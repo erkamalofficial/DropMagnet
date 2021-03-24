@@ -1,0 +1,125 @@
+:root {
+  --coreBlack: #1a1a1a;
+  --midnightBlack: #262626;
+  --darkBlack: #2e2e2e;
+  --corePurple: #610BC8;
+  --coreBlue: #0B57C8;
+  --lightBlue: #0088CB;
+  --grayBlue: #b3bbc3;
+  --royalBlue: #1874cb;
+}
+
+body {
+  background-color: var(--coreBlack);
+  margin:0;
+  padding:0;
+}
+
+h1 {
+  font-size: 25px;
+  font-family: Quicksand;
+}
+
+h2 {
+  font-size: 20px;
+  font-family: Quicksand;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 18px;
+  font-family: Quicksand;
+  font-weight: bold;
+}
+
+.p1 {
+  font-size: 16px;
+  font-family: Quicksand;
+}
+
+.p2 {
+  font-size: 14px;
+  font-family: Quicksand;
+}
+
+h1 .bold {
+  font-weight: bold;
+}
+
+.p1 .bold {
+  font-weight: bold;
+}
+
+.p1 .medium {
+  font-weight: 600;
+}
+
+.home-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.dropmagnet-logo {
+  max-width: 304px;
+  display: flex;
+  flex-direction: row;
+  margin: auto auto;
+}
+
+.header-container {
+  height: 72px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.header-left-image {
+  height: 38px;
+  width: 38px;
+}
+
+.header-right-holder {
+  display: flex;
+  flex-direction: row;
+  height: 38px;
+}
+
+.header-right-image {
+  height: 38px;
+  width: 38px;
+  cursor: pointer;
+}
+
+.list-card-view {
+  width: 270px;
+  height: 38px;
+  position: fixed;
+  bottom: 34px;
+  border-radius: 44px;
+  background-color: rgba(11, 87, 200, 0.05);
+  display: flex;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.list-card-view-text {
+  padding: 4px 22px;
+  color: white;
+  font-weight: bold;
+}
+
+.list-card-view-selected {
+  width: 123px;
+  height: 30px;
+  border-radius: 30px;
+  background-color: rgba(19, 19, 19, 0.68);
+  padding: 4px;
+}
+
+.list-card-view-unselected {
+  width: 123px;
+  height: 30px;
+  padding: 4px;
+}
