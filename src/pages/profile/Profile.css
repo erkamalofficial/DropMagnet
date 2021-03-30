@@ -1,0 +1,60 @@
+.profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0px 0 100px 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.profile-button-option-holder {
+  max-width: 286px;
+  height: 38px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 44px;
+  background-color: rgba(28, 28, 28, 0.97);
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.profile-button-option {
+  color: white;
+  font-family: Quicksand;
+  font-size: 16px;
+  font-weight: 600;
+  padding-top: 8px;
+  padding-left: 14px;
+  padding-right: 14px;
+  cursor: pointer;
+}
+
+.profile-bio-description {
+  color: white;
+  font-family: Quicksand;
+  font-size: 14px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.profile-handle-title {
+  color: white;
+  font-family: Quicksand;
+  font-size: 16px;
+  font-weight: 400;
+  padding-bottom: 16px;
+}
+
+.profile-large-title {
+  color: #ffffff;
+  font-family: Quicksand;
+  font-size: 25px;
+  font-weight: 700;
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+
+.profile-medium-title {
+  color: white;
+  font-family: Quicksand;
+  font-size: 16px;
+  font-weight: 600;
+}

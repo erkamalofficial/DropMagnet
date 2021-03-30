@@ -1,68 +1,398 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './SwipeCard.css';
-import { Frame, useMotionValue, useTransform, useAnimation } from 'framer';
+import { Frame, useMotionValue, useTransform, useAnimation, animate } from 'framer';
+
+
+export default function SwipeCard(props) {
+	
+	return (
+		<div className="detail-view">
+      <div className="detail-view-header">
+        <img className="detail-swipe-view-header-image" src={props.drop.artist_image}/>
+        <h1 className="drop-swipe-author-title">{props.drop.artist}</h1>
+				<div className="detail-swipe-view-placeholder-image"></div>
+      </div>
+      <img className="card-image" src={props.drop.drop_image}/>
+      <h1 className="drop-swipe-detail-title">{props.drop.title}</h1>
+			<div style={{height: '1px', margin: '0 36px', backgroundColor: '#2F2F2F'}} />
+      <div className="drop-swipe-detail-holder">
+        <div className="drop-marketplace-title">{props.drop.marketplace}</div>
+        <div className="drop-swipe-category-title">{props.drop.category}</div>
+				<p2 className="drop-swipe-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>
+        <p2 className="drop-swipe-detail-date">{props.drop.drop_date}</p2>
+      </div>
+      <div className="bottom-button-holder">
+        <div onClick={props.dislikeDrop} className="dismiss-button-unselected">
+          <div style={{margin: '-6px auto 0 auto'}}>
+            <img width={34} src="./discard-icon.png" />
+          </div>
+        </div>
+        <div onClick={props.likeDrop} className="add-button-unselected">
+        <img style={{margin: '0 auto'}} width={34} height={34} src="./add-icon.png" />
+        </div>
+      </div>
+    </div>
+	)
+}
 
 // Card component with destructured props
-export default function SwipeCard({ image, color }) {
-  // To move the card as the user drags the cursor
-  const motionValue = useMotionValue(0);
-  
-  // To rotate the card as the card moves on drag
-  const rotateValue = useTransform(motionValue, [-200, 200], [-50, 50]);
-  
-  // To decrease opacity of the card when swipped
-  // on dragging card to left(-200) or right(200)
-  // opacity gradually changes to 0
-  // and when the card is in center opacity = 1
-  const opacityValue = useTransform(
-    motionValue,
-    [-200, -150, 0, 150, 200],
-    [0, 1, 1, 1, 0]
-  );
-  
-  // Framer animation hook
-  const animControls = useAnimation();
-  
-  // Some styling for the card
-  // it is placed inside the card component
-  // to make backgroundImage and backgroundColor dynamic
-  const style = {
-    backgroundImage: `url(${image})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    backgroundColor: color,
-    boxShadow: '5px 10px 18px #888888',
-    borderRadius: 10,
-    height: 300
-  };
-  
-  return (
-    <div className='card-text'>
-    <Frame
-      center
-      // Card can be drag only on x-axis
-      drag='x'
-      x={motionValue}
-      rotate={rotateValue}
-      opacity={opacityValue}
-      dragConstraints={{ left: -1000, right: 1000 }}
-      style={style}
-      onDragEnd={(event, info) => {
-      
-      // If the card is dragged only upto 150 on x-axis
-      // bring it back to initial position
-      if (Math.abs(info.point.x) <= 150) {
-        animControls.start({ x: 0 });
-      } else {
-        
-        // If card is dragged beyond 150
-        // make it disappear
-  
-        // Making use of ternary operator
-        animControls.start({ x: info.point.x < 0 ? -200 : 200 });
-      }
-      }}
-    />
-    </div>
-  );
-};
+// class SwipeCard extends React.Component {
+// 	constructor(props) {
+// 		super(props);
+// 		this.state = {
+// 			active: false,
+// 			move: false,
+// 			limit: false,
+// 			mouseStartPosX: null,
+// 			mouseStartPosY: null,
+// 			mouseCurrPosX: null,
+// 			mouseCurrPosY: null,
+// 			Posx: null,
+// 			Posy: null,
+// 			k: 0.2,
+// 			restX: 0,
+// 			restY: 0,
+// 			fx: 0,
+// 			fy: 0,
+// 			ax: 0,
+// 			ay: 0,
+// 			vx: 0.0,
+// 			vy: 0.0,
+// 			mass: 0.7,
+// 			damping: 0.8
+// 		};
+// 		this.handleDown = this.handleDown.bind(this);
+// 		this.handleUp = this.handleUp.bind(this);
+// 		this.handleMove = this.handleMove.bind(this);
+// 		this.animate = this.animate.bind(this);
+// 		this.updateCard = this.updateCard.bind(this);
+// 		this.handleTouchStart = this.handleTouchStart.bind(this);
+// 		this.handleTouchEnd = this.handleTouchEnd.bind(this);
+// 		this.handleTouchMove = this.handleTouchMove.bind(this);
+// 	}
+
+// 	componentDidMount() {
+// 		this.animate();
+// 	}
+
+// 	handleDown(e) {
+// 		this.setState({
+// 			move: true,
+// 			active: true,
+// 			mouseStartPosX: e.clientX,
+// 			mouseStartPosY: e.clientY
+// 		});
+// 	}
+
+// 	handleTouchStart(e) {
+// 		e.persist();
+// 		this.setState({
+// 			move: true,
+// 			active: true,
+// 			mouseStartPosX: e.touches[0].screenX,
+// 			mouseStartPosY: e.touches[0].screenY
+// 		});
+// 		console.log(this.state.mouseStartPosX);
+// 	}
+
+// 	handleMove(e) {
+// 		if (!this.state.limit) {
+// 			if (this.state.move) {
+// 				let mouseCurrPosX = e.clientX;
+// 				let mouseCurrPosY = e.clientY;
+// 				let Posx = mouseCurrPosX - this.state.mouseStartPosX;
+// 				let Posy = mouseCurrPosY - this.state.mouseStartPosY;
+// 				let el = document.getElementById("card" + this.props.no);
+// 				let height = window.innerHeight;
+// 				let width = window.innerWidth;
+// 				let maxX = width - width * 20 / 100;
+// 				function map_range(value, low1, high1, low2, high2) {
+// 					return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+// 				}
+// 				let mouseRange = mouseCurrPosX;
+// 				if (mouseRange < width / 2) {
+// 					mouseRange = width - mouseRange;
+// 				}
+// 				let damping = map_range(
+// 					mouseRange,
+// 					width / 2,
+// 					width - width * 10 / 100,
+// 					0.6,
+// 					0.8
+// 				);
+
+// 				this.setState({
+// 					Posx,
+// 					Posy,
+// 					damping,
+// 					mouseCurrPosX,
+// 					mouseCurrPosY
+// 				});
+
+// 				if (mouseCurrPosX > width - width * 20 / 100) {
+// 					let restX, restY;
+// 					if (mouseCurrPosX > width / 2) {
+// 						restX = this.state.Posx * 5;
+// 					} else {
+// 						restX = -this.state.Posx * 5;
+// 					}
+// 					if (mouseCurrPosY > height / 2) {
+// 						restY = this.state.Posy * 5;
+// 					} else {
+// 						restY = this.state.Posy * 5;
+// 					}
+// 					let limit = true;
+// 					let move = false;
+// 					let damping = 0.06;
+// 					this.setState(
+// 						{
+// 							restX,
+// 							restY,
+// 							limit,
+// 							move,
+// 							damping
+// 						},
+// 						() => {
+// 							setTimeout(() => {
+// 								window.cancelAnimationFrame(this.animate);
+// 							}, 10);
+// 						}
+// 					);
+// 				} else if (mouseCurrPosX < width * 20 / 100) {
+// 					let restX, restY;
+// 					if (mouseCurrPosX > width / 2) {
+// 						restX = -this.state.Posx * 5;
+// 					} else {
+// 						restX = this.state.Posx * 5;
+// 					}
+// 					if (mouseCurrPosY > height / 2) {
+// 						restY = this.state.Posy * 5;
+// 					} else {
+// 						restY = this.state.Posy * 5;
+// 					}
+// 					let limit = true;
+// 					let move = false;
+// 					let damping = 0.06;
+// 					this.setState({
+// 						restX,
+// 						restY,
+// 						limit,
+// 						move,
+// 						damping
+// 					});
+// 				}
+// 			}
+// 		}
+// 	}
+
+// 	handleTouchMove(e) {
+// 		e.persist();
+// 		if (!this.state.limit) {
+// 			if (this.state.move) {
+// 				let mouseCurrPosX = e.touches[0].screenX;
+// 				let mouseCurrPosY = e.touches[0].screenY;
+// 				let Posx = mouseCurrPosX - this.state.mouseStartPosX;
+// 				let Posy = mouseCurrPosY - this.state.mouseStartPosY;
+// 				let el = document.getElementById("card" + this.props.no);
+// 				let height = window.innerHeight;
+// 				let width = window.innerWidth;
+// 				let maxX = width - width * 20 / 100;
+// 				function map_range(value, low1, high1, low2, high2) {
+// 					return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+// 				}
+// 				let mouseRange = mouseCurrPosX;
+// 				if (mouseRange < width / 2) {
+// 					mouseRange = width - mouseRange;
+// 				}
+// 				let damping = map_range(
+// 					mouseRange,
+// 					width / 2,
+// 					width - width * 10 / 100,
+// 					0.6,
+// 					0.8
+// 				);
+
+// 				this.setState({
+// 					Posx,
+// 					Posy,
+// 					damping,
+// 					mouseCurrPosX,
+// 					mouseCurrPosY
+// 				});
+
+// 				if (mouseCurrPosX > width - width * 10 / 100) {
+// 					let restX, restY;
+// 					if (mouseCurrPosX > width / 2) {
+// 						restX = this.state.Posx * 5;
+// 					} else {
+// 						restX = -this.state.Posx * 5;
+// 					}
+// 					if (mouseCurrPosY > height / 2) {
+// 						restY = this.state.Posy * 5;
+// 					} else {
+// 						restY = this.state.Posy * 5;
+// 					}
+// 					let limit = true;
+// 					let move = false;
+// 					let damping = 0.08;
+// 					this.setState(
+// 						{
+// 							restX,
+// 							restY,
+// 							limit,
+// 							move,
+// 							damping
+// 						},
+// 						() => {
+// 							setTimeout(() => {
+// 								window.cancelAnimationFrame(this.animate);
+// 							}, 10);
+// 						}
+// 					);
+// 				} else if (mouseCurrPosX < width * 10 / 100) {
+// 					let restX, restY;
+// 					if (mouseCurrPosX > width / 2) {
+// 						restX = -this.state.Posx * 5;
+// 					} else {
+// 						restX = this.state.Posx * 5;
+// 					}
+// 					if (mouseCurrPosY > height / 2) {
+// 						restY = this.state.Posy * 5;
+// 					} else {
+// 						restY = this.state.Posy * 5;
+// 					}
+// 					let limit = true;
+// 					let move = false;
+// 					let damping = 0.08;
+// 					this.setState({
+// 						restX,
+// 						restY,
+// 						limit,
+// 						move,
+// 						damping
+// 					});
+// 				}
+// 			}
+// 		}
+// 	}
+
+// 	handleUp() {
+// 		this.setState({
+// 			move: false
+// 		});
+// 	}
+
+// 	handleTouchEnd() {
+// 		this.setState({
+// 			move: false
+// 		});
+// 	}
+
+// 	updateCard() {
+// 		if (!this.state.move) {
+// 			this.setState(
+// 				{
+// 					fx: -this.state.k * (this.state.Posx - this.state.restX),
+// 					fy: -this.state.k * (this.state.Posy - this.state.restY)
+// 				},
+// 				() => {
+// 					this.setState(
+// 						{
+// 							ax: this.state.fx / this.state.mass,
+// 							ay: this.state.fy / this.state.mass
+// 						},
+// 						() => {
+// 							this.setState(
+// 								{
+// 									vx: this.state.damping * (this.state.vx + this.state.ax),
+// 									vy: this.state.damping * (this.state.vy + this.state.ay)
+// 								},
+// 								() => {
+// 									this.setState({
+// 										Posx: this.state.Posx + this.state.vx,
+// 										Posy: this.state.Posy + this.state.vy
+// 									});
+// 								}
+// 							);
+// 						}
+// 					);
+// 				}
+// 			);
+// 		}
+// 	}
+
+// 	animate() {
+// 		let el = document.getElementById("card" + this.props.no);
+// 		if (
+// 			this.state.Posx > window.innerWidth + 400 ||
+// 			this.state.Posx < -window.innerWidth - 400
+// 		) {
+// 			cancelAnimationFrame(this.animate);
+// 		} else {
+// 			requestAnimationFrame(this.animate);
+// 		}
+// 		if (this.state.active) {
+// 			el.style.transform =
+// 				"translate(" +
+// 				this.state.Posx +
+// 				"px" +
+// 				"," +
+// 				this.state.Posy +
+// 				"px) rotate(" +
+// 				this.state.Posx / 9 +
+// 				"deg) perspective(800px)";
+// 			this.updateCard();
+// 		}
+// 	}
+
+// 	render() {
+// 		return (
+// 			<div
+// 				id={"card" + this.props.no}
+// 				className={"card color" + this.props.no}
+// 				onMouseDown={this.handleDown}
+// 				onMouseMove={this.handleMove}
+// 				onMouseUp={this.handleUp}
+// 				onMouseLeave={this.handleUp}
+// 				onTouchStart={this.handleTouchStart}
+// 				onTouchMove={this.handleTouchMove}
+// 				onTouchEnd={this.handleTouchEnd}
+// 			>
+//         <div className="detail-view-header">
+//           <img className="detail-swipe-view-header-image" src={this.props.drop.artist_image}/>
+//           <h1 className="drop-swipe-author-title">{this.props.drop.artist}</h1>
+//           <div className="detail-swipe-view-placeholder-image"></div>
+//         </div>
+// 			</div>
+//     );
+    
+//     // 		<div className="detail-view">
+// //       <div className="detail-view-header">
+// //         <img className="detail-swipe-view-header-image" src={props.drop.artist_image}/>
+// //         <h1 className="drop-swipe-author-title">{props.drop.artist}</h1>
+// // 				<div className="detail-swipe-view-placeholder-image"></div>
+// //       </div>
+// //       <img className="card-image" src={props.drop.drop_image}/>
+// //       <h1 className="drop-swipe-detail-title">{props.drop.title}</h1>
+// // 			<div style={{height: '1px', margin: '0 36px', backgroundColor: '#2F2F2F'}} />
+// //       <div className="drop-swipe-detail-holder">
+// //         <div className="drop-marketplace-title">{props.drop.marketplace}</div>
+// //         <div className="drop-swipe-category-title">{props.drop.category}</div>
+// // 				<p2 className="drop-swipe-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>
+// //         <p2 className="drop-swipe-detail-date">{props.drop.drop_date}</p2>
+// //       </div>
+// //       <div className="bottom-button-holder">
+// //         <div className="dismiss-button-unselected">
+// //           <div style={{margin: '-6px auto 0 auto'}}>
+// //             <img width={34} src="./discard-icon.png" />
+// //           </div>
+// //         </div>
+// //         <div className="add-button-unselected">
+// //         <img style={{margin: '0 auto'}} width={34} height={34} src="./add-icon.png" />
+// //         </div>
+// //       </div>
+// //     </div>
+// 	}
+// }
+
+// export default SwipeCard;

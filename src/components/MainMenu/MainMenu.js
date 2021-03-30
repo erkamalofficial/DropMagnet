@@ -34,6 +34,14 @@ export default function MainMenu(props) {
         <img onClick={() => closeMenu()} className="close-button" src="./close-icon.png" />
       </div>
       <div className="menu_mobile">
+        { props.userDetails !== {} && props.userDetails !== undefined ?
+          <div className="main-menu-header">
+            <p1 style={{color: 'white', fontWeight: 'bold'}}>{props.userDetails.name}</p1>
+            <p2 style={{color: 'white'}}>@{props.userDetails.handle}</p2>
+          </div>
+          :
+          <></>
+        }
         <Link className="main-menu-item" to={`/create_drop`}>Create a drop</Link>
         {menuList.map(renderMenuItem)}
         <Link className="main-menu-item" to={`/terms`}>Terms and Conditions</Link>

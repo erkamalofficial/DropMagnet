@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import DropCell from './DropCell/DropCell'
+import DropCell from '../DropCell/DropCell'
+import "./DropList.css"
 
 export default function DropList(props) {
   const [listItems, setListItems] = useState([]);
@@ -36,11 +37,11 @@ export default function DropList(props) {
   function renderDropCell(drop) {
     return <DropCell style={{
       position: "absolute"
-    }} key={drop.drop_id} drop={drop} />
+    }} key={drop.drop_id} drop={drop} onClick={() => props.onClick(drop)} />
   }
 
   return (
-    <div style={{height: "800px", overflow: 'auto'}}>
+    <div className="drop-list">
       {listItems.map(renderDropCell)}
       {/* {isFetching && 'Fetching more list items...'} */}
     </div>

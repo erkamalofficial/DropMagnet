@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 export default function DropCell(props) {
 
   function renderDrop() {
-    console.log(props.drop)
-    return <div key={props.drop.drop_id} className="landing-cell">
+    return <div key={props.drop.drop_id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner">
         <div className="drop-details">
           <div className="drop-header">
