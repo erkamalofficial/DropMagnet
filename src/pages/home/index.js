@@ -309,17 +309,19 @@ export default function Home(props) {
   }
 
   function renderSwipeCards() {
-    return (
-      <div>
-        { /* <div className='card-holder'> */ }
-        {/* Traversing through cards arrray using map function
-        and populating card with different image and color */}
-        <SwipeCard drop={categoryList[dropOnSwipe]} no={dropOnSwipe} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} />
-        {/* {categoryList.map((drop, i) => (
-          <SwipeCard drop={drop} key={i} no={i} />
-        ))} */}
-      </div>
-    )
+    if (categoryList.length > 0) {
+      return (
+        <div>
+          { /* <div className='card-holder'> */ }
+          {/* Traversing through cards arrray using map function
+          and populating card with different image and color */}
+          <SwipeCard drop={categoryList[dropOnSwipe]} no={dropOnSwipe} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} />
+          {/* {categoryList.map((drop, i) => (
+            <SwipeCard drop={drop} key={i} no={i} />
+          ))} */}
+        </div>
+      )
+    }
   }
 
     function renderDropCell(drop) {
@@ -345,13 +347,12 @@ export default function Home(props) {
   function renderMainView() {
     return (
       <>
-        {viewIsList ? renderList() : renderSwipeCards()}
-        {/* <div className="hidden_desktop">
+        <div className="hidden_desktop">
           {viewIsList ? renderList() : renderSwipeCards()}
-        </div> */}
-        {/* <div className="hidden_mobile"> */}
+        </div>
+        <div className="hidden_mobile">
           {renderSwipeCards()}
-        {/* </div> */}
+        </div>
       </>
     )
   }
