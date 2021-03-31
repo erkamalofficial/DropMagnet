@@ -182,3 +182,15 @@ h1 .bold {
 	height: 100vh;
 	overflow: hidden;
 }
+
+@media (max-width: 999px) {
+  .hidden_mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hidden_desktop {
+    display: none;
+  }
+}

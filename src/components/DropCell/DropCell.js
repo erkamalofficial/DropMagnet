@@ -1,6 +1,7 @@
 import React from "react";
 import "./DropCell.css";
 import { Link } from 'react-router-dom';
+import Marquee from 'react-double-marquee';
 
 export default function DropCell(props) {
 
@@ -10,7 +11,11 @@ export default function DropCell(props) {
         <div className="drop-details">
           <div className="drop-header">
             <img className="drop-artist-image" src={props.drop.artist_image}/>
-            <div className="drop-header-title" >{props.drop.artist}</div>
+            <div className="drop-header-title" >
+              {/* <Marquee> */}
+                {props.drop.artist}
+              {/* </Marquee> */}
+              </div>
           </div>
           <div className="drop-name">{props.drop.title}</div>
           <div className="drop-date">{props.drop.drop_date}</div>

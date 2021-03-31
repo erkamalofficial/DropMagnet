@@ -346,6 +346,12 @@ export default function Home(props) {
     return (
       <>
         {viewIsList ? renderList() : renderSwipeCards()}
+        {/* <div className="hidden_desktop">
+          {viewIsList ? renderList() : renderSwipeCards()}
+        </div> */}
+        {/* <div className="hidden_mobile"> */}
+          {renderSwipeCards()}
+        {/* </div> */}
       </>
     )
   }
@@ -378,19 +384,21 @@ export default function Home(props) {
       <div className="home-container">
         {detailView ? renderDetail() : renderMainView()}
       </div>
-      {detailView ? 
-          <></> : 
-          <div className="list-card-view">
-            <div className={viewIsList ? "list-card-view-selected" : "list-card-view-unselected"} onClick={() => setViewIsList(true)}>
-              <img height={28} width={32} src="./list-tab-icon.png" />
-              <div className={viewIsList ? "list-card-view-text-selected" : "list-card-view-text"} >List View</div>
+      <div className="hidden_desktop">
+        {detailView ? 
+            <></> : 
+            <div className="list-card-view">
+              <div className={viewIsList ? "list-card-view-selected" : "list-card-view-unselected"} onClick={() => setViewIsList(true)}>
+                <img height={28} width={32} src="./list-tab-icon.png" />
+                <div className={viewIsList ? "list-card-view-text-selected" : "list-card-view-text"} >List View</div>
+              </div>
+              <div className={!viewIsList ? "list-card-view-selected" : "list-card-view-unselected"} onClick={() => setViewIsList(false)}>
+                <img style={{paddingTop: '2px'}} height={23} width={26} src="./cards-tab-icon.png" />
+                <div className={!viewIsList ? "list-card-view-text-selected" : "list-card-view-text"}>Card View</div>
+              </div>
             </div>
-            <div className={!viewIsList ? "list-card-view-selected" : "list-card-view-unselected"} onClick={() => setViewIsList(false)}>
-              <img style={{paddingTop: '2px'}} height={23} width={26} src="./cards-tab-icon.png" />
-              <div className={!viewIsList ? "list-card-view-text-selected" : "list-card-view-text"}>Card View</div>
-            </div>
-          </div>
-      }
+        }
+      </div>
     </div>
   );
 }
