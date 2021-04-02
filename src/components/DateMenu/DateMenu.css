@@ -26,5 +26,8 @@
 
 .scroll-menu-arrow {
   padding: 20px;
+  border-radius: 25px;
   cursor: pointer;
+  font-style: bold;
+  color: white;
 }
