@@ -311,12 +311,14 @@ export default function Home(props) {
   function renderSwipeCards() {
     if (categoryList.length > 0) {
       return (
-        <div>
+        <div className="card-deck-holder">
           { /* <div className='card-holder'> */ }
           {/* Traversing through cards arrray using map function
           and populating card with different image and color */}
-          <SwipeCard drop={categoryList[dropOnSwipe]} no={dropOnSwipe} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} />
-          {/* {categoryList.map((drop, i) => (
+          {categoryList.map((drop, i) => (
+            <SwipeCard drop={categoryList[i]} key={i} no={i} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} />
+          ))}
+            {/* {categoryList.map((drop, i) => (
             <SwipeCard drop={drop} key={i} no={i} />
           ))} */}
         </div>
