@@ -141,8 +141,8 @@ export default function Profile(props) {
           <div className="profile-button-option" onClick={() => setCategoryList(fashionArts)}>Saved Drops</div>
         </div>
       </div>
-      <div style={{padding: '0 16px'}}>
-      {renderDrops()}
+      <div style={{margin: '0 auto', maxWidth: '600px'}}>
+        {renderDrops()}
       </div>
     </div>
   );

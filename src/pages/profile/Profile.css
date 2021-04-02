@@ -1,5 +1,4 @@
 .profile-container {
-  max-width: 600px;
   margin: 0 auto;
   padding: 0px 0 100px 0;
   overflow-y: hidden;
@@ -57,4 +56,8 @@
   font-family: Quicksand;
   font-size: 16px;
   font-weight: 600;
+}
+
+.profile-menu-open {
+
 }
