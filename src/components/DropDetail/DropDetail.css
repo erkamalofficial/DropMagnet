@@ -37,10 +37,8 @@
 }
 
 .drop-detail-image {
-  height: 244px;
-  width: 244px;
+  position: relative;
   margin: 12px auto;
-  border-radius: 6px;
 }
 
 .close-detail-button {
@@ -110,7 +108,7 @@
 }
 
 .dismiss-button-unselected {
-  width: 128px;
+  min-width: 136px;
   height: 60px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -3px 0 #002b40;
   border-radius: 8px 0 0 8px;
@@ -124,11 +122,33 @@
 }
 
 .add-button-unselected {
-  width: 128px;
+  min-width: 136px;
   height: 60px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -3px 0 #2b0843;
   border-radius: 0 8px 8px 0;
   background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%);
   display: flex;
   align-items: center;
+}
+
+@media(max-width: 374px) {
+
+  .add-button-unselected {
+    height: 46px;
+  }
+
+  .dismiss-button-unselected {
+    height: 46px;
+  }
+  
+}
+
+@media(min-width: 375px) {
+  .add-button-unselected {
+		width: 173px;
+  }
+
+  .dismiss-button-unselected {
+    width: 173px;
+  }
 }

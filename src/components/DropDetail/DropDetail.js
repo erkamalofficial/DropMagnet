@@ -14,7 +14,11 @@ export default function DropDetail(props) {
         <h1 className="drop-detail-title">{props.drop.artist}</h1>
         <img onClick={() => closeDetail()} className="close-detail-button" src="./close-icon.png" />
       </div>
-      <img className="drop-detail-image" src={props.drop.drop_image}/>
+      <div className="drop-detail-image">
+        {props.drop.type === "music" ? <img style={{position: 'absolute', height: '244px', left: '0%', top: '0%'}} src="./music-30-second-icon.png" /> : <></>}
+        {props.drop.type === "music" ? <img style={{position: 'absolute', width: '90px', height: '90px', margin: 'auto', left: '50%', top: '50%', transform: 'translate(-50%, -50%)'}} src="./play-button-icon.png" /> : <></>}
+        <img style={{height: '244px', width: '244px', borderRadius: '6px'}} src={props.drop.drop_image} />
+      </div>
       <h1 className="drop-detail-title">{props.drop.title}</h1>
       <div className="drop-detail-holder">
         <div className="drop-marketplace-title">{props.drop.marketplace}</div>

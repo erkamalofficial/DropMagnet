@@ -10,15 +10,15 @@
 }
 
 .card-image {
-  margin: 12px 34px 8px 34px !important;
+  margin: 0 34px !important;
 	border-radius: 6px;
 	object-fit: contain;
-	max-height: 304px !important;
+	max-height: 340px !important;
 }
 
 @media(min-width: 1000px) {
 	.card-image {
-		object-fit: cover;
+		object-fit: contain;
 		max-height: 444px;
 		margin: 0;
 	}
@@ -46,12 +46,12 @@
 
 
 .drop-swipe-detail-title {
-	margin: 12px auto;
+	margin: 8px auto;
 }
 
 .drop-swipe-detail-holder {
 	display: flex;
-	margin: 18px auto 18px auto;
+	margin: 8px auto 8px auto;
 }
 
 .drop-swipe-category-title {
@@ -97,9 +97,24 @@
   padding-left: 20px;
 }
 
+.drop-swipe-detail-title-detail-holder {
+	height: 1px;
+	margin: 0 36px;
+	background-color: #2F2F2F;
+}
+
+.dislike-icon {
+	width: 38px;
+}
+
+.like-icon {
+	width: 34px;
+	height: 34px;
+	margin: 0 auto;
+}
+
 .swipe-card-view-header {
   height: 54px;
-  box-shadow: inset 0 -1px 0 rgba(23, 23, 23, 0.63);
   border-radius: 5px 5px 0 0;
   display: flex;
   justify-content: space-between;
@@ -107,15 +122,31 @@
 
 @media(max-height: 590px) {
 	.card-image {
-		height: 150px !important;
+		height: 100px !important;
+	}
+
+	.swipe-card-bottom-button-holder {
+		bottom: 13% !important;
 	}
 }
 
 @media screen and (min-height : 591px) and  (max-height : 714px) {
-	.card-image {
-		height: 200px !important;
-		margin: 12px 24px !important;
+	.card {
+		height: 420px !important;
 	}
+
+	.card-image {
+		height: 280px !important;
+	}
+
+	.card-deck-holder {
+		height: 110vh !important; 
+	}
+
+	.swipe-card-bottom-button-holder {
+		bottom: 0;
+	}
+
 }
 
 .swipe-card-bottom-button-holder {
@@ -124,8 +155,13 @@
 	position: absolute;
 	transform-origin: center;
 	left: 50%;
-	top: 78%;
+	bottom: 10%;
   transform: translate(-50%, 0%);
+}
+
+.drop-swipe-detail-title-detail-holder {
+	display: flex;
+	flex-direction: column;
 }
 
 .card-deck-holder {
@@ -136,7 +172,6 @@
 }
 
 .card {
-	width: 390px;
 	height: 480px;
 	position: absolute;
 	border-radius: 10px;
@@ -157,5 +192,62 @@
 	background: #262626;
 	display: flex;
 	flex-direction: column;
+	background-size: 0 0;
+}
+
+@media(max-width: 374px) {
+	.card {
+		width: 296px;
+		height: 296px;
+		background-size: 276px 276px;
+		background-position: right 10px top 10px;
+		background-repeat: no-repeat;
+	}
+
+	.card-image {
+		visibility: hidden;
+		margin: auto !important;
+	}
+
+	.swipe-card-view-header {
+		padding-top: 3px;
+	}
+
+	.drop-swipe-author-title {
+		margin: auto;
+		background-color:rgba(54, 53, 53, 0.24);
+		padding: 2px 4px;
+		border-radius: 4px;
+		backdrop-filter: blur(32px);
+		font-size: 18px !important;
+	}
+
+	.drop-swipe-detail-title-detail-holder {
+		border-radius: 0 0 4px 4px;
+		background-color: rgba(0, 0, 0, 0.08);
+		height: 67px;
+		margin: 0;
+		margin: auto;
+		backdrop-filter: blur(17px);
+		width: 260px;
+	}
+
+	.drop-swipe-detail-title {
+		margin: 8px auto 0 auto;
+		font-size: 18px !important;
+	}
+
+	.drop-swipe-detail-holder {
+		margin: 8px auto;
+	}
+
+	.dislike-icon {
+		width: 29px;
+	}
+	
+	.like-icon {
+		width: 25px;
+		height: 25px;
+	}
 }
 

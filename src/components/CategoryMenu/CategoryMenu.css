@@ -9,6 +9,12 @@
   min-width: 300px;
   max-width: 900px;
   margin-bottom: 16px;
+  background: linear-gradient(45deg, #239BAE, #D76DB2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .category-menu.hidden {

@@ -28,6 +28,8 @@ export default function Home(props) {
     "handle" : "cryptoartman"
   }
 
+  let history = useHistory()
+
   useEffect(() => {
     // Fetch list again
     setCategoryList(dropArts)
@@ -182,7 +184,8 @@ export default function Home(props) {
 			"drop_date": "22-03-2021",
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
-			"drop_pieces": 9
+      "drop_pieces": 9,
+      "type": "music"
     },
     {
       "drop_id": 10,
@@ -195,7 +198,8 @@ export default function Home(props) {
 			"drop_date": "22-03-2021",
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
-			"drop_pieces": 9
+      "drop_pieces": 9,
+      "type": "music"
     }
   ]
 
@@ -302,6 +306,10 @@ export default function Home(props) {
     }
   }
 
+  function openHome() {
+    history.push("/");
+  }
+
   // Render functions
 
   function renderDropCell(drop) {
@@ -316,7 +324,7 @@ export default function Home(props) {
           {/* Traversing through cards arrray using map function
           and populating card with different image and color */}
           {categoryList.map((drop, i) => (
-            <SwipeCard drop={categoryList[i]} key={i} no={i} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} />
+            <SwipeCard drop={categoryList[i]} key={i} no={i} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} handleClick={() => openDrop(categoryList[dropOnSwipe])} />
           ))}
             {/* {categoryList.map((drop, i) => (
             <SwipeCard drop={drop} key={i} no={i} />
@@ -341,7 +349,7 @@ export default function Home(props) {
   function renderDetail() {
     return (
       <div>
-        <DropDetail drop={categoryList[dropToOpen]} closeDetailView={() => setDetailView(false)} />
+        <DropDetail drop={categoryList[dropToOpen]} handleClick={() => console.log("handled click", categoryList[dropToOpen])} closeDetailView={() => setDetailView(false)} />
       </div>
     )
   }
@@ -349,12 +357,7 @@ export default function Home(props) {
   function renderMainView() {
     return (
       <>
-        <div className="hidden_desktop">
-          {viewIsList ? renderList() : renderSwipeCards()}
-        </div>
-        <div className="hidden_mobile">
-          {renderSwipeCards()}
-        </div>
+        {renderSwipeCards()}
       </>
     )
   }
@@ -365,7 +368,7 @@ export default function Home(props) {
       <DateMenu open={dateMenuOpen} setOpen={setDateMenuOpen} openItem={selectDate} setSelectedDate={setSelectedDate} />
       <div className="fixed-container">
           <div className="header-container">
-            <img className="header-left-image" src="./dropmagnet-small-logo.png" />
+            <img onClick={() => openHome()} className="header-left-image" src="./dropmagnet-small-logo.png" />
             <div onClick={() => openDateMenu()} className="dropdown-button">
               <p1 className="dropdown-button-title">{selectedDropdownDate}</p1>
               <img className="dropdown-button-icon" src="./dropdown.png"/>
@@ -386,21 +389,6 @@ export default function Home(props) {
         </div>
       <div className="home-container">
         {detailView ? renderDetail() : renderMainView()}
-      </div>
-      <div className="hidden_desktop">
-        {detailView ? 
-            <></> : 
-            <div className="list-card-view">
-              <div className={viewIsList ? "list-card-view-selected" : "list-card-view-unselected"} onClick={() => setViewIsList(true)}>
-                <img height={28} width={32} src="./list-tab-icon.png" />
-                <div className={viewIsList ? "list-card-view-text-selected" : "list-card-view-text"} >List View</div>
-              </div>
-              <div className={!viewIsList ? "list-card-view-selected" : "list-card-view-unselected"} onClick={() => setViewIsList(false)}>
-                <img style={{paddingTop: '2px'}} height={23} width={26} src="./cards-tab-icon.png" />
-                <div className={!viewIsList ? "list-card-view-text-selected" : "list-card-view-text"}>Card View</div>
-              </div>
-            </div>
-        }
       </div>
     </div>
   );

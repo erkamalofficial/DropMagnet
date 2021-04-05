@@ -180,6 +180,8 @@ class SwipeCard extends React.Component {
 					});
 				}
 			}
+		} else {
+			this.props.handleClick()
 		}
 	}
 
@@ -283,6 +285,8 @@ class SwipeCard extends React.Component {
 					});
 				}
 			}
+		} else {
+			this.props.handleClick()
 		}
 	}
 
@@ -525,112 +529,61 @@ class SwipeCard extends React.Component {
 			requestAnimationFrame(this.animate);
 		}
 		if (this.state.active) {
-			el.style.transform =
-				"translate(" +
-				this.state.Posx +
-				"px" +
-				"," +
-				this.state.Posy +
-				"px) rotate(" +
-				this.state.Posx / 9 +
-				"deg) perspective(800px)";
-			this.updateCard();
+			if (el) {
+				el.style.transform =
+					"translate(" +
+					this.state.Posx +
+					"px" +
+					"," +
+					this.state.Posy +
+					"px) rotate(" +
+					this.state.Posx / 9 +
+					"deg) perspective(800px)";
+				this.updateCard();
+			}
 		}
 	}
 
 	render() {
 		return (
 			<div>
-			<div
-				id={"card" + this.props.no}
-        className={"card"}
-				onMouseDown={this.handleDown}
-				onMouseMove={this.handleMove}
-				onMouseUp={this.handleUp}
-				onMouseLeave={this.handleUp}
-				onTouchStart={this.handleTouchStart}
-				onTouchMove={this.handleTouchMove}
-				onTouchEnd={this.handleTouchEnd}
-			>
-        {/* <div className="detail-view"> */}
-          <div className="swipe-card-view-header">
-         <img className="detail-swipe-view-header-image" src={this.props.drop.artist_image}/>
-         <h1 className="drop-swipe-author-title">{this.props.drop.artist}</h1>
- 				<div className="detail-swipe-view-placeholder-image"></div>
-       </div>
-       <img className="card-image" src={this.props.drop.drop_image}/>
-       <h1 className="drop-swipe-detail-title">{this.props.drop.title}</h1>
- 			<div style={{height: '1px', margin: '0 36px', backgroundColor: '#2F2F2F'}} />
-       <div className="drop-swipe-detail-holder">
-         <div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
-         <div className="drop-swipe-category-title">{this.props.drop.category}</div>
- 				<p2 className="drop-swipe-detail-piece-no">{this.props.drop.drop_pieces} Pieces</p2>
-         <p2 className="drop-swipe-detail-date">{this.props.drop.drop_date}</p2>
-       </div>
-			 </div>
-			 <div className="swipe-card-bottom-button-holder">
-         <div onClick={() => this.handleButtonClickLeft()} className="dismiss-button-unselected">
+				<div
+					id={"card" + this.props.no}
+					className={"card"}
+					style={{backgroundImage: 'url(' + this.props.drop.drop_image + ')'}}
+					onMouseDown={this.handleDown}
+					onMouseMove={this.handleMove}
+					onMouseUp={this.handleUp}
+					onMouseLeave={this.handleUp}
+					onTouchStart={this.handleTouchStart}
+					onTouchMove={this.handleTouchMove}
+					onTouchEnd={this.handleTouchEnd}
+					onClick={this.props.handleClick}
+				>
+        	<div className="swipe-card-view-header">
+         		<img className="detail-swipe-view-header-image" src={this.props.drop.artist_image}/>
+         		<h2 className="drop-swipe-author-title">{this.props.drop.artist}</h2>
+ 						<div className="detail-swipe-view-placeholder-image"></div>
+       		</div>
+       		<img className="card-image" src={this.props.drop.drop_image}/>
+						<h2 className="drop-swipe-detail-title">{this.props.drop.title}</h2>
+      			<div className="drop-swipe-detail-holder">
+        			<div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
+         			<div className="drop-swipe-category-title">{this.props.drop.category}</div>
+       			</div>
+			 		</div>
+			 		<div className="swipe-card-bottom-button-holder">
+         	<div onClick={() => this.handleButtonClickLeft()} className="dismiss-button-unselected">
            <div style={{margin: '-6px auto 0 auto'}}>
-             <img width={34} src="./discard-icon.png" />
+             <img className="dislike-icon" src="./discard-icon.png" />
            </div>
-         </div>
-         <div onClick={() => this.handleButtonClickRight()} className="add-button-unselected">
-         <img style={{margin: '0 auto'}} width={34} height={34} src="./add-icon.png" />
-         </div>
+         	</div>
+         	<div onClick={() => this.handleButtonClickRight()} className="add-button-unselected">
+         	<img className="like-icon" src="./add-icon.png" />
+         	</div>
        </div>
-     {/* </div> */}
-        {/* <div className="detail-view-header">
-          <img className="detail-swipe-view-header-image" src={this.props.drop.artist_image}/>
-          <h1 className="drop-swipe-author-title">{this.props.drop.artist}</h1>
-          <div className="detail-swipe-view-placeholder-image"></div>
-          <h1 className="drop-swipe-detail-title">{this.props.drop.title}</h1>
-          <div style={{height: '1px', margin: '0 36px', backgroundColor: '#2F2F2F'}} />
-          <div className="drop-swipe-detail-holder">
-            <div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
-            <div className="drop-swipe-category-title">{this.props.drop.category}</div>
-            <p2 className="drop-swipe-detail-piece-no">{this.props.drop.drop_pieces} Pieces</p2>
-            <p2 className="drop-swipe-detail-date">{this.props.drop.drop_date}</p2>
-          </div>
-          <div className="bottom-button-holder">
-            <div className="dismiss-button-unselected">
-              <div style={{margin: '-6px auto 0 auto'}}>
-                <img width={34} src="./discard-icon.png" />
-              </div>
-            </div>
-            <div className="add-button-unselected">
-            <img style={{margin: '0 auto'}} width={34} height={34} src="./add-icon.png" />
-            </div>
-          </div>
-        </div> */}
 			</div>
     );
-    
-    // 		<div className="detail-view">
-//       <div className="detail-view-header">
-//         <img className="detail-swipe-view-header-image" src={props.drop.artist_image}/>
-//         <h1 className="drop-swipe-author-title">{props.drop.artist}</h1>
-// 				<div className="detail-swipe-view-placeholder-image"></div>
-//       </div>
-//       <img className="card-image" src={props.drop.drop_image}/>
-//       <h1 className="drop-swipe-detail-title">{props.drop.title}</h1>
-// 			<div style={{height: '1px', margin: '0 36px', backgroundColor: '#2F2F2F'}} />
-//       <div className="drop-swipe-detail-holder">
-//         <div className="drop-marketplace-title">{props.drop.marketplace}</div>
-//         <div className="drop-swipe-category-title">{props.drop.category}</div>
-// 				<p2 className="drop-swipe-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>
-//         <p2 className="drop-swipe-detail-date">{props.drop.drop_date}</p2>
-//       </div>
-//       <div className="bottom-button-holder">
-//         <div className="dismiss-button-unselected">
-//           <div style={{margin: '-6px auto 0 auto'}}>
-//             <img width={34} src="./discard-icon.png" />
-//           </div>
-//         </div>
-//         <div className="add-button-unselected">
-//         <img style={{margin: '0 auto'}} width={34} height={34} src="./add-icon.png" />
-//         </div>
-//       </div>
-//     </div>
 	}
 }
 

@@ -16,6 +16,15 @@ export default function Profile(props) {
   const [bio, setBio] = useState('dsadasdasdas')
   const [categoryList, setCategoryList] = useState([])
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
+  const [selectedProfileList, setSelectedProfileList] = useState('saved')
+  const [scheduledPosts, setScheduledPosts] = useState([])
+  const [savedPosts, setSavedPosts] = useState([])
+
+  let history = useHistory()
+
+  useEffect(() => {
+    setScheduledPosts(collectibleArts)
+  }, [])
 
   let collectibleArts = [
     {
@@ -95,6 +104,10 @@ export default function Profile(props) {
     setMainMenuOpen(true)
   }
 
+  function openHome() {
+    history.push("/");
+  }
+
   function renderDrops() {
     return (
       <DropList drops={categoryList} onClick={openDrop} />
@@ -106,7 +119,7 @@ export default function Profile(props) {
       <MainMenu userDetails={props.userDetails} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
       <div className="fixed-container">
           <div className="header-container">
-            <img className="header-left-image" src="./dropmagnet-small-logo.png" />
+            <img onClick={() => openHome()} className="header-left-image" src="./dropmagnet-small-logo.png" />
             <div className="header-right-holder">
               <img onClick={() => openMenu()} className="header-right-image" src="./menu-mobile.png" />
               {props.userLoggedIn ? 
@@ -127,22 +140,25 @@ export default function Profile(props) {
         <div style={{display: "flex", paddingBottom: '16px'}}>
           <div style={{display: "flex", paddingRight: '24px'}}>
             <img width={30} height={24} src="./twitter-icon.png" style={{paddingRight: '8px'}} />
-            <div className="profile-medium-title">{twitterHandle !== "" ? twitterHandle : 'Connect your Twitter'}</div>
+            <div className="profile-medium-title">{twitterHandle !== "" ? twitterHandle : 'Add Twitter'}</div>
           </div>
           <div style={{display: "flex"}}>
             <img width={24} height={24} src="./insta-icon.png" style={{paddingRight: '8px'}} />
-            <div className="profile-medium-title">{instaHandle !== "" ? instaHandle : 'Connect your Instagram'}</div>
+            <div className="profile-medium-title">{instaHandle !== "" ? instaHandle : 'Add Instagram'}</div>
           </div>
         </div>
         <div className="profile-medium-title">Your Bio</div>
         <div className="profile-bio-description">{props.userDetails.bio}</div>
         <div className="profile-button-option-holder">
-          <div className="profile-button-option" onClick={() => setCategoryList(collectibleArts)}>Scheduled Drops</div>
-          <div className="profile-button-option" onClick={() => setCategoryList(fashionArts)}>Saved Drops</div>
+          {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => {setSelectedProfileList("scheduled"); setCategoryList(collectibleArts)}}>Scheduled Drops</div> : <></> }
+          <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => {setSelectedProfileList("saved"); setCategoryList(fashionArts)}}>Saved Drops</div>
         </div>
       </div>
       <div style={{margin: '0 auto', maxWidth: '600px'}}>
-        {renderDrops()}
+        {savedPosts.length > 0 || scheduledPosts.length > 0 ?
+        renderDrops()
+        :
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} className="profile-bio-description">Your Saved Drops Will Appear Here</div>}
       </div>
     </div>
   );
