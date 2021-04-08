@@ -21,8 +21,8 @@ export default function MainMenu(props) {
   }
 
   function renderMenuItem(item) {
-    return <div onClick={() => openItem(item)}>
-      <h1 className="main-menu-item">{item}</h1>
+    return <div onClick={() => openItem(item)} style={{marginTop: '16px'}}>
+      <h1 style={{margin: 'auto', marginBottom: '16px'}} className="main-menu-item">{item}</h1>
     </div>
   }
 
@@ -33,18 +33,18 @@ export default function MainMenu(props) {
       <div className="close-button-holder">
         <img onClick={() => closeMenu()} className="close-button" src="./close-icon.png" />
       </div>
-      <div className="menu_mobile">
+      <div className="main-menu-holder">
         { props.userDetails !== {} && props.userDetails !== undefined ?
           <div className="main-menu-header">
-            <p1 style={{color: 'white', fontWeight: 'bold'}}>{props.userDetails.name}</p1>
-            <p2 style={{color: 'white'}}>@{props.userDetails.handle}</p2>
+            <p1 style={{fontWeight: 'bold'}}>{props.userDetails.name}</p1>
+            <p2 style={{paddingTop: '4px'}}>@{props.userDetails.handle}</p2>
           </div>
           :
           <></>
         }
-        <Link className="main-menu-item" to={`/create_drop`}>Create a drop</Link>
+        <Link className="main-menu-item" style={{marginBottom: '16px'}} to={`/create_drop`}>Create a drop</Link>
         {menuList.map(renderMenuItem)}
-        <Link className="main-menu-item" to={`/terms`}>Terms and Conditions</Link>
+        <Link className="main-menu-item" style={{marginBottom: '16px'}} to={`/terms`}>Terms and Conditions</Link>
       </div>
     </div>
   );

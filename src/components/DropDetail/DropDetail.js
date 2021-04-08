@@ -20,11 +20,11 @@ export default function DropDetail(props) {
         <img style={{height: '244px', width: '244px', borderRadius: '6px'}} src={props.drop.drop_image} />
       </div>
       <h1 className="drop-detail-title">{props.drop.title}</h1>
-      <div className="drop-detail-holder">
+      <div className="drop-detail-holder" style={{marginTop: '24px'}}>
         <div className="drop-marketplace-title">{props.drop.marketplace}</div>
         <div className="drop-category-title">{props.drop.category}</div>
       </div>
-      <div className="drop-detail-holder">
+      <div className="drop-detail-holder" style={{marginTop: '0px'}}>
         <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>
         <p2 className="drop-detail-date">{props.drop.drop_date}</p2>
       </div>
@@ -34,11 +34,11 @@ export default function DropDetail(props) {
       <div className="bottom-button-holder">
         <div className="dismiss-button-unselected">
           <div style={{margin: '-6px auto 0 auto'}}>
-            <img width={34} src="./discard-icon.png" />
+            <img width={32} src="./discard-icon.png" />
           </div>
         </div>
         <div className="add-button-unselected">
-        <img style={{margin: '0 auto'}} width={34} height={34} src="./add-icon.png" />
+        <img style={{margin: '0 auto'}} width={32} height={32} src="./add-icon.png" />
         </div>
       </div>
     </div>

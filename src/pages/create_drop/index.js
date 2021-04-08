@@ -8,6 +8,7 @@ import 'react-calendar/dist/Calendar.css';
 import '../../components/Calendar/calendar.css'
 import DropzoneComponent from "../../components/DropzoneComponent/DropzoneComponent"
 import PageIndexItem from "../../components/PageIndexItem/PageIndexItem"
+import TextView from '../../components/TextView/TextView'
 
 export default function DropCreation(props) {
 
@@ -55,9 +56,9 @@ export default function DropCreation(props) {
   function renderFirstStep() {
     return <div>
         <TextField setInputValue={setTitle} title={"Drop Title"} placeholder={"Enter a title for your masterpiece"} />
-        <TextField setInputValue={setDescription} title={"The Story of the Drop"} placeholder={"Tell the story behind the drop (max 300 words)"} />
+        <TextView height={'62px'} titleTopMargin={'12px'} setInputValue={setDescription} title={"The Story of the Drop"} placeholder={"Tell the story behind the drop (max 300 words)"} />
         <Dropdown title={"Category"} items={["Art","Music","Collectible","Fashion"]} />
-        <TextField setInputValue={setHashtag} title={"# Hashtag"} placeholder={"Enter one i.e #Electronic if it’s music or #Abstract if it’s art."} />
+        <TextView height={'62px'} titleTopMargin={'12px'} setInputValue={setHashtag} title={"# Hashtag"} placeholder={"Enter one i.e #Electronic if it’s music or #Abstract if it’s art."} />
     </div>
   }
 
@@ -85,7 +86,7 @@ export default function DropCreation(props) {
   }
 
   function renderFifthStep() {
-    return <div>
+    return <div style={{marginTop: '50px'}}>
       <DropzoneComponent />
     </div>
   }
@@ -105,17 +106,17 @@ export default function DropCreation(props) {
   }
 
   return (
-    <div className="signup-container">
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 32px'}}>
-        <img style={{alignSelf: "flex-end",   width: '30px', height: '30px'}} onClick={() => history.push("/")} src="./close-icon.png" />
-        <div style={{display: 'flex', maxWidth: "238px", margin: '32px auto'}}>
-          <PageIndexItem index={1} selected={dropCreationStep > 0}/>
-          <PageIndexItem index={2} selected={dropCreationStep > 1}/>
-          <PageIndexItem index={3} selected={dropCreationStep > 2}/>
-          <PageIndexItem index={4} selected={dropCreationStep > 3}/>
-          <PageIndexItem index={5} selected={dropCreationStep > 4}/>
+    <div className="create-drop-container">
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 36px'}}>
+        <img style={{alignSelf: "flex-end", marginTop: '26px', width: '30px', height: '30px', marginRight: '-16px'}} onClick={() => history.push("/")} src="./close-icon.png" />
+        <div style={{display: 'flex', maxWidth: "238px", margin: '40px auto 30px auto'}}>
+          <PageIndexItem index={1} selected={dropCreationStep >= 0}/>
+          <PageIndexItem index={2} selected={dropCreationStep >= 1}/>
+          <PageIndexItem index={3} selected={dropCreationStep >= 2}/>
+          <PageIndexItem index={4} selected={dropCreationStep >= 3}/>
+          <PageIndexItem index={5} selected={dropCreationStep >= 4}/>
         </div>
-        <div style={{margin: '8px auto', color: '#B3BBC3', textAlign: 'center'}} className={"profile-large-title"}>{getTitle()}</div>
+        <div style={{margin: '0px 0px 22px 0px', color: '#B3BBC3', textAlign: 'center'}} className={"profile-large-title"}>{getTitle()}</div>
         {renderStep()}
         <button className="main-button" onClick={() => {dropCreationStep === 4 ? history.push("/") : setDropCreationStep(dropCreationStep + 1)}}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
       </div>

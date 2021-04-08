@@ -5,6 +5,7 @@ import DropList from '../../components/DropList/DropList'
 import MainMenu from '../../components/MainMenu/MainMenu'
 import CategoryMenu from '../../components/CategoryMenu/CategoryMenu'
 import "./Profile.css"
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 
 export default function Profile(props) {
 
@@ -16,7 +17,7 @@ export default function Profile(props) {
   const [bio, setBio] = useState('dsadasdasdas')
   const [categoryList, setCategoryList] = useState([])
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
-  const [selectedProfileList, setSelectedProfileList] = useState('saved')
+  const [selectedProfileList, setSelectedProfileList] = useState('scheduled')
   const [scheduledPosts, setScheduledPosts] = useState([])
   const [savedPosts, setSavedPosts] = useState([])
 
@@ -32,7 +33,7 @@ export default function Profile(props) {
       "title": "Best ever collectible you can get",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -45,7 +46,7 @@ export default function Profile(props) {
       "title": "Best ever collectible you can get",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -61,7 +62,7 @@ export default function Profile(props) {
       "title": "Bring those Guccis out",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -74,7 +75,7 @@ export default function Profile(props) {
       "title": "Bring those Guccis out",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -118,23 +119,10 @@ export default function Profile(props) {
     <div className="profile-container">
       <MainMenu userDetails={props.userDetails} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
       <div className="fixed-container">
-          <div className="header-container">
-            <img onClick={() => openHome()} className="header-left-image" src="./dropmagnet-small-logo.png" />
-            <div className="header-right-holder">
-              <img onClick={() => openMenu()} className="header-right-image" src="./menu-mobile.png" />
-              {props.userLoggedIn ? 
-                <Link to={'/profile'}>
-                  <img className="header-right-image" src="https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg"/>
-                </Link> :
-                <Link to={'/login'}>
-                  <button className="login-button">Log in</button>
-                </Link>
-              }
-            </div>
-          </div>
+        <HeaderBar openHome={() => openHome()} openMenu={() => openMenu()} userLoggedIn={props.userLoggedIn} userImage={props.userDetails.image} />
       </div>
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '60px 32px 0 32px'}}>
-        <img style={{borderRadius: '70px'}} width={140} height={140} src="https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg"/>
+      <div className="profile-detail-container">
+        <img style={{borderRadius: '70px'}} width={120} height={120} src={props.userDetails.image}/>
         <div className="profile-large-title">{props.userDetails.name /* firstName + " " + lastName */}</div>
         <div className="profile-handle-title">{"@" + props.userDetails.handle}</div>
         <div style={{display: "flex", paddingBottom: '16px'}}>
@@ -147,14 +135,13 @@ export default function Profile(props) {
             <div className="profile-medium-title">{instaHandle !== "" ? instaHandle : 'Add Instagram'}</div>
           </div>
         </div>
-        <div className="profile-medium-title">Your Bio</div>
         <div className="profile-bio-description">{props.userDetails.bio}</div>
+      </div>
+      <div style={{margin: '0 auto', maxWidth: '600px'}}>
         <div className="profile-button-option-holder">
           {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => {setSelectedProfileList("scheduled"); setCategoryList(collectibleArts)}}>Scheduled Drops</div> : <></> }
           <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => {setSelectedProfileList("saved"); setCategoryList(fashionArts)}}>Saved Drops</div>
         </div>
-      </div>
-      <div style={{margin: '0 auto', maxWidth: '600px'}}>
         {savedPosts.length > 0 || scheduledPosts.length > 0 ?
         renderDrops()
         :

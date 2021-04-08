@@ -1,7 +1,12 @@
 .dropdown-button {
-  height: 37px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -4px 0 rgba(37, 37, 37, 0.5), inset 0 -1px 3px rgba(0, 0, 0, 0.5), inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  height: 36px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5),  
+              inset 0 -1px 3px rgba(0, 0, 0, 0.5),
+              inset 0 -3px 0 rgba(37, 37, 37, 0.5), 
+              inset 0 2px 4px rgba(0, 0, 0, 0.5),
+              0 0px 2px rgba(0, 0, 0, 0.05);
   border-radius: 19px;
+  background: linear-gradient(rgba(24, 24, 24, 0.83), rgba(19, 19, 19, 0.83));
   background-color: rgba(19, 19, 19, 0.03);
   font-family: Quicksand;
   font-size: 16px;
@@ -10,11 +15,12 @@
   letter-spacing: normal;
   line-height: normal;
   text-align: left;
-  color: #ffffff;
-  outline: none;
-  border: none;
+  color: #D8D8D8;
   display: flex;
   flex-direction: row;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .dropdown-button-title {
@@ -25,9 +31,9 @@
 }
 
 .dropdown-button-icon {
-  width: 20px;
-  height: 14px;
-  margin: auto 8px auto auto;
+  width: 13px;
+  height: 8px;
+  margin: auto 12px auto auto;
 }
 
 .login-button {
@@ -78,6 +84,7 @@
 .main-button {
   width: 259px;
   height: 40px;
+  padding-bottom: 2px;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.5), inset 0 -2px 0 #610bc8;
   border-radius: 20px;
   border: 1px solid #610bc8;

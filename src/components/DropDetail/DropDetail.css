@@ -41,6 +41,11 @@
   margin: 12px auto;
 }
 
+.drop-detail-image img {
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
 .close-detail-button {
   width: 23px;
   height: 23px;
@@ -67,10 +72,11 @@
   margin-left: 6px;
   margin-right: 6px;
   padding: 8px 14px;
+  min-height: 100px;
 }
 
 .drop-detail-piece-no {
-  color: #aaaaaa;
+  color: #7A7A7A;
   font-family: Quicksand;
   font-size: 14px;
   font-weight: 700;
@@ -81,7 +87,7 @@
 }
 
 .drop-detail-date {
-  color: #aaaaaa;
+  color: #7A7A7A;
   font-family: Quicksand;
   font-size: 14px;
   font-weight: 700;

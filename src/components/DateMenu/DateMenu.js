@@ -42,14 +42,14 @@ const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
 export default function DateMenu(props) {
   const [open, setOpen] = useState(false)
-  const [selectedMonth, setSelectedMonth] = useState(0)
+  const [selectedMonth, setSelectedMonth] = useState('April')
   
   function onSelect(key) {
     setSelectedMonth(key)
   }
 
   // list of items
-  const list = [  { name: 'March' },
+  const list = [ 
   { name: 'April' },
   { name: 'May' },
   { name: 'June' },
@@ -112,9 +112,10 @@ export default function DateMenu(props) {
       <div className="close-button-holder">
         <img onClick={() => closeMenu()} className="close-button" src="./close-icon.png" />
       </div>
-      <div className="date-menu-holder">
+      <h1 style={{margin: '24px auto', textAlign: 'center'}}>Select a Drop Date</h1>
+      <div className="main-menu-holder">
         <ScrollMenu
-            style={{boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5)', backgroundColor: 'rgba(19, 19, 19, 0.56)'}}
+            style={{boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5)', backgroundColor: 'rgba(19, 19, 19, 0.56)', marginBottom: '14px'}}
             data={menu}
             arrowLeft={ArrowLeft}
             arrowRight={ArrowRight}

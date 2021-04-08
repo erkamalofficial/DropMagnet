@@ -10,6 +10,7 @@ import MainMenu from '../../components/MainMenu/MainMenu'
 import DateMenu from '../../components/DateMenu/DateMenu'
 import SwipeCard from '../../components/SwipeCard/SwipeCard'
 import DropDetail from '../../components/DropDetail/DropDetail'
+import HeaderBar from '../../components/HeaderBar/HeaderBar'
 
 export default function Home(props) {
 
@@ -58,10 +59,10 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": "22/03/2021 12:00 PM GMT",
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
@@ -71,7 +72,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -84,7 +85,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -97,7 +98,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -110,7 +111,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -123,7 +124,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -136,7 +137,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -149,7 +150,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -162,7 +163,7 @@ export default function Home(props) {
       "title": "Awesome O Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -178,7 +179,7 @@ export default function Home(props) {
       "title": "Awesome OOOOOOO Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -192,7 +193,7 @@ export default function Home(props) {
       "title": "Awesome OOOOOOO Art",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -209,7 +210,7 @@ export default function Home(props) {
       "title": "Best ever collectible you can get",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -222,7 +223,7 @@ export default function Home(props) {
       "title": "Best ever collectible you can get",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -238,7 +239,7 @@ export default function Home(props) {
       "title": "Bring those Guccis out",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -251,7 +252,7 @@ export default function Home(props) {
       "title": "Bring those Guccis out",
       "description": "My wonderful art was done by da Vinci",
       "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg",
+      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
 			"category": "Art",
 			"drop_date": "22-03-2021",
@@ -317,15 +318,16 @@ export default function Home(props) {
   }
 
   function renderSwipeCards() {
+    let i = 0
     if (categoryList.length > 0) {
       return (
         <div className="card-deck-holder">
           { /* <div className='card-holder'> */ }
           {/* Traversing through cards arrray using map function
           and populating card with different image and color */}
-          {categoryList.map((drop, i) => (
-            <SwipeCard drop={categoryList[i]} key={i} no={i} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} handleClick={() => openDrop(categoryList[dropOnSwipe])} />
-          ))}
+          {/* {categoryList.map((drop, i) => ( */}
+          <SwipeCard drop={categoryList[i]} key={i} no={i} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} handleClick={() => openDrop(categoryList[dropOnSwipe])} />
+          {/* ))} */}
             {/* {categoryList.map((drop, i) => (
             <SwipeCard drop={drop} key={i} no={i} />
           ))} */}
@@ -367,27 +369,17 @@ export default function Home(props) {
       <MainMenu userDetails={props.userDetails} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
       <DateMenu open={dateMenuOpen} setOpen={setDateMenuOpen} openItem={selectDate} setSelectedDate={setSelectedDate} />
       <div className="fixed-container">
-          <div className="header-container">
-            <img onClick={() => openHome()} className="header-left-image" src="./dropmagnet-small-logo.png" />
-            <div onClick={() => openDateMenu()} className="dropdown-button">
-              <p1 className="dropdown-button-title">{selectedDropdownDate}</p1>
-              <img className="dropdown-button-icon" src="./dropdown.png"/>
-            </div>
-            <div className="header-right-holder">
-              <img onClick={() => openMenu()} className="header-right-image" src="./menu-mobile.png" />
-              {props.userLoggedIn ? 
-                <Link to={'/profile'}>
-                  <img className="header-right-image" src="https://pbs.twimg.com/profile_images/1363617537171353601/rpc1sv1s_400x400.jpg"/>
-                </Link> :
-                <Link to={'/login'}>
-                  <button className="login-button">Log in</button>
-                </Link>
-              }
-            </div>
-          </div>
-          <CategoryMenu hidden={detailView} changeCategory={changeCategory} />
-        </div>
-      <div className="home-container">
+        <HeaderBar openHome={() => openHome()} 
+                  openMenu={() => openMenu()} 
+                  openDateMenu={() => openDateMenu()} 
+                  selectedDropdownDate={selectedDropdownDate} 
+                  datePickerVisible={detailView ? false : true}
+                  userLoggedIn={props.userLoggedIn}
+                  userImage={props.userDetails.image}
+                  userImageVisible={true} />
+        <CategoryMenu hidden={detailView} changeCategory={changeCategory} />
+      </div>
+      <div className="home-container" style={detailView ? {paddingTop: '67px', paddingLeft: '8px', paddingRight: '8px'} : {}}>
         {detailView ? renderDetail() : renderMainView()}
       </div>
     </div>

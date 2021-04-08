@@ -77,7 +77,7 @@ function DropzoneComponent(props) {
     <section>
       <div className="dropzone-style" {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <div >Drop your files here (jpeg, png, gif, mov, mp4)</div>
+        <h2 style={{textAlign: 'center', marginTop: '24px', marginBottom: '24px'}}>Drop your files here (jpeg, png, gif, mov, mp4)</h2>
         <img style={{paddingTop: "24px"}} width={138} height={138} src="./drop-box-icon.png" />
       </div>
       <aside>

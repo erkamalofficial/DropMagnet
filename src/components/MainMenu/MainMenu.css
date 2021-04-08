@@ -33,8 +33,9 @@
 }
 
 .main-menu-item {
-  color: white;
+  color: #eaeaea;
   padding-left: 32px;
+  height: 31px;
   font-size: 25px;
   font-family: Quicksand;
   font-weight: bold;
@@ -49,8 +50,8 @@
 .close-button {
   width: 30px;
   height: 30px;
-  padding-right: 32px;
-  padding-top: 32px;
+  padding-right: 26px;
+  padding-top: 20px;
 }
 
 @media (min-width: 1000px) {

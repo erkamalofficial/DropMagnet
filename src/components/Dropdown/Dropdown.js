@@ -25,7 +25,7 @@ export default function Dropdown(props) {
       <div className="text-field-title">{props.title}</div>
       <div className={selectButtonStyle} onClick={displayMenu ? hideDropdownMenu : showDropdownMenu}>
         <div>{selectedDropdownItem !== "" ? selectedDropdownItem : "Select"}</div>
-        <img width={26} height={18} src="./dropdown.png" />
+        <img style={{objectFit: 'cover', paddingTop: '6px'}} width={14} height={8} src="./dropdown.png" />
       </div>
 
       { displayMenu ? (

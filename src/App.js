@@ -18,7 +18,8 @@ function App() {
     let user = {
       "name" : "Crypto Art Man",
       "handle" : "cryptoartman",
-      "bio" : "I am am I"
+      "bio" : "The Drop From Space is a piece that signifies the launch of this incredible app — Drop Magnet! Designed by the lead designer of Drop Magnet, it’ll be available for auction on Crypto Art Man’s OpenSea page from this Friday onwards.",
+      "image" : "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg"
     }
     console.log('user in app', user)
     setUserDetails(user)

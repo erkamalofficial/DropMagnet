@@ -1,19 +1,12 @@
 .landing-cell {
   max-height: 148px;
-  padding: 14px 16px;
-  margin: 8px auto; 
+  padding: 12px;
+  margin: 16px 12px; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   background-color: #262626;
   min-width: 300px;
   max-width: 900px;
-}
-
-@media(min-width: 1000px) {
-  .landing-cell {
-    margin: 12px auto;
-    max-height: 178px;
-  }
 }
 
 .drop-inner {
@@ -52,11 +45,11 @@
   font-style: normal;
 }
 
-@media(max-width: 500px) {
+/* @media(max-width: 500px) {
   .drop-header-title {
     font-size: 4.4vw;
   }
-}
+} */
 
 .drop-footer {
   display: flex;
@@ -71,7 +64,7 @@
   padding: 0px 8px;
   vertical-align: middle;
   line-height: 22px;
-  color: #eeeeee;
+  color: #eaeaea;
   font-family: Quicksand;
   font-size: 14px;
   font-weight: 700;
@@ -88,7 +81,7 @@
   margin-left: 12px;
   vertical-align: middle;
   line-height: 22px;
-  color: #eeeeee;
+  color: #eaeaea;
   font-family: Quicksand;
   font-size: 14px;
   font-weight: 700;
@@ -141,4 +134,5 @@
   height: 125px;
   width: 125px;
   object-fit: cover;
+  object-position: 50% 0%;
 }

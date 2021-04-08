@@ -565,23 +565,23 @@ class SwipeCard extends React.Component {
          		<h2 className="drop-swipe-author-title">{this.props.drop.artist}</h2>
  						<div className="detail-swipe-view-placeholder-image"></div>
        		</div>
-       		<img className="card-image" src={this.props.drop.drop_image}/>
-						<h2 className="drop-swipe-detail-title">{this.props.drop.title}</h2>
-      			<div className="drop-swipe-detail-holder">
-        			<div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
-         			<div className="drop-swipe-category-title">{this.props.drop.category}</div>
-       			</div>
-			 		</div>
-			 		<div className="swipe-card-bottom-button-holder">
-         	<div onClick={() => this.handleButtonClickLeft()} className="dismiss-button-unselected">
-           <div style={{margin: '-6px auto 0 auto'}}>
-             <img className="dislike-icon" src="./discard-icon.png" />
-           </div>
-         	</div>
-         	<div onClick={() => this.handleButtonClickRight()} className="add-button-unselected">
-         	<img className="like-icon" src="./add-icon.png" />
-         	</div>
-       </div>
+					<img className="card-image" src={this.props.drop.drop_image}/>
+					<h2 className="drop-swipe-detail-title">{this.props.drop.title}</h2>
+					<div className="drop-swipe-detail-holder">
+						<div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
+						<div className="drop-swipe-category-title">{this.props.drop.category}</div>
+					</div>
+				</div>
+				<div className="swipe-card-bottom-button-holder">
+					<div onClick={() => this.handleButtonClickLeft()} className="dismiss-button-unselected">
+						<div style={{margin: '-6px auto 0 auto'}}>
+							<img className="dislike-icon" src="./discard-icon.png" />
+						</div>
+					</div>
+					<div onClick={() => this.handleButtonClickRight()} className="add-button-unselected">
+						<img className="like-icon" src="./add-icon.png" />
+					</div>
+				</div>
 			</div>
     );
 	}

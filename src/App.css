@@ -18,48 +18,48 @@ body {
 h1 {
   font-size: 25px;
   font-family: Quicksand;
-  color: white;
+  color: #EAEAEA;
 }
 
 h2 {
   font-size: 20px;
   font-family: Quicksand;
   font-weight: bold;
-  color: white;
+  color: #EAEAEA;
 }
 
 h3 {
   font-size: 18px;
   font-family: Quicksand;
   font-weight: bold;
-  color: white;
+  color: #EAEAEA;
 }
 
-.p1 {
+p1 {
   font-size: 16px;
   font-family: Quicksand;
-  color: white;
+  color: #EAEAEA;
 }
 
-.p2 {
+p2 {
   font-size: 14px;
   font-family: Quicksand;
-  color: white;
+  color: #EAEAEA;
 }
 
 h1 .bold {
   font-weight: bold;
-  color: white;
+  color: #EAEAEA;
 }
 
 .p1 .bold {
   font-weight: bold;
-  color: white;
+  color: #EAEAEA;
 }
 
 .p1 .medium {
   font-weight: 600;
-  color: white;
+  color: #EAEAEA;
 }
 
 .home-container {
@@ -73,7 +73,14 @@ h1 .bold {
 .signup-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 60px 0 100px 0;
+  padding: 80px 0 100px 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.create-drop-container {
+  max-width: 600px;
+  margin: 0 auto;
   overflow-y: hidden;
   overflow-x: hidden;
 }
@@ -83,44 +90,6 @@ h1 .bold {
   display: flex;
   flex-direction: row;
   margin: auto auto;
-}
-
-.fixed-container {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--coreBlack);
-  width: 95%;
-  max-width: 600px;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  z-index: 9998;
-}
-
-.header-container {
-  padding: 16px 0px;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.header-left-image {
-  height: 38px;
-  width: 34px;
-}
-
-.header-right-holder {
-  display: flex;
-  flex-direction: row;
-  height: 38px;
-}
-
-.header-right-image {
-  height: 36px;
-  width: 36px;
-  cursor: pointer;
-  border-radius: 19px;
 }
 
 .list-card-view {
