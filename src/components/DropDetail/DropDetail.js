@@ -7,6 +7,18 @@ export default function DropDetail(props) {
     props.closeDetailView()
   }
 
+  function renderMusicSideDetails() {
+    return <div className="music-info-detail">
+      <p2 style={{color: '#F5F5F5', opacity: '0.66', fontWeight: 'bold', transform: 'rotate(-90deg)', position: 'absolute', bottom: '24px', left: '8px', transformOrigin: '0 0', width: '164px'}} >30 Second Song Preview</p2>
+    </div>
+  }
+
+  function renderPlayButton() {
+    return <div className="play-button-icon">
+      <img height={38} width={38} style={{paddingLeft: '4px'}} src="./play-icon.png" />
+    </div>
+  }
+
   return (
     <div className="detail-view">
       <div className="detail-view-header">
@@ -14,13 +26,14 @@ export default function DropDetail(props) {
         <h1 className="drop-detail-title">{props.drop.artist}</h1>
         <img onClick={() => closeDetail()} className="close-detail-button" src="./close-icon.png" />
       </div>
-      <div className="drop-detail-image">
-        {props.drop.type === "music" ? <img style={{position: 'absolute', height: '244px', left: '0%', top: '0%'}} src="./music-30-second-icon.png" /> : <></>}
-        {props.drop.type === "music" ? <img style={{position: 'absolute', width: '90px', height: '90px', margin: 'auto', left: '50%', top: '50%', transform: 'translate(-50%, -50%)'}} src="./play-button-icon.png" /> : <></>}
+      <div className="drop-detail-image" onClick={() => props.handleClick()}>
+        {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
+        {props.drop.type === "music" ? renderPlayButton() : <></>}
         <img style={{height: '244px', width: '244px', borderRadius: '6px'}} src={props.drop.drop_image} />
       </div>
       <h1 className="drop-detail-title">{props.drop.title}</h1>
-      <div className="drop-detail-holder" style={{marginTop: '24px'}}>
+      <div style={{height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px'}} />
+      <div className="drop-detail-holder" style={{marginTop: '12px'}}>
         <div className="drop-marketplace-title">{props.drop.marketplace}</div>
         <div className="drop-category-title">{props.drop.category}</div>
       </div>

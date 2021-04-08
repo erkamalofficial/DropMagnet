@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import * as DropMagnetAPI from '../../DropMagnetAPI'
 import DropCell from '../../components/DropCell/DropCell'
@@ -11,6 +11,8 @@ import DateMenu from '../../components/DateMenu/DateMenu'
 import SwipeCard from '../../components/SwipeCard/SwipeCard'
 import DropDetail from '../../components/DropDetail/DropDetail'
 import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import PhotoSwipeWrapper from '../../components/wrappers/PhotoSwipeWrapper';
+
 
 export default function Home(props) {
 
@@ -21,8 +23,11 @@ export default function Home(props) {
   const [viewIsList, setViewIsList] = useState(true)
   const [detailView, setDetailView] = useState(false)
   const [dropToOpen, setDropToOpen] = useState(0)
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState("26-03-2021")
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState("8th of April")
   const [dropOnSwipe, setDropOnSwipe] = useState(0)
+
+  const [photoSwipeIsOpen, setPhotoSwipeIsOpen] = useState(false);
+  const [photoSwipeIndex, setPhotoSwipeIndex] = useState(0);
 
   let user = {
     "name" : "crypto art man",
@@ -61,6 +66,7 @@ export default function Home(props) {
       "artist": "Crypto Art Man",
       "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "drop_images": [{src: "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992", w: 1200, h: 900}],
 			"category": "Art",
 			"drop_date": "22/03/2021 12:00 PM GMT",
 			"marketplace": "Rarible",
@@ -311,6 +317,15 @@ export default function Home(props) {
     history.push("/");
   }
 
+  const handleOpen = index => {
+    setPhotoSwipeIsOpen(true);
+    setPhotoSwipeIndex(index);
+  };
+
+  const handleClose = () => {
+    setPhotoSwipeIsOpen(false);
+  };
+
   // Render functions
 
   function renderDropCell(drop) {
@@ -351,9 +366,21 @@ export default function Home(props) {
   function renderDetail() {
     return (
       <div>
-        <DropDetail drop={categoryList[dropToOpen]} handleClick={() => console.log("handled click", categoryList[dropToOpen])} closeDetailView={() => setDetailView(false)} />
+        <DropDetail drop={categoryList[dropToOpen]} handleClick={() => setPhotoSwipeIsOpen(true)} closeDetailView={() => setDetailView(false)} />
       </div>
     )
+  }
+
+  function renderGallery() {
+    return (
+      <Fragment>
+        {photoSwipeIsOpen ? 
+          <PhotoSwipeWrapper isOpen={photoSwipeIsOpen} index={photoSwipeIndex} items={categoryList[dropToOpen].drop_images} onClose={handleClose} />
+        :
+          <></>
+        }
+      </Fragment>
+    );
   }
 
   function renderMainView() {
@@ -366,6 +393,7 @@ export default function Home(props) {
 
   return (
     <div className="page-style">
+      {renderGallery()}
       <MainMenu userDetails={props.userDetails} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
       <DateMenu open={dateMenuOpen} setOpen={setDateMenuOpen} openItem={selectDate} setSelectedDate={setSelectedDate} />
       <div className="fixed-container">

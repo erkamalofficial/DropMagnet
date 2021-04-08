@@ -9,6 +9,11 @@ import '../../components/Calendar/calendar.css'
 import DropzoneComponent from "../../components/DropzoneComponent/DropzoneComponent"
 import PageIndexItem from "../../components/PageIndexItem/PageIndexItem"
 import TextView from '../../components/TextView/TextView'
+import PriceOptionButton from '../../components/PriceOptionButton/PriceOptionButton'
+import DateMenu from '../../components/DateMenu/DateMenu'
+import DateCell from '../../components/DateCell/DateCell'
+import ScrollMenu from 'react-horizontal-scrolling-menu';
+import { Menu, ArrowLeft, ArrowRight } from '../../components/DateDragBarComponent/DateDragBarComponent'
 
 export default function DropCreation(props) {
 
@@ -20,12 +25,58 @@ export default function DropCreation(props) {
   const [marketplace, setMarketplace] = useState('')
   const [marketplaceId, setMarketplaceId] = useState('')
   const [dropPieces, setDropPieces] = useState('')
+  const [listingType, setListingType] = useState('auction')
+  const [price, setPrice] = useState('')
+  const [selectedMonth, setSelectedMonth] = useState('April')
+
 
   const [date, setDate] = useState(new Date());
 
   const [dropCreationStep, setDropCreationStep] = useState(0) 
 
   let history = useHistory()
+
+  // list of items
+  const list = [ 
+    { name: 'April' },
+    { name: 'May' },
+    { name: 'June' },
+    { name: 'July' },
+    { name: 'August' },
+    { name: 'September' },
+    { name: 'October' },
+    { name: 'November' }]
+  
+    const days = [
+      {
+        date: "20-03-2021",
+        arts: 1,
+        music: 1,
+        collectible: 1,
+        fashion: 1
+      },
+      {
+        date: "21-03-2021",
+        arts: 19,
+        music: 1,
+        collectible: 1,
+        fashion: 0
+      },
+      {
+        date: "22-03-2021",
+        arts: 0,
+        music: 2,
+        collectible: 5,
+        fashion: 4
+      }
+    ]
+
+    function onSelect(key) {
+      setSelectedMonth(key)
+    }
+
+    const menu = Menu(list, selectedMonth)
+
 
   function createDrop(title, description, category, dropDate, marketplace, marketplaceId, dropPieces) {
     DropMagnetAPI.createDrop(title, description, category, dropDate, marketplace, marketplaceId, dropPieces).then(function (response) {
@@ -47,7 +98,7 @@ export default function DropCreation(props) {
     } else if (dropCreationStep === 2) {
       return "What Market Will Your Work Drop On?"
     } else if (dropCreationStep === 3) {
-      return "How Many Works are in This Drop?"
+      return "Auction or a Set Price?"
     } else if (dropCreationStep === 4) {
       return "Upload your content"
     }
@@ -64,24 +115,40 @@ export default function DropCreation(props) {
 
   function renderSecondStep() {
     return <div>
-      <Calendar
-        onChange={setDate}
-        value={date}
-      />
+      <div className="main-menu-holder">
+        <ScrollMenu
+            style={{boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5)', backgroundColor: 'rgba(19, 19, 19, 0.56)', marginBottom: '14px'}}
+            data={menu}
+            arrowLeft={ArrowLeft}
+            arrowRight={ArrowRight}
+            selected={selectedMonth}
+            onSelect={onSelect}
+          />
+        {days.map(renderDateCell)}
+      </div>
     </div>
+  }
+
+  function renderDateCell(date) {
+    return <DateCell day={date} cellSelected={date.date === dropDate.date} setSelectedDate={() => {setDropDate(date)}}/>
   }
 
   function renderThirdStep() {
     return <div>
       <Dropdown title={"Marketplace"} items={["OpenSea","Mintable","Rarible","Other"]} />
       <TextField setInputValue={setMarketplaceId} title={"Your Profile Link on The Marketplace"} placeholder={"Enter your profile link"} />
-      <div style={{fontFamily: 'Quicksand', fontSize: '14px', fontWeight: '500', color: 'white', textAlign: 'center', padding: '67px 0'}}>You Can Add The item Link When You Mint The NFTs with *name of marketplace* forthis drop on *date user entered on previous page*</div>
+      <Dropdown title={"Pieces in Drop"} items={[1,2,3,4,5]}/>
+      <div style={{fontFamily: 'Quicksand', fontSize: '14px', fontWeight: '500', color: 'white', textAlign: 'center', padding: '24px 0'}}>You Can Add The item Link When You Mint The NFTs with *name of marketplace* forthis drop on *date user entered on previous page*</div>
     </div>
   }
 
   function renderFourthStep() {
     return <div>
-      <Dropdown title={"Pieces in Drop"} items={[1,2,3,4,5]}/>
+      <div style={{display: 'flex', justifyContent: 'space-between', paddingBottom: '18px', paddingTop: '8px'}}>
+        <PriceOptionButton isSelected={listingType === 'auction'} setOptionSelected={() => setListingType('auction')} buttonType={'auction'} />
+        <PriceOptionButton isSelected={listingType === 'fixed_price'} setOptionSelected={() => setListingType('fixed_price')} buttonType={'fixed_price'} />
+      </div>
+      <TextField setInputValue={setPrice} title={"Starting Bid"} placeholder={"Enter a price"} />
     </div>
   }
 
@@ -107,8 +174,8 @@ export default function DropCreation(props) {
 
   return (
     <div className="create-drop-container">
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 36px'}}>
-        <img style={{alignSelf: "flex-end", marginTop: '26px', width: '30px', height: '30px', marginRight: '-16px'}} onClick={() => history.push("/")} src="./close-icon.png" />
+      <img style={{position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px'}} onClick={() => history.push("/")} src="./close-icon.png" />
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 36px'}}>
         <div style={{display: 'flex', maxWidth: "238px", margin: '40px auto 30px auto'}}>
           <PageIndexItem index={1} selected={dropCreationStep >= 0}/>
           <PageIndexItem index={2} selected={dropCreationStep >= 1}/>
@@ -118,8 +185,8 @@ export default function DropCreation(props) {
         </div>
         <div style={{margin: '0px 0px 22px 0px', color: '#B3BBC3', textAlign: 'center'}} className={"profile-large-title"}>{getTitle()}</div>
         {renderStep()}
-        <button className="main-button" onClick={() => {dropCreationStep === 4 ? history.push("/") : setDropCreationStep(dropCreationStep + 1)}}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
       </div>
+      <button className="main-button" style={{position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)'}} onClick={() => {dropCreationStep === 4 ? history.push("/") : setDropCreationStep(dropCreationStep + 1)}}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
     </div>
   );
 }

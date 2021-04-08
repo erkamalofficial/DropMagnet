@@ -2,43 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "./DateMenu.css"
 import DateCell from '../DateCell/DateCell'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-
-// One item component
-// selected prop will be passed
-const MenuItem = ({ text, selected }) => {
-  return (
-    <div
-      className="menu-item"
-    >
-      {text}
-    </div>
-  );
-};
-
-// All items component
-// Important! add unique key
-export const Menu = (list) => list.map(el => {
-  const { name } = el;
-
-  return (
-    <MenuItem
-      text={name}
-      key={name}
-    />
-  );
-});
-
-
-const Arrow = ({ text, className }) => {
-  return (
-    <div
-      className={className}
-    >{text}</div>
-  );
-};
-
-const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
-const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
+import { Menu, ArrowLeft, ArrowRight } from '../DateDragBarComponent/DateDragBarComponent'
 
 export default function DateMenu(props) {
   const [open, setOpen] = useState(false)
@@ -61,21 +25,21 @@ export default function DateMenu(props) {
 
   const days = [
     {
-      date: "20-03-2021",
+      date: "8th of April",
       arts: 1,
       music: 1,
       collectible: 1,
       fashion: 1
     },
     {
-      date: "21-03-2021",
+      date: "9th of April",
       arts: 19,
       music: 1,
       collectible: 1,
       fashion: 0
     },
     {
-      date: "22-03-2021",
+      date: "10th of April",
       arts: 0,
       music: 2,
       collectible: 5,

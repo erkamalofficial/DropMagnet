@@ -544,6 +544,19 @@ class SwipeCard extends React.Component {
 		}
 	}
 
+
+  renderMusicSideDetails() {
+    return <div className="music-info-detail">
+      <p2 style={{color: '#F5F5F5', opacity: '0.66', fontWeight: 'bold', transform: 'rotate(-90deg)', position: 'absolute', bottom: '24px', left: '8px', transformOrigin: '0 0', width: '164px'}} >30 Second Song Preview</p2>
+    </div>
+  }
+
+  renderPlayButton() {
+    return <div className="play-button-icon">
+      <img height={38} width={38} style={{paddingLeft: '4px'}} src="./play-icon.png" />
+    </div>
+  }
+
 	render() {
 		return (
 			<div>
@@ -566,10 +579,12 @@ class SwipeCard extends React.Component {
  						<div className="detail-swipe-view-placeholder-image"></div>
        		</div>
 					<img className="card-image" src={this.props.drop.drop_image}/>
-					<h2 className="drop-swipe-detail-title">{this.props.drop.title}</h2>
-					<div className="drop-swipe-detail-holder">
-						<div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
-						<div className="drop-swipe-category-title">{this.props.drop.category}</div>
+					<div className="drop-swipe-detail-title-detail-holder">
+						<h2 className="drop-swipe-detail-title">{this.props.drop.title}</h2>
+						<div className="drop-swipe-detail-holder">
+							<div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
+							<div className="drop-swipe-category-title">{this.props.drop.category}</div>
+						</div>
 					</div>
 				</div>
 				<div className="swipe-card-bottom-button-holder">
