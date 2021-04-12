@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import * as DropMagnetAPI from '../../DropMagnetAPI'
-import TextField from '../../components/TextField/TextField'
-import Dropdown from '../../components/Dropdown/Dropdown'
+import TextField from '../../components/elements/TextField/TextField'
+import PriceTextField from '../../components/elements/PriceTextField/PriceTextField'
+import Dropdown from '../../components/elements/Dropdown/Dropdown'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '../../components/Calendar/calendar.css'
-import DropzoneComponent from "../../components/DropzoneComponent/DropzoneComponent"
-import PageIndexItem from "../../components/PageIndexItem/PageIndexItem"
-import TextView from '../../components/TextView/TextView'
-import PriceOptionButton from '../../components/PriceOptionButton/PriceOptionButton'
-import DateMenu from '../../components/DateMenu/DateMenu'
-import DateCell from '../../components/DateCell/DateCell'
+import '../../components/elements/Calendar/calendar.css'
+import DropzoneComponent from "../../components/elements/DropzoneComponent/DropzoneComponent"
+import PageIndexItem from "../../components/elements/PageIndexItem/PageIndexItem"
+import TextView from '../../components/elements/TextView/TextView'
+import PriceOptionButton from '../../components/elements/PriceOptionButton/PriceOptionButton'
+import DateCell from '../../components/elements/DateCell/DateCell'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-import { Menu, ArrowLeft, ArrowRight } from '../../components/DateDragBarComponent/DateDragBarComponent'
+import { Menu, ArrowLeft, ArrowRight } from '../../components/elements/DateDragBarComponent/DateDragBarComponent'
 
 export default function DropCreation(props) {
 
@@ -49,21 +49,21 @@ export default function DropCreation(props) {
   
     const days = [
       {
-        date: "20-03-2021",
+        date: 1617985941,
         arts: 1,
         music: 1,
         collectible: 1,
         fashion: 1
       },
       {
-        date: "21-03-2021",
+        date: 1618072341,
         arts: 19,
         music: 1,
         collectible: 1,
         fashion: 0
       },
       {
-        date: "22-03-2021",
+        date: 1618158741,
         arts: 0,
         music: 2,
         collectible: 5,
@@ -78,8 +78,18 @@ export default function DropCreation(props) {
     const menu = Menu(list, selectedMonth)
 
 
-  function createDrop(title, description, category, dropDate, marketplace, marketplaceId, dropPieces) {
-    DropMagnetAPI.createDrop(title, description, category, dropDate, marketplace, marketplaceId, dropPieces).then(function (response) {
+  function createDrop() {
+    DropMagnetAPI.createDrop(title, 
+                            description, 
+                            category, 
+                            hashtag, 
+                            dropDate,
+                            marketplace, 
+                            marketplaceId, 
+                            dropPieces, 
+                            listingType, 
+                            price).
+                            then(function (response) {
       if (response.status === "error") {
         // setLoginError(response.message);
       } else {
@@ -101,6 +111,15 @@ export default function DropCreation(props) {
       return "Auction or a Set Price?"
     } else if (dropCreationStep === 4) {
       return "Upload your content"
+    }
+  }
+
+  function setStepAction() {
+    if (dropCreationStep === 4) {
+      history.push("/")
+      createDrop()
+    } else {
+      setDropCreationStep(dropCreationStep + 1)
     }
   }
 
@@ -143,17 +162,17 @@ export default function DropCreation(props) {
   }
 
   function renderFourthStep() {
-    return <div>
-      <div style={{display: 'flex', justifyContent: 'space-between', paddingBottom: '18px', paddingTop: '8px'}}>
+    return <div style={{marginLeft: '10px', marginRight: '10px'}}>
+      <div style={{display: 'flex', justifyContent: 'space-between', paddingBottom: '18px', paddingTop: '8px', maxWidth: '322px', margin: '0 auto'}}>
         <PriceOptionButton isSelected={listingType === 'auction'} setOptionSelected={() => setListingType('auction')} buttonType={'auction'} />
         <PriceOptionButton isSelected={listingType === 'fixed_price'} setOptionSelected={() => setListingType('fixed_price')} buttonType={'fixed_price'} />
       </div>
-      <TextField setInputValue={setPrice} title={"Starting Bid"} placeholder={"Enter a price"} />
+      <PriceTextField setInputValue={setPrice} title={"Starting Bid"} placeholder={"Enter a price"} />
     </div>
   }
 
   function renderFifthStep() {
-    return <div style={{marginTop: '50px'}}>
+    return <div style={{marginTop: '50px', marginBottom: '80px'}}>
       <DropzoneComponent />
     </div>
   }
@@ -186,7 +205,7 @@ export default function DropCreation(props) {
         <div style={{margin: '0px 0px 22px 0px', color: '#B3BBC3', textAlign: 'center'}} className={"profile-large-title"}>{getTitle()}</div>
         {renderStep()}
       </div>
-      <button className="main-button" style={{position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)'}} onClick={() => {dropCreationStep === 4 ? history.push("/") : setDropCreationStep(dropCreationStep + 1)}}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
+      <button className="main-button" style={{position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)'}} onClick={() => setStepAction()}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
     </div>
   );
 }

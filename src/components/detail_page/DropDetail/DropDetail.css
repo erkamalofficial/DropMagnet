@@ -34,6 +34,9 @@
 
 .drop-detail-title {
   margin: auto;
+  margin-left: 12px;
+  margin-right: 12px;
+  text-align: center;
 }
 
 .drop-detail-image {

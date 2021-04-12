@@ -292,185 +292,173 @@ class SwipeCard extends React.Component {
 
   handleButtonClickLeft() {
 
-		this.setState({
-			move:true,
-			active: true,
-			mouseStartPosX: 391,
-			mouseStartPosY: -631
-		});
+		// this.setState({
+		// 	move:true,
+		// 	active: true,
+		// 	mouseStartPosX: 391,
+		// 	mouseStartPosY: -631
+		// });
 
-    let mouseCurrPosX = 50;
-    let mouseCurrPosY = 0;
-    let Posx = mouseCurrPosX - this.state.mouseStartPosX;
-    let Posy = mouseCurrPosY - this.state.mouseStartPosY;
+    // let mouseCurrPosX = 50;
+    // let mouseCurrPosY = 0;
+    // let Posx = mouseCurrPosX - this.state.mouseStartPosX;
+    // let Posy = mouseCurrPosY - this.state.mouseStartPosY;
 
-    let el = document.getElementById("card" + this.props.no);
-    let height = window.innerHeight;
-    let width = window.innerWidth;
-    let maxX = width - width * 20 / 100;
-    function map_range(value, low1, high1, low2, high2) {
-      return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
-    }
-    let mouseRange = mouseCurrPosX;
-    if (mouseRange < width / 2) {
-      mouseRange = width - mouseRange;
-    }
-    let damping = map_range(
-      mouseRange,
-      width / 2,
-      width - width * 10 / 100,
-      0.6,
-      0.8
-    );
+    // let el = document.getElementById("card" + this.props.no);
+    // let height = window.innerHeight;
+    // let width = window.innerWidth;
+    // let maxX = width - width * 20 / 100;
+    // function map_range(value, low1, high1, low2, high2) {
+    //   return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+    // }
+    // let mouseRange = mouseCurrPosX;
+    // if (mouseRange < width / 2) {
+    //   mouseRange = width - mouseRange;
+    // }
+    // let damping = map_range(
+    //   mouseRange,
+    //   width / 2,
+    //   width - width * 10 / 100,
+    //   0.6,
+    //   0.8
+    // );
 
-    console.log('damping', damping)
+    // console.log('damping', damping)
 
-    this.setState({
-      Posx,
-      Posy,
-      damping,
-      mouseCurrPosX,
-      mouseCurrPosY
-    });
+    // this.setState({
+    //   Posx,
+    //   Posy,
+    //   damping,
+    //   mouseCurrPosX,
+    //   mouseCurrPosY
+    // });
 
-    console.log('width', width - width * 10 / 100)
-    console.log('mouseCurrPosX', mouseCurrPosX)
-    console.log("posx is bigger", width - width * 10 / 100)
-    console.log("posx is smaller", width * 10 / 100)
+    // console.log('width', width - width * 10 / 100)
+    // console.log('mouseCurrPosX', mouseCurrPosX)
+    // console.log("posx is bigger", width - width * 10 / 100)
+    // console.log("posx is smaller", width * 10 / 100)
 
-		if (mouseCurrPosX < width * 10 / 100) {
-      console.log("moving card to the left")
-      let restX, restY;
-      if (mouseCurrPosX > width / 2) {
-        restX = -this.state.Posx * 5;
-      } else {
-        restX = this.state.Posx * 5;
-			}
-			console.log("moving card to the left with original restX", restX)
-      restX = -1700
-      console.log("moving card to the left with restX", restX)
-      if (mouseCurrPosY > height / 2) {
-        restY = this.state.Posy * 5;
-      } else {
-        restY = this.state.Posy * 5;
-			}
-			console.log("moving card to the left with original restY", restY)
-			restY = -87
-      console.log("moving card to the left with restY", restY)
-      let limit = true;
-      let move = false;
-      let damping = 0.08;
-      this.setState({
-        restX,
-        restY,
-        limit,
-        move,
-        damping
-      });
-    }
+		// if (mouseCurrPosX < width * 10 / 100) {
+    //   console.log("moving card to the left")
+    //   let restX, restY;
+    //   if (mouseCurrPosX > width / 2) {
+    //     restX = -this.state.Posx * 5;
+    //   } else {
+    //     restX = this.state.Posx * 5;
+		// 	}
+		// 	console.log("moving card to the left with original restX", restX)
+    //   restX = -1700
+    //   console.log("moving card to the left with restX", restX)
+    //   if (mouseCurrPosY > height / 2) {
+    //     restY = this.state.Posy * 5;
+    //   } else {
+    //     restY = this.state.Posy * 5;
+		// 	}
+		// 	console.log("moving card to the left with original restY", restY)
+		// 	restY = -87
+    //   console.log("moving card to the left with restY", restY)
+    //   let limit = true;
+    //   let move = false;
+    //   let damping = 0.08;
+    //   this.setState({
+    //     restX,
+    //     restY,
+    //     limit,
+    //     move,
+    //     damping
+    //   });
+		// }
+		
+		this.props.dislikeDrop()
 	}
 
   handleButtonClickRight() {
 
-    // let mouseCurrPosX = e.touches[0].screenX;
-    // let mouseCurrPosY = e.touches[0].screenY;
-    // console.log('touches x are', mouseCurrPosX)
-    // console.log('touches y are', mouseCurrPosY)
-    // let Posx = mouseCurrPosX - this.state.mouseStartPosX;
-    // let Posy = mouseCurrPosY - this.state.mouseStartPosY;
-    // console.log('mouse start x are', this.state.mouseStartPosX)
-		// console.log('mouse start y are', this.state.mouseStartPosY)
-		
 		// this.setState({
-		// 	move: true,
+		// 	move:true,
 		// 	active: true,
-		// 	mouseStartPosX: e.touches[0].screenX,
-		// 	mouseStartPosY: e.touches[0].screenY
+		// 	mouseStartPosX: 391,
+		// 	mouseStartPosY: -668
 		// });
 
-		this.setState({
-			move:true,
-			active: true,
-			mouseStartPosX: 391,
-			mouseStartPosY: -668
-		});
+    // let mouseCurrPosX = 800;
+    // let mouseCurrPosY = 0;
+    // let Posx = mouseCurrPosX - this.state.mouseStartPosX;
+    // let Posy = mouseCurrPosY - this.state.mouseStartPosY;
 
-    let mouseCurrPosX = 800;
-    let mouseCurrPosY = 0;
-    let Posx = mouseCurrPosX - this.state.mouseStartPosX;
-    let Posy = mouseCurrPosY - this.state.mouseStartPosY;
+    // let el = document.getElementById("card" + this.props.no);
+    // let height = window.innerHeight;
+    // let width = window.innerWidth;
+    // let maxX = width - width * 20 / 100;
+    // function map_range(value, low1, high1, low2, high2) {
+    //   return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+    // }
+    // let mouseRange = mouseCurrPosX;
+    // if (mouseRange < width / 2) {
+    //   mouseRange = width - mouseRange;
+    // }
+    // let damping = map_range(
+    //   mouseRange,
+    //   width / 2,
+    //   width - width * 10 / 100,
+    //   0.6,
+    //   0.8
+    // );
 
-    let el = document.getElementById("card" + this.props.no);
-    let height = window.innerHeight;
-    let width = window.innerWidth;
-    let maxX = width - width * 20 / 100;
-    function map_range(value, low1, high1, low2, high2) {
-      return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
-    }
-    let mouseRange = mouseCurrPosX;
-    if (mouseRange < width / 2) {
-      mouseRange = width - mouseRange;
-    }
-    let damping = map_range(
-      mouseRange,
-      width / 2,
-      width - width * 10 / 100,
-      0.6,
-      0.8
-    );
+		// console.log('damping', damping)
+		// console.log('Posx', Posx)
+		// console.log('Posy', Posy)
 
-		console.log('damping', damping)
-		console.log('Posx', Posx)
-		console.log('Posy', Posy)
+    // this.setState({
+    //   Posx,
+    //   Posy,
+    //   damping,
+    //   mouseCurrPosX,
+    //   mouseCurrPosY
+    // });
 
-    this.setState({
-      Posx,
-      Posy,
-      damping,
-      mouseCurrPosX,
-      mouseCurrPosY
-    });
+    // console.log('width', width - width * 10 / 100)
+    // console.log('mouseCurrPosX', mouseCurrPosX)
+    // console.log("posx is bigger", width - width * 10 / 100)
+    // console.log("posx is smaller", width * 10 / 100)
 
-    console.log('width', width - width * 10 / 100)
-    console.log('mouseCurrPosX', mouseCurrPosX)
-    console.log("posx is bigger", width - width * 10 / 100)
-    console.log("posx is smaller", width * 10 / 100)
-
-    if (mouseCurrPosX > width - width * 10 / 100) {
-      console.log("moving card to the right")
-      let restX, restY;
-      if (mouseCurrPosX > width / 2) {
-        restX = this.state.Posx * 5;
-      } else {
-        restX = -this.state.Posx * 5;
-      }
-      restX = 4200
-      console.log("moving card to the right with restX", restX)
-      if (mouseCurrPosY > height / 2) {
-        restY = this.state.Posy * 5;
-      } else {
-        restY = this.state.Posy * 5;
-      }
-      restY = -89
-      console.log("moving card to the right with restY", restY)
-      let limit = true;
-      let move = false;
-      let damping = 0.08;
-      this.setState(
-        {
-          restX,
-          restY,
-          limit,
-          move,
-          damping
-        },
-				() => {
-					setTimeout(() => {
-						window.cancelAnimationFrame(this.animate);
-					}, 10);
-				}
-      );
-    }
+    // if (mouseCurrPosX > width - width * 10 / 100) {
+    //   console.log("moving card to the right")
+    //   let restX, restY;
+    //   if (mouseCurrPosX > width / 2) {
+    //     restX = this.state.Posx * 5;
+    //   } else {
+    //     restX = -this.state.Posx * 5;
+    //   }
+    //   restX = 4200
+    //   console.log("moving card to the right with restX", restX)
+    //   if (mouseCurrPosY > height / 2) {
+    //     restY = this.state.Posy * 5;
+    //   } else {
+    //     restY = this.state.Posy * 5;
+    //   }
+    //   restY = -89
+    //   console.log("moving card to the right with restY", restY)
+    //   let limit = true;
+    //   let move = false;
+    //   let damping = 0.08;
+    //   this.setState(
+    //     {
+    //       restX,
+    //       restY,
+    //       limit,
+    //       move,
+    //       damping
+    //     },
+		// 		() => {
+		// 			setTimeout(() => {
+		// 				window.cancelAnimationFrame(this.animate);
+		// 			}, 10);
+		// 		}
+    //   );
+		// }
+		
+		this.props.likeDrop()
 	}
 
 	handleUp() {
@@ -545,12 +533,6 @@ class SwipeCard extends React.Component {
 	}
 
 
-  renderMusicSideDetails() {
-    return <div className="music-info-detail">
-      <p2 style={{color: '#F5F5F5', opacity: '0.66', fontWeight: 'bold', transform: 'rotate(-90deg)', position: 'absolute', bottom: '24px', left: '8px', transformOrigin: '0 0', width: '164px'}} >30 Second Song Preview</p2>
-    </div>
-  }
-
   renderPlayButton() {
     return <div className="play-button-icon">
       <img height={38} width={38} style={{paddingLeft: '4px'}} src="./play-icon.png" />
@@ -558,6 +540,7 @@ class SwipeCard extends React.Component {
   }
 
 	render() {
+		console.log('current drop',this.props.drop)
 		return (
 			<div>
 				<div
@@ -578,6 +561,7 @@ class SwipeCard extends React.Component {
          		<h2 className="drop-swipe-author-title">{this.props.drop.artist}</h2>
  						<div className="detail-swipe-view-placeholder-image"></div>
        		</div>
+					{this.props.drop.type === "music" ? this.renderPlayButton() : <></>}
 					<img className="card-image" src={this.props.drop.drop_image}/>
 					<div className="drop-swipe-detail-title-detail-holder">
 						<h2 className="drop-swipe-detail-title">{this.props.drop.title}</h2>

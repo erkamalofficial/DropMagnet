@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./CategoryMenu.css";
 import { Link } from 'react-router-dom';
-import '../../css/buttons.css'
+import '../../../css/buttons.css'
 
 export default function CategoryMenu(props) {
 

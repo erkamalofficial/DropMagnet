@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import "./DateMenu.css"
-import DateCell from '../DateCell/DateCell'
+import DateCell from '../../elements/DateCell/DateCell'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-import { Menu, ArrowLeft, ArrowRight } from '../DateDragBarComponent/DateDragBarComponent'
+import { Menu, ArrowLeft, ArrowRight } from '../../elements/DateDragBarComponent/DateDragBarComponent'
 
 export default function DateMenu(props) {
   const [open, setOpen] = useState(false)
@@ -25,21 +25,21 @@ export default function DateMenu(props) {
 
   const days = [
     {
-      date: "8th of April",
+      date: 1617985941,
       arts: 1,
       music: 1,
       collectible: 1,
       fashion: 1
     },
     {
-      date: "9th of April",
+      date: 1618072341,
       arts: 19,
       music: 1,
       collectible: 1,
       fashion: 0
     },
     {
-      date: "10th of April",
+      date: 1618158741,
       arts: 0,
       music: 2,
       collectible: 5,

@@ -1,0 +1,25 @@
+.reswipe-video-holder {
+  height: 256px;
+  width: 256px;
+  border-radius: 3px;
+  position: relative;
+  align-self: center;
+  background-color: #969292;
+  margin-top: 24px;
+  margin-bottom: 26px;
+}
+
+.reswipe-video-holder img {
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+.reswipe-button {
+  min-width: 136px;
+  height: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -3px 0 #2b0843;
+  border-radius: 8px;
+  background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%);
+  display: flex;
+  align-items: center;
+}

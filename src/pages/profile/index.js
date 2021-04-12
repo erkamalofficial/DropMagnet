@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import * as DropMagnetAPI from '../../DropMagnetAPI'
-import DropList from '../../components/DropList/DropList'
-import MainMenu from '../../components/MainMenu/MainMenu'
-import CategoryMenu from '../../components/CategoryMenu/CategoryMenu'
+import DropList from '../../components/elements/DropList/DropList'
+import MainMenu from '../../components/detail_page/MainMenu/MainMenu'
+import CategoryMenu from '../../components/elements/CategoryMenu/CategoryMenu'
 import "./Profile.css"
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
 
 export default function Profile(props) {
 

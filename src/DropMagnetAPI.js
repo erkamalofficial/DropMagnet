@@ -103,16 +103,19 @@ export function changeUserImage(image, access_token) {
 
 // Drop creation
 
-export function createDrop(title, storyOfDrop, category, launchDate, marketplace, marketplaceProfileLink, piecesInDrop, access_token) {
+export function createDrop(title, storyOfDrop, category, hashtag, launchDate, marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price) {
   const createDropEndpoint = 'create_drop'
   const payload = {
     title,
     storyOfDrop,
     category,
+    hashtag,
     launchDate,
     marketplace,
     marketplaceProfileLink,
-    piecesInDrop
+    piecesInDrop,
+    listingType,
+    price
   }
   return customAPICall(createDropEndpoint, payload, "POST", access_token)
 }

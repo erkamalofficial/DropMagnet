@@ -1,38 +1,36 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import * as DropMagnetAPI from '../../DropMagnetAPI'
-import DropCell from '../../components/DropCell/DropCell'
-import CategoryMenu from '../../components/CategoryMenu/CategoryMenu'
-import DropList from '../../components/DropList/DropList'
+import DropCell from '../../components/elements/DropCell/DropCell'
+import CategoryMenu from '../../components/elements/CategoryMenu/CategoryMenu'
+import DropList from '../../components/elements/DropList/DropList'
 import '../../css/buttons.css'
 import { render } from 'react-dom'
-import MainMenu from '../../components/MainMenu/MainMenu'
-import DateMenu from '../../components/DateMenu/DateMenu'
-import SwipeCard from '../../components/SwipeCard/SwipeCard'
-import DropDetail from '../../components/DropDetail/DropDetail'
-import HeaderBar from '../../components/HeaderBar/HeaderBar'
+import MainMenu from '../../components/detail_page/MainMenu/MainMenu'
+import DateMenu from '../../components/detail_page/DateMenu/DateMenu'
+import SwipeCard from '../../components/elements/SwipeCard/SwipeCard'
+import DropDetail from '../../components/detail_page/DropDetail/DropDetail'
+import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
 import PhotoSwipeWrapper from '../../components/wrappers/PhotoSwipeWrapper';
+import ReswipeCard from '../../components/elements/ReswipeCard/ReswipeCard'
 
 
 export default function Home(props) {
 
   const [category, setCategory] = useState('Art')
   const [categoryList, setCategoryList] = useState([])
+  const [likedList, setLikedList] = useState([])
+  const [reswipeState, setReswipeState] = useState('list')
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
   const [dateMenuOpen, setDateMenuOpen] = useState(false)
   const [viewIsList, setViewIsList] = useState(true)
   const [detailView, setDetailView] = useState(false)
   const [dropToOpen, setDropToOpen] = useState(0)
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState("8th of April")
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941)
   const [dropOnSwipe, setDropOnSwipe] = useState(0)
 
   const [photoSwipeIsOpen, setPhotoSwipeIsOpen] = useState(false);
   const [photoSwipeIndex, setPhotoSwipeIndex] = useState(0);
-
-  let user = {
-    "name" : "crypto art man",
-    "handle" : "cryptoartman"
-  }
 
   let history = useHistory()
 
@@ -56,6 +54,7 @@ export default function Home(props) {
 
   useEffect(() => {
     // Fetch drops again
+    
   }, [selectedDropdownDate])
 
   let dropArts = [
@@ -68,111 +67,116 @@ export default function Home(props) {
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
       "drop_images": [{src: "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992", w: 1200, h: 900}],
 			"category": "Art",
-			"drop_date": "22/03/2021 12:00 PM GMT",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 10,
-      "title": "Awesome O Art",
+      "title": "FLYING SKULL",
       "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "artist": "Zonked",
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmXnyRawTJUanAV9VNp8uxWmixX2YhQpVNbiauT6d6kG6D&w=100",
+      "drop_image": "https://ipfs.rarible.com/ipfs/QmYaVCBzBvaRjLWxwws3L5uojA4Aoz9dYQJmmVAXNbTSF9/image.jpeg",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 11,
-      "title": "Awesome O Art",
-      "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "title": "Sitting On Air",
+      "description": `In 1987 Nike created their first air max shoe.
+      In 1967 Paolo Lomazzi & crew designed the Blow Chair which was the first mass-produced inflatable chair.
+      In 2021, I decided to merge the two and call it “Sitting on Air”."`,
+      "artist": "no_fun_studio",
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmaswCxMqPN22Ad9qcimmYYFzJywtuTX5oym7zvZ6F4kY7&w=100",
+      "drop_image": "https://ipfs.rarible.com/ipfs/QmNXeNk2UTrNNETFjTzojvjSQezjAEc39mcJKWVb5usuZG/nft.jpg",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 12,
-      "title": "Awesome O Art",
-      "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "title": "42 Artists Collaboration: 24/42 - TWO FATES",
+      "description": `This is a story about unity 🧡
+      Meet a piece of our gorgeous collaboration of 42 artists who came together in the name of love to create.`,
+      "artist": "Georgie Yana",
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmXRGWgtMbervRtrHuLu1NFyPjCDGQxHB1GBGMqqLiN2Wb&w=100",
+      "drop_image": "https://ipfs.rarible.com/ipfs/Qmck4PRMWYqopAmUv1jquhN7jY7LoM1xseKk8679qUCxdr/image.jpeg",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 13,
-      "title": "Awesome O Art",
-      "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "title": "ℭ𝔥𝔯𝔬𝔪𝔬 𝔚𝔞𝔱𝔢𝔯",
+      "description": "Water",
+      "artist": "044",
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmTaMvVofe1wYkEfhZvi8Bk6bn9VtUjsYuSjZQcpry6btq&w=240",
+      "drop_image": "https://lh3.googleusercontent.com/DtvZJHfdNtCvS1zNsF2ttFEpCSJHVNFZA-PXRyNKMIR-VLUoklPTvOM77DSwX7TysDXWJwDAe69rIUuG0NUKCwUmv_fOO5j3QKT8=s250",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 14,
-      "title": "Awesome O Art",
-      "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "title": `Soulja Boy "Crank That"`,
+      "description": "Get this super exclusive collectible from Soulja Boy, the iconic rapper and the brand-new man in crypto!",
+      "artist": "Jivinci", 
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmQqvtujakbaHGPBvjkM1c7omquoxXHTLCfJXhyX5o8iJU&w=100",
+      "drop_image": "https://ipfs.rarible.com/ipfs/QmRjXTdLQERKCF88ug55MbbHARrcjPuF569AeLgZBGzvei/image.jpeg",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 15,
-      "title": "Awesome O Art",
-      "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "title": "PORTRAIT",
+      "description": "A NEVER BEFORE PUBLISHED PHOTOGRAPH OF ANDY WARHOL.",
+      "artist": "JeffBezosForeskin",
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmNqzHooV4UZkaEdX6RZuEyXYZmUEfm4b7K72iyo58xTPx&w=100",
+      "drop_image": "https://ipfs.rarible.com/ipfs/QmcautNq2Kob9UCM5bGTVqKHSmQPL5SScQYqrFwBuWeo2N/image.jpeg",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 16,
-      "title": "Awesome O Art",
-      "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "title": "Fenrir",
+      "description": "The indomitable wolf",
+      "artist": "Venomdts",
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmQPfuingE1ZMf85KJ3C8io3Vo7L3mCEMP1CXsWbB98C3B&w=100",
+      "drop_image": "https://ipfs.rarible.com/ipfs/QmSGbm3g7sxhXBJ2frXB1wEHeUJuqaNsQUZewbsXWgPrWD/image.jpeg",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
     },
     {
       "drop_id": 17,
-      "title": "Awesome O Art",
-      "description": "My wonderful art was done by da Vinci",
-      "artist": "Crypto Art Man",
-      "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
+      "title": "Diego Armando Maradona (10)",
+      "description": `Tribute to Diego Armando Maradona. Giving up 10 pieces for free, you just have to pay gas.
+
+      The unlockable content will take you back to good ol days, when futbol was futbol.`,
+      "artist": "Veuve Gold",
+      "artist_image": "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmQqfLKJW49GpfmkCUqRJDPVs5KnkGKGnZWCnFUMNLd86t&w=100",
+      "drop_image": "https://ipfs.rarible.com/ipfs/QmaEddMwknbGRuWZHwJZjFnGsDDCHfc2KET4mQABBSjtpf/image.png",
 			"category": "Art",
-			"drop_date": "22-03-2021",
+			"drop_date": 1617985941,
 			"marketplace": "Rarible",
 			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
 			"drop_pieces": 9
@@ -301,16 +305,35 @@ export default function Home(props) {
 
   function likeDrop(drop) {
     console.log('liked drop', drop)
-    if (dropOnSwipe < categoryList.length - 1) {
+    if (dropOnSwipe <= categoryList.length) {
       setDropOnSwipe(dropOnSwipe + 1)
     }
+
+    if (reswipeState !== "list") {
+      return
+    }
+    
+    if (likedList.length == 0) {
+      let list = [drop]
+      setLikedList(list)
+    } else {
+      likedList.push(drop)
+      setLikedList(likedList)
+    }
+    console.log('liked list has', likedList)
+    console.log('drop on swipe on like is', dropOnSwipe)
   }
 
   function dislikeDrop(drop) {
+    if (likedList.length > 0) {
+      let removedArr = likedList.filter(item => item !== drop)
+      setLikedList(removedArr)
+    }
     console.log('disliked drop', drop)
     if (dropOnSwipe < categoryList.length - 1) {
       setDropOnSwipe(dropOnSwipe + 1)
     }
+    console.log('drop on swipe on dislike is', dropOnSwipe)
   }
 
   function openHome() {
@@ -326,10 +349,48 @@ export default function Home(props) {
     setPhotoSwipeIsOpen(false);
   };
 
+  function setCurrentReswipeState() {
+    setDropOnSwipe(0)
+    
+    if (reswipeState === 'list') {
+      setReswipeState('first_reswipe')
+    } else if (reswipeState === 'first_reswipe') {
+      setReswipeState('reswipe_again')
+    } else if (reswipeState === 'reswipe_again') {
+      setReswipeState('swipe_done')
+    } else if (reswipeState === 'swipe_done') {
+      setReswipeState('list')
+    }
+  }
+
   // Render functions
 
-  function renderDropCell(drop) {
-    return <DropCell key={drop.drop_id} drop={drop} />
+
+  function renderSwipeCardState() {
+    let i = 0
+    console.log('current reswipe state', reswipeState)
+    let currentReswipeState = reswipeState === 'list' ? "first_reswipe" : reswipeState
+    if (reswipeState === 'list' && likedList.length < 5) {
+      currentReswipeState = 'swipe_done'
+    }
+    let listLength = reswipeState === 'list' ? categoryList.length : likedList.length
+    console.log('list length', listLength)
+    if (dropOnSwipe >= listLength) {
+      return <ReswipeCard drops={likedList} state={currentReswipeState} reswipeDone={() => setCurrentReswipeState()}/>
+    }
+    if (reswipeState === 'list') {
+      return <>
+      {/* {categoryList.map((drop, i) => ( */}
+        <SwipeCard drop={categoryList[dropOnSwipe]} key={i} no={i} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} handleClick={() => openDrop(categoryList[dropOnSwipe])} />
+      {/* ))} */}
+      </>
+    } else if (reswipeState !== 'list') {
+      return <>
+      {/* {categoryList.map((drop, i) => ( */}
+        <SwipeCard drop={likedList[dropOnSwipe]} key={i} no={i} likeDrop={() => likeDrop(likedList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(likedList[dropOnSwipe])} handleClick={() => openDrop(likedList[dropOnSwipe])} />
+      {/* ))} */}
+      </>
+    }
   }
 
   function renderSwipeCards() {
@@ -337,15 +398,7 @@ export default function Home(props) {
     if (categoryList.length > 0) {
       return (
         <div className="card-deck-holder">
-          { /* <div className='card-holder'> */ }
-          {/* Traversing through cards arrray using map function
-          and populating card with different image and color */}
-          {/* {categoryList.map((drop, i) => ( */}
-          <SwipeCard drop={categoryList[i]} key={i} no={i} likeDrop={() => likeDrop(categoryList[dropOnSwipe])} dislikeDrop={() => dislikeDrop(categoryList[dropOnSwipe])} handleClick={() => openDrop(categoryList[dropOnSwipe])} />
-          {/* ))} */}
-            {/* {categoryList.map((drop, i) => (
-            <SwipeCard drop={drop} key={i} no={i} />
-          ))} */}
+          {renderSwipeCardState()}
         </div>
       )
     }

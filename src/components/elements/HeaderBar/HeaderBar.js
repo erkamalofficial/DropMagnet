@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import "./HeaderBar.css"
+import { epochToDayMonth } from '../../../helpers/DateFormatter';
 
 export default function HeaderBar(props) {
 
@@ -24,7 +25,7 @@ export default function HeaderBar(props) {
       <img onClick={() => props.openHome()} className="header-left-image" src="./dropmagnet-small-logo.png" />
       { props.datePickerVisible ? 
         <div onClick={() => props.openDateMenu()} className="dropdown-button">
-          <p1 className="dropdown-button-title">{props.selectedDropdownDate}</p1>
+          <p1 className="dropdown-button-title">{epochToDayMonth(props.selectedDropdownDate)}</p1>
           <img style={{objectFit: 'cover'}} className="dropdown-button-icon" src="./dropdown.png"/>
         </div>
         :

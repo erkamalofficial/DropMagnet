@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import * as DropMagnetAPI from '../../DropMagnetAPI'
-import TextField from '../../components/TextField/TextField'
+import TextField from '../../components/elements/TextField/TextField'
 
 export default function Login(props) {
   

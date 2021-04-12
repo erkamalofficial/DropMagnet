@@ -14,7 +14,7 @@
 	border-radius: 6px;
 	object-fit: cover;
   object-position: 50% 0%;
-	max-height: 338px !important;
+	height: 338px;
 }
 
 @media(min-width: 1000px) {
@@ -22,7 +22,8 @@
 		object-fit: cover;
 		object-position: 50% 0%;
 		max-height: 444px;
-		margin: 0;
+		margin: 0 36px !important;
+		height: 368px;
 	}
 }
 
@@ -48,7 +49,11 @@
 
 
 .drop-swipe-detail-title {
-	margin: 12px auto 0 auto;
+	margin: 12px 12px 0 12px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .drop-swipe-detail-holder {
@@ -163,7 +168,7 @@
 }
 
 .card {
-	max-width: 600px;
+	max-width: 440px;
 	height: 478px;
 	position: absolute;
 	border-radius: 10px;
@@ -192,6 +197,17 @@
 	.card {
 		margin-left: auto;
 		margin-right: auto;
+		height: 508px;
+	}
+
+	.detail-swipe-view-header-image {
+		margin-left: 36px;
+		margin-right: 36px;
+	}
+
+	.detail-swipe-view-placeholder-image {
+		margin-left: 36px;
+		margin-right: 36px;
 	}
 }
 
@@ -202,6 +218,8 @@
 		background-size: 276px 276px;
 		background-position: right 10px top 10px;
 		background-repeat: no-repeat;
+		margin-left: 12px;
+    margin-right: 12px;
 	}
 
 	.card-image {

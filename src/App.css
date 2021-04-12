@@ -17,6 +17,18 @@ body {
   padding:0;
 }
 
+.h1-large {
+  font-size: 32px;
+  font-family: Quicksand;
+  color: #EAEAEA;
+}
+
+.h1-mid-large {
+  font-size: 28px;
+  font-family: Quicksand;
+  color: #EAEAEA;
+}
+
 h1 {
   font-size: 25px;
   font-family: Quicksand;

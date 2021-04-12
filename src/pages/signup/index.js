@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import * as DropMagnetAPI from '../../DropMagnetAPI'
-import TextField from '../../components/TextField/TextField'
-import TextView from '../../components/TextView/TextView'
+import TextField from '../../components/elements/TextField/TextField'
+import TextView from '../../components/elements/TextView/TextView'
 
 export default function Signup(props) {
 

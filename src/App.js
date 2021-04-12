@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import DropCell from './components/DropCell/DropCell'
 import Home from './pages/home/index'
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import TermsAndConditions from './pages/terms';
