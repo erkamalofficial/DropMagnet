@@ -17,10 +17,7 @@
   text-align: left;
   color: #D8D8D8;
   display: flex;
-  flex-direction: row;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0%);
+  margin-left: 16px;
 }
 
 .dropdown-button-title {
@@ -54,9 +51,13 @@
 
 .category-button-selected {
   border: none;
-  background-image: linear-gradient(135deg, #239bae 0%, #6d8ad7 41%, #9d6dd7 72%, #d76db2 100%);
+  background: linear-gradient(135deg, #239bae 0%, #6d8ad7 41%, #9d6dd7 72%, #d76db2 100%);
+  background: -webkit-linear-gradient(135deg, #239bae 0%, #6d8ad7 41%, #9d6dd7 72%, #d76db2 100%);
   background-clip: text;
-  color: #0b57c8;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
   font-family: Quicksand;
   font-size: 16px;
   font-weight: 700;
@@ -70,7 +71,8 @@
 .category-button-unselected {
   border: none;
   background-clip: text;
-  color: #ffffff;
+  -webkit-text-fill-color: #EBEAE8;
+  color: #EBEAE8;
   font-family: Quicksand;
   font-size: 16px;
   font-weight: 700;

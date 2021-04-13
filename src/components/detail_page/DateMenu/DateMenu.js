@@ -77,7 +77,7 @@ export default function DateMenu(props) {
         <img onClick={() => closeMenu()} className="close-button" src="./close-icon.png" />
       </div>
       <h1 style={{margin: '24px auto', textAlign: 'center'}}>Select a Drop Date</h1>
-      <div className="main-menu-holder">
+      <div className="date-menu-holder">
         <ScrollMenu
             style={{boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5)', backgroundColor: 'rgba(19, 19, 19, 0.56)', marginBottom: '14px'}}
             data={menu}

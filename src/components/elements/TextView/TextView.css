@@ -4,16 +4,13 @@
 }
 
 .text-view-title {
-  color: #ffffff;
-  font-family: Quicksand;
   font-weight: 600;
-  font-size: 16px;
   margin-bottom: 12px;
   margin-top: 18px;
 }
 
 textarea {
-  color: #ffffff;
+  color: #EAEAEA;
   height: 40px;
   font-family: Quicksand;
   font-size: 14px;

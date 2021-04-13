@@ -20,8 +20,8 @@ export default function DropCell(props) {
           <div className="drop-name">{props.drop.title}</div>
           <div className="drop-date">{props.drop.drop_date}</div>
           <div className="drop-footer">
-            <div className="drop-marketplace-title">{props.drop.marketplace}</div>
-            <div className="drop-category-title">{props.drop.category}</div>
+            <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
+            <p2 className="drop-category-title">{props.drop.category}</p2>
           </div>
         </div>
         <img className="drop-image" src={props.drop.drop_image}/>

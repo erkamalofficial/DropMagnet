@@ -1,25 +1,31 @@
+import firebase from "firebase/app"
+import "firebase/auth"
+import { useAuth } from "../src/contexts/FirebaseAuthContext"
+
 var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  host = 'http://localhost:2001/api/';
+  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
 } else {
   // pick up from .env
-  host = process.env.REACT_APP_API_URL;
+  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
 }
 
 async function customAPICall(endpoint, data, method, access_token) {
+
   const uri = host + endpoint
   console.log('endpoint', uri)
   console.log('data is', JSON.stringify(data))
+  console.log('access token', access_token)
 
   const res = await fetch(uri, {
     method: method,
-    body: JSON.stringify(data),
+    body: data === "" ? null : JSON.stringify(data),
     mode: 'cors', // no-cors, *cors, same-origin
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + access_token
+      'Authorization': `Bearer ${access_token}`
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -27,70 +33,21 @@ async function customAPICall(endpoint, data, method, access_token) {
   return res.json()
 }
 
-// Login endpoint
-
-export function loginUser(email, password) {
-  const loginEndpoint = 'login'
-  const payload = {
-    email,
-    password
-  }
-  return customAPICall(loginEndpoint, payload, "POST")
-}
-
-// Signup endpoints
-
-export function signup(handle, email, password) {
-  const signupEndpoint = 'signup'
-  const payload = {
-    handle,
-    email,
-    password
-  }
-  return customAPICall(signupEndpoint, payload, "POST")
-}
-
-export function setUserDetails(userId, firstName, lastName, bio) {
-  const userDetailsEndpoint = 'users' + '/' + userId + '/' + 'user_details'
-  const payload = {
-    firstName,
-    lastName,
-    bio
-  }
-  return customAPICall(userDetailsEndpoint, payload, "POST")
-}
-
-export function refresh(refresh_token) {
-  const refreshEndpoint = 'refreshtoken'
-  const payload = {
-    refresh_token
-  }
-  return customAPICall(refreshEndpoint, payload, "POST")
-}
-
-// Main dashboard endpoints
-
-export function getPosts(access_token, date) {
-  const postsEndpoint = 'drops'
-  const payload = {
-    date
-  }
-  return customAPICall(postsEndpoint, payload, "GET", access_token)
-}
-
-export function getPost(access_token, post_id) {
-  const dropEndpoint = 'drop_detail'
-  const payload = {
-    post_id
-  }
-  return customAPICall(dropEndpoint, payload, "GET", access_token)
-}
-
 // User profile
 
-export function getUserProfile(profile_id) {
-  const userProfileEndpoint = 'user_profile'
-  return customAPICall(userProfileEndpoint, profile_id, "GET")
+export function createNewUserProfile(name, username, email, token) {
+  const profilesEndpoint = 'profiles'
+  const payload = {
+    name,
+    username,
+    email
+  }
+  return customAPICall(profilesEndpoint, payload, "POST", token)
+}
+
+export function getUserProfile(profile_id, token) {
+  const userProfileEndpoint = 'profiles' + '/' + profile_id
+  return customAPICall(userProfileEndpoint, "", "GET", token)
 }
 
 export function changeUserImage(image, access_token) {

@@ -8,6 +8,8 @@ import Signup from './pages/signup';
 import Login from './pages/login';
 import Profile from './pages/profile';
 import { useState, useEffect } from 'react';
+import { FirebaseAuthProvider } from "../src/contexts/FirebaseAuthContext"
+import firebase from "firebase/app";
 
 function App() {
 
@@ -22,7 +24,6 @@ function App() {
     }
     console.log('user in app', user)
     setUserDetails(user)
-
   }, [])
 
   function saveCredentials(accessTokenCred, refreshTokenCred) {
@@ -34,14 +35,16 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} />
-        <Route path="/terms" render={(props) => <TermsAndConditions {...props} />} />
-        <Route path="/create_drop" render={(props) => <DropCreation {...props} userHandle={userDetails.handle}/>} />
-        <Route path="/signup" render={(props) => <Signup {...props} />} />
-        <Route path="/login" render={(props) => <Login {...props} />} />
-        <Route path="/profile" render={(props) => <Profile {...props} userDetails={userDetails} userLoggedIn={true}/>} />
-      </Switch>
+      <FirebaseAuthProvider>
+        <Switch>
+          <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} />
+          <Route path="/terms" render={(props) => <TermsAndConditions {...props} />} />
+          <Route path="/create_drop" render={(props) => <DropCreation {...props} userHandle={userDetails.handle}/>} />
+          <Route path="/signup" render={(props) => <Signup {...props} />} />
+          <Route path="/login" render={(props) => <Login {...props} />} />
+          <Route path="/profile" render={(props) => <Profile {...props} userDetails={userDetails} userLoggedIn={true}/>} />
+        </Switch>
+      </FirebaseAuthProvider>
     </Router>
   );
 }

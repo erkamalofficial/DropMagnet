@@ -2,39 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './SwipeCard.css';
 import { Frame, useMotionValue, useTransform, useAnimation, animate } from 'framer';
 
-
-// export default function SwipeCard(props) {
-	
-// 	return (
-// 		<div className="detail-view">
-//       <div className="detail-view-header">
-//         <img className="detail-swipe-view-header-image" src={props.drop.artist_image}/>
-//         <h1 className="drop-swipe-author-title">{props.drop.artist}</h1>
-// 				<div className="detail-swipe-view-placeholder-image"></div>
-//       </div>
-//       <img className="card-image" src={props.drop.drop_image}/>
-//       <h1 className="drop-swipe-detail-title">{props.drop.title}</h1>
-// 			<div style={{height: '1px', margin: '0 36px', backgroundColor: '#2F2F2F'}} />
-//       <div className="drop-swipe-detail-holder">
-//         <div className="drop-marketplace-title">{props.drop.marketplace}</div>
-//         <div className="drop-swipe-category-title">{props.drop.category}</div>
-// 				<p2 className="drop-swipe-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>
-//         <p2 className="drop-swipe-detail-date">{props.drop.drop_date}</p2>
-//       </div>
-//       <div className="bottom-button-holder">
-//         <div onClick={props.dislikeDrop} className="dismiss-button-unselected">
-//           <div style={{margin: '-6px auto 0 auto'}}>
-//             <img width={34} src="./discard-icon.png" />
-//           </div>
-//         </div>
-//         <div onClick={props.likeDrop} className="add-button-unselected">
-//         <img style={{margin: '0 auto'}} width={34} height={34} src="./add-icon.png" />
-//         </div>
-//       </div>
-//     </div>
-// 	)
-// }
-
 class SwipeCard extends React.Component {
 	constructor(props) {
 		super(props);
@@ -566,8 +533,8 @@ class SwipeCard extends React.Component {
 					<div className="drop-swipe-detail-title-detail-holder">
 						<h2 className="drop-swipe-detail-title">{this.props.drop.title}</h2>
 						<div className="drop-swipe-detail-holder">
-							<div className="drop-marketplace-title">{this.props.drop.marketplace}</div>
-							<div className="drop-swipe-category-title">{this.props.drop.category}</div>
+							<p2 className="drop-marketplace-title">{this.props.drop.marketplace}</p2>
+							<p2 className="drop-swipe-category-title">{this.props.drop.category}</p2>
 						</div>
 					</div>
 				</div>

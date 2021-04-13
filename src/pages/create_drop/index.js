@@ -194,7 +194,7 @@ export default function DropCreation(props) {
   return (
     <div className="create-drop-container">
       <img style={{position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px'}} onClick={() => history.push("/")} src="./close-icon.png" />
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 36px'}}>
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 36px 128px 36px'}}>
         <div style={{display: 'flex', maxWidth: "238px", margin: '40px auto 30px auto'}}>
           <PageIndexItem index={1} selected={dropCreationStep >= 0}/>
           <PageIndexItem index={2} selected={dropCreationStep >= 1}/>
@@ -202,7 +202,7 @@ export default function DropCreation(props) {
           <PageIndexItem index={4} selected={dropCreationStep >= 3}/>
           <PageIndexItem index={5} selected={dropCreationStep >= 4}/>
         </div>
-        <div style={{margin: '0px 0px 22px 0px', color: '#B3BBC3', textAlign: 'center'}} className={"profile-large-title"}>{getTitle()}</div>
+        <h1 style={{margin: '0px 0px 22px 0px', paddingTop: '12px', paddingBottom: '8px', color: '#B3BBC3', textAlign: 'center'}}>{getTitle()}</h1>
         {renderStep()}
       </div>
       <button className="main-button" style={{position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)'}} onClick={() => setStepAction()}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>

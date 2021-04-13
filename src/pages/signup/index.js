@@ -3,6 +3,8 @@ import { Link, Redirect, useHistory } from 'react-router-dom'
 import * as DropMagnetAPI from '../../DropMagnetAPI'
 import TextField from '../../components/elements/TextField/TextField'
 import TextView from '../../components/elements/TextView/TextView'
+import firebase from "firebase/app";
+import { useAuth } from "../../contexts/FirebaseAuthContext"
 
 export default function Signup(props) {
 
@@ -17,31 +19,48 @@ export default function Signup(props) {
 
   const [signupStep, setSignupStep] = useState(0)
 
+  const { signup, currentUser } = useAuth()
+
   let history = useHistory()
 
-  function signupUser() {        
-    setSignupStep(1)
-    DropMagnetAPI.signup(handle, email, password).then(function (response) {
-      if (response.status === "error") {
-        // setLoginError(response.message);
-      } else {
-        // setLoginError('');
-        props.saveCredentials(response.access_token, response.refresh_token);
+  async function signupUser() {
+
+    try {
+      // setError("")
+      // setLoading(true)
+      await signup(email, password).then((userCredential) => {
+        // Signed up
+        var user = userCredential.user;
+        console.log('signed up user', user)
         setSignupStep(1)
-      }
-    });
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ..
+      })
+    } catch {
+      // setError("Failed to create an account")
+    }
+
+    // setLoading(false)
   }
 
   function setUserDetails() {
-    history.push("/");
-    DropMagnetAPI.setUserDetails(userId, firstName, lastName, bio).then(function (response) {
-      if (response.status === "error") {
-        // setLoginError(response.message);
-      } else {
-        // setLoginError('');
-        props.saveCredentials(response.access_token, response.refresh_token);
-        history.push("/");
-      }
+    currentUser.getIdToken(true).then(function(idToken) {
+      // Send token to your backend via HTTPS
+      // ...
+      console.log('id token is', idToken)
+      let name = firstName + " " + lastName
+      DropMagnetAPI.createNewUserProfile(name, handle, email, idToken).then(function (response) {
+        if (response.status === "error") {
+          console.log('error', response)
+        } else {
+          history.push('/')
+        }
+      })
+    }).catch(function(error) {
+      // Handle error
     });
   }
 

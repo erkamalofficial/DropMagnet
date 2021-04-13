@@ -4,7 +4,6 @@
   flex-direction: column;
   background-color: var(--coreBlack);
   width: 100%;
-  max-width: 600px;
   left: 50%;
   transform: translate(-50%, 0%);
   z-index: 9998;
@@ -21,6 +20,12 @@
 .header-left-image {
   height: 34px;
   width: 30px;
+}
+
+.header-left-holder {
+  display: flex;
+  flex-direction: row;
+  height: 36px;
   padding-left: 20px;
 }
 

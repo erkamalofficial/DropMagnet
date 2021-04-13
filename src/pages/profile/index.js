@@ -6,12 +6,14 @@ import MainMenu from '../../components/detail_page/MainMenu/MainMenu'
 import CategoryMenu from '../../components/elements/CategoryMenu/CategoryMenu'
 import "./Profile.css"
 import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
+import { useAuth } from "../../contexts/FirebaseAuthContext"
 
 export default function Profile(props) {
 
   const [handle, setHandle] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [userImage, setUserImage] = useState('')
   const [twitterHandle, setTwitterHandle] = useState('')
   const [instaHandle, setInstaHandle] = useState('')
   const [bio, setBio] = useState('dsadasdasdas')
@@ -21,11 +23,9 @@ export default function Profile(props) {
   const [scheduledPosts, setScheduledPosts] = useState([])
   const [savedPosts, setSavedPosts] = useState([])
 
-  let history = useHistory()
+  const { currentUser } = useAuth()
 
-  useEffect(() => {
-    setScheduledPosts(collectibleArts)
-  }, [])
+  let history = useHistory()
 
   let collectibleArts = [
     {
@@ -86,7 +86,31 @@ export default function Profile(props) {
   ]
 
   useEffect(() => {
+    setScheduledPosts(collectibleArts)
     setCategoryList(collectibleArts)
+
+    currentUser.getIdToken(true).then(function(idToken) {
+      // Send token to your backend via HTTPS
+      // ...
+      console.log('id token is', idToken)
+      DropMagnetAPI.getUserProfile("3H9hG6VA2AND6UosP23nzLyK5mZ2", idToken).then(function (response) {
+        console.log('user profile response', response)
+        if (response.status === "error") {
+          // setLoginError(response.message);
+        } else {
+          let splitName = response.name.split(" "); // split the name by spaces
+          setFirstName(splitName[0])
+          setLastName(splitName[1])
+          setHandle(response.username)
+          setBio(response.bio)
+          setInstaHandle(response.insta_url)
+          setTwitterHandle(response.twitter_url)
+          setUserImage(response.avatar_url)
+        }
+      })
+    }).catch(function(error) {
+      // Handle error
+    });
   }, [])
 
   function fetchUser() {
@@ -119,23 +143,23 @@ export default function Profile(props) {
     <div className="profile-container">
       <MainMenu userDetails={props.userDetails} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
       <div className="fixed-container">
-        <HeaderBar openHome={() => openHome()} openMenu={() => openMenu()} userLoggedIn={props.userLoggedIn} userImage={props.userDetails.image} />
+        <HeaderBar openHome={() => openHome()} openMenu={() => openMenu()} userLoggedIn={props.userLoggedIn} userImage={userImage} />
       </div>
       <div className="profile-detail-container">
-        <img style={{borderRadius: '70px'}} width={120} height={120} src={props.userDetails.image}/>
-        <div className="profile-large-title">{props.userDetails.name /* firstName + " " + lastName */}</div>
-        <div className="profile-handle-title">{"@" + props.userDetails.handle}</div>
+        <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/>
+        <div className="profile-large-title">{firstName + " " + lastName}</div>
+        <div className="profile-handle-title">{"@" + handle}</div>
         <div style={{display: "flex", paddingBottom: '16px'}}>
           <div style={{display: "flex", paddingRight: '24px'}}>
             <img width={30} height={24} src="./twitter-icon.png" style={{paddingRight: '8px'}} />
-            <div className="profile-medium-title">{twitterHandle !== "" ? twitterHandle : 'Add Twitter'}</div>
+            <div className="profile-medium-title">{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
           </div>
           <div style={{display: "flex"}}>
             <img width={24} height={24} src="./insta-icon.png" style={{paddingRight: '8px'}} />
-            <div className="profile-medium-title">{instaHandle !== "" ? instaHandle : 'Add Instagram'}</div>
+            <div className="profile-medium-title">{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
           </div>
         </div>
-        <div className="profile-bio-description">{props.userDetails.bio}</div>
+        <div className="profile-bio-description">{bio === "" ? "Tap To Add Bio": bio}</div>
       </div>
       <div style={{margin: '0 auto', maxWidth: '600px'}}>
         <div className="profile-button-option-holder">

@@ -35,8 +35,8 @@ export default function DropDetail(props) {
       <h1 className="drop-detail-title">{props.drop.title}</h1>
       <div style={{height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px'}} />
       <div className="drop-detail-holder" style={{marginTop: '12px'}}>
-        <div className="drop-marketplace-title">{props.drop.marketplace}</div>
-        <div className="drop-category-title">{props.drop.category}</div>
+        <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
+        <p2 className="drop-category-title">{props.drop.category}</p2>
       </div>
       <div className="drop-detail-holder" style={{marginTop: '0px'}}>
         <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>
