@@ -5,27 +5,17 @@ import ImageZoom from "react-medium-image-zoom";
 import ReactFullpage from "@fullpage/react-fullpage";
 
 const Gallery = (value, index) => {
-    const url = `https://jariz.github.io/vibrant.js/examples/${index + 1}.jpg`;
+    const url = `./magazine-cover/m${index + 1}.jpg`;
     const styles = { backgroundColor: value.hex };
-    console.log("JJJ:", value);
 
     return (
         <div key={index} className="listItem section" style={styles}>
-            <div className="gallery_section">
-
-                <div className="header">
-                    <span className="header_title">
-                        @CryptoArtMan
-                    </span>
-
-                </div>
-
-                <h3 className="gallery_title">Art title</h3>
+            <div className="constent-section mag-content-section">
                 <ImageZoom
                     image={{
                         src: url,
                         alt: "Golden Gate Bridge",
-                        className: "gallery_art",
+                        className: "artPic",
                     }}
                     zoomImage={{
                         className: "artPiczoom",
@@ -36,8 +26,10 @@ const Gallery = (value, index) => {
                         },
                     }}
                 />
-                <p className="gallery_desc">The Description goes here</p>
-                <button className="gallery_buybtn"> Buy for 1E </button>
+            </div>
+            <div className="mag-gallery-footer">
+                <div className="mag-gallery-date"> April 14th 2020 </div>
+                <button className="buyBtn"> Buy for 1E </button>
             </div>
         </div>
     );
@@ -46,10 +38,10 @@ const Gallery = (value, index) => {
 const avgColorPromiseList = (value, index) => {
     const fac = new FastAverageColor();
     const urls = [
-        `https://jariz.github.io/vibrant.js/examples/1.jpg`,
-        `https://jariz.github.io/vibrant.js/examples/2.jpg`,
-        `https://jariz.github.io/vibrant.js/examples/3.jpg`,
-        `https://jariz.github.io/vibrant.js/examples/4.jpg`,
+        `./magazine-cover/m1.jpg`,
+        `./magazine-cover/m2.jpg`,
+        `./magazine-cover/m3.jpg`,
+        `./magazine-cover/m4.jpg`,
     ];
     const promiseList = urls.map((url) => {
         return fac.getColorAsync(url);
@@ -58,7 +50,7 @@ const avgColorPromiseList = (value, index) => {
     return Promise.all(promiseList);
 };
 
-export default function SquareGallery() {
+export default function App() {
     const [data, setData] = useState([]);
     useEffect(() => {
         avgColorPromiseList().then((values) => {
@@ -66,9 +58,12 @@ export default function SquareGallery() {
         });
     }, []);
     return (
-        <div className="square-gallery">
+        <div className="mag-gallery">
             {data.length > 0 && (
                 <div className="main">
+                    <div className="header mag-header">
+                        <span>Mag.Link/TIME</span>
+                    </div>
                     <ReactFullpage
                         render={() => {
                             return data.map(Gallery);
