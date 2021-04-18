@@ -3,34 +3,36 @@ import "./gallery.css";
 import FastAverageColor from "fast-average-color";
 import ImageZoom from "react-medium-image-zoom";
 import ReactFullpage from "@fullpage/react-fullpage";
+import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
+
 
 const Gallery = (value, index) => {
     const url = `./magazine-cover/m${index + 1}.jpg`;
-    const styles = { backgroundColor: value.hex };
+    const styles = { backgroundColor: '#201c1c' };
 
     return (
         <div key={index} className="listItem section" style={styles}>
-            <div className="constent-section mag-content-section">
+            <div className="gallery_section">
                 <ImageZoom
                     image={{
                         src: url,
                         alt: "Golden Gate Bridge",
-                        className: "artPic",
+                        className: "gallery_art mag_art",
                     }}
                     zoomImage={{
                         className: "artPiczoom",
                     }}
                     defaultStyles={{
                         overlay: {
-                            backgroundColor: value.hex,
+                            backgroundColor: "#000",
                         },
                     }}
                 />
-            </div>
-            <div className="mag-gallery-footer">
                 <div className="mag-gallery-date"> April 14th 2020 </div>
-                <button className="buyBtn"> Buy for 1E </button>
+                <button className="gallery_buybtn"> Buy for 1E </button>
             </div>
+
+
         </div>
     );
 };
@@ -50,7 +52,7 @@ const avgColorPromiseList = (value, index) => {
     return Promise.all(promiseList);
 };
 
-export default function App() {
+const MagGallery = (props) => {
     const [data, setData] = useState([]);
     useEffect(() => {
         avgColorPromiseList().then((values) => {
@@ -59,11 +61,9 @@ export default function App() {
     }, []);
     return (
         <div className="mag-gallery">
+            <FixedHeader {...props} isMagGallery={true} />
             {data.length > 0 && (
                 <div className="main">
-                    <div className="header mag-header">
-                        <span>Mag.Link/TIME</span>
-                    </div>
                     <ReactFullpage
                         render={() => {
                             return data.map(Gallery);
@@ -73,4 +73,5 @@ export default function App() {
             )}
         </div>
     );
-}
+};
+export default MagGallery;

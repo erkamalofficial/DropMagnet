@@ -126,7 +126,7 @@ function App() {
           <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/terms" render={(props) => <TermsAndConditions {...props} />} />
           <Route path="/square_gallery" render={(props) => <SquareGallery {...props} userDetails={userDetails} userLoggedIn={true} />} />
-          <Route path="/mag_gallery" render={(props) => <MagGallery {...props} />} />
+          <Route path="/mag_gallery" render={(props) => <MagGallery {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/create_drop" render={(props) => <DropCreation {...props} userHandle={userDetails.handle} />} />
           <Route path="/signup" render={(props) => <Signup {...props} />} />
           <Route path="/login" render={(props) => <Login {...props} />} />

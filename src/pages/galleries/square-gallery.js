@@ -3,15 +3,21 @@ import "./gallery.css";
 import FastAverageColor from "fast-average-color";
 import ImageZoom from "react-medium-image-zoom";
 import ReactFullpage from "@fullpage/react-fullpage";
-import FixedHeader from "../header/fixed-header";
+import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 
 
 const Gallery = (value, index) => {
     const url = `https://jariz.github.io/vibrant.js/examples/${index + 1}.jpg`;
-    const styles = { backgroundColor: value.hex };
+    const styles = { backgroundColor: value.hex, filter: "brightness(85%)" };
+    let user = {
+        "name": "Crypto Art Man",
+        "handle": "cryptoartman",
+        "bio": "The Drop From Space is a piece that signifies the launch of this incredible app — Drop Magnet! Designed by the lead designer of Drop Magnet, it’ll be available for auction on Crypto Art Man’s OpenSea page from this Friday onwards.",
+        "image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg"
+    }
     return (
         <div key={index} className="listItem section" style={styles}>
-            <div className="gallery_section">
+            <div className="gallery_section sq_gallery_section">
 
                 <div className="header"> @CryptoArtMan </div>
 
