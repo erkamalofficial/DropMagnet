@@ -7,8 +7,6 @@ import ReactFullpage from "@fullpage/react-fullpage";
 const Gallery = (value, index) => {
     const url = `https://jariz.github.io/vibrant.js/examples/${index + 1}.jpg`;
     const styles = { backgroundColor: value.hex };
-    console.log("JJJ:", value);
-
     return (
         <div key={index} className="listItem section" style={styles}>
             <div className="gallery_section">
