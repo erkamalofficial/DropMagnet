@@ -13,12 +13,7 @@ const Gallery = (value, index) => {
         <div key={index} className="listItem section" style={styles}>
             <div className="gallery_section">
 
-                <div className="header">
-                    <span className="header_title">
-                        @CryptoArtMan
-                    </span>
-
-                </div>
+                <div className="header"> @CryptoArtMan </div>
 
                 <h3 className="gallery_title">Art title</h3>
                 <ImageZoom
@@ -37,7 +32,7 @@ const Gallery = (value, index) => {
                     }}
                 />
                 <p className="gallery_desc">The Description goes here</p>
-                <button className="gallery_buybtn"> Buy for 1E </button>
+                <button className="gallery_buybtn"> Buy for 1Ξ </button>
             </div>
         </div>
     );
