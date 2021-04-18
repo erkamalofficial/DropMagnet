@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --coreBlack: #1a1a1a;
   --midnightBlack: #262626;
   --darkBlack: #2e2e2e;
@@ -112,16 +112,6 @@ p1 .medium {
 }
 
 .list-card-view {
-  /* -webkit-backdrop-filter: blur(32px) saturate(100%);
-  backdrop-filter: blur(32px) saturate(100%);
-  background-color: rgba(11, 87, 200, 0.05);
-  border-radius: 3px;
-  height: 22px;
-  left: 0px;
-  opacity: 0.82;
-  position: absolute;
-  top: 0px;
-  width: 74px; */
   width: 270px;
   height: 38px;
   position: fixed;
@@ -215,4 +205,55 @@ p1 .medium {
   .hidden_desktop {
     display: none;
   }
+} */
+
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overscroll-behavior-y: contain;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial,
+    sans-serif;
+  position: fixed;
+  overflow: hidden;
+}
+
+#root {
+  background: lightblue;
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  cursor: url('https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png') 39 39, auto;
+}
+
+#root > div {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root > div > div {
+  background-color: white;
+  background-size: auto 85%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 45vh;
+  max-width: 300px;
+  height: 85vh;
+  max-height: 570px;
+  will-change: transform;
+  border-radius: 10px;
 }

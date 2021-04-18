@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './pages/home/index'
+// import Home from './pages/home/index'
+import Home from './pages/home/index3'
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import TermsAndConditions from './pages/terms';
 import DropCreation from './pages/create_drop';
@@ -115,18 +116,12 @@ function App() {
     setUserDetails(user)
   }, [])
 
-  function saveCredentials(accessTokenCred, refreshTokenCred) {
-    // setAccessToken(accessTokenCred)
-    // setRefreshToken(refreshTokenCred)
-    // for now (to review) store refresh token in localStorage, and access token in memory/state only
-    localStorage.setItem("rt", refreshTokenCred);
-  }
 
   return (
     <Router>
       <FirebaseAuthProvider>
         <Switch>
-          {/* <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} /> */}
+          <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/terms" render={(props) => <TermsAndConditions {...props} />} />
           <Route path="/square_gallery" render={(props) => <SquareGallery {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/mag_gallery" render={(props) => <MagGallery {...props} userDetails={userDetails} userLoggedIn={true} />} />
@@ -143,4 +138,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
