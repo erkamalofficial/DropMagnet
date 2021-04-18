@@ -7,6 +7,7 @@ import DropCreation from './pages/create_drop';
 import Signup from './pages/signup';
 import Login from './pages/login';
 import Profile from './pages/profile';
+import SquareGallery from './pages/galleries/square-gallery';
 import { useState, useEffect } from 'react';
 import { FirebaseAuthProvider } from "../src/contexts/FirebaseAuthContext"
 import firebase from "firebase/app";
@@ -101,10 +102,10 @@ function App() {
 
   useEffect(() => {
     let user = {
-      "name" : "Crypto Art Man",
-      "handle" : "cryptoartman",
-      "bio" : "The Drop From Space is a piece that signifies the launch of this incredible app — Drop Magnet! Designed by the lead designer of Drop Magnet, it’ll be available for auction on Crypto Art Man’s OpenSea page from this Friday onwards.",
-      "image" : "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg"
+      "name": "Crypto Art Man",
+      "handle": "cryptoartman",
+      "bio": "The Drop From Space is a piece that signifies the launch of this incredible app — Drop Magnet! Designed by the lead designer of Drop Magnet, it’ll be available for auction on Crypto Art Man’s OpenSea page from this Friday onwards.",
+      "image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg"
     }
     console.log('user in app', user)
     setUserDetails(user)
@@ -123,10 +124,11 @@ function App() {
         <Switch>
           <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/terms" render={(props) => <TermsAndConditions {...props} />} />
-          <Route path="/create_drop" render={(props) => <DropCreation {...props} userHandle={userDetails.handle}/>} />
+          <Route path="/square_gallery" render={(props) => <SquareGallery {...props} />} />
+          <Route path="/create_drop" render={(props) => <DropCreation {...props} userHandle={userDetails.handle} />} />
           <Route path="/signup" render={(props) => <Signup {...props} />} />
           <Route path="/login" render={(props) => <Login {...props} />} />
-          <Route path="/profile" render={(props) => <Profile {...props} userDetails={userDetails} userLoggedIn={true}/>} />
+          <Route path="/profile" render={(props) => <Profile {...props} userDetails={userDetails} userLoggedIn={true} />} />
         </Switch>
       </FirebaseAuthProvider>
     </Router>
