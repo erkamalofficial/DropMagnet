@@ -16,6 +16,7 @@
   font-family: "Quicksand", Helvetica;
   width: inherit;
   max-width: inherit;
+  margin-top: 68px;
 }
 .header {
   box-sizing: border-box;

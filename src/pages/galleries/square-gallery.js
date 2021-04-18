@@ -3,6 +3,8 @@ import "./gallery.css";
 import FastAverageColor from "fast-average-color";
 import ImageZoom from "react-medium-image-zoom";
 import ReactFullpage from "@fullpage/react-fullpage";
+import FixedHeader from "../header/fixed-header";
+
 
 const Gallery = (value, index) => {
     const url = `https://jariz.github.io/vibrant.js/examples/${index + 1}.jpg`;
@@ -17,7 +19,7 @@ const Gallery = (value, index) => {
                 <ImageZoom
                     image={{
                         src: url,
-                        alt: "Golden Gate Bridge",
+                        // alt: "Golden Gate Bridge",
                         className: "gallery_art",
                     }}
                     zoomImage={{
@@ -51,7 +53,7 @@ const avgColorPromiseList = (value, index) => {
     return Promise.all(promiseList);
 };
 
-export default function SquareGallery() {
+export default function SquareGallery(props) {
     const [data, setData] = useState([]);
     useEffect(() => {
         avgColorPromiseList().then((values) => {
@@ -60,6 +62,7 @@ export default function SquareGallery() {
     }, []);
     return (
         <div className="square-gallery">
+            <FixedHeader {...props} />
             {data.length > 0 && (
                 <div className="main">
                     <ReactFullpage
