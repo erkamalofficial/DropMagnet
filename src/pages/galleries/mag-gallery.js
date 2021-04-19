@@ -7,8 +7,9 @@ import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 
 
 const Gallery = (value, index) => {
-    const url = `./magazine-cover/m${index + 1}.jpg`;
-    const styles = { backgroundColor: '#201c1c' };
+    const fileType = index === 4 ? 'gif' : 'jpg';
+    const url = `./magazine-cover/m${index + 1}.${fileType}`;
+    const styles = { backgroundColor: '#1a1a1a' };
 
     return (
         <div key={index} className="listItem section" style={styles}>
@@ -28,8 +29,8 @@ const Gallery = (value, index) => {
                         },
                     }}
                 />
-                <div className="mag-gallery-date"> April 14th 2020 </div>
-                <button className="gallery_buybtn"> Buy for 1E </button>
+                {/* <div className="mag-gallery-date"> April 14th 2020 </div> */}
+                <button className="gallery_buybtn"> Buy for 1Ξ </button>
             </div>
 
 
@@ -44,6 +45,7 @@ const avgColorPromiseList = (value, index) => {
         `./magazine-cover/m2.jpg`,
         `./magazine-cover/m3.jpg`,
         `./magazine-cover/m4.jpg`,
+        `./magazine-cover/m5.gif`
     ];
     const promiseList = urls.map((url) => {
         return fac.getColorAsync(url);

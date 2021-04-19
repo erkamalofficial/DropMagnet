@@ -138,7 +138,9 @@
   }
   .gallery_section {
     padding: 0;
+    margin-top: 0;
   }
+
   .sq_gallery_section {
     margin: 0;
   }

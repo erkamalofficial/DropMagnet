@@ -11,8 +11,9 @@ const FixedHeader = (props) => {
     function showUserAction() {
         if (props.userLoggedIn) {
             return <Link to={'/profile'}>
-                <div className="header-profile-img-holder JJJJ">
+                <div className="header-profile-img-holder">
                     <img className="header-right-image" src={props.userDetails.image} />
+
                 </div>
             </Link>
         } else {
@@ -28,7 +29,11 @@ const FixedHeader = (props) => {
             <div className="header-container">
                 <div className="header-left-holder">
                     <img className="header-left-image" src="./dropmagnet-small-logo.png" />
-                    {props.isMagGallery && <div className="dropdown-button-title"> Mag.Link/TIME </div>}
+                    {props.isMagGallery &&
+                        <div className="mag-gallery-btn-title">
+                            <span>Mag.Link/TIME</span>
+                        </div>
+                    }
                 </div>
                 <div className="header-right-holder">
                     <div className="header-bar-menu-icon">
