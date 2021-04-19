@@ -4,11 +4,12 @@ import FastAverageColor from "fast-average-color";
 import ImageZoom from "react-medium-image-zoom";
 import ReactFullpage from "@fullpage/react-fullpage";
 import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
+import BuyBtn from '../../components/blocks/buy-btn';
+import { getDominantColorFromImages } from '../../utils';
 
 
-const Gallery = (value, index) => {
-    const url = `https://jariz.github.io/vibrant.js/examples/${index + 1}.jpg`;
-    const styles = { backgroundColor: value.hex, filter: "brightness(85%)" };
+const Gallery = ({ url, color }, index) => {
+    const styles = { backgroundColor: color.hex, filter: "brightness(85%)" };
     let user = {
         "name": "Crypto Art Man",
         "handle": "cryptoartman",
@@ -20,12 +21,10 @@ const Gallery = (value, index) => {
             <div className="gallery_section sq_gallery_section">
 
                 <div className="header"> @CryptoArtMan </div>
-
                 <h3 className="gallery_title">Art title</h3>
                 <ImageZoom
                     image={{
                         src: url,
-                        // alt: "Golden Gate Bridge",
                         className: "gallery_art",
                     }}
                     zoomImage={{
@@ -33,36 +32,29 @@ const Gallery = (value, index) => {
                     }}
                     defaultStyles={{
                         overlay: {
-                            backgroundColor: value.hex,
+                            backgroundColor: color.hex,
                         },
                     }}
                 />
                 <p className="gallery_desc">The Description goes here</p>
-                <button className="gallery_buybtn"> Buy for 1Ξ </button>
+                <BuyBtn />
             </div>
         </div>
     );
 };
 
-const avgColorPromiseList = (value, index) => {
-    const fac = new FastAverageColor();
-    const urls = [
-        `https://jariz.github.io/vibrant.js/examples/1.jpg`,
-        `https://jariz.github.io/vibrant.js/examples/2.jpg`,
-        `https://jariz.github.io/vibrant.js/examples/3.jpg`,
-        `https://jariz.github.io/vibrant.js/examples/4.jpg`,
-    ];
-    const promiseList = urls.map((url) => {
-        return fac.getColorAsync(url);
-    });
 
-    return Promise.all(promiseList);
-};
+const urls = [
+    { id: 'img1', url: 'https://jariz.github.io/vibrant.js/examples/1.jpg' },
+    { id: 'img2', url: 'https://jariz.github.io/vibrant.js/examples/2.jpg' },
+    { id: 'img3', url: 'https://jariz.github.io/vibrant.js/examples/3.jpg' },
+    { id: 'img4', url: 'https://jariz.github.io/vibrant.js/examples/4.jpg' }
+];
 
 export default function SquareGallery(props) {
     const [data, setData] = useState([]);
     useEffect(() => {
-        avgColorPromiseList().then((values) => {
+        getDominantColorFromImages(urls).then((values) => {
             setData(values);
         });
     }, []);
