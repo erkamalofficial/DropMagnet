@@ -9,6 +9,7 @@ import Login from './pages/login';
 import Profile from './pages/profile';
 import SquareGallery from './pages/galleries/square-gallery';
 import MagGallery from './pages/galleries/mag-gallery';
+import WalletLinks from './pages/wallet/wallet-links';
 import { useState, useEffect } from 'react';
 import { FirebaseAuthProvider } from "../src/contexts/FirebaseAuthContext"
 import firebase from "firebase/app";
@@ -123,7 +124,7 @@ function App() {
     <Router>
       <FirebaseAuthProvider>
         <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} />
+          {/* <Route exact path="/" render={(props) => <Home {...props} userDetails={userDetails} userLoggedIn={true} />} /> */}
           <Route path="/terms" render={(props) => <TermsAndConditions {...props} />} />
           <Route path="/square_gallery" render={(props) => <SquareGallery {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/mag_gallery" render={(props) => <MagGallery {...props} userDetails={userDetails} userLoggedIn={true} />} />
@@ -131,6 +132,7 @@ function App() {
           <Route path="/signup" render={(props) => <Signup {...props} />} />
           <Route path="/login" render={(props) => <Login {...props} />} />
           <Route path="/profile" render={(props) => <Profile {...props} userDetails={userDetails} userLoggedIn={true} />} />
+          <Route path="/wallet_links" render={(props) => <WalletLinks {...props} userDetails={userDetails} userLoggedIn={true} />} />
         </Switch>
       </FirebaseAuthProvider>
     </Router>
