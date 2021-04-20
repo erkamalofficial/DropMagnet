@@ -13,7 +13,6 @@ const BuyBtn = styled.button`
     font-weight: 700;
     color: #fff;
     outline: none;
-    margin: 32px auto;
     order: 2;
 `;
 export default function () {

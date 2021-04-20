@@ -19,8 +19,6 @@ const Gallery = ({ url, color }, index) => {
     return (
         <div key={index} className="listItem section" style={styles}>
             <div className="gallery_section sq_gallery_section">
-
-                <div className="header"> @CryptoArtMan </div>
                 <h3 className="gallery_title">Art title</h3>
                 <ImageZoom
                     image={{
@@ -45,10 +43,10 @@ const Gallery = ({ url, color }, index) => {
 
 
 const urls = [
-    { id: 'img1', url: 'https://jariz.github.io/vibrant.js/examples/1.jpg' },
-    { id: 'img2', url: 'https://jariz.github.io/vibrant.js/examples/2.jpg' },
-    { id: 'img3', url: 'https://jariz.github.io/vibrant.js/examples/3.jpg' },
-    { id: 'img4', url: 'https://jariz.github.io/vibrant.js/examples/4.jpg' }
+    { id: 'img1', url: './square-gallery/s1.png' },
+    { id: 'img2', url: './square-gallery/s2.gif' },
+    { id: 'img3', url: './square-gallery/s3.jpg' },
+    { id: 'img4', url: './square-gallery/s4.jpg' }
 ];
 
 export default function SquareGallery(props) {

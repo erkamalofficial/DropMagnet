@@ -111,6 +111,9 @@
 }
 
 @media screen and (max-width: 600px) {
+  .fp-tableCell {
+    vertical-align: top !important;
+  }
   .header {
     border-radius: 0;
     margin: 0;
