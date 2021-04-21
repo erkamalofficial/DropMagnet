@@ -6,6 +6,7 @@ import ColorText from '../../components/blocks/color-text';
 import WalletHeader from '../../components/blocks/wallet-header';
 
 const NftDisplayWrapper = styled.div`
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     .nftHeader {
@@ -53,12 +54,13 @@ const TagSection = styled.div`
 
 const LinkSection = styled.div`
     display: flex;
-    flex-direction: column;
-    gap: 1rem;  
-    height: 80vh;
-    align-items: center;
-    font-size: 24px;
+    flex-direction: row;
+    gap: 0.5rem;
+    font-size: 18px;
     font-weight: 700;
+    align-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
 `;
 const TldTitle = styled.div`
     color: rgba(242,214,0,1.0);

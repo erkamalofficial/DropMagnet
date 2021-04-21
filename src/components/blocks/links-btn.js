@@ -5,7 +5,7 @@ const LinksBtn = styled.div`
     border: 1px solid #000;
     line-height: 40px;
     background: #242424;
-    padding: 5px 32px;
+    padding: 5px 24px;
 
     &.button-active {
         background-color: rgba(26, 39, 52, 1);

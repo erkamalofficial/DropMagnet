@@ -8,9 +8,8 @@ const WalletWrapper = styled.div`
     color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 100vh;
     font-weight: 700;
     .rowItem {
         margin-bottom: 1rem;
@@ -35,10 +34,7 @@ const WalletContentSection = styled.div`
 `;
 const TagSection = styled.div`
     display: flex;
-    width: 100%;
-    @media (min-width: 600px) {
-        width: 62%;
-    }
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
@@ -59,11 +55,12 @@ const TagSection = styled.div`
 
 const LinkSection = styled.div`
     display: flex;
-    flex-direction: column;
-    gap: 1rem;  
-    height: 80vh;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;  
     align-items: center;
-    font-size: 24px;
+    justify-content: center;
+    font-size: 18px;
     font-weight: 700;
 `;
 
