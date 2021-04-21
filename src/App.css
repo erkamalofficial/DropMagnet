@@ -6,8 +6,12 @@
   --coreBlue: #0B57C8;
   --lightBlue: #0088CB;
   --grayBlue: #b3bbc3;
-  --grayWhite: #EAEAEA;;
+  --whiteGray: #c7c7c7;
+  --grayWhite: #EAEAEA;
   --royalBlue: #1874cb;
+  --white: #FFFFFF;
+  --lightBlack: #020202;
+  --grayBlack: #222222;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700');
