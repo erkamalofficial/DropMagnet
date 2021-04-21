@@ -51,7 +51,7 @@ const MagGallery = (props) => {
         <div className="mag-gallery">
             <FixedHeader {...props} isMagGallery={true} />
             {data.length > 0 && (
-                <div className="main">
+                <div className="mag_main">
                     <ReactFullpage
                         render={() => {
                             return data.map(Gallery);

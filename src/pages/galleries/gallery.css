@@ -18,6 +18,12 @@
   max-width: inherit;
   margin-top: 68px;
 }
+.mag_main {
+  color: var(--coreBlack);
+  font-family: "Quicksand", Helvetica;
+  width: inherit;
+  max-width: inherit;
+}
 .header {
   box-sizing: border-box;
   text-align: center;
@@ -152,6 +158,10 @@
   main {
     width: auto;
   }
+  .mag_main {
+    margin-top: 68px;
+  }
+
   .listItem .artPic {
     max-width: 100%;
   }
