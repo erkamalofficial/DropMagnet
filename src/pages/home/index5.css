@@ -1,42 +1,47 @@
 
 
 .card-container {
-    position: fixed;
+    position: absolute;
     overflow: hidden;
     width: 100%;
     height: 100%;
     
-    background: #f5f5f5 url('https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-bg@2x.png')
-    center top no-repeat;
+    /* background: #656060; */
     background-size: 100vw auto;
 }
 
 .card-container .animatedMain {
     position: absolute;
-    width: 100vw;
-    height: 100vh;
     will-change: transform;
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-top: 6vh;
+    justify-content: flex-start;
+    flex-direction: column;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .card-container .animatedChild {
-    cursor: url('https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png') 39 39, auto;
-    background-color: white;
-    background-size: auto 100%;
+    cursor: url(https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png) 39 39, auto;
+    background-color: #262626;
+    background-size: auto 75%;
     background-repeat: no-repeat;
     background-position: center center;
     /* min-width: 300px; */
     width: 80vw;
-    max-width: 325px;
-  
-    height: 65vh;
-    max-height: 426px;
+    max-width: 440px;
+    display: flex;
+    height: 70vh;
     will-change: transform;
     border-radius: 8px;
-    box-shadow: 0 10px 10px -10px rgba(50, 50, 73, 0.025);
+    box-shadow: 0 10px 10px -10px rgb(50 50 73 / 3%);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding-bottom: 10px;
   }
   
   @media screen and (min-device-height: 667px) {

@@ -1,8 +1,55 @@
 import { render } from 'react-dom';
+import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
-import './index5.css'
+import { dropArts } from './data';
+import Card from './Card';
+import PlusBtn from '../../components/blocks/plus-btn';
+import MinusBtn from '../../components/blocks/minus-btn';
+
+import './index5.css';
+
+const HomeContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    div.rel {
+        height: 100vh;
+        width: 460px;
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+        border: 1px solid;
+        background: #171616;
+        position: relative;
+    }
+    div.abs {
+        height: 100%;
+        width: 100%;
+        border: 1px solid;
+        background: gray;
+        position: absolute;
+    }
+    div.abschild {
+        position: absolute;
+        background: #dea6a6;
+        height: 80%;
+        width: 80%;
+        left: 50%;
+        top: 50%
+
+    }
+`;
+const ActionSection = styled.div`
+
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+`;
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({ x: 0, y: 0, scale: 1, rot: 0, delay: i * 50 })
@@ -50,18 +97,26 @@ function Deck({ cardList }) {
     })
     // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
     {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */ }
-    return props.map(({ x, y, rot, scale }, i) => (
-        <animated.div key={i} className="animatedMain" style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
-            <animated.div
-                {...bind(i)}
-                className="animatedChild"
-                style={{
-                    transform: interpolate([rot, scale], trans),
-                    backgroundImage: `url(${cards[i]})`
-                }}
-            />
-        </animated.div>
-    ))
+    return props.map(({ x, y, rot, scale }, i) => {
+        const card = cards[i];
+        return (
+            <animated.div key={i}
+                className="animatedMain"
+                style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+                <animated.div
+                    {...bind(i)}
+                    className="animatedChild"
+                    style={{
+                        transform: interpolate([rot, scale], trans),
+                        backgroundImage: `url(${card.drop_image})`,
+                        backgroundSize: '100% 58%%',
+                        backgroundPosition: 'center 32%'
+                    }}
+                > <Card cardDetails={card} />
+                </animated.div>
+            </animated.div>
+        )
+    });
 }
 
 const Home = () => {
@@ -78,9 +133,25 @@ const Home = () => {
         'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-10.jpg'
     ]
 
-    return <div className="card-container">
-        <Deck cardList={cards} />
-    </div>
+    return <HomeContainer>
+
+        {/* <p>this is my relative controller </p>
+        <p>this is my relative controller </p> */}
+        <div className="rel">
+            <p>this is my relative controller </p>
+            {/* <div className="abs">This box </div> */}
+            <p>this is my relative controller </p>
+            <div className="card-container">
+                <Deck cardList={dropArts} />
+            </div>
+            <ActionSection>
+                <MinusBtn>-</MinusBtn>
+                <PlusBtn>+</PlusBtn>
+            </ActionSection>
+        </div>
+
+
+    </HomeContainer>
 }
 
 export default Home;

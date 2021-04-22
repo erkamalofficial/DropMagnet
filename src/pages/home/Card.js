@@ -32,19 +32,54 @@ const HeaderSection = styled.div`
     }
 `;
 const FooterSection = styled.div`
+    padding: 0 10px;
 `;
+const FooterButtons = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 1rem;
+    font-weight: 700;
+    line-height: 22px;
+    div {
+        padding: 0 10px;
+        border-radius: 3px;
+    }
+    .rare {
+        background: var(--corePurple);
+    }
+    .art {
+        background: var(--coreBlue);
+    }
+
+`;
+const FooterTitle = styled.div`
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+
+`
+
 const SwipeImage = styled.img`
     width: 100%
 `;
+
 export default function ({ cardDetails }) {
     const { title, drop_image, artist_image } = cardDetails;
-    return (<CardWrapper>
+    return [
         <HeaderSection>
             <UserAvatar src={artist_image} />
             <div>Crypto Art Man</div>
-        </HeaderSection>
-        {/* <SwipeIma   ge src={drop_image} />
-        <div>Title: {title} </div>
-        <FooterSection>Footer section</FooterSection> */}
-    </CardWrapper>);
+        </HeaderSection>,
+        <FooterSection>
+            <FooterTitle>{title} </FooterTitle>
+            <FooterButtons>
+                <div className="rare">RARIBLE</div>
+                <div className="art">ART</div>
+            </FooterButtons>
+        </FooterSection>
+    ]
+
 };
+
