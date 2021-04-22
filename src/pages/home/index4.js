@@ -2,17 +2,6 @@ import { render } from 'react-dom';
 import React, { useState } from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
-import Card from './Card';
-import { dropArts } from './data';
-import styled from 'styled-components';
-
-const HomeContainer = styled.div`
-    // max-width: 600px;
-    width: 600px;
-    height: 100vh;
-    background: grey;
-    position: relative;
-`;
 // import './styles.css'
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
@@ -61,47 +50,34 @@ function Deck({ cardList }) {
     })
     // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
     {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */ }
-    return props.map(({ x, y, rot, scale }, i) => {
-        const card = cards[i];
-        return (
-            <animated.div key={i}
-                style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
-                <animated.div
-                    {...bind(i)}
-                    style={{
-                        transform: interpolate([rot, scale], trans),
-                        backgroundImage: `url(${card.drop_image})`
-                    }}
-                >
-                    <Card cardDetails={card} />
-                </animated.div>
-            </animated.div>
-        );
-    })
+    return props.map(({ x, y, rot, scale }, i) => (
+        <animated.div key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+            <animated.div
+                {...bind(i)}
+                style={{
+                    transform: interpolate([rot, scale], trans),
+                    backgroundImage: `url(${cards[i]})`
+                }}
+            />
+        </animated.div>
+    ))
 }
 
 const Home = () => {
-    // const cards = [
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-1.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-2.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-3.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-4.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-5.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-6.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-7.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-8.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-9.jpg',
-    //     'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-10.jpg'
-    // ]
+    const cards = [
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-1.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-2.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-3.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-4.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-5.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-6.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-7.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-8.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-9.jpg',
+        'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-10.jpg'
+    ]
 
-    return (
-        <HomeContainer >
-            <div id="card-container" className="card-container">
-                <Deck cardList={dropArts} />
-                {/* <div> THis is the center div </div> */}
-            </div>
-        </HomeContainer>
-    );
+    return <div className="card-container"><Deck cardList={cards} /></div>
 }
 
 export default Home;
