@@ -2,7 +2,7 @@ import { render } from 'react-dom';
 import React, { useState } from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
-import './index4.css'
+import './index5.css'
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({ x: 0, y: 0, scale: 1, rot: 0, delay: i * 50 })
@@ -51,9 +51,10 @@ function Deck({ cardList }) {
     // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
     {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */ }
     return props.map(({ x, y, rot, scale }, i) => (
-        <animated.div key={i} style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+        <animated.div key={i} className="animatedMain" style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
             <animated.div
                 {...bind(i)}
+                className="animatedChild"
                 style={{
                     transform: interpolate([rot, scale], trans),
                     backgroundImage: `url(${cards[i]})`
@@ -77,7 +78,9 @@ const Home = () => {
         'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-10.jpg'
     ]
 
-    return <Deck cardList={cards} />;
+    return <div className="card-container">
+        <Deck cardList={cards} />
+    </div>
 }
 
 export default Home;
