@@ -68,11 +68,11 @@ const SwipeImage = styled.img`
 export default function ({ cardDetails }) {
     const { title, drop_image, artist_image } = cardDetails;
     return [
-        <HeaderSection>
+        <HeaderSection key={1}>
             <UserAvatar src={artist_image} />
             <div>Crypto Art Man</div>
         </HeaderSection>,
-        <FooterSection>
+        <FooterSection key={2}>
             <FooterTitle>{title} </FooterTitle>
             <FooterButtons>
                 <div className="rare">RARIBLE</div>
