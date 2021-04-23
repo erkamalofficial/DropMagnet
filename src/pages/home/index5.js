@@ -7,6 +7,8 @@ import { dropArts } from './data';
 import Card from './Card';
 import PlusBtn from '../../components/blocks/plus-btn';
 import MinusBtn from '../../components/blocks/minus-btn';
+import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
+
 
 import './index5.css';
 
@@ -20,9 +22,8 @@ const HomeContainer = styled.div`
         @media (max-width: 600px) {
             width: 100%;
         }
-        border: 1px solid;
-        background: #171616;
         position: relative;
+        padding-top:90px;
     }
     div.abs {
         height: 100%;
@@ -119,7 +120,7 @@ function Deck({ cardList }) {
     });
 }
 
-const Home = () => {
+const Home = (props) => {
     const cards = [
         'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-1.jpg',
         'https://digitalstudiosproduct.discovery.com/prototypes/fn-recipe-meal-match-hybrid/assets/recipe-2.jpg',
@@ -134,16 +135,10 @@ const Home = () => {
     ]
 
     return <HomeContainer>
-
-        {/* <p>this is my relative controller </p>
-        <p>this is my relative controller </p> */}
-        <div className="rel">
-            <p>this is my relative controller </p>
-            {/* <div className="abs">This box </div> */}
-            <p>this is my relative controller </p>
-            <div className="card-container">
-                <Deck cardList={dropArts} />
-            </div>
+        <FixedHeader {...props} />
+        <div className="rel">  <div className="card-container">
+            <Deck cardList={dropArts} />
+        </div>
             <ActionSection>
                 <MinusBtn>-</MinusBtn>
                 <PlusBtn>+</PlusBtn>

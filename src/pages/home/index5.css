@@ -35,7 +35,7 @@
     height: 70vh;
     will-change: transform;
     border-radius: 8px;
-    box-shadow: 0 10px 10px -10px rgb(50 50 73 / 3%);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;

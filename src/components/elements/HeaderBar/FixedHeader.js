@@ -63,7 +63,7 @@ const HeaderBarMenuIcon = styled.div`
     justify-content: center;
     align-self: center;
 `;
-
+const HeaderTitle = ({ txt }) => (<HeaderTitleBtn> <span>{txt}</span> </HeaderTitleBtn>)
 
 const FixedHeader = (props) => {
 
@@ -80,13 +80,14 @@ const FixedHeader = (props) => {
             </Link>
         }
     }
+    const showHeaderTitleIfNeeded = (props.isMagGallery === undefined) ? null : props.isMagGallery ?
+        <HeaderTitle txt='Mag.Link/TIME' /> : <HeaderTitle txt='@CryptoArtMan' />
+
     return (
         <FixedHeaderWrapper isMagGallery={props.isMagGallery}>
             <HeaderHolder>
                 <Logo src="./dropmagnet-small-logo.png" />
-                <HeaderTitleBtn>
-                    <span>{props.isMagGallery ? 'Mag.Link/TIME' : '@CryptoArtMan'}</span>
-                </HeaderTitleBtn>
+                {showHeaderTitleIfNeeded};
             </HeaderHolder>
             <HeaderHolder>
                 <HeaderBarMenuIcon>

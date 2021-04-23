@@ -58,7 +58,7 @@ export default function SquareGallery(props) {
     }, []);
     return (
         <div className="square-gallery">
-            <FixedHeader {...props} />
+            <FixedHeader {...props} isMagGallery={false} />
             {data.length > 0 && (
                 <div className="main">
                     <ReactFullpage
