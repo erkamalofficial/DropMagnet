@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 const ConnectAnotherWalletBtn = styled.div`
-    height: 36px;
     border-radius: 19px;
     color: var(--whiteGray);
     font-size: 26px;

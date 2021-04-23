@@ -9,6 +9,8 @@ import ConnectAnotherWalletBtn from '../../components/blocks/connect-another-wal
 const ConnectedWalletsWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    
     .nftHeader {
         padding: 16px;
         background: rgba(31,31,31,1.0);

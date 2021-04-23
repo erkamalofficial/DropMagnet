@@ -5,9 +5,8 @@
     overflow: hidden;
     width: 100%;
     height: 100%;
-    
-    /* background: #656060; */
     background-size: 100vw auto;
+    user-select: none;
 }
 
 .card-container .animatedMain {
