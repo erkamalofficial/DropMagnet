@@ -25,7 +25,7 @@ const ConnectedWalletsWrapper = styled.div`
 const NftDisplayBottomSection = styled.div`
     max-width: 600px;
     background-color: rgb(18, 18, 18);
-    color: #fff;
+    color: var(--white);
     display: flex;
     flex-direction: column;
     justify-content: center;

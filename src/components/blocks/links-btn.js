@@ -2,20 +2,20 @@ import styled from 'styled-components';
 
 const LinksBtn = styled.div`
     border-radius: 30px;
-    border: 1px solid #000;
+    border: 1px solid var(--pureBlack);
     line-height: 40px;
-    background: #242424;
+    background: var(--darkGray);
     padding: 5px 24px;
 
     &.button-active {
-        background-color: rgba(26, 39, 52, 1);
-        border: 3px solid rgba(97, 26, 200, 1);
+        background-color: var(--darkBlue);
+        border: 3px solid var(--purple500);
     }
     .tagLink {
-        color: rgba(174, 23, 186, 1);
+        color: var(--rose500);
     }
     .tagYou {
-        color: rgba(23, 130, 186, 1);
+        color: var(--blue200);
     }
 `;
 export default function (props) {

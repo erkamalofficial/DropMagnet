@@ -27,7 +27,7 @@ const HeaderSection = styled.div`
     > * {
         margin: 0 10px;
         font-weight: 700;
-        color: #eaeaea;
+        color: var(--grayWhite);
         font-size: 20px;
     }
 `;

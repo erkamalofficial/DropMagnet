@@ -5,7 +5,7 @@ import LinksBtn from '../../components/blocks/links-btn';
 const WalletWrapper = styled.div`
     max-width: 600px;
     background-color: rgb(18, 18, 18);
-    color: #fff;
+    color: var(--white);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -42,7 +42,7 @@ const TagSection = styled.div`
     margin-bottom: 1rem;
     box-sizing: border-box;
     .tags {
-        background-color: var(--shark);
+        background-color: var(--darkGray);
         border-radius: 24px;
         line-height: 30px;
         padding: 0px 30px;

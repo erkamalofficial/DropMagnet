@@ -11,7 +11,7 @@ const HeaderTitleBtn = styled.div`
     font-style: normal;
     letter-spacing: normal;
     text-align: left;
-    color: #D8D8D8;
+    color: var(--grey200);
     display: flex;
     margin-left: 16px;
     padding: 3px 24px;

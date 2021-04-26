@@ -2,6 +2,7 @@
   --coreBlack: #1a1a1a;
   --midnightBlack: #262626;
   --darkBlack: #2e2e2e;
+  --black400: #1f1f1f;
   --corePurple: #610BC8;
   --coreBlue: #0B57C8;
   --lightBlue: #0088CB;
@@ -12,6 +13,14 @@
   --white: #FFFFFF;
   --lightBlack: #020202;
   --grayBlack: #222222;
+  --darkGray: #242424;
+  --pureBlack: #000000;
+  --darkBlue: #1a2734;
+  --purple500: #611ac8;
+  --purple300: #7110b3;
+  --rose500: #ae17ba;
+  --blue200: #1782ba;
+  --grey200: #D8D8D8;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700');
@@ -25,60 +34,60 @@ body {
 .h1-large {
   font-size: 32px;
   font-family: Quicksand;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 .h1-mid-large {
   font-size: 28px;
   font-family: Quicksand;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 h1 {
   font-size: 25px;
   font-family: Quicksand;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 h2 {
   font-size: 20px;
   font-family: Quicksand;
   font-weight: bold;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 h3 {
   font-size: 18px;
   font-family: Quicksand;
   font-weight: bold;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 p1 {
   font-size: 16px;
   font-family: Quicksand;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 p2 {
   font-size: 14px;
   font-family: Quicksand;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 h1 .bold {
   font-weight: bold;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 p1 .bold {
   font-weight: bold;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 p1 .medium {
   font-weight: 600;
-  color: #EAEAEA;
+  color: var(--grayWhite);
 }
 
 .home-container {

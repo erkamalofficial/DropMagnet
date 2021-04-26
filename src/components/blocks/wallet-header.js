@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 const WalletHeader = styled.div`
     padding: 16px;
-    background: rgba(31,31,31,1.0);
+    background: var(--black400);
     display: flex;
     width: 100%;
     line-height: 70px;

@@ -26,22 +26,6 @@ const HomeContainer = styled.div`
         position: relative;
         padding-top:90px;
     }
-    div.abs {
-        height: 100%;
-        width: 100%;
-        border: 1px solid;
-        background: gray;
-        position: absolute;
-    }
-    div.abschild {
-        position: absolute;
-        background: #dea6a6;
-        height: 80%;
-        width: 80%;
-        left: 50%;
-        top: 50%
-
-    }
 `;
 const ActionSection = styled.div`
 
