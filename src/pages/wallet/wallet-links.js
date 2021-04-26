@@ -1,9 +1,16 @@
 
 import styled from 'styled-components';
 import LinksBtn from '../../components/blocks/links-btn';
+import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 
 const WalletWrapper = styled.div`
     max-width: 600px;
+    width: 100%;
+    margin: 0 auto; 
+    overflow: hidden;
+`;
+
+const WalletLinksWrapper = styled.div`
     background-color: rgb(18, 18, 18);
     color: var(--white);
     display: flex;
@@ -64,32 +71,36 @@ const LinkSection = styled.div`
     font-weight: 700;
 `;
 
-const WalletLinks = () => {
+const WalletLinks = props => {
     return (
         <WalletWrapper>
-            <div className="rowItem walletHeader">
-                <div className="title"> Ethereum Logo </div>
-                <div> 0xda2ed8e7776d54495cc7a1a5d5…… </div>
-            </div>
+            <FixedHeader {...props} />
 
-            <div className="rowItem"> Assign a call-to-action URL to This Gallery</div>
-            <div className="rowItem">(Filter By Category)</div>
-            <TagSection className="rowItem">
-                <div className="tags">Fashion</div>
-                <div className="tags">Art</div>
-                <div className="tags tag-active">Music</div>
-                <div className="tags">Sports</div>
-                <div className="tags">Meme</div>
-                <div className="tags">Other</div>
-            </TagSection>
-            <LinkSection className="rowItem">
-                <LinksBtn />
-                <LinksBtn />
-                <LinksBtn className="button-active" />
-                <LinksBtn />
-                <LinksBtn />
-                <LinksBtn />
-            </LinkSection>
+            <WalletLinksWrapper>
+                <div className="rowItem walletHeader">
+                    <div className="title"> Ethereum Logo </div>
+                    <div> 0xda2ed8e7776d54495cc7a1a5d5…… </div>
+                </div>
+
+                <div className="rowItem"> Assign a call-to-action URL to This Gallery</div>
+                <div className="rowItem">(Filter By Category)</div>
+                <TagSection className="rowItem">
+                    <div className="tags">Fashion</div>
+                    <div className="tags">Art</div>
+                    <div className="tags tag-active">Music</div>
+                    <div className="tags">Sports</div>
+                    <div className="tags">Meme</div>
+                    <div className="tags">Other</div>
+                </TagSection>
+                <LinkSection className="rowItem">
+                    <LinksBtn />
+                    <LinksBtn />
+                    <LinksBtn className="button-active" />
+                    <LinksBtn />
+                    <LinksBtn />
+                    <LinksBtn />
+                </LinkSection>
+            </WalletLinksWrapper>
         </WalletWrapper>
     )
 

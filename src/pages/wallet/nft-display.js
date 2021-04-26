@@ -4,7 +4,14 @@ import LinksBtn from '../../components/blocks/links-btn';
 import ConnectWalletBtn from '../../components/blocks/connect-wallet-btn';
 import ColorText from '../../components/blocks/color-text';
 import WalletHeader from '../../components/blocks/wallet-header';
+import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 
+const WalletWrapper = styled.div`
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto; 
+    overflow: hidden;
+`;
 const NftDisplayWrapper = styled.div`
     margin-top: 70px;
     .nftHeader {
@@ -98,36 +105,39 @@ const TldTagLine = styled.div`
     }
 `;
 
-const NftDisplayPage = () => {
+const NftDisplayPage = (props) => {
     return (
-        <NftDisplayWrapper>
-            <WalletHeader />
-            <NftDisplayBottomSection>
-                <DisplayNftTitle> Display Your NFTs </DisplayNftTitle>
-                <ColorText />
-                <DisplayNftSubtitle>
-                    <div>And share with</div>
-                    <div>custom subdomains</div>
-                </DisplayNftSubtitle>
-                <ConnectWalletBtn style={{ marginBottom: '16px' }}>Connect Wallet</ConnectWalletBtn>
-                <TldTagLine>
-                    <div>To create your unique</div>
-                    <div>custom domain from</div>
-                    <div>dozens of gTLDs in</div>
-                    <div>the Drop Magnet </div>
-                    <div>ecosystem.</div>
-                </TldTagLine>
-                <TldTitle>30+ gTLDs to choose from!</TldTitle>
-                <LinkSection>
-                    <LinksBtn />
-                    <LinksBtn />
-                    <LinksBtn className="button-active" />
-                    <LinksBtn />
-                    <LinksBtn />
-                    <LinksBtn />
-                </LinkSection>
-            </NftDisplayBottomSection>
-        </NftDisplayWrapper>
+        <WalletWrapper>
+            <FixedHeader {...props} />
+            <NftDisplayWrapper>
+                <WalletHeader />
+                <NftDisplayBottomSection>
+                    <DisplayNftTitle> Display Your NFTs </DisplayNftTitle>
+                    <ColorText />
+                    <DisplayNftSubtitle>
+                        <div>And share with</div>
+                        <div>custom subdomains</div>
+                    </DisplayNftSubtitle>
+                    <ConnectWalletBtn style={{ marginBottom: '16px' }}>Connect Wallet</ConnectWalletBtn>
+                    <TldTagLine>
+                        <div>To create your unique</div>
+                        <div>custom domain from</div>
+                        <div>dozens of gTLDs in</div>
+                        <div>the Drop Magnet </div>
+                        <div>ecosystem.</div>
+                    </TldTagLine>
+                    <TldTitle>30+ gTLDs to choose from!</TldTitle>
+                    <LinkSection>
+                        <LinksBtn />
+                        <LinksBtn />
+                        <LinksBtn className="button-active" />
+                        <LinksBtn />
+                        <LinksBtn />
+                        <LinksBtn />
+                    </LinkSection>
+                </NftDisplayBottomSection>
+            </NftDisplayWrapper>
+        </WalletWrapper>
     )
 
 }

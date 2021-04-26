@@ -5,7 +5,14 @@ import ConnectWalletBtn from '../../components/blocks/connect-wallet-btn';
 import ColorText from '../../components/blocks/color-text';
 import WalletHeader from '../../components/blocks/wallet-header';
 import ConnectAnotherWalletBtn from '../../components/blocks/connect-another-wallet-btn';
+import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 
+const WalletWrapper = styled.div`
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto; 
+    overflow: hidden;
+`;
 const ConnectedWalletsWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -23,7 +30,6 @@ const ConnectedWalletsWrapper = styled.div`
     }
 `;
 const NftDisplayBottomSection = styled.div`
-    max-width: 600px;
     background-color: rgb(18, 18, 18);
     color: var(--white);
     display: flex;
@@ -107,27 +113,30 @@ const Circle = styled.div`
 const ConnectWalletMsg = styled.div`
     font-size: 16px;
 `;
-const ConnectedWallets = () => {
+const ConnectedWallets = props => {
     return (
-        <ConnectedWalletsWrapper>
-            <WalletHeader />
-            <NftDisplayBottomSection>
-                <ConnectedWalletTitle>Connected Wallets</ConnectedWalletTitle>
+        <WalletWrapper>
+            <FixedHeader {...props} />
+            <ConnectedWalletsWrapper>
+                <WalletHeader />
+                <NftDisplayBottomSection>
+                    <ConnectedWalletTitle>Connected Wallets</ConnectedWalletTitle>
 
-                <WalletSection>
-                    <div>Ethereum</div>
-                    <div>0xda2ed8e7776d54495cc7a1a5d5</div>
-                    <div>Edit</div>
-                </WalletSection>
-                <WalletSection>
-                    <div>Ethereum</div>
-                    <div>0xda2ed8e7776d54495cc7a1a5d5</div>
-                    <div>Edit</div>
-                </WalletSection>
-                <ConnectAnotherWalletBtn style={{ marginBottom: '16px' }} />
-                <ConnectWalletMsg>You Can Connect Up To 10!</ConnectWalletMsg>
-            </NftDisplayBottomSection>
-        </ConnectedWalletsWrapper>
+                    <WalletSection>
+                        <div>Ethereum</div>
+                        <div>0xda2ed8e7776d54495cc7a1a5d5</div>
+                        <div>Edit</div>
+                    </WalletSection>
+                    <WalletSection>
+                        <div>Ethereum</div>
+                        <div>0xda2ed8e7776d54495cc7a1a5d5</div>
+                        <div>Edit</div>
+                    </WalletSection>
+                    <ConnectAnotherWalletBtn style={{ marginBottom: '16px' }} />
+                    <ConnectWalletMsg>You Can Connect Up To 10!</ConnectWalletMsg>
+                </NftDisplayBottomSection>
+            </ConnectedWalletsWrapper>
+        </WalletWrapper>
     )
 
 }
