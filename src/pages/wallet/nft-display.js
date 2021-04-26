@@ -6,9 +6,7 @@ import ColorText from '../../components/blocks/color-text';
 import WalletHeader from '../../components/blocks/wallet-header';
 
 const NftDisplayWrapper = styled.div`
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
+    margin-top: 70px;
     .nftHeader {
         padding: 16px;
         background: rgba(31,31,31,1.0);

@@ -11,7 +11,7 @@ import Profile from './pages/profile';
 import SquareGallery from './pages/galleries/square-gallery';
 import MagGallery from './pages/galleries/mag-gallery';
 import WalletLinks from './pages/wallet/wallet-links';
-import NftDisplay from './pages/wallet/nft-display';
+import Wallet from './pages/wallet';
 import ConnectedWallets from './pages/wallet/connected-wallets';
 import { useState, useEffect } from 'react';
 import { FirebaseAuthProvider } from "../src/contexts/FirebaseAuthContext"
@@ -130,7 +130,7 @@ function App() {
           <Route path="/login" render={(props) => <Login {...props} />} />
           <Route path="/profile" render={(props) => <Profile {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/wallet_links" render={(props) => <WalletLinks {...props} userDetails={userDetails} userLoggedIn={true} />} />
-          <Route path="/nfts" render={(props) => <NftDisplay {...props} userDetails={userDetails} userLoggedIn={true} />} />
+          <Route path="/nfts" render={(props) => <Wallet {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/cw" render={(props) => <ConnectedWallets {...props} userDetails={userDetails} userLoggedIn={true} />} />
         </Switch>
       </FirebaseAuthProvider>
