@@ -1,6 +1,6 @@
 const dropArts = [
     {
-        "drop_id": 9,
+        "drop_id": 101,
         "title": "Awesome O Art",
         "description": "My wonderful art was done by da Vinci",
         "artist": "Crypto Art Man",
@@ -14,7 +14,7 @@ const dropArts = [
         "drop_pieces": 9
     },
     {
-        "drop_id": 10,
+        "drop_id": 102,
         "title": "FLYING SKULL",
         "description": "My wonderful art was done by da Vinci",
         "artist": "Zonked",
@@ -27,7 +27,7 @@ const dropArts = [
         "drop_pieces": 9
     },
     {
-        "drop_id": 11,
+        "drop_id": 103,
         "title": "Sitting On Air",
         "description": `In 1987 Nike created their first air max shoe.
       In 1967 Paolo Lomazzi & crew designed the Blow Chair which was the first mass-produced inflatable chair.
@@ -46,7 +46,7 @@ const dropArts = [
 
 const musicArts = [
     {
-        "drop_id": 16,
+        "drop_id": 104,
         "title": "Fenrir",
         "description": "The indomitable wolf",
         "artist": "Venomdts",
@@ -59,7 +59,7 @@ const musicArts = [
         "drop_pieces": 9
     },
     {
-        "drop_id": 17,
+        "drop_id": 105,
         "title": "Diego Armando Maradona (10)",
         "description": `Tribute to Diego Armando Maradona. Giving up 10 pieces for free, you just have to pay gas.
 
@@ -77,7 +77,7 @@ const musicArts = [
 
 const collectibleArts = [
     {
-        "drop_id": 14,
+        "drop_id": 106,
         "title": `Soulja Boy "Crank That"`,
         "description": "Get this super exclusive collectible from Soulja Boy, the iconic rapper and the brand-new man in crypto!",
         "artist": "Jivinci",
@@ -90,7 +90,7 @@ const collectibleArts = [
         "drop_pieces": 9
     },
     {
-        "drop_id": 15,
+        "drop_id": 107,
         "title": "PORTRAIT",
         "description": "A NEVER BEFORE PUBLISHED PHOTOGRAPH OF ANDY WARHOL.",
         "artist": "JeffBezosForeskin",
@@ -107,7 +107,7 @@ const collectibleArts = [
 const fashionArts = [
 
     {
-        "drop_id": 12,
+        "drop_id": 108,
         "title": "42 Artists Collaboration: 24/42 - TWO FATES",
         "description": `This is a story about unity 🧡
       Meet a piece of our gorgeous collaboration of 42 artists who came together in the name of love to create.`,
@@ -121,7 +121,7 @@ const fashionArts = [
         "drop_pieces": 9
     },
     {
-        "drop_id": 13,
+        "drop_id": 109,
         "title": "ℭ𝔥𝔯𝔬𝔪𝔬 𝔚𝔞𝔱𝔢𝔯",
         "description": "Water",
         "artist": "044",
@@ -135,21 +135,9 @@ const fashionArts = [
     }
 ];
 
-export default [
-    {
-        title: "Art",
-        list: dropArts
-    },
-    {
-        title: "Music",
-        list: musicArts
-    },
-    {
-        title: "Collectibles",
-        list: collectibleArts
-    },
-    {
-        title: "Fashion",
-        list: fashionArts
-    }
-];
+export default {
+    art: { title: "Art", collection: dropArts },
+    music: { title: "Music", collection: musicArts },
+    collectibles: { title: "Collectibles", collection: collectibleArts },
+    fashion: { title: "Fashion", collection: fashionArts }
+};

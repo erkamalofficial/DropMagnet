@@ -1,14 +1,16 @@
 import { render } from 'react-dom';
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
-import { dropArts } from './data';
-import Card from './Card';
+import dataCollection from './data';
+import Card from './card';
 import PlusBtn from '../../components/blocks/plus-btn';
 import MinusBtn from '../../components/blocks/minus-btn';
 import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
-
+import Tabs from './tabs';
+import ProgressBar from './progress-bar';
+import { useSelector, useDispatch } from "react-redux";
 
 import './index.css';
 
@@ -28,7 +30,6 @@ const HomeContainer = styled.div`
     }
 `;
 const ActionSection = styled.div`
-
     display: flex;
     position: absolute;
     bottom: 0;
@@ -45,6 +46,13 @@ const trans = (r, s) => `scale(${s})`
 const cardSelected = [];
 function Deck({ cardList }) {
     const [cards, setCards] = useState(cardList);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setCards(cardList);
+    }, [cardList]);
+
+
     const [selectedIndex, setIndex] = useState(cardList.length - 1);
 
     const [gone] = useState(() => new Set())
@@ -64,11 +72,13 @@ function Deck({ cardList }) {
                 setIndex((idx) => idx - 1); //set the index
                 if (x > 0) {
                     cardSelected.push(index);
+                    dispatch({ type: '', });
                     // console.log('Selected cards: ', cardSelected)
                 }
             }
             return someValue
         })
+        // When last item in the collection moved        
         if (!down && gone.size === cards.length) {
             setTimeout(() => {
                 gone.clear()
@@ -102,7 +112,7 @@ function Deck({ cardList }) {
             const scale = down ? 1.05 : 1;
             if (isGone) {
                 if (x > 0) {
-                    cardSelected.push(index)
+                    cardSelected.push(index);
                 }
             }
             return {
@@ -113,7 +123,7 @@ function Deck({ cardList }) {
                 config: { friction: 50, tension: down ? 800 : isGone ? 100 : 500 }
             };
         });
-
+        // When last item in the collection clicked
         if (!down && gone.size === cards.length) {
             gone.clear()
             const filtered = cards.filter((el, i) => cardSelected.some((j) => i === j))
@@ -125,47 +135,68 @@ function Deck({ cardList }) {
     }
 
 
-    return (
-        <div className="rel">
-            <div className="card-container">
-                {
-                    props.map(({ x, y, rot, scale }, i) => {
-                        const card = cards[i];
-                        return (
-                            <animated.div key={i}
-                                className="animatedMain"
-                                style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
-                                <animated.div
-                                    {...bind(i)}
-                                    className="animatedChild"
-                                    style={{
-                                        transform: interpolate([rot, scale], trans),
-                                        backgroundImage: `url(${card.drop_image})`,
-                                        backgroundSize: '100% 58%%',
-                                        backgroundPosition: 'center 32%'
-                                    }}
-                                > <Card cardDetails={card} />
-                                </animated.div>
+    return [
+        <div className="card-container" key="card-container">
+            {
+                props.map(({ x, y, rot, scale }, i) => {
+                    const card = cards[i];
+                    return (
+                        <animated.div key={i}
+                            className="animatedMain"
+                            style={{ transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`) }}>
+                            <animated.div
+                                {...bind(i)}
+                                className="animatedChild"
+                                style={{
+                                    transform: interpolate([rot, scale], trans),
+                                    backgroundImage: `url(${card.drop_image})`,
+                                    backgroundSize: '100% 58%%',
+                                    backgroundPosition: 'center 32%'
+                                }}
+                            > <Card cardDetails={card} />
                             </animated.div>
-                        )
-                    })
-                }
-            </div>
-            <ActionSection>
-                <MinusBtn onClick={(e) => handOnClick(e, selectedIndex, 'prev')}>-</MinusBtn>
-                <PlusBtn onClick={(e) => handOnClick(e, selectedIndex, 'next')}>+</PlusBtn>
-            </ActionSection>
-        </div>
-    );
-
+                        </animated.div>
+                    )
+                })
+            }
+        </div>,
+        <ActionSection key="footer">
+            <MinusBtn onClick={(e) => handOnClick(e, selectedIndex, 'prev')}>-</MinusBtn>
+            <PlusBtn onClick={(e) => handOnClick(e, selectedIndex, 'next')}>+</PlusBtn>
+        </ActionSection>
+    ];
 
 }
 
-const Home = (props) => (
-    <HomeContainer>
-        <FixedHeader {...props} />
-        <Deck cardList={dropArts} />
-    </HomeContainer>
-);
+const Home = (props) => {
+    const [activeIndex, setActiveIndex] = useState(0);
+    // const [cardList, setCardList] = useState(dataCollection[activeIndex]);
+    const art = useSelector((state) => state.category.art);
+    const music = useSelector((state) => state.category.music);
+    const collectibles = useSelector((state) => state.category.collectibles);
+    const fashion = useSelector((state) => state.category.fashion);
+
+    const category = [art, music, collectibles, fashion];
+    const selectedCategory = category[activeIndex];
+
+    const handleActiveIndex = (index) => {
+        setActiveIndex(index);
+        // setCardList(dataCollection[index]);
+    }
+    return (
+        <HomeContainer>
+            <FixedHeader {...props} />
+            <div className="rel">
+                <Tabs
+                    activeIndex={activeIndex}
+                    handleActiveIndex={handleActiveIndex}
+                    dataCollection={category}
+                />
+                <ProgressBar size={selectedCategory.length} />
+                <Deck cardList={selectedCategory.collection} />
+            </div>
+        </HomeContainer>
+    );
+};
 
 export default Home;
