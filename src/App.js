@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-// import Home from './pages/home/index'
-import Home from './pages/home/index5'
+import Home from './pages/home/index'
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import TermsAndConditions from './pages/terms';
 import DropCreation from './pages/create_drop';
