@@ -136,8 +136,9 @@ const fashionArts = [
 ];
 
 export default {
-    art: { title: "Art", collection: dropArts },
-    music: { title: "Music", collection: musicArts },
-    collectibles: { title: "Collectibles", collection: collectibleArts },
-    fashion: { title: "Fashion", collection: fashionArts }
+    general: { isLoading: true, activeTabIndex: 0 },
+    arts: { apiData: [], userSelectedCards: [] },
+    music: { apiData: [], userSelectedCards: [] },
+    collectibles: { apiData: [], userSelectedCards: [] },
+    fashion: { apiData: [], userSelectedCards: [] }
 };

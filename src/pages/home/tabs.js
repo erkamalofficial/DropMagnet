@@ -34,15 +34,15 @@ const TabItem = styled.li`
     background-clip: text;
     -webkit-background-clip: text;
 `;
-export default ({ activeIndex, handleActiveIndex, dataCollection }) => {
+export default ({ activeTabIndex, handleActiveTabIndex, tabList }) => {
     return (
         <TabsWrapper>
-            {dataCollection.map((tabItem, index) =>
-                <TabItem 
-                    key={index} 
-                    onClick={() => handleActiveIndex(index)} 
-                    className={activeIndex === index ? 'tab-selected' : ''}
-                >{tabItem.title}</TabItem>
+            {tabList.map((title, index) =>
+                <TabItem
+                    key={index}
+                    onClick={() => handleActiveTabIndex(index)}
+                    className={activeTabIndex === index ? 'tab-selected' : ''}
+                >{title}</TabItem>
             )}
         </TabsWrapper>
     );

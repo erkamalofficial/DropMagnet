@@ -1,4 +1,5 @@
 import { render } from 'react-dom';
+import '../../server';
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
@@ -72,7 +73,7 @@ function Deck({ cardList }) {
                 setIndex((idx) => idx - 1); //set the index
                 if (x > 0) {
                     cardSelected.push(index);
-                    dispatch({ type: '', });
+                    // dispatch({ type: 'art' });
                     // console.log('Selected cards: ', cardSelected)
                 }
             }
@@ -113,6 +114,7 @@ function Deck({ cardList }) {
             if (isGone) {
                 if (x > 0) {
                     cardSelected.push(index);
+                    dispatch({ type: "addUserData", payload: { selectedIndex: index } });
                 }
             }
             return {
@@ -169,31 +171,59 @@ function Deck({ cardList }) {
 }
 
 const Home = (props) => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    // const [cardList, setCardList] = useState(dataCollection[activeIndex]);
-    const art = useSelector((state) => state.category.art);
-    const music = useSelector((state) => state.category.music);
-    const collectibles = useSelector((state) => state.category.collectibles);
-    const fashion = useSelector((state) => state.category.fashion);
+    // const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        fetch("/api/arts")
+            .then((res) => res.json())
+            .then((json) => {
+                dispatch({ type: 'arts', payload: json });
+                // dispatch({ type: 'Arts', json });
+            })
+    }, []);
+    // const [cardList, setCardList] = useState(dataCollection[activeTabIndex]);
+    const tabList = ["arts", "music", "collectables", "fashion"];
+    const activeTabIndex = useSelector((state) => {
+        return state.category.general.activeTabIndex
+    });
+    const isLoading = useSelector((state) => state.category.general.isLoading);
+    const currentTabId = tabList[activeTabIndex];
 
-    const category = [art, music, collectibles, fashion];
-    const selectedCategory = category[activeIndex];
+    const selectedCollection = useSelector((state) => {
+        console.log('JJJ:', state);
+        return state.category[currentTabId];
+    });
 
-    const handleActiveIndex = (index) => {
-        setActiveIndex(index);
+    // const art = useSelector((state) => state.category.art);
+    // const music = useSelector((state) => state.category.music);
+    // const collectibles = useSelector((state) => state.category.collectibles);
+    // const fashion = useSelector((state) => state.category.fashion);
+
+    // const category = [art, music, collectibles, fashion];
+    // const selectedCategory = category[activeTabIndex];
+
+    const handleActiveTabIndex = (index) => {
         // setCardList(dataCollection[index]);
+        // dispatch({ type: 'general', payload: { activeTabIndex: index } });
+        dispatch({ type: tabList[index] });
+
     }
     return (
         <HomeContainer>
             <FixedHeader {...props} />
             <div className="rel">
                 <Tabs
-                    activeIndex={activeIndex}
-                    handleActiveIndex={handleActiveIndex}
-                    dataCollection={category}
+                    activeTabIndex={activeTabIndex}
+                    handleActiveTabIndex={handleActiveTabIndex}
+                    tabList={tabList}
                 />
-                <ProgressBar size={selectedCategory.length} />
-                <Deck cardList={selectedCategory.collection} />
+                {!isLoading &&
+                    [<ProgressBar
+                        size={selectedCollection.apiData.length}
+                        selectedCount={selectedCollection.userSelectedCards.length}
+                    />,
+                    <Deck cardList={selectedCollection.apiData} />]
+                }
             </div>
         </HomeContainer>
     );

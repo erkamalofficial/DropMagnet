@@ -14,10 +14,10 @@ const ProgressBar = styled.div`
     }
 `;
 
-export default () => {
+export default ({ size, selectedCount }) => {
     return (
         <ProgressBar>
-            <span>12/25</span>
+            <span>{selectedCount}/{size}</span>
             <span>Exit swipe</span>
         </ProgressBar>
     );
