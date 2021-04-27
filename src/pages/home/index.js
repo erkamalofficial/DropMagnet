@@ -12,7 +12,7 @@ import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 import Tabs from './tabs';
 import ProgressBar from './progress-bar';
 import { useSelector, useDispatch } from "react-redux";
-
+import { fetchMusic, fetchArt } from './actions';
 import './index.css';
 
 const HomeContainer = styled.div`
@@ -175,12 +175,7 @@ const Home = (props) => {
     // const [activeTabIndex, setActiveTabIndex] = useState(0);
     const dispatch = useDispatch();
     useEffect(() => {
-        fetch("/api/arts")
-            .then((res) => res.json())
-            .then((json) => {
-                dispatch({ type: 'arts', payload: json });
-                // dispatch({ type: 'Arts', json });
-            })
+        dispatch(fetchArt({ activeTabIndex: 0 }));
     }, []);
     // const [cardList, setCardList] = useState(dataCollection[activeTabIndex]);
     const tabList = ["arts", "music", "collectables", "fashion"];
@@ -206,7 +201,13 @@ const Home = (props) => {
     const handleActiveTabIndex = (index) => {
         // setCardList(dataCollection[index]);
         // dispatch({ type: 'general', payload: { activeTabIndex: index } });
-        dispatch({ type: tabList[index] });
+        const activeTab = tabList[index];
+        if (activeTab === 'music') {
+            dispatch(fetchMusic({ activeTabIndex: index }));
+        }
+        if (activeTab === 'arts') {
+            dispatch(fetchArt({ activeTabIndex: index }));
+        }
 
     }
     return (
@@ -220,10 +221,14 @@ const Home = (props) => {
                 />
                 {!isLoading &&
                     [<ProgressBar
+                        key="progressBar"
                         size={selectedCollection.apiData.length}
                         selectedCount={selectedCollection.userSelectedCards.length}
                     />,
-                    <Deck cardList={selectedCollection.apiData} />]
+                    <Deck
+                        cardList={selectedCollection.apiData}
+                        key="cardDeck"
+                    />]
                 }
             </div>
         </HomeContainer>

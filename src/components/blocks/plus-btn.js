@@ -8,6 +8,7 @@ const PlusBtn = styled.button`
     background-image: linear-gradient(180deg,#2e2e2e,#1e1e1e);
     font-size: 48px;
     color: var(--purple300);
+    cursor: pointer;
     @media (max-width: 600px) {
         min-width: 150px;
     }

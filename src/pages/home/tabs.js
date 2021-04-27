@@ -22,10 +22,10 @@ const TabsWrapper = styled.ul`
         border: none;
         -webkit-background-clip: text;
     }
-    @media (max-width: 600px) {
-        margin: 0 0 16px;
-        border-radius: unset;
-    }
+    // @media (max-width: 600px) {
+    //     margin: 0 0 16px;
+    //     border-radius: unset;
+    // }
 `;
 const TabItem = styled.li`
     border: none;

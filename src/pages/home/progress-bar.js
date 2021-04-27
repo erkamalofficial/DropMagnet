@@ -9,11 +9,11 @@ const ProgressBar = styled.div`
     margin: 0 8px 16px;
     padding: 8px 16px;;
     border-radius: 22px;
-    @media (max-width: 600px) {
-        margin: 0 0 16px;
-        padding: 8px 40px;
-        border-radius: unset;
-    }
+    // @media (max-width: 600px) {
+    //     margin: 0 0 16px;
+    //     padding: 8px 40px;
+    //     border-radius: unset;
+    // }
     span {
         line-height: 24px;
     }
