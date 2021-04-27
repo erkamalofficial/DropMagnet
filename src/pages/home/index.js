@@ -24,7 +24,7 @@ const HomeContainer = styled.div`
         width: 460px;
         @media (max-width: 600px) {
             width: 100%;
-            height: 92vh;
+            height: 100vh;
         }
         position: relative;
         padding-top:90px;
@@ -33,7 +33,7 @@ const HomeContainer = styled.div`
 const ActionSection = styled.div`
     display: flex;
     position: absolute;
-    bottom: 0;
+    bottom: 1%;
     left: 0;
     right: 0;
     justify-content: center;
@@ -75,6 +75,7 @@ function Deck({ cardList }) {
                     cardSelected.push(index);
                     // dispatch({ type: 'art' });
                     // console.log('Selected cards: ', cardSelected)
+                    dispatch({ type: "addUserData", payload: { selectedIndex: index } });
                 }
             }
             return someValue
