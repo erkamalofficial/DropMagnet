@@ -51,9 +51,8 @@ const categoryReducer = (state = initialState, action) => {
         }
 
         case "FETCH_RESWIPE_REQUEST": {
-            const currentTab = tabList[state.general.activeTabIndex];
-            const arts = { ...state.arts, apiData: [...state[currentTab].userSelectedCards], userSelectedCards: [] };
-            return { ...state, arts };
+            const general = { ...state.general, reswipeModeActive: false };
+            return { ...state, general };
         }
         case "addUserData": {
             const currentTab = tabList[state.general.activeTabIndex];
