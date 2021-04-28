@@ -56,20 +56,36 @@ const categoryReducer = (state = initialState, action) => {
         }
         case "ADD_USER_DATA": {
             const currentTab = tabList[state.general.activeTabIndex];
-            const userSelectedCard = state[currentTab].apiData[action.payload.selectedIndex];
-            const userSelectedCards = state[currentTab].userSelectedCards.concat(userSelectedCard)
+            const activeTabContent = state[currentTab];
+            const userSelectedCard = activeTabContent.apiData[action.payload.selectedIndex];
+            var reswipeBucketContent = activeTabContent.reswipeBucket;
+            var favBucketContent = activeTabContent.favBucket;
+            if (activeTabContent.reswipeBucket.length < 10) {
+                reswipeBucketContent = activeTabContent.reswipeBucket.concat(userSelectedCard);
+            }
+            if (state.general.reswipeModeActive) {
+                const contentForFav = activeTabContent.reswipeBucket[action.payload.selectedIndex];
+                favBucketContent = activeTabContent.favBucket.concat(contentForFav)
+            }
+
 
             const isInReswipeMode = state.general.enableReswipeMode;
 
-            const isReswipe = (userSelectedCards.length === 10);
+            const isReswipe = (reswipeBucketContent.length === 10);
             var reswipeModeActive = state.general.reswipeModeActive;
+
             if (isReswipe && !state.general.reswipeModeActive) {
                 reswipeModeActive = true;
             }
-            var selectedTab = { ...state[currentTab], userSelectedCards };
+
+            var selectedTab = { ...activeTabContent, reswipeBucket: reswipeBucketContent };
             if (isReswipe) {
-                userSelectedCards.sort((a, b) => a.drop_id - b.drop_id);
-                selectedTab = { ...state[currentTab], apiData: userSelectedCards, userSelectedCards: [] };
+                reswipeBucketContent.sort((a, b) => a.drop_id - b.drop_id);
+                selectedTab = {
+                    ...activeTabContent,
+                    reswipeBucket: reswipeBucketContent,
+                    favBucket: favBucketContent
+                };
             }
 
             const general = {
@@ -82,6 +98,7 @@ const categoryReducer = (state = initialState, action) => {
             return { ...state, [currentTab]: selectedTab, general };
         }
         case "REMOVE_USER_DATA": {
+
             const general = {
                 ...state.general,
                 selectionCount: state.general.selectionCount - 1

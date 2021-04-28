@@ -44,8 +44,7 @@ const Home = (props) => {
     const selectionCount = useSelector((state) => state.category.general.selectionCount);
     const currentTabId = tabList[activeTabIndex];
 
-    const { apiData, userSelectedCards } = useSelector((state) => {
-        console.log("JJJ");
+    const { apiData, reswipeBucket } = useSelector((state) => {
         return state.category[currentTabId];
     });
 
@@ -89,7 +88,7 @@ const Home = (props) => {
                 {!isLoading &&
                     <Deck
                         key={reswipeModeActive}
-                        cardList={apiData}
+                        cardList={reswipeModeActive? reswipeBucket : apiData}
                     />
                 }
             </div>
