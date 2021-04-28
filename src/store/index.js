@@ -66,10 +66,10 @@ const categoryReducer = (state = initialState, action) => {
             if (isReswipe && !state.general.reswipeModeActive) {
                 reswipeModeActive = true;
             }
-            var arts = { ...state.arts, userSelectedCards };
+            var selectedTab = { ...state[currentTab], userSelectedCards };
             if (isReswipe) {
                 userSelectedCards.sort((a, b) => a.drop_id - b.drop_id);
-                arts = { ...state.arts, apiData: userSelectedCards, userSelectedCards: [] };
+                selectedTab = { ...state[currentTab], apiData: userSelectedCards, userSelectedCards: [] };
             }
 
             const general = {
@@ -78,7 +78,7 @@ const categoryReducer = (state = initialState, action) => {
                 reswipeModeActive: reswipeModeActive
             };
 
-            return { ...state, arts, general };
+            return { ...state, [currentTab]: selectedTab, general };
         }
         default:
             return state;
