@@ -8,6 +8,7 @@ import Tabs from './tabs';
 import ProgressBar from './progress-bar';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMusic, fetchArt, fetchColletibles, fetchFashion, fetchReswipeList } from './actions';
+import Spinner from '../../components/blocks/spinner';
 import './index.css';
 
 const HomeContainer = styled.div`
@@ -40,14 +41,13 @@ const Home = (props) => {
     const isLoading = useSelector((state) => state.category.general.isLoading);
     // const enableReswipeMode = useSelector((state) => state.category.general.enableReswipeMode);
     const reswipeModeActive = useSelector((state) => state.category.general.reswipeModeActive);
+    const selectionCount = useSelector((state) => state.category.general.selectionCount);
     const currentTabId = tabList[activeTabIndex];
 
     const { apiData, userSelectedCards } = useSelector((state) => {
         console.log("JJJ");
         return state.category[currentTabId];
     });
-
-    const userSelectedCardsLength = userSelectedCards.length;
 
     const handleActiveTabIndex = (index) => {
         const activeTab = tabList[index];
@@ -77,12 +77,13 @@ const Home = (props) => {
                     handleActiveTabIndex={handleActiveTabIndex}
                     tabList={tabList}
                 />
+                {isLoading && <Spinner />}
                 {reswipeModeActive &&
                     <ProgressBar
                         key="progressBar"
                         size={apiData.length}
                         handleReswipe={handleReswipe}
-                        selectedCount={userSelectedCardsLength}
+                        selectedCount={selectionCount}
                     />
                 }
                 {!isLoading &&

@@ -46,7 +46,7 @@ const Deck = ({ cardList }) => {
                     cardSelected.push(index);
                     // dispatch({ type: 'art' });
                     // console.log('Selected cards: ', cardSelected)
-                    dispatch({ type: "addUserData", payload: { selectedIndex: index } });
+                    dispatch({ type: "ADD_USER_DATA", payload: { selectedIndex: index } });
                 }
             }
             return someValue
@@ -84,10 +84,13 @@ const Deck = ({ cardList }) => {
 
             const scale = down ? 1.05 : 1;
             if (isGone) {
-                if (x > 0) {
+                if (type === 'next') {
                     cardSelected.push(index);
-                    dispatch({ type: "addUserData", payload: { selectedIndex: index } });
+                    dispatch({ type: "ADD_USER_DATA", payload: { selectedIndex: index } });
+                } else {
+                    dispatch({ type: "REMOVE_USER_DATA", payload: { selectedIndex: index } });
                 }
+
             }
             return {
                 x,

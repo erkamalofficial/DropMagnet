@@ -54,7 +54,7 @@ const categoryReducer = (state = initialState, action) => {
             const general = { ...state.general, reswipeModeActive: false };
             return { ...state, general };
         }
-        case "addUserData": {
+        case "ADD_USER_DATA": {
             const currentTab = tabList[state.general.activeTabIndex];
             const userSelectedCard = state[currentTab].apiData[action.payload.selectedIndex];
             const userSelectedCards = state[currentTab].userSelectedCards.concat(userSelectedCard)
@@ -75,10 +75,18 @@ const categoryReducer = (state = initialState, action) => {
             const general = {
                 ...state.general,
                 enableReswipeMode: isReswipe,
-                reswipeModeActive: reswipeModeActive
+                reswipeModeActive: reswipeModeActive,
+                selectionCount: state.general.selectionCount + 1
             };
 
             return { ...state, [currentTab]: selectedTab, general };
+        }
+        case "REMOVE_USER_DATA": {
+            const general = {
+                ...state.general,
+                selectionCount: state.general.selectionCount - 1
+            };
+            return { ...state, general };
         }
         default:
             return state;
