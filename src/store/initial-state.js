@@ -485,9 +485,9 @@ const fashionArts = [
 ];
 
 export default {
-    general: { isLoading: true, activeTabIndex: 0 },
+    general: { isLoading: true, activeTabIndex: 0, enableReswipeMode: false, reswipeModeActive: false },
     arts: { apiData: [], userSelectedCards: [] },
     music: { apiData: [], userSelectedCards: [] },
-    collectibles: { apiData: [], userSelectedCards: [] },
+    collectables: { apiData: [], userSelectedCards: [] },
     fashion: { apiData: [], userSelectedCards: [] }
 };

@@ -4,17 +4,6 @@ import thunk from "redux-thunk";
 
 import initialState from './initial-state';
 
-// const generalReducer = (state = { activeTabIndex: 0, isLoading: true }, action) => {
-//     switch (action.type) {
-//         case "general": {
-//             const general = { ...state.general, activeTabIndex: action.payload.activeTabIndex };
-//             return { ...state, general };
-//         }
-
-//         default:
-//             return state;
-//     }
-// };
 const categoryReducer = (state = initialState, action) => {
     const tabList = ["arts", "music", "collectables", "fashion"];
 
@@ -41,22 +30,57 @@ const categoryReducer = (state = initialState, action) => {
             const arts = { ...state.arts, apiData: [...action.payload] };
             return { ...state, arts, general };
         }
-        case "arts": {
-            const general = { ...state.general, isLoading: false };
-            const arts = { ...state.arts, apiData: [...action.payload] };
-            return { ...state, arts, general };
+        case "FETCH_COLLECTABLES_REQUEST": {
+            const general = { ...state.general, activeTabIndex: action.payload.activeTabIndex, isLoading: true };
+            return { ...state, general };
         }
-        case "music": {
+        case "FETCH_COLLECTABLES_SUCCESS": {
             const general = { ...state.general, isLoading: false };
-            const arts = { ...state.arts, apiData: [...action.payload] };
-            return { ...state, arts, general };
+            const collectables = { ...state.collectables, apiData: [...action.payload] };
+            return { ...state, collectables, general };
         }
-        case "addUserData":
+
+        case "FETCH_FASHION_REQUEST": {
+            const general = { ...state.general, activeTabIndex: action.payload.activeTabIndex, isLoading: true };
+            return { ...state, general };
+        }
+        case "FETCH_FASHION_SUCCESS": {
+            const general = { ...state.general, isLoading: false };
+            const fashion = { ...state.fashion, apiData: [...action.payload] };
+            return { ...state, fashion, general };
+        }
+
+        case "FETCH_RESWIPE_REQUEST": {
+            const currentTab = tabList[state.general.activeTabIndex];
+            const arts = { ...state.arts, apiData: [...state[currentTab].userSelectedCards], userSelectedCards: [] };
+            return { ...state, arts };
+        }
+        case "addUserData": {
             const currentTab = tabList[state.general.activeTabIndex];
             const userSelectedCard = state[currentTab].apiData[action.payload.selectedIndex];
             const userSelectedCards = state[currentTab].userSelectedCards.concat(userSelectedCard)
-            const arts = { ...state.arts, userSelectedCards };
-            return { ...state, arts };
+
+            const isInReswipeMode = state.general.enableReswipeMode;
+
+            const isReswipe = (userSelectedCards.length === 10);
+            var reswipeModeActive = state.general.reswipeModeActive;
+            if (isReswipe && !state.general.reswipeModeActive) {
+                reswipeModeActive = true;
+            }
+            var arts = { ...state.arts, userSelectedCards };
+            if (isReswipe) {
+                userSelectedCards.sort((a, b) => a.drop_id - b.drop_id);
+                arts = { ...state.arts, apiData: userSelectedCards, userSelectedCards: [] };
+            }
+
+            const general = {
+                ...state.general,
+                enableReswipeMode: isReswipe,
+                reswipeModeActive: reswipeModeActive
+            };
+
+            return { ...state, arts, general };
+        }
         default:
             return state;
     }

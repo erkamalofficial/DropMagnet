@@ -9,6 +9,11 @@ const ProgressBar = styled.div`
     margin: 0 8px 16px;
     padding: 8px 16px;;
     border-radius: 22px;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 89px;
+    background: #1d1c1c;
     // @media (max-width: 600px) {
     //     margin: 0 0 16px;
     //     padding: 8px 40px;
@@ -17,13 +22,16 @@ const ProgressBar = styled.div`
     span {
         line-height: 24px;
     }
+    span.reswipeBtn {
+        cursor: pointer;
+    }
 `;
 
-export default ({ size, selectedCount }) => {
+export default ({ size, selectedCount, handleReswipe }) => {
     return (
         <ProgressBar>
-            <span>{selectedCount}/{size}</span>
-            <span>Exit swipe</span>
+            <span>{selectedCount}/10</span>
+            <span className="reswipeBtn" onClick={() => handleReswipe()}>Exit reswipe</span>
         </ProgressBar>
     );
 };
