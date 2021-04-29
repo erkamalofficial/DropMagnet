@@ -39,12 +39,11 @@ const Home = (props) => {
         return state.category.general.activeTabIndex
     });
     const isLoading = useSelector((state) => state.category.general.isLoading);
-    // const enableReswipeMode = useSelector((state) => state.category.general.enableReswipeMode);
     const reswipeModeActive = useSelector((state) => state.category.general.reswipeModeActive);
     const selectionCount = useSelector((state) => state.category.general.selectionCount);
     const currentTabId = tabList[activeTabIndex];
 
-    const { apiData, reswipeBucket } = useSelector((state) => {
+    const { activeBucket, reswipeBucket, selectionBucket } = useSelector((state) => {
         return state.category[currentTabId];
     });
 
@@ -80,15 +79,15 @@ const Home = (props) => {
                 {reswipeModeActive &&
                     <ProgressBar
                         key="progressBar"
-                        size={apiData.length}
+                        size={activeBucket.length}
                         handleReswipe={handleReswipe}
-                        selectedCount={selectionCount}
+                        selectedCount={selectionBucket.fav.length}
                     />
                 }
                 {!isLoading &&
                     <Deck
                         key={reswipeModeActive}
-                        cardList={reswipeModeActive? reswipeBucket : apiData}
+                        cardList={reswipeModeActive ? reswipeBucket : activeBucket}
                     />
                 }
             </div>

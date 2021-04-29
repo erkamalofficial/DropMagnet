@@ -4,6 +4,8 @@ import thunk from "redux-thunk";
 
 import initialState from './initial-state';
 
+
+
 const categoryReducer = (state = initialState, action) => {
     const tabList = ["arts", "music", "collectables", "fashion"];
 
@@ -18,7 +20,7 @@ const categoryReducer = (state = initialState, action) => {
         }
         case "FETCH_MUSIC_SUCCESS": {
             const general = { ...state.general, isLoading: false };
-            const music = { ...state.music, apiData: [...action.payload] };
+            const music = { ...state.music, apiData: [...action.payload], activeBucket: [...action.payload] };
             return { ...state, music, general };
         }
         case "FETCH_ARTS_REQUEST": {
@@ -27,7 +29,7 @@ const categoryReducer = (state = initialState, action) => {
         }
         case "FETCH_ARTS_SUCCESS": {
             const general = { ...state.general, isLoading: false };
-            const arts = { ...state.arts, apiData: [...action.payload] };
+            const arts = { ...state.arts, apiData: [...action.payload], activeBucket: [...action.payload] };
             return { ...state, arts, general };
         }
         case "FETCH_COLLECTABLES_REQUEST": {
@@ -36,7 +38,7 @@ const categoryReducer = (state = initialState, action) => {
         }
         case "FETCH_COLLECTABLES_SUCCESS": {
             const general = { ...state.general, isLoading: false };
-            const collectables = { ...state.collectables, apiData: [...action.payload] };
+            const collectables = { ...state.collectables, apiData: [...action.payload], activeBucket: [...action.payload] };
             return { ...state, collectables, general };
         }
 
@@ -46,51 +48,65 @@ const categoryReducer = (state = initialState, action) => {
         }
         case "FETCH_FASHION_SUCCESS": {
             const general = { ...state.general, isLoading: false };
-            const fashion = { ...state.fashion, apiData: [...action.payload] };
+            const fashion = { ...state.fashion, apiData: [...action.payload], activeBucket: [...action.payload] };
             return { ...state, fashion, general };
         }
 
         case "FETCH_RESWIPE_REQUEST": {
+            const currentTab = tabList[state.general.activeTabIndex];
+            const activeTabContent = state[currentTab];
+
+            const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav, ...activeTabContent.selectionBucket.rem];
+            const remainingCardsForSwipe = activeTabContent.apiData.filter((card) => !cardIdsAlreadySwiped.includes(card.drop_id))
+
+            const selectedTabContent = { ...activeTabContent, activeBucket: remainingCardsForSwipe };
             const general = { ...state.general, reswipeModeActive: false };
-            return { ...state, general };
+
+            return { ...state, general, [currentTab]: selectedTabContent };
         }
         case "ADD_USER_DATA": {
             const currentTab = tabList[state.general.activeTabIndex];
             const activeTabContent = state[currentTab];
-            const userSelectedCard = activeTabContent.apiData[action.payload.selectedIndex];
-            var reswipeBucketContent = activeTabContent.reswipeBucket;
-            var favBucketContent = activeTabContent.favBucket;
-            if (activeTabContent.reswipeBucket.length < 10) {
-                reswipeBucketContent = activeTabContent.reswipeBucket.concat(userSelectedCard);
-            }
+
+            var userSelectedCard = activeTabContent.activeBucket[action.payload.selectedIndex];
             if (state.general.reswipeModeActive) {
-                const contentForFav = activeTabContent.reswipeBucket[action.payload.selectedIndex];
-                favBucketContent = activeTabContent.favBucket.concat(contentForFav)
+                userSelectedCard = activeTabContent.reswipeBucket[action.payload.selectedIndex];
             }
 
-
-            const isInReswipeMode = state.general.enableReswipeMode;
-
-            const isReswipe = (reswipeBucketContent.length === 10);
             var reswipeModeActive = state.general.reswipeModeActive;
-
-            if (isReswipe && !state.general.reswipeModeActive) {
+            const favList = activeTabContent.selectionBucket.fav;
+            const isFavBucketHasTenItems = favList.length === 10;
+            if (favList.length < 10 && !favList.includes(userSelectedCard.drop_id)) {
+                favList.push(userSelectedCard.drop_id);
+            } else {
                 reswipeModeActive = true;
             }
 
-            var selectedTab = { ...activeTabContent, reswipeBucket: reswipeBucketContent };
-            if (isReswipe) {
-                reswipeBucketContent.sort((a, b) => a.drop_id - b.drop_id);
-                selectedTab = {
-                    ...activeTabContent,
-                    reswipeBucket: reswipeBucketContent,
-                    favBucket: favBucketContent
-                };
+
+            if (isFavBucketHasTenItems && !state.general.reswipeModeActive) {
+                reswipeModeActive = true;
             }
+
+
+            var selectedTab = { ...activeTabContent };
+
+            if (favList.length === 10) {
+                const reswipeBucketContent = activeTabContent.apiData.filter((card) => favList.includes(card.drop_id));
+                reswipeBucketContent.sort((a, b) => a.drop_id - b.drop_id);
+                selectedTab = { ...activeTabContent, reswipeBucket: reswipeBucketContent };
+            }
+            //reswipe over
+            if (state.general.reswipeModeActive && action.payload.selectedIndex === 0) {
+                reswipeModeActive = false;
+                const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav, ...activeTabContent.selectionBucket.rem];
+                const activeBucketContent = activeTabContent.apiData.filter((card) => !cardIdsAlreadySwiped.includes(card.drop_id))
+
+                selectedTab = { ...activeTabContent, activeBucket: activeBucketContent };
+            }
+
 
             const general = {
                 ...state.general,
-                enableReswipeMode: isReswipe,
                 reswipeModeActive: reswipeModeActive,
                 selectionCount: state.general.selectionCount + 1
             };
@@ -98,12 +114,26 @@ const categoryReducer = (state = initialState, action) => {
             return { ...state, [currentTab]: selectedTab, general };
         }
         case "REMOVE_USER_DATA": {
+            const currentTab = tabList[state.general.activeTabIndex];
+            const activeTabContent = state[currentTab];
+
+            var userSelectedCard = activeTabContent.activeBucket[action.payload.selectedIndex];
+            if (state.general.reswipeModeActive) {
+                userSelectedCard = activeTabContent.reswipeBucket[action.payload.selectedIndex];
+            }
+            var userFav = activeTabContent.selectionBucket.fav;
+            if (userFav.includes(userSelectedCard.drop_id)) {
+                activeTabContent.selectionBucket.fav = userFav.filter(item => item != userSelectedCard.drop_id)
+            }
+            activeTabContent.selectionBucket.rem.push(userSelectedCard.drop_id);
 
             const general = {
                 ...state.general,
                 selectionCount: state.general.selectionCount - 1
             };
-            return { ...state, general };
+            var selectedTab = { ...activeTabContent, selectionBucket: activeTabContent.selectionBucket };
+
+            return { ...state, general, [currentTab]: selectedTab, };
         }
         default:
             return state;

@@ -486,8 +486,8 @@ const fashionArts = [
 
 export default {
     general: { isLoading: true, activeTabIndex: 0, enableReswipeMode: false, reswipeModeActive: false, selectionCount: 0 },
-    arts: { apiData: [], reswipeBucket: [], favBucket: [] },
-    music: { apiData: [], reswipeBucket: [], favBucket: [] },
-    collectables: { apiData: [], reswipeBucket: [], favBucket: [] },
-    fashion: { apiData: [], reswipeBucket: [], favBucket: [] }
+    arts: { apiData: [], reswipeBucket: [], activeBucket: [], selectionBucket: { fav: [], rem: [] } },
+    music: { apiData: [], reswipeBucket: [], activeBucket: [], selectionBucket: { fav: [], rem: [] } },
+    collectables: { apiData: [], reswipeBucket: [], activeBucket: [], selectionBucket: { fav: [], rem: [] } },
+    fashion: { apiData: [], reswipeBucket: [], activeBucket: [], selectionBucket: { fav: [], rem: [] } }
 };
