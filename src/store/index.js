@@ -78,9 +78,10 @@ const categoryReducer = (state = initialState, action) => {
             const isFavBucketHasTenItems = favList.length === 10;
             if (favList.length < 10 && !favList.includes(userSelectedCard.drop_id)) {
                 favList.push(userSelectedCard.drop_id);
-            } else {
-                reswipeModeActive = true;
             }
+            // else {
+            //     reswipeModeActive = true;
+            // }
 
 
             if (isFavBucketHasTenItems && !state.general.reswipeModeActive) {
@@ -95,14 +96,22 @@ const categoryReducer = (state = initialState, action) => {
                 reswipeBucketContent.sort((a, b) => a.drop_id - b.drop_id);
                 selectedTab = { ...activeTabContent, reswipeBucket: reswipeBucketContent };
             }
-            //reswipe over
-            if (state.general.reswipeModeActive && action.payload.selectedIndex === 0) {
-                reswipeModeActive = false;
-                const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav, ...activeTabContent.selectionBucket.rem];
-                const activeBucketContent = activeTabContent.apiData.filter((card) => !cardIdsAlreadySwiped.includes(card.drop_id))
 
-                selectedTab = { ...activeTabContent, activeBucket: activeBucketContent };
+            if (state.general.reswipeModeActive && action.payload.selectedIndex === 0) {
+                const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav];
+                const activeBucketContent = activeTabContent.apiData.filter((card) => cardIdsAlreadySwiped.includes(card.drop_id))
+
+                selectedTab = { ...activeTabContent, reswipeBucket: activeBucketContent };
             }
+
+            // //reswipe over
+            // if (state.general.reswipeModeActive && action.payload.selectedIndex === 0) {
+            //     reswipeModeActive = false;
+            //     const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav, ...activeTabContent.selectionBucket.rem];
+            //     const activeBucketContent = activeTabContent.apiData.filter((card) => !cardIdsAlreadySwiped.includes(card.drop_id))
+
+            //     selectedTab = { ...activeTabContent, activeBucket: activeBucketContent };
+            // }
 
 
             const general = {
