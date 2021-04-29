@@ -79,7 +79,7 @@ const Home = (props) => {
                 {reswipeModeActive &&
                     <ProgressBar
                         key="progressBar"
-                        size={activeBucket.length}
+                        size={reswipeModeActive ? reswipeBucket.length : 10}
                         handleReswipe={handleReswipe}
                         selectedCount={selectionBucket.fav.length}
                     />

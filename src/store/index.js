@@ -130,17 +130,25 @@ const categoryReducer = (state = initialState, action) => {
             if (state.general.reswipeModeActive) {
                 userSelectedCard = activeTabContent.reswipeBucket[action.payload.selectedIndex];
             }
+
             var userFav = activeTabContent.selectionBucket.fav;
             if (userFav.includes(userSelectedCard.drop_id)) {
                 activeTabContent.selectionBucket.fav = userFav.filter(item => item != userSelectedCard.drop_id)
             }
             activeTabContent.selectionBucket.rem.push(userSelectedCard.drop_id);
 
+            var selectedTab = { ...activeTabContent, selectionBucket: activeTabContent.selectionBucket };
+
+            if (state.general.reswipeModeActive && action.payload.selectedIndex === 0) {
+                const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav];
+                const activeBucketContent = activeTabContent.apiData.filter((card) => cardIdsAlreadySwiped.includes(card.drop_id))
+                selectedTab = { ...activeTabContent, selectionBucket: activeTabContent.selectionBucket, reswipeBucket: activeBucketContent };
+            }
+
             const general = {
                 ...state.general,
                 selectionCount: state.general.selectionCount - 1
             };
-            var selectedTab = { ...activeTabContent, selectionBucket: activeTabContent.selectionBucket };
 
             return { ...state, general, [currentTab]: selectedTab, };
         }

@@ -30,7 +30,7 @@ const ProgressBar = styled.div`
 export default ({ size, selectedCount, handleReswipe }) => {
     return (
         <ProgressBar>
-            <span>{selectedCount}/10</span>
+            <span>{selectedCount}/{size}</span>
             <span className="reswipeBtn" onClick={() => handleReswipe()}>Exit reswipe</span>
         </ProgressBar>
     );
