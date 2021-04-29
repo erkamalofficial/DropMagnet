@@ -27,14 +27,14 @@ const Avatar = styled.img`
 const FixedHeaderWrapper = styled.div`
     position: fixed;
     flex-direction: column;
-    background-color: ${({ isMagGallery }) => isMagGallery ? 'rgb(0,0,0, 0)' : 'rgb(0,0,0)'};
+    background-color: ${({ isMagGallery }) => isMagGallery ? 'rgb(0,0,0, 0)' : 'inherit'};
     @media (max-width: 600px) {
         background-color: var(--coreBlack);
     }
     width: 100%;
     left: 50%;
     transform: translate(-50%, 0%);
-    z-index: 9998;
+    z-index: 1;
     padding: 16px 0px;
     display: flex;
     flex-direction: row;
@@ -99,4 +99,4 @@ const FixedHeader = (props) => {
     )
 };
 
-export default FixedHeader;
+export default React.memo(FixedHeader);

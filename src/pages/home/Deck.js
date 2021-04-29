@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
 import { useSelector, useDispatch } from "react-redux";
@@ -145,5 +145,5 @@ const Deck = ({ cardList }) => {
 
 }
 
-export default Deck;
+export default memo(Deck);
 

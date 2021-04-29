@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styled from 'styled-components';
 
 const TabsWrapper = styled.ul`
@@ -40,7 +41,7 @@ const TabItem = styled.li`
     background-clip: text;
     -webkit-background-clip: text;
 `;
-export default ({ activeTabIndex, handleActiveTabIndex, tabList }) => {
+const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList }) => {
     return (
         <TabsWrapper>
             {tabList.map((title, index) =>
@@ -53,3 +54,5 @@ export default ({ activeTabIndex, handleActiveTabIndex, tabList }) => {
         </TabsWrapper>
     );
 };
+
+export default memo(Tabs);
