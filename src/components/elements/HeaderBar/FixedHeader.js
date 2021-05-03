@@ -87,7 +87,7 @@ const FixedHeader = (props) => {
         <FixedHeaderWrapper isMagGallery={props.isMagGallery}>
             <HeaderHolder>
                 <Logo src="./dropmagnet-small-logo.png" />
-                {showHeaderTitleIfNeeded};
+                {showHeaderTitleIfNeeded}
             </HeaderHolder>
             <HeaderHolder>
                 <HeaderBarMenuIcon>

@@ -19,8 +19,9 @@ const LinksBtn = styled.div`
     }
 `;
 export default function (props) {
+    const { galleryName } = props;
     return <LinksBtn {...props}>
         <span className="tagLink">BasketballNFTs.Link</span>
-        <span className="tagYou">/You</span>
+        <span className="tagYou">/{galleryName}</span>
     </LinksBtn>;
 };
