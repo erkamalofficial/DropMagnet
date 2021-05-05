@@ -1,37 +1,33 @@
-import styled from 'styled-components';
+// import "./styles.css";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from "swiper/core";
-
-// install Swiper modules
-import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css";
+import { useSpringCarousel } from "react-spring-carousel-js";
+import styled from "styled-components";
 import LinksBtn from '../../components/blocks/links-btn';
 
-SwiperCore.use([Navigation]);
-
-const SwiperWrapper = styled.div`
-  display: flex;
-  width: 850px;
-  margin: auto;
-  .swiper-container {
-    width: 100%;
-    height: 100%;
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-  }
+const ArrowButton = styled.div`
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border: none;
+  background-color: grey;
+  transition: all 240ms ease 0s;
+  outline: none;
 `;
+
 const CardSection = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('./links-card.png');
-    background-size: 110% 110%;
-    box-shadow: 0px 4px 1px 0px rgb(0 0 0 / 83%);
-    border-radius: 10px;
-    padding: 0 18px 0.6rem;
+    
+    width: 488px;
+    height: 334px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -4px 0 #161616;
+    border-radius: 8px;
+    background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%);
+  
     gap: 0.6rem;
     opacity: 0.8;
+    margin-top: 36px;
 `;
 const Circle = styled.div`
     width: 72px;
@@ -49,10 +45,15 @@ const Circle = styled.div`
     border: 3px solid var(--purple500);
 `;
 const PLLinksBtn = styled(LinksBtn) `
-    background: var(--grey800);
+    width: 396px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 23px;
+    background-color: rgba(23, 23, 24, 0.88);
     font-weight: 700;
-    min-width: 310px;
     text-align: center;
+    padding: 12px;
+    line-height: normal;
+    lin
     .tagLink {
         color: var(--grayWhite);
     }
@@ -66,50 +67,76 @@ const HeaderSubtitle = styled.div`
     font-weight: 700;
 
 `;
-const CardSectionDesktop = ({ displayName }) => (
+const CodeContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+    align-items: center;
+`;
+const NavIcon = styled.div`
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: rgba(23, 23, 24, 0.88);
+    text-align: center;
+    font-size: 32px;
+    cursor: pointer;
+`;
+const GridContainer = styled.div`
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    align-items: center;
+    justify-items: center;
+    width: 1148px;
+    margin: auto;
+    margin-bottom: 32px;
 
-    <SwiperWrapper>
-        <Swiper
-            slidesPerView={2} navigation={true} className="mySwiper" freeMode={true} >
-            <SwiperSlide>
-                <CardSection>
-                    <Circle>🎨</Circle>
-                    <HeaderSubtitle>Artists</HeaderSubtitle>
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                </CardSection>
-            </SwiperSlide>
-            <SwiperSlide>
-                <CardSection>
-                    <Circle>🌕</Circle>
-                    <HeaderSubtitle>Collectors</HeaderSubtitle>
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                </CardSection>
-            </SwiperSlide>
-            <SwiperSlide>
-                <CardSection>
-                    <Circle>🧥</Circle>
-                    <HeaderSubtitle>Music</HeaderSubtitle>
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                </CardSection>
-            </SwiperSlide>
-            <SwiperSlide>
-                <CardSection>
-                    <Circle>🎭</Circle>
-                    <HeaderSubtitle>Fashion</HeaderSubtitle>
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                    <PLLinksBtn galleryName={displayName} />
-                </CardSection>
-            </SwiperSlide>
+`;
 
-        </Swiper>
-    </SwiperWrapper>
-);
 
-export default CardSectionDesktop;
+
+const CardSectionItem = (cardItem, index, displayName) => {
+    return {
+        id: index,
+        renderItem: (
+            <CardSection>
+                <Circle>{cardItem.icon}</Circle>
+                <HeaderSubtitle>{cardItem.title}</HeaderSubtitle>
+                <PLLinksBtn galleryName={displayName} />
+                <PLLinksBtn galleryName={displayName} />
+                <PLLinksBtn galleryName={displayName} />
+            </CardSection>
+        )
+    };
+}
+const contentList2 = [
+    { title: "Artists", icon: "🎨" },
+    { title: "Collectors", icon: "🌕" },
+    { title: "Fashion", icon: "🧥" },
+    { title: "Music", icon: "🎭" }
+];
+
+const CaurouselComponent = ({ displayName }) => {
+    const {
+        carouselFragment,
+        slideToPrevItem,
+        slideToNextItem
+    } = useSpringCarousel({
+        itemsPerSlide: 2,
+        initialStartingPosition: "center",
+        items: contentList2.map((cardItem, index) => CardSectionItem(cardItem, index, displayName))
+    });
+
+    return (
+        <GridContainer>
+            <NavIcon type="prev" onClick={slideToPrevItem}> &#8249; </NavIcon>
+            {carouselFragment}
+            <NavIcon type="next" onClick={slideToNextItem}> &#8250; </NavIcon>
+        </GridContainer>
+    );
+};
+
+export default CaurouselComponent;
+

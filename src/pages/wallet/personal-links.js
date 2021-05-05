@@ -6,6 +6,8 @@ import CardSectionDesktop from './card-section-desktop';
 import CardSectionMobile from './card-section-mobile';
 import useViewport from './useViewport';
 
+
+
 const PersonalLinksWrapper = styled.div`
     // max-width: 600px;
     width: 100%;
@@ -44,16 +46,6 @@ const HeaderSubtitle = styled.div`
     font-weight: 700;
 
 `;
-
-// const PLSectionTwo = styled.div`
-//     display: flex;
-//     flex-direction: row;
-//     flex-wrap: wrap;
-//     justify-content: center;
-//     gap: 1rem;
-//     margin-bottom: 24px;
-// `;
-
 
 
 const PLSectionThree = styled.div`
@@ -97,7 +89,12 @@ const PLSectionBtn = styled.div`
         cursor: pointer;
     }
 `;
-
+const CardOverLay = styled.div`
+    background: url('./links_card.png');
+    position: absolute;
+    width: 1440px;
+    height: 1024px;
+`;
 const PersonalLinks = props => {
     const [galleryName, setGalleryName] = useState('');
     const displayName = galleryName === '' ? 'You' : galleryName;
@@ -105,11 +102,13 @@ const PersonalLinks = props => {
     const breakpoint = 620;
 
     const handleGalleryName = (val) => {
-        setGalleryName(val);
+        const checkAndLimitGalleryName = val.length > 22 ? `${val.substring(0, 22)}...` : val;
+        setGalleryName(checkAndLimitGalleryName);
     }
     return (
         <PersonalLinksWrapper>
             <FixedHeader {...props} />
+            {/* <CardOverLay> Test </CardOverLay> */}
 
             <PLSectionOne>
                 <PLSectionOneContent>
@@ -118,9 +117,11 @@ const PersonalLinks = props => {
                     <HeaderSubtitle> Promote your art with unique personal links </HeaderSubtitle>
                 </PLSectionOneContent>
             </PLSectionOne>
-            {viewportWidth < breakpoint ?
+            <CardSectionDesktop displayName={displayName} />
+
+            {/* {viewportWidth < breakpoint ?
                 <CardSectionMobile displayName={displayName} /> :
-                <CardSectionDesktop displayName={displayName} />}
+                <CardSectionDesktop displayName={displayName} />} */}
             <PLSectionThree>
                 <PLSectionThreeTitle>
                     <span>Reserve Your</span>
@@ -128,7 +129,6 @@ const PersonalLinks = props => {
                 </PLSectionThreeTitle>
                 <PLSectionUserinput
                     placeholder="Enter your brand or name here"
-                    value={galleryName}
                     onChange={(e) => handleGalleryName(e.target.value)}
                 />
                 <PLSectionEmojiLine>Emoji's are allowed! ❤️</PLSectionEmojiLine>

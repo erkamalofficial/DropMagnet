@@ -33,6 +33,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-spring": "^9.1.2",
+    "react-spring-carousel-js": "1.9.5",
     "react-use-gesture": "5.2.4",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
