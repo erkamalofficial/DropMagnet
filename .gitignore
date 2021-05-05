@@ -5,3 +5,11 @@
 .secret
 node_modules
 build
+
+# production
+/build
+
+.firebase
+.firebase/
+.firebase/*
+.firebase/**

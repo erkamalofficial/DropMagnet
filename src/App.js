@@ -14,6 +14,7 @@ import WalletLinks from './pages/wallet/wallet-links';
 import PersonalLinks from './pages/wallet/personal-links';
 import NftDisplay from './pages/wallet/nft-display';
 import ConnectedWallets from './pages/wallet/connected-wallets';
+import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from 'react';
 import { FirebaseAuthProvider } from "../src/contexts/FirebaseAuthContext"
 import firebase from "firebase/app";
@@ -135,6 +136,7 @@ function App() {
           <Route path="/nfts" render={(props) => <NftDisplay {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/cw" render={(props) => <ConnectedWallets {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/personal_links" render={(props) => <PersonalLinks {...props} userDetails={userDetails} userLoggedIn={true} />} />
+          <Route path="/tinder_cards" render={(props) => <TinderCards {...props} userDetails={userDetails} userLoggedIn={true} />} />
         </Switch>
       </FirebaseAuthProvider>
     </Router>
