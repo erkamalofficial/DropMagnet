@@ -67,11 +67,14 @@ const PLSectionUserinput = styled.input`
     font-size: var(--font-size-m);
     border-radius: 5px;
     width: 398px;
+    @media (max-width: 600px) {
+        width: 90%;
+    }
     line-height: 48px;
     text-align: center;
 `;
 const PLSectionEmojiLine = styled.div`
-    font-weight: 500;
+    font-weight: 700;
     color: var(--grey250);
     font-size: var(--font-size-s);
 `;
@@ -108,7 +111,6 @@ const PersonalLinks = props => {
     return (
         <PersonalLinksWrapper>
             <FixedHeader {...props} />
-            {/* <CardOverLay> Test </CardOverLay> */}
 
             <PLSectionOne>
                 <PLSectionOneContent>
@@ -117,15 +119,14 @@ const PersonalLinks = props => {
                     <HeaderSubtitle> Promote your art with unique personal links </HeaderSubtitle>
                 </PLSectionOneContent>
             </PLSectionOne>
-            <CardSectionDesktop displayName={displayName} />
 
-            {/* {viewportWidth < breakpoint ?
+            {viewportWidth < breakpoint ?
                 <CardSectionMobile displayName={displayName} /> :
-                <CardSectionDesktop displayName={displayName} />} */}
+                <CardSectionDesktop displayName={displayName} />}
             <PLSectionThree>
                 <PLSectionThreeTitle>
-                    <span>Reserve Your</span>
-                    <span>Gallery Name</span>
+                    <span>Reserve Your </span>
+                    <span> Gallery Name</span>
                 </PLSectionThreeTitle>
                 <PLSectionUserinput
                     placeholder="Enter your brand or name here"

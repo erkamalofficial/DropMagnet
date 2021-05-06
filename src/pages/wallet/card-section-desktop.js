@@ -53,7 +53,6 @@ const PLLinksBtn = styled(LinksBtn) `
     text-align: center;
     padding: 12px;
     line-height: normal;
-    lin
     .tagLink {
         color: var(--grayWhite);
     }
