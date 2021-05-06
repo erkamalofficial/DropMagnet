@@ -36,6 +36,7 @@
   --font-size-3xl: 40px;
   --font-size-4xl: 48px;
   --font-quicksand: "Quicksand";
+  --font-bdcols: "BD Colonius";
 }
 
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700');
@@ -238,6 +239,10 @@ p1 .medium {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'BD Colonius';
+  src: url('./css/BD-Colonius-Reg.otf');
+}
  
 
 

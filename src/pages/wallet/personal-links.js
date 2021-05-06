@@ -98,6 +98,11 @@ const CardOverLay = styled.div`
     width: 1440px;
     height: 1024px;
 `;
+const GalleryNameTitle = styled.span`
+    font-family: var(--font-bdcols);
+    font-size: 22px;
+    font-weight: normal;
+`;
 const PersonalLinks = props => {
     const [galleryName, setGalleryName] = useState('');
     const displayName = galleryName === '' ? 'You' : galleryName;
@@ -106,7 +111,7 @@ const PersonalLinks = props => {
 
     const handleGalleryName = (val) => {
         const checkAndLimitGalleryName = val.length > 22 ? `${val.substring(0, 22)}...` : val;
-        setGalleryName(checkAndLimitGalleryName);
+        setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ''));
     }
     return (
         <PersonalLinksWrapper>
@@ -125,8 +130,8 @@ const PersonalLinks = props => {
                 <CardSectionDesktop displayName={displayName} />}
             <PLSectionThree>
                 <PLSectionThreeTitle>
-                    <span>Reserve Your </span>
-                    <span> Gallery Name</span>
+                    <span>Reserve your </span>
+                    <GalleryNameTitle> Gallery Name</GalleryNameTitle>
                 </PLSectionThreeTitle>
                 <PLSectionUserinput
                     placeholder="Enter your brand or name here"

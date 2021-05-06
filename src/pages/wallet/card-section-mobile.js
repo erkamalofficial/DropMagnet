@@ -81,6 +81,10 @@ const TabItem = styled.div`
     display: flex;
     align-items: center;
     gap: 0.3rem;
+    .icon {
+        font-size: 12px;
+    }
+    .
 `
 
 const CardSectionItem = (cardItem, index, displayName) => {
@@ -88,7 +92,7 @@ const CardSectionItem = (cardItem, index, displayName) => {
         id: index,
         renderItem: (
             <TabItem>
-                <span>{cardItem.icon}</span>
+                <span className="icon">{cardItem.icon}</span>
                 <span>{cardItem.title}</span>
             </TabItem>
         )
