@@ -45,6 +45,7 @@ const PLLinksBtn = styled(LinksBtn) `
     .tagYou {
         color: var(--purple400);
     }
+    margin-bottom: 8px;
 `;
 const HeaderSubtitle = styled.div`
     font-size: var(--font-size-xl);
@@ -84,9 +85,21 @@ const TabItem = styled.div`
     .icon {
         font-size: 12px;
     }
-    .
-`
+`;
+const ScrollContainer = styled.div`
+    height: 210px;
+    width: 100%;
+    overflow: hidden;
+`;
+const ScrollContainerContent = styled.div`
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+`;
 const CardSectionItem = (cardItem, index, displayName) => {
     return {
         id: index,
@@ -123,9 +136,35 @@ const CaurouselComponent = ({ displayName }) => {
                 {carouselFragment}
                 <NavIcon type="next" onClick={slideToNextItem}> &#8250; </NavIcon>
             </GridContainer>
-            <PLLinksBtn galleryName={displayName} />
-            <PLLinksBtn galleryName={displayName} />
-            <PLLinksBtn galleryName={displayName} />
+            <ScrollContainer>
+                <ScrollContainerContent>
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                    <PLLinksBtn galleryName={displayName} />
+                </ScrollContainerContent>
+            </ScrollContainer>
         </CardSection>
     );
 };

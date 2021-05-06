@@ -45,7 +45,7 @@ const Circle = styled.div`
     border: 3px solid var(--purple500);
 `;
 const PLLinksBtn = styled(LinksBtn) `
-    width: 396px;
+    width: 95%;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
     border-radius: 23px;
     background-color: rgba(23, 23, 24, 0.88);
@@ -59,6 +59,7 @@ const PLLinksBtn = styled(LinksBtn) `
     .tagYou {
         color: var(--purple400);
     }
+    margin-bottom: 8px;
 `;
 const HeaderSubtitle = styled.div`
     font-size: var(--font-size-xl);
@@ -91,10 +92,21 @@ const GridContainer = styled.div`
     width: 1148px;
     margin: auto;
     margin-bottom: 32px;
-
 `;
 
-
+const ScrollContainer = styled.div`
+    height: 210px;
+    width: 100%;
+    overflow: hidden;
+`;
+const ScrollContainerContent = styled.div`
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 
 const CardSectionItem = (cardItem, index, displayName) => {
     return {
@@ -103,9 +115,36 @@ const CardSectionItem = (cardItem, index, displayName) => {
             <CardSection>
                 <Circle>{cardItem.icon}</Circle>
                 <HeaderSubtitle>{cardItem.title}</HeaderSubtitle>
-                <PLLinksBtn galleryName={displayName} />
-                <PLLinksBtn galleryName={displayName} />
-                <PLLinksBtn galleryName={displayName} />
+                <ScrollContainer>
+                    <ScrollContainerContent>
+
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                        <PLLinksBtn galleryName={displayName} />
+                    </ScrollContainerContent>
+                </ScrollContainer>
             </CardSection>
         )
     };

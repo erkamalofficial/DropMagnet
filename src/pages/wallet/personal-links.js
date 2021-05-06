@@ -18,6 +18,9 @@ const PersonalLinksWrapper = styled.div`
 const PLSectionOne = styled.div`
     margin-top: 72px;
     margin-bottom: 40px;
+    @media (max-width: 600px) {
+        margin-bottom: unset;
+    }
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -108,9 +111,11 @@ const PersonalLinks = props => {
     const displayName = galleryName === '' ? 'You' : galleryName;
     const { viewportWidth } = useViewport();
     const breakpoint = 620;
+    const isMobile = viewportWidth < breakpoint;
 
     const handleGalleryName = (val) => {
-        const checkAndLimitGalleryName = val.length > 22 ? `${val.substring(0, 22)}...` : val;
+        const galleryNameLimit = isMobile ? 16 : 22;
+        const checkAndLimitGalleryName = val.length > galleryNameLimit ? `${val.substring(0, galleryNameLimit)}...` : val;
         setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ''));
     }
     return (
@@ -125,7 +130,7 @@ const PersonalLinks = props => {
                 </PLSectionOneContent>
             </PLSectionOne>
 
-            {viewportWidth < breakpoint ?
+            {isMobile ?
                 <CardSectionMobile displayName={displayName} /> :
                 <CardSectionDesktop displayName={displayName} />}
             <PLSectionThree>
