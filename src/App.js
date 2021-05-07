@@ -5,6 +5,7 @@ import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import TermsAndConditions from './pages/terms';
 import DropCreation from './pages/create_drop';
 import Signup from './pages/signup';
+import Signup2 from './pages/signup/index2';
 import Login from './pages/login';
 import Profile from './pages/profile';
 import SquareGallery from './pages/galleries/square-gallery';
@@ -127,6 +128,7 @@ function App() {
           <Route path="/mag_gallery" render={(props) => <MagGallery {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/create_drop" render={(props) => <DropCreation {...props} userHandle={userDetails.handle} />} />
           <Route path="/signup" render={(props) => <Signup {...props} />} />
+          <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/login" render={(props) => <Login {...props} />} />
           <Route path="/profile" render={(props) => <Profile {...props} userDetails={userDetails} userLoggedIn={true} />} />
           <Route path="/wallet_links" render={(props) => <WalletLinks {...props} userDetails={userDetails} userLoggedIn={true} />} />
