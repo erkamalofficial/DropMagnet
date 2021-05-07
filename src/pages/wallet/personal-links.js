@@ -63,9 +63,9 @@ const PLSectionThree = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+     > * { margin-bottom: 1rem;}
     @media (max-width: 320px) {
-        gap: 0.5rem;
+        > * { margin-bottom: 0.5rem;}
     }
 `;
 const PLSectionThreeTitle = styled.div`

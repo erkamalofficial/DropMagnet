@@ -23,12 +23,11 @@ const CardSection = styled.div`
     align-items: center;
     
     width: 100%;
-    height: 334px;
+    height: 320px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -4px 0 #161616;
     border-radius: 8px;
     background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%);
-  
-    gap: 0.6rem;
+
     opacity: 0.8;
     margin-top: 36px;
 `;
@@ -70,13 +69,6 @@ const HeaderSubtitle = styled.div`
     font-weight: 700;
 
 `;
-const CodeContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin-bottom: 32px;
-    align-items: center;
-`;
 const NavIcon = styled.div`
     border-radius: 50%;
     width: 44px;
@@ -87,6 +79,7 @@ const NavIcon = styled.div`
     font-size: 32px;
     cursor: pointer;
     margin-top: 18px;
+    user-select: none;
 `;
 const GridContainer = styled.div`
     display: grid;
@@ -122,7 +115,6 @@ const CardSectionItem = (cardItem, index, displayName) => {
                     <HeaderSubtitle>{cardItem.title}</HeaderSubtitle>
                     <ScrollContainer>
                         <ScrollContainerContent>
-
                             <PLLinksBtn galleryName={displayName} />
                             <PLLinksBtn galleryName={displayName} />
                             <PLLinksBtn galleryName={displayName} />

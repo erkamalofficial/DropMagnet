@@ -72,8 +72,10 @@ const ContinueBtn = styled.button`
     font-weight: 700;
 `;
 const Recaptcha = styled.div`
-    text-align: center;
     margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 export default function Signup(props) {
     useEffect(() => {

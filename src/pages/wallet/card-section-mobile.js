@@ -24,7 +24,7 @@ const CardSection = styled.div`
     border-radius: 8px;
     background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%);
   
-    gap: 0.6rem;
+    > * { margin-bottom: 0.6rem;}
     opacity: 0.8;
     margin: 18px;
     padding: 16px 0;
@@ -60,13 +60,7 @@ const HeaderSubtitle = styled.div`
     margin-bottom: 16px;
     font-weight: 700;
 `;
-const CodeContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin-bottom: 32px;
-    align-items: center;
-`;
+
 
 const NavIcon = styled.div`
     width: 44px;
@@ -74,6 +68,7 @@ const NavIcon = styled.div`
     text-align: center;
     font-size: 32px;
     cursor: pointer;
+    user-select: none;
 `;
 const GridContainer = styled.div`
     display: grid;
@@ -89,7 +84,7 @@ const GridContainer = styled.div`
 const TabItem = styled.div`
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    > * { margin-right: 0.3rem;}
     .icon {
         font-size: 12px;
     }
