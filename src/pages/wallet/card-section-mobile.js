@@ -28,6 +28,10 @@ const CardSection = styled.div`
     opacity: 0.8;
     margin: 18px;
     padding: 16px 0;
+    @media (max-width: 320px) {
+        margin: 8px;
+        padding: 8px 0;
+    }
 `;
 
 const PLLinksBtn = styled(LinksBtn) `
@@ -36,7 +40,6 @@ const PLLinksBtn = styled(LinksBtn) `
     background-color: rgba(23, 23, 24, 0.88);
     font-weight: 700;
     text-align: center;
-    padding: 12px;
     line-height: normal;
     width: 92%;
     .tagLink {
@@ -46,6 +49,11 @@ const PLLinksBtn = styled(LinksBtn) `
         color: var(--purple400);
     }
     margin-bottom: 8px;
+    padding: 12px;
+    @media (max-width: 320px) {
+        padding: 8px;
+        font-size: var(--font-size-xs);
+    }
 `;
 const HeaderSubtitle = styled.div`
     font-size: var(--font-size-xl);
@@ -88,6 +96,9 @@ const TabItem = styled.div`
 `;
 const ScrollContainer = styled.div`
     height: 210px;
+    @media (max-width: 320px) {
+        height: 135px;
+    }
     width: 100%;
     overflow: hidden;
 `;

@@ -34,10 +34,16 @@ const PLSectionOneContent = styled.div`
 `;
 const HeaderTitle = styled.div`
     font-size: var(--font-size-xxl);
+    @media (max-width: 320px) {
+        font-size: var(--font-size-m);
+    }
     margin-bottom: 16px;
 `;
 const HeaderTitleTag = styled.div`
     font-size: var(--font-size-xl);
+    @media (max-width: 320px) {
+        font-size: var(--font-size-s);
+    }
     letter-spacing: 8px;
     margin-bottom: 16px;
     color: var(--grey400);
@@ -45,9 +51,11 @@ const HeaderTitleTag = styled.div`
 `;
 const HeaderSubtitle = styled.div`
     font-size: var(--font-size-xl);
+    @media (max-width: 320px) {
+        font-size: var(--font-size-s);
+    }
     margin-bottom: 16px;
     font-weight: 700;
-
 `;
 
 
@@ -56,18 +64,27 @@ const PLSectionThree = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    @media (max-width: 320px) {
+        gap: 0.5rem;
+    }
 `;
 const PLSectionThreeTitle = styled.div`
     line-height: 28px;
     font-weight: 700;
     color: var(--grey300);
-    font-size: var(--font-size-l)
+    font-size: var(--font-size-l);
+    @media (max-width: 320px) {
+        font-size: var(--font-size-s);
+    }
 `;
 const PLSectionUserinput = styled.input`
     font-weight: normal;
     border: 1px solid var(--purple500);
     color: var(--grey250);
     font-size: var(--font-size-m);
+    @media (max-width: 320px) {
+        font-size: var(--font-size-s);
+    }
     border-radius: 5px;
     width: 398px;
     @media (max-width: 600px) {
@@ -80,6 +97,9 @@ const PLSectionEmojiLine = styled.div`
     font-weight: 700;
     color: var(--grey250);
     font-size: var(--font-size-s);
+    @media (max-width: 320px) {
+        font-size: var(--font-size-xs);
+    }
 `;
 const PLSectionBtn = styled.div`
     button {
@@ -89,6 +109,9 @@ const PLSectionBtn = styled.div`
         border: 1px solid var(--purple500);
         border-radius: 5px;
         font-size: var(--font-size-xs);
+        @media (max-width: 320px) {
+            font-size: var(--font-size-xxs);
+        }
         font-weight: 700;
         padding: 0 14px;
         margin-right: 16px;
@@ -104,6 +127,9 @@ const CardOverLay = styled.div`
 const GalleryNameTitle = styled.span`
     font-family: var(--font-bdcols);
     font-size: 22px;
+    @media (max-width: 320px) {
+        font-size: var(--font-size-m);
+    }
     font-weight: normal;
 `;
 const PersonalLinks = props => {
