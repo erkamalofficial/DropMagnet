@@ -4,10 +4,10 @@ const React = require("react");
 const sleep = require("p-sleep");
 
 const settings = {
-  snapBackDuration: 200,
+  snapBackDuration: 300,
   maxTilt: 5,
   bouncePower: 0.2,
-  swipeThreshold: 150, // offset to start the swiping
+  swipeThreshold: 100, // offset to start the swiping
 };
 
 const getElementSize = (element) => {
@@ -29,9 +29,10 @@ const animateOut = async (element, speed, easeIn = false) => {
   const diagonal = pythagoras(bodySize.x, bodySize.y);
 
   const velocity = pythagoras(speed.x, speed.y);
-  const time = 0.6; //diagonal / velocity
-  const multiplier = 0.9; //diagonal / velocity
+  const time = 0.7; //diagonal / velocity
+  const multiplier = 1; //diagonal / velocity
 
+  // const translateString = translationString(speed.x * multiplier + startPos.x, -speed.y * multiplier + startPos.y)
   const translateString = translationString(
     speed.x * multiplier,
     -speed.y * multiplier
@@ -54,7 +55,7 @@ const animateOut = async (element, speed, easeIn = false) => {
     rotateString = rotationString(rotationPower / 4 + getRotation(element));
   }
   // rotateString = rotationString(0)
-  console.log("vaules", translateString + rotateString);
+  // console.log("vaules", translateString + rotateString);
   element.style.transform = translateString + rotateString;
   await sleep(time * 1000);
 };
@@ -67,7 +68,7 @@ const animateBack = (element) => {
     startingPoint.y * -settings.bouncePower
   );
   const rotation = rotationString(getRotation(element) * -settings.bouncePower);
-  // element.style.transform = translation + rotation
+  element.style.transform = translation + rotation;
 
   setTimeout(() => {
     element.style.transform = "none";
@@ -145,6 +146,7 @@ const TinderCard = React.forwardRef(
       onCardLeftScreen,
       className,
       preventSwipe = [],
+      overlayLabels = false,
     },
     perentRef
   ) => {
@@ -318,6 +320,7 @@ const TinderCard = React.forwardRef(
       [handleSwipeReleased, handleSwipeStart]
     );
 
+    // console.log("render card");
     return React.createElement("div", { ref, className }, children);
   }
 );
