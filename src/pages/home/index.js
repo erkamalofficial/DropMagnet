@@ -15,7 +15,7 @@ import {
   fetchReswipeList,
 } from "./actions";
 import Spinner from "../../components/blocks/spinner";
-import DemoSwiper from "../react-tinder-card/DemoSwiper";
+import Swiper from "../react-tinder-card/swiper";
 import "./index.css";
 
 const HomeContainer = styled.div`
@@ -101,7 +101,7 @@ const Home = (props) => {
           //     cardList={reswipeModeActive ? reswipeBucket : activeBucket}
           // />
 
-          <DemoSwiper
+          <Swiper
             key={reswipeBucket.length}
             db={reswipeModeActive ? reswipeBucket : activeBucket}
           />

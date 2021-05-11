@@ -1,13 +1,36 @@
 import React, { useState, useMemo, useEffect } from "react";
 import TinderCard from "./index";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import Card from "./card";
 import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
 
+const ActionSection = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+const SwipeCard = styled.div`
+  cursor: pointer;
+  background-color: #262626;
+  background-size: auto 70%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  max-width: 100%;
+  display: flex;
+  will-change: transform;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+`;
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
-function DemoSwiper({ db }) {
+function Swiper({ db }) {
   const [allCards, setAllCards] = useState([]);
   const [cards, setCards] = useState([]);
   // const [lastDirection, setLastDirection] = useState();
@@ -17,13 +40,6 @@ function DemoSwiper({ db }) {
 
   useEffect(() => {
     if (newLoading) {
-      // for (let i = 0; i <  25; i++) {
-      //   db.push({
-      //     name: "card " + i,
-      //     url: `https://picsum.photos/${i + 200}/300`,
-      //   });
-      // }
-
       setAllCards(db);
       let start = db.length < CARD_PRELOAD ? 0 : db.length - CARD_PRELOAD;
       setCards(db.slice(start, db.length));
@@ -80,32 +96,31 @@ function DemoSwiper({ db }) {
   return (
     <div>
       <div className="cardContainer">
-        {cards.map((character, index) => (
-          <TinderCard
-            ref={childRefs[index]}
-            className={`swipe ${character.drop_id}`}
-            data-id={character.drop_id}
-            key={character.drop_id}
-            onSwipe={(dir) => swiped(dir, character.drop_id)}
-            onCardLeftScreen={() => outOfFrame(character.drop_id)}
-            overlayLabels={true}
-          >
-            <div
-              style={{ backgroundImage: "url(" + character.drop_image + ")" }}
-              className="card"
+        {cards.map((cardDetails, index) => {
+          const { drop_id } = cardDetails;
+          return (
+            <TinderCard
+              ref={childRefs[index]}
+              className={`swipe ${drop_id}`}
+              data-id={drop_id}
+              key={drop_id}
+              onSwipe={(dir) => swiped(dir, drop_id)}
+              onCardLeftScreen={() => outOfFrame(drop_id)}
+              overlayLabels={true}
             >
-              <h3>{character.title}</h3>
-            </div>
-          </TinderCard>
-        ))}
+              <SwipeCard className="card">
+                <Card {...cardDetails} />
+              </SwipeCard>
+            </TinderCard>
+          );
+        })}
       </div>
-      <div className="buttons">
-        <button onClick={() => swipe("left")}>Swipe left!</button>
-        <button onClick={() => swipe("up")}>Swipe up!</button>
-        <button onClick={() => swipe("right")}>Swipe right!</button>
-      </div>
+      <ActionSection key="footer">
+        <MinusBtn onClick={() => swipe("left")}>-</MinusBtn>
+        <PlusBtn onClick={() => swipe("right")}>+</PlusBtn>
+      </ActionSection>
     </div>
   );
 }
 
-export default DemoSwiper;
+export default Swiper;

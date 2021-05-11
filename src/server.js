@@ -458,7 +458,7 @@ server.get("/api/arts", [
     artist_image:
       "https://images.rarible.com/?fit=outsize&n=-1&url=https%3A%2F%2Fipfs.rarible.com%2Fipfs%2FQmaswCxMqPN22Ad9qcimmYYFzJywtuTX5oym7zvZ6F4kY7&w=100",
     drop_image:
-      "https://ipfs.rarible.com/ipfs/QmeGQXY25YQwYCeQEuLTVSoCow75Bk6gLHgwzQXzLLrC7C/image.jpeg",
+      "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
     category: "Art",
     drop_date: 1617985941,
     marketplace: "Rarible",
