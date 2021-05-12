@@ -79,11 +79,13 @@ const Home = (props) => {
     <HomeContainer>
       <FixedHeader {...props} />
       <div className="rel">
-        <Tabs
-          activeTabIndex={activeTabIndex}
-          handleActiveTabIndex={handleActiveTabIndex}
-          tabList={tabList}
-        />
+        {!reswipeModeActive && (
+          <Tabs
+            activeTabIndex={activeTabIndex}
+            handleActiveTabIndex={handleActiveTabIndex}
+            tabList={tabList}
+          />
+        )}
         {isLoading && <Spinner />}
         {reswipeModeActive && (
           <ProgressBar
