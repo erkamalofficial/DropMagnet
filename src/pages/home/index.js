@@ -1,8 +1,6 @@
-import { render } from "react-dom";
 import "../../server";
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
-import Deck from "./Deck";
+import React, { useEffect } from "react";
 import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 import Tabs from "./tabs";
 import ProgressBar from "./progress-bar";
@@ -15,7 +13,7 @@ import {
   fetchReswipeList,
 } from "./actions";
 import Spinner from "../../components/blocks/spinner";
-import Swiper from "../react-tinder-card/swiper";
+import Swiper from "./swiper";
 import "./index.css";
 
 const HomeContainer = styled.div`

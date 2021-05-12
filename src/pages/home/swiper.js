@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import TinderCard from "./index";
+import TinderCard from "./swipe-main";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Card from "./card";
@@ -116,8 +116,12 @@ function Swiper({ db }) {
         })}
       </div>
       <ActionSection key="footer">
-        <MinusBtn onClick={() => swipe("left")}>-</MinusBtn>
-        <PlusBtn onClick={() => swipe("right")}>+</PlusBtn>
+        <MinusBtn onClick={() => swipe("left")}>
+          <img src="./minus.svg" alt="minus" />
+        </MinusBtn>
+        <PlusBtn onClick={() => swipe("right")}>
+          <img src="./plus.svg" alt="plus" />
+        </PlusBtn>
       </ActionSection>
     </div>
   );
