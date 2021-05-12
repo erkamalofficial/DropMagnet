@@ -9,11 +9,12 @@ import MinusBtn from "../../components/blocks/minus-btn";
 const ActionSection = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 24px;
 `;
 const SwipeCard = styled.div`
   cursor: pointer;
   background-color: #262626;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
   background-size: auto 70%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -21,12 +22,12 @@ const SwipeCard = styled.div`
   display: flex;
   will-change: transform;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   color: white;
+  height: auto;
 `;
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload

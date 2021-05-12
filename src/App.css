@@ -39,6 +39,22 @@
   --font-bdcols: "BD Colonius";
 }
 
+@media (max-width: 999px) {
+  :root {
+    --swipe-card-art-width: 354px;
+    --swipe-card-art-height: 354px;
+    --header-tab-margin: 0 0 24px;
+    --font-size-xs: 15px;
+    --font-size-s: 16px;
+    --font-size-m: 18px;
+    --font-size-l: 22px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 32px;
+    --font-size-3xl: 40px;
+    --font-size-4xl: 48px;
+  }
+}
+
 @import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700");
 
 ::-webkit-scrollbar {
@@ -299,12 +315,11 @@ h2 {
 .cardContainer {
   width: 100%;
   height: 90vw;
-  max-height: 570px;
+  max-height: 510px;
 }
 
 .card {
   position: relative;
-  background-color: #fff;
   width: 100%;
   /* max-width: 260px; */
   /* height: 300px; */

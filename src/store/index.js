@@ -111,11 +111,6 @@ const categoryReducer = (state = initialState, action) => {
       const { drop_id } = action.payload;
       console.log("drop_id: ", drop_id);
 
-      // var userSelectedCard = activeTabContent.activeBucket[action.payload.selectedIndex];
-      // if (state.general.reswipeModeActive) {
-      //     userSelectedCard = activeTabContent.reswipeBucket[action.payload.selectedIndex];
-      // }
-
       var reswipeModeActive = state.general.reswipeModeActive;
       const favList = activeTabContent.selectionBucket.fav;
       if (favList.length < 10 && !favList.includes(drop_id)) {
@@ -159,15 +154,6 @@ const categoryReducer = (state = initialState, action) => {
         }
       }
 
-      // //reswipe over
-      // if (state.general.reswipeModeActive && action.payload.selectedIndex === 0) {
-      //     reswipeModeActive = false;
-      //     const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav, ...activeTabContent.selectionBucket.rem];
-      //     const activeBucketContent = activeTabContent.apiData.filter((card) => !cardIdsAlreadySwiped.includes(card.drop_id))
-
-      //     selectedTab = { ...activeTabContent, activeBucket: activeBucketContent };
-      // }
-
       const general = {
         ...state.general,
         reswipeModeActive: reswipeModeActive,
@@ -179,13 +165,6 @@ const categoryReducer = (state = initialState, action) => {
     case "REMOVE_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
-
-      //   var userSelectedCard =
-      //     activeTabContent.activeBucket[action.payload.selectedIndex];
-      //   if (state.general.reswipeModeActive) {
-      //     userSelectedCard =
-      //       activeTabContent.reswipeBucket[action.payload.selectedIndex];
-      //   }
 
       const { drop_id } = action.payload;
       console.log("rem drop_id: ", drop_id);

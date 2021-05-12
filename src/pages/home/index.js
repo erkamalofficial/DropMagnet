@@ -22,7 +22,7 @@ const HomeContainer = styled.div`
   align-items: center;
   div.rel {
     height: 100vh;
-    width: 460px;
+    width: 426px;
     @media (max-width: 600px) {
       width: 100%;
       height: 100vh;
