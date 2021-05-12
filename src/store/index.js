@@ -42,11 +42,14 @@ const categoryReducer = (state = initialState, action) => {
     }
     case "FETCH_ARTS_SUCCESS": {
       const general = { ...state.general, isLoading: false };
+      console.log("JJJ", action.payload);
+      const [first, second, third] = action.payload;
       const arts = {
         ...state.arts,
         apiData: [...action.payload],
-        activeBucket: [...action.payload],
+        activeBucket: [third, second, first],
       };
+
       return { ...state, arts, general };
     }
     case "FETCH_COLLECTABLES_REQUEST": {
@@ -123,6 +126,13 @@ const categoryReducer = (state = initialState, action) => {
       }
 
       var selectedTab = { ...activeTabContent };
+      if (
+        activeTabContent.activeBucket.length < activeTabContent.apiData.length
+      ) {
+        selectedTab.activeBucket.unshift(
+          activeTabContent.apiData[activeTabContent.activeBucket.length]
+        );
+      }
 
       if (favList.length === 10) {
         const reswipeBucketContent = activeTabContent.apiData.filter((card) =>
@@ -185,6 +195,14 @@ const categoryReducer = (state = initialState, action) => {
         ...activeTabContent,
         selectionBucket: activeTabContent.selectionBucket,
       };
+
+      if (
+        activeTabContent.activeBucket.length < activeTabContent.apiData.length
+      ) {
+        selectedTab.activeBucket.unshift(
+          activeTabContent.apiData[activeTabContent.activeBucket.length]
+        );
+      }
 
       if (state.general.reswipeModeActive) {
         const selectedIndex = activeTabContent.reswipeBucket.findIndex(

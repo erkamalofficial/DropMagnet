@@ -155,6 +155,7 @@ const TinderCard = React.forwardRef(
 
     React.useImperativeHandle(perentRef, () => ({
       async swipe(dir = "right") {
+        console.log("elementGlobal: ", elementGlobal);
         if (onSwipe) onSwipe(dir);
         const power = 1000;
         const disturbance = 0; //(Math.random() - 0.5) * 100

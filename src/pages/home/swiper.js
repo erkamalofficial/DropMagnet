@@ -31,23 +31,17 @@ const SwipeCard = styled.div`
 `;
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
-function Swiper({ db }) {
-  const [allCards, setAllCards] = useState([]);
-  const [cards, setCards] = useState([]);
+function Swiper({ db, reswipeModeActive }) {
+  const [allCards, setAllCards] = useState(db);
+  const [cards, setCards] = useState(db);
   // const [lastDirection, setLastDirection] = useState();
   const [newLoading, setNewLoading] = useState(true);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (newLoading) {
-      setAllCards(db);
-      let start = db.length < CARD_PRELOAD ? 0 : db.length - CARD_PRELOAD;
-      setCards(db.slice(start, db.length));
-      setNewLoading(false);
-      alreadyRemoved.length = 0;
-    }
-  }, [newLoading]);
+    alreadyRemoved.length = 0;
+  }, [reswipeModeActive]);
 
   const childRefs = useMemo(
     () =>
@@ -59,7 +53,7 @@ function Swiper({ db }) {
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
   const swiped = (direction, drop_id) => {
-    console.log("direction: " + direction);
+    // console.log("direction:KKK " + direction);
     if (direction === "right") {
       dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
     }
@@ -72,11 +66,11 @@ function Swiper({ db }) {
   };
 
   const outOfFrame = (name) => {
-    if (allCards.length === alreadyRemoved.length) {
-      //if all cards are removed, reload new cards
-      setNewLoading(true);
-      return;
-    }
+    // if (allCards.length === alreadyRemoved.length) {
+    //   //if all cards are removed, reload new cards
+    //   setNewLoading(true);
+    //   return;
+    // }
     //reset the cards to show
     // const currIndex = allCards.length - alreadyRemoved.length;
     // let start = currIndex < CARD_PRELOAD ? 0 : currIndex - CARD_PRELOAD;

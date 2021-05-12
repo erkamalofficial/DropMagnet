@@ -101,6 +101,7 @@ const Home = (props) => {
 
           <Swiper
             key={reswipeBucket.length}
+            reswipeModeActive={reswipeModeActive}
             db={reswipeModeActive ? reswipeBucket : activeBucket}
           />
         )}
