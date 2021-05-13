@@ -320,7 +320,11 @@ const TinderCard = React.forwardRef(
     );
 
     // console.log("render card");
-    return React.createElement("div", { ref, className }, children);
+    return React.createElement(
+      "div",
+      { ref, className, "data-key": "card-abs" },
+      children
+    );
   }
 );
 

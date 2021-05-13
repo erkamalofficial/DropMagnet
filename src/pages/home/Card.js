@@ -1,22 +1,48 @@
 import styled from "styled-components";
 
+const SwipeCard = styled.div`
+  cursor: pointer;
+  background-color: #262626;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+  background-size: auto 70%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  will-change: transform;
+  height: auto;
+`;
+const SwipeCardDeviceContainer = styled.div`
+  position: var(--card-device-container-pos);
+`;
 const UserAvatar = styled.img`
-  height: 30px;
-  width: 30px;
+  height: var(--art-avatar-size);
+  width: var(--art-avatar-size);
   border-radius: 15px;
-  position: absolute;
-  left: 36px;
+  margin-left: var(--art-avatar-left-margin);
 `;
 const HeaderSection = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  position: var(--card-elem-pos);
+  // text-align: center;
   width: 100%;
-  padding: 16px 36px;
+  // padding: 0 var(--art-card-space);
+  .empty {
+    opacity: 0;
+  }
+  margin: var(--card-header-section-margin);
   .card-title {
-    padding-left: 24px;
     font-size: var(--font-size-xl);
+    @media (max-width: 320px) {
+      background: #a98d8d61;
+      backdrop-filter: blur(10px);
+      padding: 5px 8px;
+      border-radius: 5px;
+    }
   }
   > * {
     font-weight: 700;
@@ -25,35 +51,39 @@ const HeaderSection = styled.div`
   }
 `;
 const FooterSection = styled.div`
+  position: var(--card-elem-pos);
+  bottom: 0;
+  background: var(--card-transparent-bg);
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--card-title-section-margin);
   width: 100%;
-  padding: 0 36px;
+  padding: 0 var(--art-card-space);
 `;
 const FooterButtons = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-  gap: 1rem;
   font-weight: 700;
   line-height: 22px;
+  margin-bottom: var(--card-title-section-text-margin);
   div {
     padding: 0 10px;
     border-radius: 3px;
   }
   .rare {
     background: var(--corePurple);
+    margin-right: 16px;
   }
   .art {
     background: var(--coreBlue);
   }
 `;
 const FooterTitle = styled.div`
-  margin-bottom: 14px;
+  margin: var(--card-title-text-margin);
   font-size: var(--font-size-l);
+  width: var(--card-title-text-width);
   font-weight: 700;
-  width: 360px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -65,24 +95,33 @@ const SwipeImage = styled.div`
   width: var(--swipe-card-art-width);
   height: var(--swipe-card-art-width);
   background-repeat: no-repeat;
-  margin-bottom: 16px;
+  margin: var(--swipe-card-art-margin);
 `;
 
 const Card = ({ title, drop_image, artist_image, drop_id }) => {
-  return [
-    <HeaderSection key={1}>
-      <UserAvatar src={artist_image} />
-      <div className="card-title">Crypto Art Man - {drop_id}</div>
-    </HeaderSection>,
-    <SwipeImage key={2} style={{ backgroundImage: `url(${drop_image})` }} />,
-    <FooterSection key={3}>
-      <FooterTitle>{title} </FooterTitle>
-      <FooterButtons>
-        <div className="rare">RARIBLE</div>
-        <div className="art">ART</div>
-      </FooterButtons>
-    </FooterSection>,
-  ];
+  return (
+    <SwipeCard data-key="card-bdr">
+      <SwipeCardDeviceContainer data-key="card-rel-container">
+        <HeaderSection key={1}>
+          <UserAvatar src={artist_image} />
+          <div className="card-title">Crypto Art Man - {drop_id}</div>
+          <div className="empty">......</div>
+        </HeaderSection>
+        <SwipeImage
+          data-key="art"
+          key={2}
+          style={{ backgroundImage: `url(${drop_image})` }}
+        />
+        <FooterSection key={3}>
+          <FooterTitle>{title} </FooterTitle>
+          <FooterButtons>
+            <div className="rare">RARIBLE</div>
+            <div className="art">ART</div>
+          </FooterButtons>
+        </FooterSection>
+      </SwipeCardDeviceContainer>
+    </SwipeCard>
+  );
 };
 
 export default Card;

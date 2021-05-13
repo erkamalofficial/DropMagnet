@@ -9,26 +9,13 @@ import MinusBtn from "../../components/blocks/minus-btn";
 const ActionSection = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 24px;
 `;
-const SwipeCard = styled.div`
-  cursor: pointer;
-  background-color: #262626;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
-  background-size: auto 70%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  max-width: 100%;
-  display: flex;
-  will-change: transform;
-  border-radius: 8px;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  color: white;
-  height: auto;
+const CardContainer = styled.div`
+  width: var(--card-container-width);
+  height: var(--card-container-height);
+  margin-bottom: var(--gap-bottom);
 `;
+
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper({ db, reswipeModeActive }) {
@@ -88,38 +75,34 @@ function Swiper({ db, reswipeModeActive }) {
     }
   };
 
-  return (
-    <div>
-      <div className="cardContainer">
-        {cards.map((cardDetails, index) => {
-          const { drop_id } = cardDetails;
-          return (
-            <TinderCard
-              ref={childRefs[index]}
-              className={`swipe ${drop_id}`}
-              data-id={drop_id}
-              key={drop_id}
-              onSwipe={(dir) => swiped(dir, drop_id)}
-              onCardLeftScreen={() => outOfFrame(drop_id)}
-              overlayLabels={true}
-            >
-              <SwipeCard className="card">
-                <Card {...cardDetails} />
-              </SwipeCard>
-            </TinderCard>
-          );
-        })}
-      </div>
-      <ActionSection key="footer">
-        <MinusBtn onClick={() => swipe("left")}>
-          <img src="./minus.svg" alt="minus" />
-        </MinusBtn>
-        <PlusBtn onClick={() => swipe("right")}>
-          <img src="./plus.svg" alt="plus" />
-        </PlusBtn>
-      </ActionSection>
-    </div>
-  );
+  return [
+    <CardContainer key="cardContainer">
+      {cards.map((cardDetails, index) => {
+        const { drop_id } = cardDetails;
+        return (
+          <TinderCard
+            ref={childRefs[index]}
+            className={`swipe ${drop_id}`}
+            data-id={drop_id}
+            key={drop_id}
+            onSwipe={(dir) => swiped(dir, drop_id)}
+            onCardLeftScreen={() => outOfFrame(drop_id)}
+            overlayLabels={true}
+          >
+            <Card {...cardDetails} />
+          </TinderCard>
+        );
+      })}
+    </CardContainer>,
+    <ActionSection key="footer">
+      <MinusBtn onClick={() => swipe("left")}>
+        <img src="./minus.svg" alt="minus" />
+      </MinusBtn>
+      <PlusBtn onClick={() => swipe("right")}>
+        <img src="./plus.svg" alt="plus" />
+      </PlusBtn>
+    </ActionSection>,
+  ];
 }
 
 export default Swiper;

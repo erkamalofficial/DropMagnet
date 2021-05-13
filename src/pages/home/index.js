@@ -21,12 +21,6 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   div.rel {
-    height: 100vh;
-    width: 426px;
-    @media (max-width: 600px) {
-      width: 100%;
-      height: 100vh;
-    }
     position: relative;
     padding-top: 90px;
   }
@@ -96,11 +90,6 @@ const Home = (props) => {
           />
         )}
         {!isLoading && (
-          // <Deck
-          //     key={reswipeModeActive}
-          //     cardList={reswipeModeActive ? reswipeBucket : activeBucket}
-          // />
-
           <Swiper
             key={reswipeBucket.length}
             reswipeModeActive={reswipeModeActive}
