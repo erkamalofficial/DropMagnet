@@ -22,7 +22,7 @@ const HomeContainer = styled.div`
   align-items: center;
   div.rel {
     position: relative;
-    padding-top: 90px;
+    padding-top: var(--main-header-margin-top);
   }
 `;
 

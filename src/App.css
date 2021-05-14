@@ -41,6 +41,7 @@
 
 @media (min-width: 601px) {
   :root {
+    --main-header-margin-top: 90px;
     --swipe-card-art-width: 354px;
     --swipe-card-art-height: 354px;
     --swipe-card-art-margin: 0 0 16px;
@@ -70,9 +71,10 @@
 }
 @media (max-width: 600px) {
   :root {
+    --main-header-margin-top: 68px;
     --swipe-card-art-width: 302px;
     --swipe-card-art-height: 302px;
-    --swipe-card-art-margin: 0 0 16px;
+    --swipe-card-art-margin: 0 0 14px;
     --card-container-width: 362px;
     --card-container-height: 458px;
     --card-elem-pos: static;
@@ -85,7 +87,7 @@
     --card-title-text-margin: 14px;
     --card-title-text-width: 210px;
     --card-title-section-text-margin: 0;
-    --card-header-section-margin: 16px 0;
+    --card-header-section-margin: 14px 0;
     --gap-bottom: 16px;
     --font-size-xs: 15px;
     --font-size-s: 16px;
@@ -99,6 +101,7 @@
 }
 @media (max-width: 320px) {
   :root {
+    --main-header-margin-top: 68px;
     --swipe-card-art-width: 278px;
     --swipe-card-art-height: 278px;
     --swipe-card-art-margin: 9px 0;

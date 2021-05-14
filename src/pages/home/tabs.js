@@ -6,7 +6,7 @@ const TabsWrapper = styled.ul`
   flex-direction: row;
   width: var(--card-container-width);
   color: #ebeae8;
-  padding: 10px;
+  padding: 6px 10px;
   margin: 0;
   margin-bottom: var(--gap-bottom);
   box-shadow: inset 0 1px 3px rgb(0 0 0 / 50%),
