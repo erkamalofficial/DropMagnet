@@ -1,6 +1,6 @@
 import "../../server";
 import styled from "styled-components";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 import Tabs from "./tabs";
 import ProgressBar from "./progress-bar";
@@ -22,6 +22,7 @@ const HomeContainer = styled.div`
   align-items: center;
   div.rel {
     position: relative;
+    user-select: none;
     padding-top: var(--main-header-margin-top);
   }
 `;
@@ -40,7 +41,6 @@ const Home = (props) => {
   const reswipeModeActive = useSelector(
     (state) => state.category.general.reswipeModeActive
   );
-
   useSelector((state) => state.category.general.selectionCount);
 
   const currentTabId = tabList[activeTabIndex];
@@ -49,6 +49,11 @@ const Home = (props) => {
     (state) => {
       return state.category[currentTabId];
     }
+  );
+  const uidChanged = useSelector((state) => state.category.general.uidChanged);
+  const uniqueId = useMemo(
+    () => Date.now(),
+    [reswipeBucket.length, uidChanged]
   );
 
   const handleActiveTabIndex = (index) => {
@@ -91,7 +96,7 @@ const Home = (props) => {
         )}
         {!isLoading && (
           <Swiper
-            key={reswipeBucket.length}
+            key={uniqueId}
             reswipeModeActive={reswipeModeActive}
             db={reswipeModeActive ? reswipeBucket : activeBucket}
           />
