@@ -4,6 +4,22 @@ import thunk from "redux-thunk";
 
 import initialState from "./initial-state";
 
+const getProcessedCollection = (state, action, type) => {
+  const general = { ...state.general, isLoading: false };
+  const [first, second, third] = action.payload;
+
+  const collection = {
+    ...state[type],
+    apiData: [...action.payload],
+    activeBucket: [third, second, first],
+  };
+  return {
+    ...state,
+    [type]: collection,
+    general,
+  };
+};
+
 const categoryReducer = (state = initialState, action) => {
   const tabList = ["arts", "music", "collectables", "fashion"];
 
@@ -24,13 +40,8 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, general };
     }
     case "FETCH_MUSIC_SUCCESS": {
-      const general = { ...state.general, isLoading: false };
-      const music = {
-        ...state.music,
-        apiData: [...action.payload],
-        activeBucket: [...action.payload],
-      };
-      return { ...state, music, general };
+      const musicCollection = getProcessedCollection(state, action, "music");
+      return musicCollection;
     }
     case "FETCH_ARTS_REQUEST": {
       const general = {
@@ -41,16 +52,8 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, general };
     }
     case "FETCH_ARTS_SUCCESS": {
-      const general = { ...state.general, isLoading: false };
-      console.log("JJJ", action.payload);
-      const [first, second, third] = action.payload;
-      const arts = {
-        ...state.arts,
-        apiData: [...action.payload],
-        activeBucket: [third, second, first],
-      };
-
-      return { ...state, arts, general };
+      const artsCollection = getProcessedCollection(state, action, "arts");
+      return artsCollection;
     }
     case "FETCH_COLLECTABLES_REQUEST": {
       const general = {
@@ -61,13 +64,12 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, general };
     }
     case "FETCH_COLLECTABLES_SUCCESS": {
-      const general = { ...state.general, isLoading: false };
-      const collectables = {
-        ...state.collectables,
-        apiData: [...action.payload],
-        activeBucket: [...action.payload],
-      };
-      return { ...state, collectables, general };
+      const collectablesCollection = getProcessedCollection(
+        state,
+        action,
+        "collectables"
+      );
+      return collectablesCollection;
     }
 
     case "FETCH_FASHION_REQUEST": {
@@ -79,13 +81,12 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, general };
     }
     case "FETCH_FASHION_SUCCESS": {
-      const general = { ...state.general, isLoading: false };
-      const fashion = {
-        ...state.fashion,
-        apiData: [...action.payload],
-        activeBucket: [...action.payload],
-      };
-      return { ...state, fashion, general };
+      const fashionCollection = getProcessedCollection(
+        state,
+        action,
+        "fashion"
+      );
+      return fashionCollection;
     }
 
     case "FETCH_RESWIPE_REQUEST": {
@@ -177,7 +178,6 @@ const categoryReducer = (state = initialState, action) => {
       const activeTabContent = state[currentTab];
 
       const { drop_id } = action.payload;
-      console.log("rem drop_id: ", drop_id);
 
       var userRem = activeTabContent.selectionBucket.rem;
       var userFav = activeTabContent.selectionBucket.fav;
@@ -189,7 +189,6 @@ const categoryReducer = (state = initialState, action) => {
       if (!userRem.includes(drop_id)) {
         activeTabContent.selectionBucket.rem.push(drop_id);
       }
-      //   activeTabContent.selectionBucket.rem.push(drop_id);
 
       var selectedTab = {
         ...activeTabContent,

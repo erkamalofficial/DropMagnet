@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ProgressBar = styled.div`
+const ProgressBarWrapper = styled.div`
   display: flex;
   flex-direction: row;
   color: #ebeae8;
@@ -8,7 +8,7 @@ const ProgressBar = styled.div`
     inset 0 -1px 2px rgb(0 0 0 / 50%), inset 0 -3px 0 rgb(37 37 37 / 50%),
     inset 0 2px 4px rgb(0 0 0 / 50%), 0 3px 2px rgb(0 0 0 / 13%);
   justify-content: space-between;
-  margin: 0 8px 16px;
+  margin-bottom: var(--gap-bottom);
   padding: 8px 16px;
   border-radius: 22px;
   z-index: 1;
@@ -23,15 +23,16 @@ const ProgressBar = styled.div`
   }
 `;
 
-export default ({ size, selectedCount, handleReswipe }) => {
+const ProgressBar = ({ size, selectedCount, handleReswipe }) => {
   return (
-    <ProgressBar>
+    <ProgressBarWrapper>
       <span>
         {selectedCount}/{size}
       </span>
       <span className="reswipeBtn" onClick={() => handleReswipe()}>
         Exit reswipe
       </span>
-    </ProgressBar>
+    </ProgressBarWrapper>
   );
 };
+export default ProgressBar;
