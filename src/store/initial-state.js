@@ -579,10 +579,10 @@ const initialState = {
     reswipeModeActive: false,
     selectionCount: 0,
   },
-  arts: { ...buckets },
-  music: { ...buckets },
-  collectables: { ...buckets },
-  fashion: { ...buckets },
+  arts: JSON.parse(JSON.stringify(buckets)),
+  music: JSON.parse(JSON.stringify(buckets)),
+  collectables: JSON.parse(JSON.stringify(buckets)),
+  fashion: JSON.parse(JSON.stringify(buckets)),
 };
 
 export default initialState;

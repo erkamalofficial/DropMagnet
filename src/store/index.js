@@ -20,7 +20,7 @@ const getProcessedCollection = (state, action, type) => {
   };
 };
 
-const duringReswipe = (state, activeTabContent, drop_id, selectedTab) => {
+const duringReswipe = (activeTabContent, drop_id) => {
   const selectedIndex = activeTabContent.reswipeBucket.findIndex(
     (card) => card.drop_id === drop_id
   );
@@ -30,12 +30,11 @@ const duringReswipe = (state, activeTabContent, drop_id, selectedTab) => {
       cardIdsAlreadySwiped.includes(card.drop_id)
     );
 
-    return {
-      ...activeTabContent,
+    Object.assign(activeTabContent, {
       reswipeBucket: activeBucketContent,
-    };
+    });
   }
-  return selectedTab;
+  return activeTabContent;
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -143,11 +142,10 @@ const categoryReducer = (state = initialState, action) => {
         reswipeModeActive = true;
       }
 
-      var selectedTab = { ...activeTabContent };
       if (
         activeTabContent.activeBucket.length < activeTabContent.apiData.length
       ) {
-        selectedTab.activeBucket.unshift(
+        activeTabContent.activeBucket.unshift(
           activeTabContent.apiData[activeTabContent.activeBucket.length]
         );
       }
@@ -156,7 +154,7 @@ const categoryReducer = (state = initialState, action) => {
         const reswipeBucketContent = activeTabContent.apiData.filter((card) =>
           favList.includes(card.drop_id)
         );
-        selectedTab = Object.assign(activeTabContent, {
+        Object.assign(activeTabContent, {
           reswipeBucket: reswipeBucketContent,
         });
       }
@@ -165,12 +163,7 @@ const categoryReducer = (state = initialState, action) => {
       }
 
       if (reswipeModeActive) {
-        selectedTab = duringReswipe(
-          state,
-          activeTabContent,
-          drop_id,
-          selectedTab
-        );
+        duringReswipe(activeTabContent, drop_id);
       }
 
       const general = {
@@ -179,7 +172,7 @@ const categoryReducer = (state = initialState, action) => {
         selectionCount: state.general.selectionCount + 1,
       };
 
-      return { ...state, [currentTab]: selectedTab, general };
+      return { ...state, [currentTab]: activeTabContent, general };
     }
     case "REMOVE_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
@@ -198,26 +191,16 @@ const categoryReducer = (state = initialState, action) => {
         activeTabContent.selectionBucket.rem.push(drop_id);
       }
 
-      var selectedTab = {
-        ...activeTabContent,
-        selectionBucket: activeTabContent.selectionBucket,
-      };
-
       if (
         activeTabContent.activeBucket.length < activeTabContent.apiData.length
       ) {
-        selectedTab.activeBucket.unshift(
+        activeTabContent.activeBucket.unshift(
           activeTabContent.apiData[activeTabContent.activeBucket.length]
         );
       }
 
       if (state.general.reswipeModeActive) {
-        selectedTab = duringReswipe(
-          state,
-          activeTabContent,
-          drop_id,
-          selectedTab
-        );
+        duringReswipe(activeTabContent, drop_id);
       }
 
       const general = {
@@ -225,7 +208,7 @@ const categoryReducer = (state = initialState, action) => {
         selectionCount: state.general.selectionCount - 1,
       };
 
-      return { ...state, general, [currentTab]: selectedTab };
+      return { ...state, general, [currentTab]: activeTabContent };
     }
     default:
       return state;
