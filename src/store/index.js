@@ -129,10 +129,11 @@ const categoryReducer = (state = initialState, action) => {
     case "ADD_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
+      const { selectionBucket, activeBucket, apiData } = activeTabContent;
       const { drop_id } = action.payload;
 
       var reswipeModeActive = state.general.reswipeModeActive;
-      const favList = activeTabContent.selectionBucket.fav;
+      const favList = selectionBucket.fav;
       if (favList.length < 10 && !favList.includes(drop_id)) {
         favList.push(drop_id);
       }
@@ -142,16 +143,12 @@ const categoryReducer = (state = initialState, action) => {
         reswipeModeActive = true;
       }
 
-      if (
-        activeTabContent.activeBucket.length < activeTabContent.apiData.length
-      ) {
-        activeTabContent.activeBucket.unshift(
-          activeTabContent.apiData[activeTabContent.activeBucket.length]
-        );
+      if (activeBucket.length < apiData.length) {
+        activeBucket.unshift(apiData[activeBucket.length]);
       }
 
       if (isFavBucketHasTenItems) {
-        const reswipeBucketContent = activeTabContent.apiData.filter((card) =>
+        const reswipeBucketContent = apiData.filter((card) =>
           favList.includes(card.drop_id)
         );
         Object.assign(activeTabContent, {
@@ -177,26 +174,21 @@ const categoryReducer = (state = initialState, action) => {
     case "REMOVE_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
+      const { selectionBucket, activeBucket, apiData } = activeTabContent;
 
       const { drop_id } = action.payload;
 
-      var userRem = activeTabContent.selectionBucket.rem;
-      var userFav = activeTabContent.selectionBucket.fav;
+      var userRem = selectionBucket.rem;
+      var userFav = selectionBucket.fav;
       if (userFav.includes(drop_id)) {
-        activeTabContent.selectionBucket.fav = userFav.filter(
-          (item) => item !== drop_id
-        );
+        selectionBucket.fav = userFav.filter((item) => item !== drop_id);
       }
       if (!userRem.includes(drop_id)) {
-        activeTabContent.selectionBucket.rem.push(drop_id);
+        selectionBucket.rem.push(drop_id);
       }
 
-      if (
-        activeTabContent.activeBucket.length < activeTabContent.apiData.length
-      ) {
-        activeTabContent.activeBucket.unshift(
-          activeTabContent.apiData[activeTabContent.activeBucket.length]
-        );
+      if (activeBucket.length < apiData.length) {
+        activeBucket.unshift(apiData[activeBucket.length]);
       }
 
       if (state.general.reswipeModeActive) {

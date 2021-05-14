@@ -40,9 +40,9 @@ const Home = (props) => {
   const reswipeModeActive = useSelector(
     (state) => state.category.general.reswipeModeActive
   );
-  const selectionCount = useSelector(
-    (state) => state.category.general.selectionCount
-  );
+
+  useSelector((state) => state.category.general.selectionCount);
+
   const currentTabId = tabList[activeTabIndex];
 
   const { activeBucket, reswipeBucket, selectionBucket } = useSelector(
