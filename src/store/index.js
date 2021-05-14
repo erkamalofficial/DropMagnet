@@ -20,6 +20,24 @@ const getProcessedCollection = (state, action, type) => {
   };
 };
 
+const duringReswipe = (state, activeTabContent, drop_id, selectedTab) => {
+  const selectedIndex = activeTabContent.reswipeBucket.findIndex(
+    (card) => card.drop_id === drop_id
+  );
+  if (selectedIndex === 0) {
+    const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav];
+    const activeBucketContent = activeTabContent.apiData.filter((card) =>
+      cardIdsAlreadySwiped.includes(card.drop_id)
+    );
+
+    return {
+      ...activeTabContent,
+      reswipeBucket: activeBucketContent,
+    };
+  }
+  return selectedTab;
+};
+
 const categoryReducer = (state = initialState, action) => {
   const tabList = ["arts", "music", "collectables", "fashion"];
 
@@ -113,7 +131,6 @@ const categoryReducer = (state = initialState, action) => {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
       const { drop_id } = action.payload;
-      console.log("drop_id: ", drop_id);
 
       var reswipeModeActive = state.general.reswipeModeActive;
       const favList = activeTabContent.selectionBucket.fav;
@@ -135,34 +152,25 @@ const categoryReducer = (state = initialState, action) => {
         );
       }
 
-      if (favList.length === 10) {
+      if (isFavBucketHasTenItems) {
         const reswipeBucketContent = activeTabContent.apiData.filter((card) =>
           favList.includes(card.drop_id)
         );
-        reswipeBucketContent.sort((a, b) => a.drop_id - b.drop_id);
-        selectedTab = {
-          ...activeTabContent,
+        selectedTab = Object.assign(activeTabContent, {
           reswipeBucket: reswipeBucketContent,
-        };
+        });
+      }
+      if (reswipeModeActive && isFavBucketHasTenItems) {
+        console.log("WHiat should do");
       }
 
-      if (state.general.reswipeModeActive) {
-        const selectedIndex = activeTabContent.reswipeBucket.findIndex(
-          (card) => card.drop_id === drop_id
+      if (reswipeModeActive) {
+        selectedTab = duringReswipe(
+          state,
+          activeTabContent,
+          drop_id,
+          selectedTab
         );
-        if (selectedIndex === 0) {
-          const cardIdsAlreadySwiped = [
-            ...activeTabContent.selectionBucket.fav,
-          ];
-          const activeBucketContent = activeTabContent.apiData.filter((card) =>
-            cardIdsAlreadySwiped.includes(card.drop_id)
-          );
-
-          selectedTab = {
-            ...activeTabContent,
-            reswipeBucket: activeBucketContent,
-          };
-        }
       }
 
       const general = {
@@ -204,22 +212,12 @@ const categoryReducer = (state = initialState, action) => {
       }
 
       if (state.general.reswipeModeActive) {
-        const selectedIndex = activeTabContent.reswipeBucket.findIndex(
-          (card) => card.drop_id === drop_id
+        selectedTab = duringReswipe(
+          state,
+          activeTabContent,
+          drop_id,
+          selectedTab
         );
-        if (selectedIndex === 0) {
-          const cardIdsAlreadySwiped = [
-            ...activeTabContent.selectionBucket.fav,
-          ];
-          const activeBucketContent = activeTabContent.apiData.filter((card) =>
-            cardIdsAlreadySwiped.includes(card.drop_id)
-          );
-          selectedTab = {
-            ...activeTabContent,
-            selectionBucket: activeTabContent.selectionBucket,
-            reswipeBucket: activeBucketContent,
-          };
-        }
       }
 
       const general = {
