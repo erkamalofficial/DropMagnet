@@ -14,7 +14,7 @@ const PlusBtn = styled.div`
     width: 36px;
     height: 32px;
   }
-  @media (max-width: 320px) {
+  @media (max-width: 340px) {
     min-width: 135px;
   }
 `;

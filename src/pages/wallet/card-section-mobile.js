@@ -17,7 +17,7 @@ const CardSection = styled.div`
   opacity: 0.8;
   margin: 18px;
   padding: 16px 0;
-  @media (max-width: 320px) {
+  @media (max-width: 340px) {
     margin: 8px;
     padding: 8px 0;
   }
@@ -39,7 +39,7 @@ const PLLinksBtn = styled(LinksBtn)`
   }
   margin-bottom: 8px;
   padding: 12px;
-  @media (max-width: 320px) {
+  @media (max-width: 340px) {
     padding: 8px;
     font-size: var(--font-size-xs);
   }
@@ -79,7 +79,7 @@ const TabItem = styled.div`
 `;
 const ScrollContainer = styled.div`
   height: 210px;
-  @media (max-width: 320px) {
+  @media (max-width: 340px) {
     height: 135px;
   }
   width: 100%;
@@ -112,17 +112,14 @@ const contentList2 = [
 ];
 
 const CaurouselComponent = ({ displayName }) => {
-  const {
-    carouselFragment,
-    slideToPrevItem,
-    slideToNextItem,
-  } = useSpringCarousel({
-    itemsPerSlide: 2,
-    initialStartingPosition: "center",
-    items: contentList2.map((cardItem, index) =>
-      CardSectionItem(cardItem, index, displayName)
-    ),
-  });
+  const { carouselFragment, slideToPrevItem, slideToNextItem } =
+    useSpringCarousel({
+      itemsPerSlide: 2,
+      initialStartingPosition: "center",
+      items: contentList2.map((cardItem, index) =>
+        CardSectionItem(cardItem, index, displayName)
+      ),
+    });
 
   return (
     <CardSection>

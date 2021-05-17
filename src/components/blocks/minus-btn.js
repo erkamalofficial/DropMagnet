@@ -15,7 +15,7 @@ const MinusBtn = styled.div`
     height: 6px;
     margin-bottom: 12px;
   }
-  @media (max-width: 320px) {
+  @media (max-width: 340px) {
     min-width: 135px;
   }
 `;

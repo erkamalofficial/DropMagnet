@@ -37,7 +37,7 @@ const HeaderSection = styled.div`
   margin: var(--card-header-section-margin);
   .card-title {
     font-size: var(--font-size-xl);
-    @media (max-width: 320px) {
+    @media (max-width: 340px) {
       background: #a98d8d61;
       backdrop-filter: blur(10px);
       padding: 5px 8px;
