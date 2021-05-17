@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const PlusBtn = styled.div`
+const PlusBtnWrapper = styled.div`
   min-width: 174px;
   line-height: 54px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 50%), inset 0 -3px 0 var(--purple300);
@@ -18,6 +18,7 @@ const PlusBtn = styled.div`
     min-width: 135px;
   }
 `;
-export default function (props) {
-  return <PlusBtn {...props} />;
-}
+const PlusBtn = (props) => {
+  return <PlusBtnWrapper {...props} />;
+};
+export default PlusBtn;

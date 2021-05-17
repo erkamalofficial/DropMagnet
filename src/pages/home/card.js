@@ -28,9 +28,7 @@ const HeaderSection = styled.div`
   display: flex;
   justify-content: space-between;
   position: var(--card-elem-pos);
-  // text-align: center;
   width: 100%;
-  // padding: 0 var(--art-card-space);
   .empty {
     opacity: 0;
   }
@@ -57,7 +55,6 @@ const FooterSection = styled.div`
   text-align: center;
   margin-bottom: var(--card-title-section-margin);
   width: 100%;
-  padding: 0 var(--art-card-space);
 `;
 const FooterButtons = styled.div`
   display: flex;
@@ -82,7 +79,7 @@ const FooterButtons = styled.div`
 const FooterTitle = styled.div`
   margin: var(--card-title-text-margin);
   font-size: var(--font-size-l);
-  width: var(--card-title-text-width);
+  width: auto;
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;

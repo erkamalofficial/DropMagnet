@@ -10,25 +10,7 @@ const settings = {
   swipeThreshold: 100, // offset to start the swiping
 };
 
-const getElementSize = (element) => {
-  const elementStyles = window.getComputedStyle(element);
-  const widthString = elementStyles.getPropertyValue("width");
-  const width = Number(widthString.split("px")[0]);
-  const heightString = elementStyles.getPropertyValue("height");
-  const height = Number(heightString.split("px")[0]);
-  return { x: width, y: height };
-};
-
-const pythagoras = (x, y) => {
-  return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-};
-
 const animateOut = async (element, speed, easeIn = false) => {
-  const startPos = getTranslate(element);
-  const bodySize = getElementSize(document.body);
-  const diagonal = pythagoras(bodySize.x, bodySize.y);
-
-  const velocity = pythagoras(speed.x, speed.y);
   const time = 0.7; //diagonal / velocity
   const multiplier = 1; //diagonal / velocity
 

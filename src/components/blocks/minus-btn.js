@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MinusBtn = styled.div`
+const MinusBtnWrapper = styled.div`
   min-width: 174px;
   line-height: 54px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 50%), inset 0 -3px 0 var(--lightBlue);
@@ -19,6 +19,7 @@ const MinusBtn = styled.div`
     min-width: 135px;
   }
 `;
-export default function (props) {
-  return <MinusBtn {...props} />;
-}
+const MinusBtn = (props) => {
+  return <MinusBtnWrapper {...props} />;
+};
+export default MinusBtn;

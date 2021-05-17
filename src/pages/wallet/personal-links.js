@@ -117,12 +117,6 @@ const PLSectionBtn = styled.div`
     cursor: pointer;
   }
 `;
-const CardOverLay = styled.div`
-  background: url("./links_card.png");
-  position: absolute;
-  width: 1440px;
-  height: 1024px;
-`;
 const GalleryNameTitle = styled.span`
   font-family: var(--font-bdcols);
   font-size: 22px;

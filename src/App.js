@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Home from "./pages/home/index";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
@@ -17,7 +16,7 @@ import ConnectedWallets from "./pages/wallet/connected-wallets";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from "react";
 import { FirebaseAuthProvider } from "../src/contexts/FirebaseAuthContext";
-import firebase from "firebase/app";
+// import firebase from "firebase/app";
 
 // wallet connect and reading NFT's packages.
 import { FetchWrapper } from "use-nft";
