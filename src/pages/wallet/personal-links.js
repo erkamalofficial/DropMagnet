@@ -4,6 +4,7 @@ import { useState } from "react";
 import CardSectionDesktop from "./card-section-desktop";
 import CardSectionMobile from "./card-section-mobile";
 import useViewport from "./useViewport";
+import { Link } from "react-router-dom";
 
 const PersonalLinksWrapper = styled.div`
   // max-width: 600px;
@@ -172,7 +173,9 @@ const PersonalLinks = (props) => {
         <PLSectionEmojiLine>Emoji's are allowed! ❤️</PLSectionEmojiLine>
         <PLSectionBtn>
           <button>Learn More</button>
-          <button>Sign Up</button>
+          <Link to="/signup">
+            <button>Sign Up</button>
+          </Link>
         </PLSectionBtn>
       </PLSectionThree>
     </PersonalLinksWrapper>

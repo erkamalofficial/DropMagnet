@@ -1,11 +1,14 @@
 import "./App.css";
-import Home from "./pages/home/index";
+// import Home from "./pages/home/index";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import PrivateRoute from "./components/wrappers/PrivateRoute";
+import React, { Suspense } from "react";
+
 import TermsAndConditions from "./pages/terms";
 import DropCreation from "./pages/create_drop";
-import Signup from "./pages/signup";
-import Signup2 from "./pages/signup/index2";
-import Login from "./pages/login";
+import Signup from "./pages/register/Signup";
+import Login from "./pages/register/Login";
+import ForgotPassword from "./pages/register/ForgotPassword";
 import Profile from "./pages/profile";
 import SquareGallery from "./pages/galleries/square-gallery";
 import MagGallery from "./pages/galleries/mag-gallery";
@@ -15,14 +18,20 @@ import NftDisplay from "./pages/wallet/nft-display";
 import ConnectedWallets from "./pages/wallet/connected-wallets";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from "react";
-import { FirebaseAuthProvider } from "../src/contexts/FirebaseAuthContext";
+import { AuthProvider } from "../src/contexts/FirebaseAuthContext";
+// import Nft from "./nft";
 // import firebase from "firebase/app";
+const HomeComponent = React.lazy(() => import("./pages/home/index"));
 
-// wallet connect and reading NFT's packages.
-import { FetchWrapper } from "use-nft";
-import { ethers } from "ethers";
-import Web3 from "web3";
-import axios from "axios";
+const HomePage = (props) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <HomeComponent
+      {...props}
+      userDetails={props.userDetails}
+      userLoggedIn={true}
+    />
+  </Suspense>
+);
 
 function App() {
   // TODO - Martin Bullman Notes
@@ -38,74 +47,7 @@ function App() {
   //
   // Its at this point we can either show the NFT in a Gallery or store it in the Firebase DB.
   // THIS WORK STILL NEEDS TO BE IMPLEMENTED.
-  window.addEventListener("load", function () {
-    let web3 = null;
-    const ethereum = window.ethereum;
-
-    // Modern DApp Browsers
-    if (window.ethereum) {
-      let web3 = new Web3(ethereum);
-
-      try {
-        ethereum.enable().then(function () {
-          // User has allowed account access to DApp...
-          web3.eth.getAccounts().then((accounts) => {
-            // URLS to get the TX or NFT's for a given wallet address.
-
-            // rinkeby testnet
-            //let url = 'https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address='   + accounts[0]  +  '&startblock=0&endblock=99999999&sort=asc&apikey=4UXJPJNUIQ5BI9HGTP8WPB6S7GP65EY2H1'
-            let url =
-              "https://api-rinkeby.etherscan.io/api?module=account&action=tokennfttx&address=" +
-              accounts[0] +
-              "&startblock=0&endblock=999999999&sort=asc&apikey=4UXJPJNUIQ5BI9HGTP8WPB6S7GP65EY2H1";
-
-            // main net
-            //let url = 'https://api.etherscan.io/api?module=account&action=txlist&address='   + accounts[0]  +  '&startblock=0&endblock=99999999&sort=asc&apikey=4UXJPJNUIQ5BI9HGTP8WPB6S7GP65EY2H1'
-            //let url = 'https://api.etherscan.io/api?module=account&action=tokennfttx&address=' + accounts[0] + '&startblock=0&endblock=999999999&sort=asc&apikey=4UXJPJNUIQ5BI9HGTP8WPB6S7GP65EY2H1'
-
-            axios
-              .post(url)
-              .then(async (resp) => {
-                for (const entry of resp.data.result) {
-                  let contractAddress = entry.contractAddress;
-                  let tokenId = entry.tokenID;
-
-                  const fetcher = [
-                    "ethers",
-                    { ethers, provider: ethers.getDefaultProvider() },
-                  ];
-                  const fetchWrapper = new FetchWrapper(fetcher);
-                  const result = await fetchWrapper.fetchNft(
-                    // sample NFT contract address and token ID which can be used for testing
-                    //"0xd07dc4262bcdbf85190c01c996b4c06a461d2430",
-                    //"90473"
-                    contractAddress,
-                    tokenId
-                  );
-
-                  // just logging the NFT meta data here but they con be stored or displayed in a gallery as needed.
-                  console.log(result);
-                  console.log(result.image);
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          });
-        });
-      } catch (e) {
-        // User has denied account access to DApp...
-      }
-    }
-    // Legacy DApp Browsers
-    else if (window.web3) {
-      let web3 = new Web3(window.web3.currentProvider);
-    }
-    // Non-DApp Browsers
-    else {
-      alert("You have to install MetaMask !");
-    }
-  });
+  // window.addEventListener("load",  Nft);
 
   const [userDetails, setUserDetails] = useState({});
 
@@ -123,14 +65,15 @@ function App() {
 
   return (
     <Router>
-      <FirebaseAuthProvider>
+      <AuthProvider>
         <Switch>
-          <Route
+          {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
+
+          <PrivateRoute
             exact
-            path="/"
-            render={(props) => (
-              <Home {...props} userDetails={userDetails} userLoggedIn={true} />
-            )}
+            path="/home"
+            userDetails={userDetails}
+            component={HomePage}
           />
           <Route
             path="/terms"
@@ -162,9 +105,12 @@ function App() {
               <DropCreation {...props} userHandle={userDetails.handle} />
             )}
           />
-          <Route path="/signup" render={(props) => <Signup {...props} />} />
+          {/* <Route path="/signup" render={(props) => <Signup {...props} />} />
           <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
-          <Route path="/login" render={(props) => <Login {...props} />} />
+          <Route path="/login" render={(props) => <Login {...props} />} /> */}
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/forgot-password" component={ForgotPassword} />
           <Route
             path="/profile"
             render={(props) => (
@@ -206,7 +152,7 @@ function App() {
             )}
           />
           <Route
-            path="/personal_links"
+            path="/"
             render={(props) => (
               <PersonalLinks
                 {...props}
@@ -217,7 +163,7 @@ function App() {
           />
           {/* <Route path="/tinder_cards" render={(props) => <TinderCards {...props} userDetails={userDetails} userLoggedIn={true} />} /> */}
         </Switch>
-      </FirebaseAuthProvider>
+      </AuthProvider>
     </Router>
   );
 }
