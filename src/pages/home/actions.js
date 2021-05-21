@@ -1,50 +1,68 @@
-export const fetchArt = ({ activeTabIndex }) => async (dispatch, getState) => {
-    dispatch({
-        type: "FETCH_ARTS_REQUEST", payload: {
-            activeTabIndex
-        }
-    });
-    const response = await fetch(`/api/arts`);
-    const result = await response.json();
-    dispatch({ type: "FETCH_ARTS_SUCCESS", payload: result });
-};
+import { db } from "../../firebase";
 
-export const fetchMusic = ({ activeTabIndex }) => async (dispatch, getState) => {
-    dispatch({
-        type: "FETCH_MUSIC_REQUEST", payload: {
-            activeTabIndex
-        }
+const getDataFromDb = async (dispatch, categoryType, actionType) => {
+  try {
+    const querySnapshot = await db
+      .collection("drops_v1")
+      .where("category", "==", categoryType)
+      .get();
+    const result = [];
+    querySnapshot.forEach((doc) => {
+      result.push(doc.data());
     });
-    const response = await fetch(`/api/music`);
-    const result = await response.json();
-    dispatch({ type: "FETCH_MUSIC_SUCCESS", payload: result });
+    dispatch({ type: actionType, payload: result });
+  } catch (err) {
+    console.log(`error while fetching ${categoryType}`, err);
+  }
 };
-export const fetchColletibles = ({ activeTabIndex }) => async (dispatch, getState) => {
+export const fetchArt =
+  ({ activeTabIndex }) =>
+  async (dispatch, getState) => {
     dispatch({
-        type: "FETCH_COLLECTABLES_REQUEST", payload: {
-            activeTabIndex
-        }
+      type: "FETCH_ARTS_REQUEST",
+      payload: {
+        activeTabIndex,
+      },
     });
-    const response = await fetch(`/api/collectables`);
-    const result = await response.json();
-    dispatch({ type: "FETCH_COLLECTABLES_SUCCESS", payload: result });
-};
-export const fetchFashion = ({ activeTabIndex }) => async (dispatch, getState) => {
+    getDataFromDb(dispatch, "Art", "FETCH_ARTS_SUCCESS");
+  };
+
+export const fetchMusic =
+  ({ activeTabIndex }) =>
+  async (dispatch, getState) => {
     dispatch({
-        type: "FETCH_FASHION_REQUEST", payload: {
-            activeTabIndex
-        }
+      type: "FETCH_MUSIC_REQUEST",
+      payload: {
+        activeTabIndex,
+      },
     });
-    const response = await fetch(`/api/fashion`);
-    const result = await response.json();
-    dispatch({ type: "FETCH_FASHION_SUCCESS", payload: result });
-};
+    getDataFromDb(dispatch, "Music", "FETCH_MUSIC_SUCCESS");
+  };
+export const fetchColletibles =
+  ({ activeTabIndex }) =>
+  async (dispatch, getState) => {
+    dispatch({
+      type: "FETCH_COLLECTABLES_REQUEST",
+      payload: {
+        activeTabIndex,
+      },
+    });
+    getDataFromDb(dispatch, "Collectables", "FETCH_COLLECTABLES_SUCCESS");
+  };
+export const fetchFashion =
+  ({ activeTabIndex }) =>
+  async (dispatch, getState) => {
+    dispatch({
+      type: "FETCH_FASHION_REQUEST",
+      payload: {
+        activeTabIndex,
+      },
+    });
+    getDataFromDb(dispatch, "Fashion", "FETCH_FASHION_SUCCESS");
+  };
 export const fetchReswipeList = (tabIndex) => async (dispatch, getState) => {
-    dispatch({
-        type: "FETCH_RESWIPE_REQUEST",
-        payload: { activeTabIndex: tabIndex }
-    });
+  dispatch({
+    type: "FETCH_RESWIPE_REQUEST",
+    payload: { activeTabIndex: tabIndex },
+  });
 };
-
-
-

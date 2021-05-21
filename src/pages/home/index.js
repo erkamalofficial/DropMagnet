@@ -1,4 +1,4 @@
-import "../../server";
+// import "../../server";
 import styled from "styled-components";
 import React, { useEffect, useMemo } from "react";
 import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
