@@ -16,9 +16,6 @@ export default function Login(props) {
   async function loginUser() {
     try {
       await login(email, password).then((userCredential) => {
-        // Signed in 
-        var user = userCredential.user;
-        console.log('logged in user', user)
         history.push("/")
       })
       .catch((error) => {

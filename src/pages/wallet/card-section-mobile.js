@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useSpringCarousel } from "react-spring-carousel-js";
 import styled from "styled-components";
-import LinksBtn from "../../components/blocks/links-btn";
+import LinksBtn from "./links-btn";
+import { map } from "lodash";
 
 const CardSection = styled.div`
   display: flex;
@@ -70,6 +72,7 @@ const GridContainer = styled.div`
 const TabItem = styled.div`
   display: flex;
   align-items: center;
+  user-select: none;
   > * {
     margin-right: 0.3rem;
   }
@@ -93,74 +96,78 @@ const ScrollContainerContent = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const CardSectionItem = (cardItem, index, displayName) => {
+const CardSectionItem = (linkItems, linkKey, handleTabSelection) => {
   return {
-    id: index,
+    id: linkKey,
     renderItem: (
-      <TabItem>
-        <span className="icon">{cardItem.icon}</span>
-        <span>{cardItem.title}</span>
+      <TabItem onClick={() => handleTabSelection(linkKey)}>
+        <span className="icon">{linkItems[0].icon}</span>
+        <span>{linkItems[0].title}</span>
       </TabItem>
     ),
   };
 };
-const contentList2 = [
-  { title: "Artists", icon: "🎨" },
-  { title: "Collectors", icon: "🌕" },
-  { title: "Fashion", icon: "🧥" },
-  { title: "Music", icon: "🎭" },
-];
 
-const CaurouselComponent = ({ displayName }) => {
-  const { carouselFragment, slideToPrevItem, slideToNextItem } =
-    useSpringCarousel({
-      itemsPerSlide: 2,
-      initialStartingPosition: "center",
-      items: contentList2.map((cardItem, index) =>
-        CardSectionItem(cardItem, index, displayName)
-      ),
-    });
+const CaurouselComponent = ({ displayName, linksList }) => {
+  const [selectedTab, setSelectedTab] = useState("Art");
+  const handleTabSelection = (key) => {
+    setSelectedTab(key);
+  };
+  const {
+    carouselFragment,
+    slideToPrevItem,
+    slideToNextItem,
+    getCurrentActiveItem,
+  } = useSpringCarousel({
+    itemsPerSlide: 1,
+    initialStartingPosition: "center",
+    items: map(linksList, (linkItem, linkKey) =>
+      CardSectionItem(linkItem, linkKey, handleTabSelection)
+    ),
+  });
 
+  // keep the order
+
+  const linksMap = new Map();
+  map(linksList, (links, key) => {
+    linksMap.set(key, links);
+  });
+
+  const currentSelectedItem = linksMap.get(selectedTab);
+  const handlePrev = () => {
+    slideToPrevItem();
+    const { id } = getCurrentActiveItem();
+    setSelectedTab(id);
+  };
+  const handleNext = () => {
+    slideToNextItem();
+    const { id } = getCurrentActiveItem();
+    setSelectedTab(id);
+  };
   return (
     <CardSection>
       <GridContainer>
-        <NavIcon type="prev" onClick={slideToPrevItem}>
+        <NavIcon type="prev" onClick={handlePrev}>
           {" "}
           &#8249;{" "}
         </NavIcon>
         {carouselFragment}
-        <NavIcon type="next" onClick={slideToNextItem}>
+        <NavIcon type="next" onClick={handleNext}>
           {" "}
           &#8250;{" "}
         </NavIcon>
       </GridContainer>
       <ScrollContainer>
         <ScrollContainerContent>
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
-          <PLLinksBtn galleryName={displayName} />
+          {map(currentSelectedItem, (linkItem, index) => {
+            return (
+              <PLLinksBtn
+                key={index}
+                linkName={linkItem.item.domain}
+                galleryName={displayName}
+              />
+            );
+          })}
         </ScrollContainerContent>
       </ScrollContainer>
     </CardSection>

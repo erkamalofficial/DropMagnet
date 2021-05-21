@@ -1,11 +1,16 @@
+import { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import styled from "styled-components";
 import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
+import Spinner from "../../components/blocks/spinner";
 import { useState } from "react";
 import CardSectionDesktop from "./card-section-desktop";
 import CardSectionMobile from "./card-section-mobile";
 import useViewport from "./useViewport";
 import { Link } from "react-router-dom";
-
+import { fetchLinks } from "./actions";
+import emojis from "./emojiicons";
 const PersonalLinksWrapper = styled.div`
   // max-width: 600px;
   width: 100%;
@@ -126,12 +131,43 @@ const GalleryNameTitle = styled.span`
   }
   font-weight: normal;
 `;
+const getGroupedLinks = (linkList) => {
+  const st = new Set();
+  linkList.forEach((item) => st.add(...item.tags));
+  const uniqueKeys = [...st];
+
+  const groupedList = {};
+  linkList.forEach((link) => {
+    uniqueKeys.forEach((key) => {
+      if (link.tags.includes(key)) {
+        groupedList[key] = groupedList[key] || [];
+        groupedList[key].push({ icon: emojis[key], title: key, item: link });
+      }
+    });
+  });
+  return groupedList;
+};
+
 const PersonalLinks = (props) => {
   const [galleryName, setGalleryName] = useState("");
+  // const [groupedList, setGroupedList] = useState([]);
   const displayName = galleryName === "" ? "You" : galleryName;
   const { viewportWidth } = useViewport();
   const breakpoint = 620;
   const isMobile = viewportWidth < breakpoint;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchLinks());
+  }, []);
+
+  const isLoading = useSelector((state) => state.category.general.isLoading);
+  const allLinksList = useSelector((state) => state.category.links);
+  var groupedList = {};
+
+  if (allLinksList.length > 0) {
+    groupedList = getGroupedLinks(allLinksList);
+  }
 
   const handleGalleryName = (val) => {
     const galleryNameLimit = isMobile ? 16 : 22;
@@ -141,6 +177,7 @@ const PersonalLinks = (props) => {
         : val;
     setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
   };
+
   return (
     <PersonalLinksWrapper>
       <FixedHeader {...props} />
@@ -155,12 +192,23 @@ const PersonalLinks = (props) => {
           </HeaderSubtitle>
         </PLSectionOneContent>
       </PLSectionOne>
-
-      {isMobile ? (
-        <CardSectionMobile displayName={displayName} />
-      ) : (
-        <CardSectionDesktop displayName={displayName} />
+      {isLoading && <Spinner />}
+      {!isLoading && allLinksList.length > 0 && (
+        <>
+          {isMobile ? (
+            <CardSectionMobile
+              displayName={displayName}
+              linksList={groupedList}
+            />
+          ) : (
+            <CardSectionDesktop
+              displayName={displayName}
+              linksList={groupedList}
+            />
+          )}
+        </>
       )}
+
       <PLSectionThree>
         <PLSectionThreeTitle>
           <span>Reserve your </span>

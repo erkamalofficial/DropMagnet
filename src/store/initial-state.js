@@ -17,6 +17,7 @@ const initialState = {
   music: JSON.parse(JSON.stringify(buckets)),
   collectables: JSON.parse(JSON.stringify(buckets)),
   fashion: JSON.parse(JSON.stringify(buckets)),
+  links: {},
 };
 
 export default initialState;

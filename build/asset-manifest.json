@@ -1,26 +1,30 @@
 {
   "files": {
-    "main.css": "/static/css/main.b23e29b6.chunk.css",
-    "main.js": "/static/js/main.b9f06b0b.chunk.js",
-    "main.js.map": "/static/js/main.b9f06b0b.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.e6e798ec.js",
-    "runtime-main.js.map": "/static/js/runtime-main.e6e798ec.js.map",
+    "main.css": "/static/css/main.dea88109.chunk.css",
+    "main.js": "/static/js/main.1a326259.chunk.js",
+    "main.js.map": "/static/js/main.1a326259.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.812bd310.js",
+    "runtime-main.js.map": "/static/js/runtime-main.812bd310.js.map",
     "static/css/2.8cebfa1f.chunk.css": "/static/css/2.8cebfa1f.chunk.css",
-    "static/js/2.37963fa1.chunk.js": "/static/js/2.37963fa1.chunk.js",
-    "static/js/2.37963fa1.chunk.js.map": "/static/js/2.37963fa1.chunk.js.map",
-    "static/js/3.8bd26237.chunk.js": "/static/js/3.8bd26237.chunk.js",
-    "static/js/3.8bd26237.chunk.js.map": "/static/js/3.8bd26237.chunk.js.map",
+    "static/js/2.615fa883.chunk.js": "/static/js/2.615fa883.chunk.js",
+    "static/js/2.615fa883.chunk.js.map": "/static/js/2.615fa883.chunk.js.map",
+    "static/css/3.60d7ba10.chunk.css": "/static/css/3.60d7ba10.chunk.css",
+    "static/js/3.bfa2f73e.chunk.js": "/static/js/3.bfa2f73e.chunk.js",
+    "static/js/3.bfa2f73e.chunk.js.map": "/static/js/3.bfa2f73e.chunk.js.map",
+    "static/js/4.a684e228.chunk.js": "/static/js/4.a684e228.chunk.js",
+    "static/js/4.a684e228.chunk.js.map": "/static/js/4.a684e228.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.8cebfa1f.chunk.css.map": "/static/css/2.8cebfa1f.chunk.css.map",
-    "static/css/main.b23e29b6.chunk.css.map": "/static/css/main.b23e29b6.chunk.css.map",
-    "static/js/2.37963fa1.chunk.js.LICENSE.txt": "/static/js/2.37963fa1.chunk.js.LICENSE.txt",
+    "static/css/3.60d7ba10.chunk.css.map": "/static/css/3.60d7ba10.chunk.css.map",
+    "static/css/main.dea88109.chunk.css.map": "/static/css/main.dea88109.chunk.css.map",
+    "static/js/2.615fa883.chunk.js.LICENSE.txt": "/static/js/2.615fa883.chunk.js.LICENSE.txt",
     "static/media/App.css": "/static/media/BD-Colonius-Reg.eb85d4a6.otf"
   },
   "entrypoints": [
-    "static/js/runtime-main.e6e798ec.js",
+    "static/js/runtime-main.812bd310.js",
     "static/css/2.8cebfa1f.chunk.css",
-    "static/js/2.37963fa1.chunk.js",
-    "static/css/main.b23e29b6.chunk.css",
-    "static/js/main.b9f06b0b.chunk.js"
+    "static/js/2.615fa883.chunk.js",
+    "static/css/main.dea88109.chunk.css",
+    "static/js/main.1a326259.chunk.js"
   ]
 }

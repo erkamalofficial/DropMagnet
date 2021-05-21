@@ -15,7 +15,7 @@ var VERIFY_EMAIL_PATH;
 if (process.env === "development") {
   VERIFY_EMAIL_PATH = "http://localhost:3000";
 } else {
-  VERIFY_EMAIL_PATH = "https://jj-web-ed26d.web.app";
+  VERIFY_EMAIL_PATH = "https://fb-web-763f4.web.app";
 }
 
 export default function Signup() {

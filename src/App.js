@@ -59,7 +59,6 @@ function App() {
       image:
         "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
     };
-    console.log("user in app", user);
     setUserDetails(user);
   }, []);
 

@@ -2,8 +2,8 @@
 
 import { useSpringCarousel } from "react-spring-carousel-js";
 import styled from "styled-components";
-import LinksBtn from "../../components/blocks/links-btn";
-
+import LinksBtn from "./links-btn";
+import { map } from "lodash";
 const CardContainer = styled.div`
   width: 100%;
   margin: 16px;
@@ -95,41 +95,23 @@ const ScrollContainerContent = styled.div`
   align-items: center;
 `;
 
-const CardSectionItem = (cardItem, index, displayName) => {
+const CardSectionItem = (linkItems, linkKey, displayName) => {
   return {
-    id: index,
+    id: linkKey,
     renderItem: (
       <CardContainer>
         <CardSection>
-          <Circle>{cardItem.icon}</Circle>
-          <HeaderSubtitle>{cardItem.title}</HeaderSubtitle>
+          <Circle>{linkItems[0].icon}</Circle>
+          <HeaderSubtitle>{linkItems[0].title}</HeaderSubtitle>
           <ScrollContainer>
             <ScrollContainerContent>
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
-              <PLLinksBtn galleryName={displayName} />
+              {map(linkItems, (linkItem, index) => (
+                <PLLinksBtn
+                  key={index}
+                  linkName={linkItem.item.domain}
+                  galleryName={displayName}
+                />
+              ))}
             </ScrollContainerContent>
           </ScrollContainer>
         </CardSection>
@@ -137,20 +119,14 @@ const CardSectionItem = (cardItem, index, displayName) => {
     ),
   };
 };
-const contentList2 = [
-  { title: "Artists", icon: "🎨" },
-  { title: "Collectors", icon: "🌕" },
-  { title: "Fashion", icon: "🧥" },
-  { title: "Music", icon: "🎭" },
-];
 
-const CaurouselComponent = ({ displayName }) => {
+const CaurouselComponent = ({ displayName, linksList }) => {
   const { carouselFragment, slideToPrevItem, slideToNextItem } =
     useSpringCarousel({
       itemsPerSlide: 2,
       initialStartingPosition: "center",
-      items: contentList2.map((cardItem, index) =>
-        CardSectionItem(cardItem, index, displayName)
+      items: map(linksList, (linkItem, linkKey) =>
+        CardSectionItem(linkItem, linkKey, displayName)
       ),
     });
 
