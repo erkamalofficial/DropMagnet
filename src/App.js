@@ -17,6 +17,7 @@ import WalletLinks from "./pages/wallet/wallet-links";
 import PersonalLinks from "./pages/wallet/personal-links";
 import NftDisplay from "./pages/wallet/nft-display";
 import ConnectedWallets from "./pages/wallet/connected-wallets";
+import PersonalLinksPayment from "./pages/wallet/personal-links-payments";
 // import SelectLinks from "./pages/wallet/select-links";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from "react";
@@ -112,7 +113,7 @@ function App() {
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/forgot-password" component={ForgotPassword} />
-          {/* <Route path="/select-links" component={SelectLinks} /> */}
+
           <Route
             path="/profile"
             render={(props) => (
@@ -153,8 +154,10 @@ function App() {
               />
             )}
           />
+          <Route path="/links-payment" component={PersonalLinksPayment} />
           <Route
             path="/"
+            exact
             render={(props) => (
               <PersonalLinks
                 {...props}

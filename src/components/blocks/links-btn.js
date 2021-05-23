@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const LinksBtn = styled.div`
+const LinksBtnWrapper = styled.div`
   border-radius: 30px;
   border: 1px solid var(--pureBlack);
   line-height: 40px;
@@ -18,12 +18,13 @@ const LinksBtn = styled.div`
     color: var(--blue200);
   }
 `;
-export default function (props) {
+const LinksBtn = (props) => {
   const { galleryName } = props;
   return (
-    <LinksBtn {...props}>
+    <LinksBtnWrapper {...props}>
       <span className="tagLink">BasketballNFTs.Link</span>
       <span className="tagYou">/{galleryName}</span>
-    </LinksBtn>
+    </LinksBtnWrapper>
   );
-}
+};
+export default LinksBtn;

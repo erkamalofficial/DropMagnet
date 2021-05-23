@@ -3,7 +3,7 @@ import LinksHeader from "../../components/elements/HeaderBar/LinksHeader";
 const LinksPage = styled.div`
   display: flex;
   flex-direction: column;
-  margin: auto;
+  margin: 16px;
 `;
 const LinksPageWrapper = ({ children }) => {
   return (

@@ -159,13 +159,11 @@ const CaurouselComponent = ({
     <CardSection>
       <GridContainer>
         <NavIcon type="prev" onClick={handlePrev}>
-          {" "}
-          &#8249;{" "}
+          &#8249;
         </NavIcon>
         {carouselFragment}
         <NavIcon type="next" onClick={handleNext}>
-          {" "}
-          &#8250;{" "}
+          &#8250;
         </NavIcon>
       </GridContainer>
       <ScrollContainer>
