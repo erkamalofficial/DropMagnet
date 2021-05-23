@@ -96,7 +96,13 @@ const ScrollContainerContent = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const CardSectionItem = (linkItems, linkKey, handleTabSelection) => {
+const CardSectionItem = (
+  linkItems,
+  linkKey,
+  handleTabSelection,
+  handleLinkSelection,
+  selectedLinks
+) => {
   return {
     id: linkKey,
     renderItem: (
@@ -108,7 +114,12 @@ const CardSectionItem = (linkItems, linkKey, handleTabSelection) => {
   };
 };
 
-const CaurouselComponent = ({ displayName, linksList }) => {
+const CaurouselComponent = ({
+  displayName,
+  linksList,
+  handleLinkSelection,
+  selectedLinks,
+}) => {
   const [selectedTab, setSelectedTab] = useState("Art");
   const handleTabSelection = (key) => {
     setSelectedTab(key);
@@ -165,6 +176,13 @@ const CaurouselComponent = ({ displayName, linksList }) => {
                 key={index}
                 linkName={linkItem.item.domain}
                 galleryName={displayName}
+                selectLink={() =>
+                  handleLinkSelection(linkItem.item.id, linkItem.item.active)
+                }
+                className={
+                  (linkItem.item.active === "S" && "button-disabled") ||
+                  (selectedLinks.includes(linkItem.item.id) && "button-active")
+                }
               />
             );
           })}

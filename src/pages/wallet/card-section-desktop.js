@@ -95,7 +95,13 @@ const ScrollContainerContent = styled.div`
   align-items: center;
 `;
 
-const CardSectionItem = (linkItems, linkKey, displayName) => {
+const CardSectionItem = (
+  linkItems,
+  linkKey,
+  displayName,
+  handleLinkSelection,
+  selectedLinks
+) => {
   return {
     id: linkKey,
     renderItem: (
@@ -108,6 +114,16 @@ const CardSectionItem = (linkItems, linkKey, displayName) => {
               {map(linkItems, (linkItem, index) => (
                 <PLLinksBtn
                   key={index}
+                  dataKey={index}
+                  linkId={linkItem.item.id}
+                  selectLink={() =>
+                    handleLinkSelection(linkItem.item.id, linkItem.item.active)
+                  }
+                  className={
+                    (linkItem.item.active === "S" && "button-disabled") ||
+                    (selectedLinks.includes(linkItem.item.id) &&
+                      "button-active")
+                  }
                   linkName={linkItem.item.domain}
                   galleryName={displayName}
                 />
@@ -120,13 +136,24 @@ const CardSectionItem = (linkItems, linkKey, displayName) => {
   };
 };
 
-const CaurouselComponent = ({ displayName, linksList }) => {
+const CaurouselComponent = ({
+  displayName,
+  linksList,
+  handleLinkSelection,
+  selectedLinks,
+}) => {
   const { carouselFragment, slideToPrevItem, slideToNextItem } =
     useSpringCarousel({
       itemsPerSlide: 2,
       initialStartingPosition: "center",
       items: map(linksList, (linkItem, linkKey) =>
-        CardSectionItem(linkItem, linkKey, displayName)
+        CardSectionItem(
+          linkItem,
+          linkKey,
+          displayName,
+          handleLinkSelection,
+          selectedLinks
+        )
       ),
     });
 

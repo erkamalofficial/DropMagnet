@@ -1,18 +1,16 @@
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import styled from "styled-components";
-import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
+import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
 import Spinner from "../../components/blocks/spinner";
 import { useState } from "react";
 import CardSectionDesktop from "./card-section-desktop";
 import CardSectionMobile from "./card-section-mobile";
 import useViewport from "./useViewport";
-import { Link } from "react-router-dom";
 import { fetchLinks } from "./actions";
 import emojis from "./emojiicons";
 const PersonalLinksWrapper = styled.div`
-  // max-width: 600px;
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
@@ -59,77 +57,35 @@ const HeaderSubtitle = styled.div`
   margin-bottom: 16px;
   font-weight: 700;
 `;
-
-const PLSectionThree = styled.div`
+const PLFooterSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  > * {
-    margin-bottom: 1rem;
-  }
-  @media (max-width: 340px) {
-    > * {
-      margin-bottom: 0.5rem;
-    }
-  }
-`;
-const PLSectionThreeTitle = styled.div`
-  line-height: 28px;
   font-weight: 700;
-  color: var(--grey300);
-  font-size: var(--font-size-l);
-  @media (max-width: 340px) {
-    font-size: var(--font-size-s);
-  }
 `;
-const PLSectionUserinput = styled.input`
-  font-weight: normal;
-  border: 1px solid var(--purple500);
-  color: var(--grey250);
-  font-size: var(--font-size-m);
-  @media (max-width: 340px) {
-    font-size: var(--font-size-s);
-  }
-  border-radius: 5px;
-  width: 398px;
-  @media (max-width: 600px) {
-    width: 90%;
-  }
-  line-height: 48px;
+const PLFooterSectionTitle = styled.div`
   text-align: center;
-`;
-const PLSectionEmojiLine = styled.div`
-  font-weight: 700;
-  color: var(--grey250);
-  font-size: var(--font-size-s);
-  @media (max-width: 340px) {
-    font-size: var(--font-size-xs);
-  }
-`;
-const PLSectionBtn = styled.div`
-  button {
-    line-height: 40px;
-    background-color: var(--darkBlue);
-    color: var(--grey300);
-    border: 1px solid var(--purple500);
-    border-radius: 5px;
-    font-size: var(--font-size-xs);
-    @media (max-width: 340px) {
-      font-size: var(--font-size-xxs);
-    }
-    font-weight: 700;
-    padding: 0 14px;
-    margin-right: 16px;
-    cursor: pointer;
-  }
-`;
-const GalleryNameTitle = styled.span`
-  font-family: var(--font-bdcols);
+  line-height: 58px;
+  width: 309px;
+  height: 58px;
+  border-radius: 16px;
+  background-image: linear-gradient(180deg, #202020 0%, #333232 100%);
   font-size: 22px;
-  @media (max-width: 340px) {
-    font-size: var(--font-size-m);
-  }
-  font-weight: normal;
+  margin-bottom: 18px;
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const ContinueButton = styled.div`
+  line-height: 44px;
+  box-shadow: 0 3px 25px rgba(57, 30, 125, 0.2), inset 0 -2px 0 #610bc8;
+  border-radius: 8px 8px 0;
+  border: 1px solid #610bc8;
+  background-color: #152230;
+  text-align: center;
+  padding: 0 16px;
+  margin-right: 16px;
 `;
 const getGroupedLinks = (linkList) => {
   const st = new Set();
@@ -150,8 +106,10 @@ const getGroupedLinks = (linkList) => {
 
 const PersonalLinks = (props) => {
   const [galleryName, setGalleryName] = useState("");
-  // const [groupedList, setGroupedList] = useState([]);
+  const [showBuyAllBtn, setShowBuyALlBtn] = useState(false);
+  const [selectedLinks, setSelectedLinks] = useState([]);
   const displayName = galleryName === "" ? "You" : galleryName;
+  const [costText, setCostText] = useState("Free Forever");
   const { viewportWidth } = useViewport();
   const breakpoint = 620;
   const isMobile = viewportWidth < breakpoint;
@@ -177,56 +135,72 @@ const PersonalLinks = (props) => {
         : val;
     setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
   };
+  const handleLinkSelection = (id, linkStatus) => {
+    if (linkStatus === "S") return;
+    const linkSelection = [...selectedLinks];
+    const selectedLinkIndex = linkSelection.indexOf(id);
+    if (selectedLinkIndex > -1) {
+      linkSelection.splice(selectedLinkIndex, 1);
+    } else {
+      linkSelection.push(id);
+    }
+    if (linkSelection.length < 4) {
+      setCostText("Free Forever");
+      setShowBuyALlBtn(false);
+    }
+    if (linkSelection.length === 4) {
+      setCostText("$4 per year");
+      setShowBuyALlBtn(true);
+    }
+    if (linkSelection.length > 4) {
+      setCostText(`$${linkSelection.length} per year`);
+      setShowBuyALlBtn(true);
+    }
+    setSelectedLinks(linkSelection);
+  };
 
   return (
-    <PersonalLinksWrapper>
-      <FixedHeader {...props} />
-
-      <PLSectionOne>
-        <PLSectionOneContent>
-          <HeaderTitle> Display Your NFTs </HeaderTitle>
-          <HeaderTitleTag> BEAUTIFULLY </HeaderTitleTag>
-          <HeaderSubtitle>
-            {" "}
-            Promote your art with unique personal links{" "}
-          </HeaderSubtitle>
-        </PLSectionOneContent>
-      </PLSectionOne>
-      {isLoading && <Spinner />}
-      {!isLoading && allLinksList.length > 0 && (
-        <>
-          {isMobile ? (
-            <CardSectionMobile
-              displayName={displayName}
-              linksList={groupedList}
-            />
-          ) : (
-            <CardSectionDesktop
-              displayName={displayName}
-              linksList={groupedList}
-            />
-          )}
-        </>
-      )}
-
-      <PLSectionThree>
-        <PLSectionThreeTitle>
-          <span>Reserve your </span>
-          <GalleryNameTitle> Gallery Name</GalleryNameTitle>
-        </PLSectionThreeTitle>
-        <PLSectionUserinput
-          placeholder="Enter your brand or name here"
-          onChange={(e) => handleGalleryName(e.target.value)}
-        />
-        <PLSectionEmojiLine>Emoji's are allowed! ❤️</PLSectionEmojiLine>
-        <PLSectionBtn>
-          <button>Learn More</button>
-          <Link to="/signup">
-            <button>Sign Up</button>
-          </Link>
-        </PLSectionBtn>
-      </PLSectionThree>
-    </PersonalLinksWrapper>
+    <LinksWrapper>
+      <PersonalLinksWrapper>
+        <PLSectionOne>
+          <PLSectionOneContent>
+            <HeaderTitle> Display Your NFTs </HeaderTitle>
+            <HeaderTitleTag> BEAUTIFULLY </HeaderTitleTag>
+            <HeaderSubtitle>
+              {" "}
+              Promote your art with unique personal links{" "}
+            </HeaderSubtitle>
+          </PLSectionOneContent>
+        </PLSectionOne>
+        {isLoading && <Spinner />}
+        {!isLoading && allLinksList.length > 0 && (
+          <>
+            {isMobile ? (
+              <CardSectionMobile
+                displayName={displayName}
+                handleLinkSelection={handleLinkSelection}
+                selectedLinks={selectedLinks}
+                linksList={groupedList}
+              />
+            ) : (
+              <CardSectionDesktop
+                displayName={displayName}
+                handleLinkSelection={handleLinkSelection}
+                selectedLinks={selectedLinks}
+                linksList={groupedList}
+              />
+            )}
+          </>
+        )}
+        <PLFooterSection>
+          <PLFooterSectionTitle>Total Price: {costText}</PLFooterSectionTitle>
+          <ButtonContainer>
+            {showBuyAllBtn && <ContinueButton>Buy All For $99</ContinueButton>}
+            <ContinueButton>Continue</ContinueButton>
+          </ButtonContainer>
+        </PLFooterSection>
+      </PersonalLinksWrapper>
+    </LinksWrapper>
   );
 };
 

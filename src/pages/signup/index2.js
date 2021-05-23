@@ -1,46 +1,13 @@
 import styled from "styled-components";
-import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
 import { useEffect } from "react";
 
-const SignupWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 600px;
-  margin: auto;
-`;
 const SignupWrapperContents = styled.div`
   margin-top: 72px;
   display: flex;
   flex-direction: column;
   padding: 12px;
 `;
-const WhitePageLabel = styled.div`
-  background: linear-gradient(to left, #ac43f1, #6620de);
-  border-radius: 40px;
-  display: inline-block;
-  font-size: 20px;
-  padding: 1px;
-  text-decoration: none;
 
-  span {
-    background-color: rgba(0, 0, 0, 0.88);
-    display: block;
-    padding: 10px 24px;
-    border-radius: 40px;
-    font-size: var(--font-size-s);
-    @media (max-width: 320px) {
-      padding: 5px 12px;
-      font-size: 12px;
-      line-height: 24px;
-      display: inline-block;
-    }
-  }
-`;
-const SignupHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-`;
 const SignupTitle = styled.div`
   font-size: 32px;
   color: #eaeaea;
@@ -86,21 +53,7 @@ const Recaptcha = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const LogoSection = styled.div`
-  display: flex;
-`;
-const BrandLogo = styled.img`
-  height: 36px;
-  width: 36px;
-`;
-const LogoTitleSection = styled.div`
-  padding-left: 20px;
-`;
-const LogoTitle = styled.div`
-  font-family: var(--font-bdcols);
-  font-weight: 400;
-  font-size: var(--font-size-l);
-`;
+
 export default function Signup(props) {
   useEffect(() => {
     const script = document.createElement("script");
@@ -110,21 +63,8 @@ export default function Signup(props) {
     document.body.appendChild(script);
   }, []);
   return (
-    <SignupWrapper>
-      <FixedHeader {...props} />
+ 
       <SignupWrapperContents>
-        <SignupHeader>
-          <LogoSection>
-            <BrandLogo src="./drop_icon.png" alt="drop magnet" />
-            <LogoTitleSection>
-              <LogoTitle>drop magnet</LogoTitle>
-              <div>#ThreeTheWeb</div>
-            </LogoTitleSection>
-          </LogoSection>
-          <WhitePageLabel>
-            <span>White Paper</span>
-          </WhitePageLabel>
-        </SignupHeader>
         <SignupTitle> Sign Up to Claim your URLs</SignupTitle>
         <SignupFormLabel> Email address </SignupFormLabel>
         <SignupFormInput placeholder="Enter your email address" />
@@ -140,6 +80,6 @@ export default function Signup(props) {
           <ContinueBtn type="submit"> Continue </ContinueBtn>
         </form>
       </SignupWrapperContents>
-    </SignupWrapper>
+    
   );
 }

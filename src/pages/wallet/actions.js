@@ -5,11 +5,12 @@ export const fetchLinks = () => async (dispatch) => {
   try {
     const querySnapshot = await db
       .collection("links")
-      .where("active", "==", "Y")
+      .where("active", "in", ["Y", "S"])
       .get();
     const result = [];
     querySnapshot.forEach((doc) => {
-      result.push(doc.data());
+      const data = { id: doc.id, ...doc.data() };
+      result.push(data);
     });
     dispatch({ type: "FETCH_LINKS_SUCCESS", payload: result });
   } catch (err) {

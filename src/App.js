@@ -7,6 +7,7 @@ import React, { Suspense } from "react";
 import TermsAndConditions from "./pages/terms";
 import DropCreation from "./pages/create_drop";
 import Signup from "./pages/register/Signup";
+import Signup2 from "./pages/signup/index2";
 import Login from "./pages/register/Login";
 import ForgotPassword from "./pages/register/ForgotPassword";
 import Profile from "./pages/profile";
@@ -16,6 +17,7 @@ import WalletLinks from "./pages/wallet/wallet-links";
 import PersonalLinks from "./pages/wallet/personal-links";
 import NftDisplay from "./pages/wallet/nft-display";
 import ConnectedWallets from "./pages/wallet/connected-wallets";
+// import SelectLinks from "./pages/wallet/select-links";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from "react";
 import { AuthProvider } from "../src/contexts/FirebaseAuthContext";
@@ -105,11 +107,12 @@ function App() {
             )}
           />
           {/* <Route path="/signup" render={(props) => <Signup {...props} />} />
-          <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/login" render={(props) => <Login {...props} />} /> */}
+          <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/forgot-password" component={ForgotPassword} />
+          {/* <Route path="/select-links" component={SelectLinks} /> */}
           <Route
             path="/profile"
             render={(props) => (
@@ -160,7 +163,6 @@ function App() {
               />
             )}
           />
-          {/* <Route path="/tinder_cards" render={(props) => <TinderCards {...props} userDetails={userDetails} userLoggedIn={true} />} /> */}
         </Switch>
       </AuthProvider>
     </Router>
