@@ -15,6 +15,7 @@ import SquareGallery from "./pages/galleries/square-gallery";
 import MagGallery from "./pages/galleries/mag-gallery";
 import WalletLinks from "./pages/wallet/wallet-links";
 import PersonalLinks from "./pages/wallet/personal-links";
+import PersonalLinksHome from "./pages/wallet/personal-links-home";
 import NftDisplay from "./pages/wallet/nft-display";
 import ConnectedWallets from "./pages/wallet/connected-wallets";
 import PersonalLinksPayment from "./pages/wallet/personal-links-payments";
@@ -69,8 +70,6 @@ function App() {
     <Router>
       <AuthProvider>
         <Switch>
-          {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-
           <PrivateRoute
             exact
             path="/home"
@@ -107,8 +106,6 @@ function App() {
               <DropCreation {...props} userHandle={userDetails.handle} />
             )}
           />
-          {/* <Route path="/signup" render={(props) => <Signup {...props} />} />
-          <Route path="/login" render={(props) => <Login {...props} />} /> */}
           <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
@@ -155,8 +152,9 @@ function App() {
             )}
           />
           <Route path="/links-payment" component={PersonalLinksPayment} />
+          <Route exact path="/" component={PersonalLinksHome} />
           <Route
-            path="/"
+            path="/buy-links"
             exact
             render={(props) => (
               <PersonalLinks

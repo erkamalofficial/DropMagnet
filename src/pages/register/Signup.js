@@ -45,7 +45,7 @@ export default function Signup() {
         window.localStorage.setItem("emailForSignIn", emailRef.current.value);
         await res.user.sendEmailVerification({
           handleCodeInApp: true,
-          url: `${VERIFY_EMAIL_PATH}/home`,
+          url: `${VERIFY_EMAIL_PATH}/buy-links`,
         });
         setMessage("Check your email inbox for further instructions");
       } catch {
