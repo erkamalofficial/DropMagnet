@@ -5,9 +5,9 @@ const LinksPage = styled.div`
   flex-direction: column;
   margin: 16px;
 `;
-const LinksPageWrapper = ({ children }) => {
+const LinksPageWrapper = ({ children, ...rest }) => {
   return (
-    <LinksPage>
+    <LinksPage {...rest}>
       <LinksHeader />
       {children}
     </LinksPage>

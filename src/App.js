@@ -14,7 +14,7 @@ import Profile from "./pages/profile";
 import SquareGallery from "./pages/galleries/square-gallery";
 import MagGallery from "./pages/galleries/mag-gallery";
 import WalletLinks from "./pages/wallet/wallet-links";
-import PersonalLinks from "./pages/wallet/personal-links";
+import BuyLinks from "./pages/wallet/buy-links";
 import PersonalLinksHome from "./pages/wallet/personal-links-home";
 import NftDisplay from "./pages/wallet/nft-display";
 import ConnectedWallets from "./pages/wallet/connected-wallets";
@@ -157,7 +157,7 @@ function App() {
             path="/buy-links"
             exact
             render={(props) => (
-              <PersonalLinks
+              <BuyLinks
                 {...props}
                 userDetails={userDetails}
                 userLoggedIn={true}

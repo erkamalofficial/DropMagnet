@@ -1,15 +1,9 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
 import styled from "styled-components";
 import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
-import Spinner from "../../components/blocks/spinner";
 import { useState } from "react";
-import CardSectionDesktop from "./card-section-desktop";
-import CardSectionMobile from "./card-section-mobile";
-import useViewport from "./useViewport";
-import { fetchLinks } from "./actions";
-import emojis from "./emojiicons";
+import LinksCard from "./links-card";
+import { Link } from "react-router-dom";
+
 const PersonalLinksWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -77,7 +71,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const ContinueButton = styled.div`
+const ContinueButton = styled(Link)`
   line-height: 44px;
   box-shadow: 0 3px 25px rgba(57, 30, 125, 0.2), inset 0 -2px 0 #610bc8;
   border-radius: 8px 8px 0;
@@ -86,55 +80,13 @@ const ContinueButton = styled.div`
   text-align: center;
   padding: 0 16px;
   margin-right: 16px;
+  text-decoration: none;
 `;
-const getGroupedLinks = (linkList) => {
-  const st = new Set();
-  linkList.forEach((item) => st.add(...item.tags));
-  const uniqueKeys = [...st];
 
-  const groupedList = {};
-  linkList.forEach((link) => {
-    uniqueKeys.forEach((key) => {
-      if (link.tags.includes(key)) {
-        groupedList[key] = groupedList[key] || [];
-        groupedList[key].push({ icon: emojis[key], title: key, item: link });
-      }
-    });
-  });
-  return groupedList;
-};
-
-const PersonalLinks = (props) => {
-  const [galleryName, setGalleryName] = useState("");
-  const [showBuyAllBtn, setShowBuyALlBtn] = useState(false);
-  const [selectedLinks, setSelectedLinks] = useState([]);
-  const displayName = galleryName === "" ? "You" : galleryName;
+const BuyLinks = () => {
   const [costText, setCostText] = useState("Free Forever");
-  const { viewportWidth } = useViewport();
-  const breakpoint = 620;
-  const isMobile = viewportWidth < breakpoint;
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchLinks());
-  }, []);
-
-  const isLoading = useSelector((state) => state.category.general.isLoading);
-  const allLinksList = useSelector((state) => state.category.links);
-  var groupedList = {};
-
-  if (allLinksList.length > 0) {
-    groupedList = getGroupedLinks(allLinksList);
-  }
-
-  const handleGalleryName = (val) => {
-    const galleryNameLimit = isMobile ? 16 : 22;
-    const checkAndLimitGalleryName =
-      val.length > galleryNameLimit
-        ? `${val.substring(0, galleryNameLimit)}...`
-        : val;
-    setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
-  };
+  const [showBuyAllBtn, setShowBuyAllBtn] = useState(false);
+  const [selectedLinks, setSelectedLinks] = useState([]);
   const handleLinkSelection = (id, linkStatus) => {
     if (linkStatus === "S") return;
     const linkSelection = [...selectedLinks];
@@ -146,15 +98,15 @@ const PersonalLinks = (props) => {
     }
     if (linkSelection.length < 4) {
       setCostText("Free Forever");
-      setShowBuyALlBtn(false);
+      setShowBuyAllBtn(false);
     }
     if (linkSelection.length === 4) {
       setCostText("$4 per year");
-      setShowBuyALlBtn(true);
+      setShowBuyAllBtn(true);
     }
     if (linkSelection.length > 4) {
       setCostText(`$${linkSelection.length} per year`);
-      setShowBuyALlBtn(true);
+      setShowBuyAllBtn(true);
     }
     setSelectedLinks(linkSelection);
   };
@@ -167,36 +119,26 @@ const PersonalLinks = (props) => {
             <HeaderTitle> Display Your NFTs </HeaderTitle>
             <HeaderTitleTag> BEAUTIFULLY </HeaderTitleTag>
             <HeaderSubtitle>
-              {" "}
-              Promote your art with unique personal links{" "}
+              Promote your art with unique personal links
             </HeaderSubtitle>
           </PLSectionOneContent>
         </PLSectionOne>
-        {isLoading && <Spinner />}
-        {!isLoading && allLinksList.length > 0 && (
-          <>
-            {isMobile ? (
-              <CardSectionMobile
-                displayName={displayName}
-                handleLinkSelection={handleLinkSelection}
-                selectedLinks={selectedLinks}
-                linksList={groupedList}
-              />
-            ) : (
-              <CardSectionDesktop
-                displayName={displayName}
-                handleLinkSelection={handleLinkSelection}
-                selectedLinks={selectedLinks}
-                linksList={groupedList}
-              />
-            )}
-          </>
-        )}
+        <LinksCard
+          setCostText={setCostText}
+          setShowBuyAllBtn={setShowBuyAllBtn}
+          handleLinkSelection={handleLinkSelection}
+          selectedLinks={selectedLinks}
+          displayName={"You"}
+        />
         <PLFooterSection>
           <PLFooterSectionTitle>Total Price: {costText}</PLFooterSectionTitle>
           <ButtonContainer>
-            {showBuyAllBtn && <ContinueButton>Buy All For $99</ContinueButton>}
-            <ContinueButton>Continue</ContinueButton>
+            {showBuyAllBtn && (
+              <ContinueButton to="/links-payment">
+                Buy All For $99
+              </ContinueButton>
+            )}
+            <ContinueButton to="/links-payment">Continue</ContinueButton>
           </ButtonContainer>
         </PLFooterSection>
       </PersonalLinksWrapper>
@@ -204,4 +146,4 @@ const PersonalLinks = (props) => {
   );
 };
 
-export default PersonalLinks;
+export default BuyLinks;

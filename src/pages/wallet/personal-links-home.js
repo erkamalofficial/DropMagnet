@@ -1,16 +1,13 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
-import Spinner from "../../components/blocks/spinner";
-import { useState } from "react";
-import CardSectionDesktop from "./card-section-desktop";
-import CardSectionMobile from "./card-section-mobile";
-import useViewport from "./useViewport";
+
 import { fetchLinks } from "./actions";
-import emojis from "./emojiicons";
 import PersonalLinksPreview from "./personal-links-preview";
+import LinksCard from "./links-card";
+import useViewport from "./useViewport";
 
 const PersonalLinksWrapper = styled.div`
   width: 100%;
@@ -59,75 +56,20 @@ const HeaderSubtitle = styled.div`
   margin-bottom: 16px;
   font-weight: 700;
 `;
-const PLFooterSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-weight: 700;
-`;
-const PLFooterSectionTitle = styled.div`
-  text-align: center;
-  line-height: 58px;
-  width: 309px;
-  height: 58px;
-  border-radius: 16px;
-  background-image: linear-gradient(180deg, #202020 0%, #333232 100%);
-  font-size: 22px;
-  margin-bottom: 18px;
-`;
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-const ContinueButton = styled.div`
-  line-height: 44px;
-  box-shadow: 0 3px 25px rgba(57, 30, 125, 0.2), inset 0 -2px 0 #610bc8;
-  border-radius: 8px 8px 0;
-  border: 1px solid #610bc8;
-  background-color: #152230;
-  text-align: center;
-  padding: 0 16px;
-  margin-right: 16px;
-`;
-const getGroupedLinks = (linkList) => {
-  const st = new Set();
-  linkList.forEach((item) => st.add(...item.tags));
-  const uniqueKeys = [...st];
 
-  const groupedList = {};
-  linkList.forEach((link) => {
-    uniqueKeys.forEach((key) => {
-      if (link.tags.includes(key)) {
-        groupedList[key] = groupedList[key] || [];
-        groupedList[key].push({ icon: emojis[key], title: key, item: link });
-      }
-    });
-  });
-  return groupedList;
-};
+const LinksHome = (props) => {
+  const dispatch = useDispatch();
 
-const PersonalLinks = (props) => {
   const [galleryName, setGalleryName] = useState("");
-  const [showBuyAllBtn, setShowBuyALlBtn] = useState(false);
-  const [selectedLinks, setSelectedLinks] = useState([]);
+
   const displayName = galleryName === "" ? "You" : galleryName;
-  const [costText, setCostText] = useState("Free Forever");
   const { viewportWidth } = useViewport();
   const breakpoint = 620;
   const isMobile = viewportWidth < breakpoint;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchLinks());
   }, []);
-
-  const isLoading = useSelector((state) => state.category.general.isLoading);
-  const allLinksList = useSelector((state) => state.category.links);
-  var groupedList = {};
-
-  if (allLinksList.length > 0) {
-    groupedList = getGroupedLinks(allLinksList);
-  }
 
   const handleGalleryName = (val) => {
     const galleryNameLimit = isMobile ? 16 : 22;
@@ -137,30 +79,6 @@ const PersonalLinks = (props) => {
         : val;
     setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
   };
-  const handleLinkSelection = (id, linkStatus) => {
-    if (linkStatus === "S") return;
-    const linkSelection = [...selectedLinks];
-    const selectedLinkIndex = linkSelection.indexOf(id);
-    if (selectedLinkIndex > -1) {
-      linkSelection.splice(selectedLinkIndex, 1);
-    } else {
-      linkSelection.push(id);
-    }
-    if (linkSelection.length < 4) {
-      setCostText("Free Forever");
-      setShowBuyALlBtn(false);
-    }
-    if (linkSelection.length === 4) {
-      setCostText("$4 per year");
-      setShowBuyALlBtn(true);
-    }
-    if (linkSelection.length > 4) {
-      setCostText(`$${linkSelection.length} per year`);
-      setShowBuyALlBtn(true);
-    }
-    setSelectedLinks(linkSelection);
-  };
-
   return (
     <LinksWrapper>
       <PersonalLinksWrapper>
@@ -170,34 +88,21 @@ const PersonalLinks = (props) => {
             <HeaderTitleTag> BEAUTIFULLY </HeaderTitleTag>
             <HeaderSubtitle>
               {" "}
+              {displayName}:::{galleryName}
               Promote your art with unique personal links{" "}
             </HeaderSubtitle>
           </PLSectionOneContent>
         </PLSectionOne>
-        {isLoading && <Spinner />}
-        {!isLoading && allLinksList.length > 0 && (
-          <>
-            {isMobile ? (
-              <CardSectionMobile
-                displayName={displayName}
-                handleLinkSelection={handleLinkSelection}
-                selectedLinks={selectedLinks}
-                linksList={groupedList}
-              />
-            ) : (
-              <CardSectionDesktop
-                displayName={displayName}
-                handleLinkSelection={handleLinkSelection}
-                selectedLinks={selectedLinks}
-                linksList={groupedList}
-              />
-            )}
-          </>
-        )}
+        <LinksCard
+          handleLinkSelection={() => {}}
+          selectedLinks={[]}
+          displayName={displayName}
+          handleGalleryName={handleGalleryName}
+        />
         <PersonalLinksPreview handleGalleryName={handleGalleryName} />
       </PersonalLinksWrapper>
     </LinksWrapper>
   );
 };
 
-export default PersonalLinks;
+export default LinksHome;

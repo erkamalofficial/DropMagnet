@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
+import { Link } from "react-router-dom";
 
 const PaymentsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: jineesh;
 `;
 const TotalPriceSectionGradient = styled.div`
   display: flex;
@@ -107,15 +109,16 @@ const BuyAllBtn = styled.div`
   margin-bottom: 16px;
   width: 100%;
 `;
-const BackBtn = styled.div`
+const BackBtn = styled(Link)`
   cursor: pointer;
   color: #eaeaea;
   font-size: 16px;
   font-weight: 700;
+  text-decoration: none;
 `;
 const PersonalLinksPayments = () => {
   return (
-    <LinksWrapper>
+    <LinksWrapper style={{ maxWidth: "600px", margin: "16px auto" }}>
       <PaymentsWrapper>
         <TotalPriceSectionGradient>
           <TotalPriceSection>
@@ -149,7 +152,7 @@ const PersonalLinksPayments = () => {
         </TermsText>
         <ClaimAllUrls>Claim all the URLs/You</ClaimAllUrls>
         <BuyAllBtn>Buy All For $99</BuyAllBtn>
-        <BackBtn>Back</BackBtn>
+        <BackBtn to="/buy-links">Back</BackBtn>
       </PaymentsWrapper>
     </LinksWrapper>
   );
