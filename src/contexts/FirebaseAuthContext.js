@@ -8,6 +8,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [idToken, setIdToken] = useState("");
   const [loading, setLoading] = useState(true);
 
   function signup(email, password) {
@@ -39,6 +40,9 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
+      user.getIdToken().then(function (idToken) {
+        setIdToken(idToken);
+      });
     });
 
     return unsubscribe;
@@ -46,6 +50,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    idToken,
     login,
     signup,
     logout,

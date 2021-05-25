@@ -215,6 +215,13 @@ const categoryReducer = (state = initialState, action) => {
         links: action.payload,
       };
     }
+    case "PRICE_UPDATE_REQUEST": {
+      const general = { ...state.general, price: action.payload.price };
+      return {
+        ...state,
+        general,
+      };
+    }
     default:
       return state;
   }

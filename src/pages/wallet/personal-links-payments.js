@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
 import { Link } from "react-router-dom";
+import StripeCheckoutBtn from "../../components/blocks/stripe-btn";
+import { useSelector } from "react-redux";
 
 const PaymentsWrapper = styled.div`
   display: flex;
@@ -51,6 +53,9 @@ const CardSection = styled.div`
   opacity: 0.8;
   margin: 0 18px 16px;
   padding: 24px 16px;
+  > span {
+    width: 100%;
+  }
   @media (max-width: 340px) {
     margin: 8px;
     padding: 8px 0;
@@ -67,6 +72,7 @@ const PaymentOptionSection = styled.div`
   line-height: 48px;
   justify-content: space-between;
   margin-bottom: 18px;
+  cursor: pointer;
   img {
     padding: 8px 0 8px 16px;
   }
@@ -116,25 +122,24 @@ const BackBtn = styled(Link)`
   font-weight: 700;
   text-decoration: none;
 `;
-const PersonalLinksPayments = () => {
+
+const PersonalLinksPayments = ({ idToken }) => {
+  const price = useSelector((state) => state.category.general.price);
+
   return (
     <LinksWrapper style={{ maxWidth: "600px", margin: "16px auto" }}>
       <PaymentsWrapper>
         <TotalPriceSectionGradient>
           <TotalPriceSection>
             <span>Total Price: </span>
-            <span className="price">$4 per year</span>
+            <span className="price">${price} per year</span>
           </TotalPriceSection>
         </TotalPriceSectionGradient>
         <PaymentOptionText>
           Select one of the payment options below
         </PaymentOptionText>
         <CardSection>
-          <PaymentOptionSection>
-            <img src="./stripe.svg" alt="Stripe" />
-            <span className="paymentTitle">Stripe</span>
-            <span>.</span>
-          </PaymentOptionSection>
+          <StripeCheckoutBtn price={price} idToken={idToken} />
           <PaymentOptionSection>
             <img src="./wyre.svg" alt="Wyre" />
             <span className="paymentTitle">Wyre</span>

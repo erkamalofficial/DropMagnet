@@ -12,6 +12,7 @@ const initialState = {
     reswipeModeActive: false,
     selectionCount: 0,
     uidChanged: Date.now(),
+    price: 0,
   },
   arts: JSON.parse(JSON.stringify(buckets)),
   music: JSON.parse(JSON.stringify(buckets)),

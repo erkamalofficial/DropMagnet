@@ -151,19 +151,14 @@ function App() {
               />
             )}
           />
-          <Route path="/links-payment" component={PersonalLinksPayment} />
+
           <Route exact path="/" component={PersonalLinksHome} />
-          <Route
-            path="/buy-links"
+          <PrivateRoute
             exact
-            render={(props) => (
-              <BuyLinks
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
-              />
-            )}
+            path="/links-payment"
+            component={PersonalLinksPayment}
           />
+          <PrivateRoute path="/buy-links" exact component={BuyLinks} />
         </Switch>
       </AuthProvider>
     </Router>

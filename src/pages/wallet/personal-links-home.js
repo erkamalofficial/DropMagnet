@@ -87,9 +87,7 @@ const LinksHome = (props) => {
             <HeaderTitle> Display Your NFTs </HeaderTitle>
             <HeaderTitleTag> BEAUTIFULLY </HeaderTitleTag>
             <HeaderSubtitle>
-              {" "}
-              {displayName}:::{galleryName}
-              Promote your art with unique personal links{" "}
+              Promote your art with unique personal links
             </HeaderSubtitle>
           </PLSectionOneContent>
         </PLSectionOne>

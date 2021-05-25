@@ -3,6 +3,7 @@ import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
 import { useState } from "react";
 import LinksCard from "./links-card";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const PersonalLinksWrapper = styled.div`
   width: 100%;
@@ -82,11 +83,16 @@ const ContinueButton = styled(Link)`
   margin-right: 16px;
   text-decoration: none;
 `;
-
+const getPrice = (v) => {
+  if (v < 4) return 0;
+  if (v === 4) return 4;
+  if (v > 4) return v;
+};
 const BuyLinks = () => {
   const [costText, setCostText] = useState("Free Forever");
   const [showBuyAllBtn, setShowBuyAllBtn] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState([]);
+  const dispatch = useDispatch();
   const handleLinkSelection = (id, linkStatus) => {
     if (linkStatus === "S") return;
     const linkSelection = [...selectedLinks];
@@ -108,6 +114,10 @@ const BuyLinks = () => {
       setCostText(`$${linkSelection.length} per year`);
       setShowBuyAllBtn(true);
     }
+    dispatch({
+      type: "PRICE_UPDATE_REQUEST",
+      payload: { price: getPrice(linkSelection.length) },
+    });
     setSelectedLinks(linkSelection);
   };
 
