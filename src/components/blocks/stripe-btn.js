@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import StripeCheckout from "react-stripe-checkout";
-
-import axios from "axios";
+import { makePayment } from "../../pages/wallet/actions";
 
 const StripePaymentButton = styled.div`
   display: flex;
@@ -29,32 +28,14 @@ const StripePaymentButton = styled.div`
   }
 `;
 
-const StripeCheckoutButton = ({ price, idToken }) => {
+const StripeCheckoutButton = ({ price, idToken, selectedLinksIds }) => {
   const priceForStripe = price * 100;
 
   const publishableKey =
     "pk_test_51IuOlYBDufd2b5OuLFab7yOLhWiYZwxDBsHZTLP0iT5EkkfmRfC5B2Qd4d8GOM9A8y5MqypsXxn6lqHiAQqfxu7T00FxleYWdK";
 
   const onToken = (token) => {
-    axios({
-      // url: "http://localhost:8080/payments",
-      url: "https://drop-backend-rnd454q4pa-ew.a.run.app/payments",
-      method: "post",
-      data: {
-        amount: priceForStripe,
-        token: token,
-      },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`,
-      },
-    })
-      .then((response) => {
-        console.log("succesful payment", response);
-      })
-      .catch((error) => {
-        console.log("Payment Error: ", error);
-      });
+    makePayment(token, idToken, priceForStripe, selectedLinksIds);
   };
 
   return (

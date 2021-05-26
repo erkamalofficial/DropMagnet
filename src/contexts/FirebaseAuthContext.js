@@ -40,9 +40,11 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
-      user.getIdToken().then(function (idToken) {
-        setIdToken(idToken);
-      });
+      if (user) {
+        user.getIdToken().then(function (idToken) {
+          setIdToken(idToken);
+        });
+      }
     });
 
     return unsubscribe;

@@ -125,6 +125,9 @@ const BackBtn = styled(Link)`
 
 const PersonalLinksPayments = ({ idToken }) => {
   const price = useSelector((state) => state.category.general.price);
+  const selectedLinksIds = useSelector(
+    (state) => state.category.general.selectedLinksIds
+  );
 
   return (
     <LinksWrapper style={{ maxWidth: "600px", margin: "16px auto" }}>
@@ -139,7 +142,11 @@ const PersonalLinksPayments = ({ idToken }) => {
           Select one of the payment options below
         </PaymentOptionText>
         <CardSection>
-          <StripeCheckoutBtn price={price} idToken={idToken} />
+          <StripeCheckoutBtn
+            price={price}
+            idToken={idToken}
+            selectedLinksIds={selectedLinksIds}
+          />
           <PaymentOptionSection>
             <img src="./wyre.svg" alt="Wyre" />
             <span className="paymentTitle">Wyre</span>

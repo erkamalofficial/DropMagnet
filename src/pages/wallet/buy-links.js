@@ -88,7 +88,7 @@ const getPrice = (v) => {
   if (v === 4) return 4;
   if (v > 4) return v;
 };
-const BuyLinks = () => {
+const BuyLinks = ({ idToken }) => {
   const [costText, setCostText] = useState("Free Forever");
   const [showBuyAllBtn, setShowBuyAllBtn] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState([]);
@@ -115,8 +115,11 @@ const BuyLinks = () => {
       setShowBuyAllBtn(true);
     }
     dispatch({
-      type: "PRICE_UPDATE_REQUEST",
-      payload: { price: getPrice(linkSelection.length) },
+      type: "LINK_UPDATE_REQUEST",
+      payload: {
+        price: getPrice(linkSelection.length),
+        linkIds: linkSelection,
+      },
     });
     setSelectedLinks(linkSelection);
   };

@@ -13,6 +13,7 @@ const initialState = {
     selectionCount: 0,
     uidChanged: Date.now(),
     price: 0,
+    selectedLinksIds: [],
   },
   arts: JSON.parse(JSON.stringify(buckets)),
   music: JSON.parse(JSON.stringify(buckets)),
