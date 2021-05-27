@@ -69,6 +69,15 @@ const getSwipeDirection = (speed) => {
   }
 };
 
+const getSwipeDirectionBasedOnLocation = (location) => {
+  console.log("LocationX: " + location.x);
+  if (location.x < -settings.swipeThreshold) {
+    return "left";
+  } else if (location.x > settings.swipeThreshold) {
+    return "right";
+  }
+}
+
 const calcSpeed = (oldLocation, newLocation) => {
   const dx = newLocation.x - oldLocation.x;
   const dy = oldLocation.y - newLocation.y;
@@ -127,7 +136,7 @@ const TinderCard = React.forwardRef(
       onSwipe,
       onCardLeftScreen,
       className,
-      preventSwipe = [],
+      preventSwipe = ["up", "down"],
       overlayLabels = false,
     },
     perentRef
@@ -168,7 +177,9 @@ const TinderCard = React.forwardRef(
           location.x > settings.swipeThreshold ||
           location.x < -settings.swipeThreshold
         ) {
-          const dir = getSwipeDirection(speed);
+          // const dir = getSwipeDirection(speed);
+          const dir = getSwipeDirectionBasedOnLocation(location);
+          console.log("DIRECTION - " + dir);
 
           if (onSwipe) onSwipe(dir);
 
@@ -178,11 +189,11 @@ const TinderCard = React.forwardRef(
 
               const power = 1000;
               const disturbance = 0;
-              if (location.x < -settings.swipeThreshold) {
-                //right
-                await animateOut(element, { x: -power, y: disturbance });
-              } else if (location.x > settings.swipeThreshold) {
+              if (dir === "left") {
                 //left
+                await animateOut(element, { x: -power, y: disturbance });
+              } else if (dir === "right") {
+                //right
                 await animateOut(element, { x: power, y: disturbance });
               } else if (location.y < -settings.swipeThreshold) {
                 //up
@@ -194,6 +205,9 @@ const TinderCard = React.forwardRef(
                 onCardLeftScreen(dir);
               }
               return;
+            }
+            else {
+              console.log("Ignored direction - " + dir);
             }
           }
         }
@@ -228,6 +242,7 @@ const TinderCard = React.forwardRef(
 
         element.addEventListener("touchstart", (ev) => {
           ev.preventDefault();
+          ev.stopImmediatePropagation();
           mouseIsClicked = true;
           handleSwipeStart();
           offset = {
@@ -248,6 +263,7 @@ const TinderCard = React.forwardRef(
 
         element.addEventListener("touchmove", (ev) => {
           ev.preventDefault();
+          ev.stopImmediatePropagation();
           if (mouseIsClicked) {
             const newLocation = dragableTouchmove(
               touchCoordinatesFromEvent(ev),
@@ -277,6 +293,7 @@ const TinderCard = React.forwardRef(
         element.addEventListener("touchend", (ev) => {
           if (mouseIsClicked) {
             ev.preventDefault();
+            ev.stopImmediatePropagation();
             handleSwipeReleased(element, speed, lastLocation);
           }
         });
