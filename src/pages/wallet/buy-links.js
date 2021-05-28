@@ -3,7 +3,7 @@ import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
 import { useState } from "react";
 import LinksCard from "./links-card";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const PersonalLinksWrapper = styled.div`
   width: 100%;
@@ -93,6 +93,10 @@ const BuyLinks = ({ idToken }) => {
   const [showBuyAllBtn, setShowBuyAllBtn] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState([]);
   const dispatch = useDispatch();
+  const galleryName = useSelector(
+    (state) => state.category.general.galleryName
+  );
+
   const handleLinkSelection = (id, linkStatus) => {
     if (linkStatus === "S") return;
     const linkSelection = [...selectedLinks];
@@ -141,7 +145,7 @@ const BuyLinks = ({ idToken }) => {
           setShowBuyAllBtn={setShowBuyAllBtn}
           handleLinkSelection={handleLinkSelection}
           selectedLinks={selectedLinks}
-          displayName={"You"}
+          displayName={galleryName}
         />
         <PLFooterSection>
           <PLFooterSectionTitle>Total Price: {costText}</PLFooterSectionTitle>

@@ -100,7 +100,8 @@ const CardSectionItem = (
   linkKey,
   displayName,
   handleLinkSelection,
-  selectedLinks
+  selectedLinks,
+  availableLinks
 ) => {
   return {
     id: linkKey,
@@ -124,7 +125,7 @@ const CardSectionItem = (
                     (selectedLinks.includes(linkItem.item.id) &&
                       "button-active")
                   }
-                  linkName={linkItem.item.domain}
+                  linkName={linkItem.item.id}
                   galleryName={displayName}
                 />
               ))}
@@ -139,32 +140,58 @@ const CardSectionItem = (
 const CaurouselComponent = ({
   displayName,
   linksList,
+  availableLinks,
   handleLinkSelection,
   selectedLinks,
+  getPageDetails,
 }) => {
-  const { carouselFragment, slideToPrevItem, slideToNextItem } =
-    useSpringCarousel({
-      itemsPerSlide: 2,
-      initialStartingPosition: "center",
-      items: map(linksList, (linkItem, linkKey) =>
-        CardSectionItem(
-          linkItem,
-          linkKey,
-          displayName,
-          handleLinkSelection,
-          selectedLinks
-        )
-      ),
-    });
+  const {
+    carouselFragment,
+    slideToPrevItem,
+    slideToNextItem,
+    getCurrentActiveItem,
+  } = useSpringCarousel({
+    itemsPerSlide: 2,
+    initialStartingPosition: "center",
+    items: map(linksList, (linkItem, linkKey) =>
+      CardSectionItem(
+        linkItem,
+        linkKey,
+        displayName,
+        handleLinkSelection,
+        selectedLinks,
+        availableLinks
+      )
+    ),
+  });
+
+  const handlePrev = () => {
+    slideToPrevItem();
+    const { id, index } = getCurrentActiveItem();
+    var pageNos = [0, 1];
+    if (index > 0) {
+      pageNos = [index - 1, index];
+    }
+    getPageDetails(pageNos);
+  };
+  const handleNext = () => {
+    slideToNextItem();
+    const { id, index } = getCurrentActiveItem();
+    var pageNos = [0, 1];
+    if (index > 0) {
+      pageNos = [index, index + 1];
+    }
+    getPageDetails(pageNos);
+  };
 
   return (
     <GridContainer>
-      <NavIcon type="prev" onClick={slideToPrevItem}>
+      <NavIcon type="prev" onClick={handlePrev}>
         {" "}
         &#8249;{" "}
       </NavIcon>
       {carouselFragment}
-      <NavIcon type="next" onClick={slideToNextItem}>
+      <NavIcon type="next" onClick={handleNext}>
         {" "}
         &#8250;{" "}
       </NavIcon>

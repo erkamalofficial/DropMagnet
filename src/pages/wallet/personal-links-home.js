@@ -1,10 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
+import { fetchAvailableDomainHandle } from "./actions";
+import { map } from "lodash";
 
-import { fetchLinks } from "./actions";
 import PersonalLinksPreview from "./personal-links-preview";
 import LinksCard from "./links-card";
 import useViewport from "./useViewport";
@@ -57,19 +58,43 @@ const HeaderSubtitle = styled.div`
   font-weight: 700;
 `;
 
+const formatLinkIds = (list, handle, pageNos) => {
+  console.log("RRRR: ", pageNos);
+  const merged = [...list[pageNos[0]], ...list[pageNos[1]]];
+  const domainPathList = map(merged, ({ item }) => {
+    const path = `links_v1/${item.id}/${handle}`;
+    return { id: item.id, path };
+  });
+  return domainPathList;
+};
+
 const LinksHome = (props) => {
   const dispatch = useDispatch();
 
   const [galleryName, setGalleryName] = useState("");
+  const [pageNos, setPageNos] = useState([0, 1]);
 
   const displayName = galleryName === "" ? "You" : galleryName;
   const { viewportWidth } = useViewport();
   const breakpoint = 620;
   const isMobile = viewportWidth < breakpoint;
+  const groupedLinks = useSelector((state) => state.category.groupedLinks);
+  const getPageDetails = (pageNos) => {
+    setPageNos(pageNos);
+  };
 
   useEffect(() => {
-    dispatch(fetchLinks());
-  }, []);
+    const timeoutId = setTimeout(() => {
+      if (galleryName !== "") {
+        const domainPaths = formatLinkIds(groupedLinks, galleryName, pageNos);
+        dispatch(fetchAvailableDomainHandle(domainPaths, galleryName));
+      }
+      console.log(`store ${galleryName} handle in store `);
+    }, 5000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [galleryName]);
 
   const handleGalleryName = (val) => {
     const galleryNameLimit = isMobile ? 16 : 22;
@@ -96,6 +121,7 @@ const LinksHome = (props) => {
           selectedLinks={[]}
           displayName={displayName}
           handleGalleryName={handleGalleryName}
+          getPageDetails={getPageDetails}
         />
         <PersonalLinksPreview handleGalleryName={handleGalleryName} />
       </PersonalLinksWrapper>

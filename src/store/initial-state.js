@@ -13,6 +13,7 @@ const initialState = {
     selectionCount: 0,
     uidChanged: Date.now(),
     price: 0,
+    galleryName: localStorage.getItem("galleryName") || "",
     selectedLinksIds: [],
   },
   arts: JSON.parse(JSON.stringify(buckets)),
@@ -20,6 +21,8 @@ const initialState = {
   collectables: JSON.parse(JSON.stringify(buckets)),
   fashion: JSON.parse(JSON.stringify(buckets)),
   links: {},
+  groupedLinks: [],
+  availableLinks: [],
 };
 
 export default initialState;

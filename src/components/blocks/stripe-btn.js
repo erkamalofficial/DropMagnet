@@ -28,14 +28,14 @@ const StripePaymentButton = styled.div`
   }
 `;
 
-const StripeCheckoutButton = ({ price, idToken, selectedLinksIds }) => {
+const StripeCheckoutButton = ({ price, idToken, selectedLinksIds, uid }) => {
   const priceForStripe = price * 100;
 
   const publishableKey =
     "pk_test_51IuOlYBDufd2b5OuLFab7yOLhWiYZwxDBsHZTLP0iT5EkkfmRfC5B2Qd4d8GOM9A8y5MqypsXxn6lqHiAQqfxu7T00FxleYWdK";
 
   const onToken = (token) => {
-    makePayment(token, idToken, priceForStripe, selectedLinksIds);
+    makePayment(token, idToken, priceForStripe, selectedLinksIds, uid);
   };
 
   return (
