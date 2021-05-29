@@ -99,9 +99,7 @@ const ScrollContainerContent = styled.div`
 const CardSectionItem = (
   linkItems,
   linkKey,
-  handleTabSelection,
-  handleLinkSelection,
-  selectedLinks
+  handleTabSelection
 ) => {
   return {
     id: linkKey,

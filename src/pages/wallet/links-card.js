@@ -8,8 +8,6 @@ import Spinner from "../../components/blocks/spinner";
 import useViewport from "./useViewport";
 
 const LinksCard = ({
-  setCostText,
-  setShowBuyAllBtn,
   handleLinkSelection,
   selectedLinks,
   displayName,

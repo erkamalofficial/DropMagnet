@@ -167,7 +167,7 @@ const CaurouselComponent = ({
 
   const handlePrev = () => {
     slideToPrevItem();
-    const { id, index } = getCurrentActiveItem();
+    const { index } = getCurrentActiveItem();
     var pageNos = [0, 1];
     if (index > 0) {
       pageNos = [index - 1, index];
@@ -176,7 +176,7 @@ const CaurouselComponent = ({
   };
   const handleNext = () => {
     slideToNextItem();
-    const { id, index } = getCurrentActiveItem();
+    const { index } = getCurrentActiveItem();
     var pageNos = [0, 1];
     if (index > 0) {
       pageNos = [index, index + 1];
@@ -187,13 +187,11 @@ const CaurouselComponent = ({
   return (
     <GridContainer>
       <NavIcon type="prev" onClick={handlePrev}>
-        {" "}
-        &#8249;{" "}
+        &#8249;
       </NavIcon>
       {carouselFragment}
       <NavIcon type="next" onClick={handleNext}>
-        {" "}
-        &#8250;{" "}
+        &#8250;
       </NavIcon>
     </GridContainer>
   );

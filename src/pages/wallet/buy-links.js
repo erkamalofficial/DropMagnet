@@ -88,7 +88,7 @@ const getPrice = (v) => {
   if (v === 4) return 4;
   if (v > 4) return v;
 };
-const BuyLinks = ({ idToken }) => {
+const BuyLinks = () => {
   const [costText, setCostText] = useState("Free Forever");
   const [showBuyAllBtn, setShowBuyAllBtn] = useState(false);
   const [selectedLinks, setSelectedLinks] = useState([]);

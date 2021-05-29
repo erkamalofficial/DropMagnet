@@ -68,7 +68,6 @@ const ConnectedWallets = (props) => {
         <WalletHeader />
         <NftDisplayBottomSection>
           <ConnectedWalletTitle>Connected Wallets</ConnectedWalletTitle>
-
           <WalletSection>
             <div>Ethereum</div>
             <div>0xda2ed8e7776d54495cc7a1a5d5</div>

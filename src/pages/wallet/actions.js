@@ -3,6 +3,7 @@ import { db } from "../../firebase";
 export const fetchLinks = () => async (dispatch) => {
   dispatch({ type: "FETCH_LINKS_REQUEST" });
   try {
+    // call using a api
     const querySnapshot = await db
       .collection("links_v1")
       .where("active", "in", ["Y", "S"])
@@ -42,8 +43,8 @@ export const makePayment = (
   selectedLinksIds,
   uid
 ) => {
-  const url = "http://localhost:8080/payments";
-  // const url = "https://drop-backend-rnd454q4pa-ew.a.run.app/payments";
+  // const url = "http://localhost:8080/payments";
+  const url = "https://drop-backend-rnd454q4pa-ew.a.run.app/payments";
   fetch(url, {
     method: "post",
     body: JSON.stringify({
@@ -65,8 +66,8 @@ export const makePayment = (
 };
 
 export const updateLinks = (idToken, linkIds, uid) => {
-  const url = "http://localhost:8080/links";
-  // const url = "https://drop-backend-rnd454q4pa-ew.a.run.app/links";
+  // const url = "http://localhost:8080/links";
+  const url = "https://drop-backend-rnd454q4pa-ew.a.run.app/links";
   fetch(url, {
     method: "post",
     body: JSON.stringify({
