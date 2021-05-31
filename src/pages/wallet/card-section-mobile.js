@@ -17,7 +17,6 @@ const CardSection = styled.div`
     margin-bottom: 0.6rem;
   }
   opacity: 0.8;
-  margin: 18px;
   padding: 16px 0;
   @media (max-width: 340px) {
     margin: 8px;

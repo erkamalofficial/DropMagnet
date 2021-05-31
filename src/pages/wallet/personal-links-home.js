@@ -17,7 +17,9 @@ const PersonalLinksWrapper = styled.div`
 `;
 
 const PLSectionOne = styled.div`
-  margin-top: 72px;
+  @media (max-width: 600px) {
+    margin-top: unset;
+  }
   margin-bottom: 40px;
   @media (max-width: 600px) {
     margin-bottom: unset;
@@ -32,6 +34,9 @@ const PLSectionOneContent = styled.div`
   align-items: center;
   font-weight: 700;
   text-align: center;
+`;
+const LinksSection = styled.div`
+  margin-bottom: 16px;
 `;
 const HeaderTitle = styled.div`
   font-size: var(--font-size-xxl);
@@ -116,13 +121,15 @@ const LinksHome = (props) => {
             </HeaderSubtitle>
           </PLSectionOneContent>
         </PLSectionOne>
-        <LinksCard
-          handleLinkSelection={() => {}}
-          selectedLinks={[]}
-          displayName={displayName}
-          handleGalleryName={handleGalleryName}
-          getPageDetails={getPageDetails}
-        />
+        <LinksSection>
+          <LinksCard
+            handleLinkSelection={() => {}}
+            selectedLinks={[]}
+            displayName={displayName}
+            handleGalleryName={handleGalleryName}
+            getPageDetails={getPageDetails}
+          />
+        </LinksSection>
         <PersonalLinksPreview handleGalleryName={handleGalleryName} />
       </PersonalLinksWrapper>
     </LinksWrapper>

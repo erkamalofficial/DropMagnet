@@ -12,7 +12,6 @@ const PersonalLinksWrapper = styled.div`
 `;
 
 const PLSectionOne = styled.div`
-  margin-top: 72px;
   margin-bottom: 40px;
   @media (max-width: 600px) {
     margin-bottom: unset;
