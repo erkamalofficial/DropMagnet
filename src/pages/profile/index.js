@@ -151,11 +151,11 @@ export default function Profile(props) {
         <div className="profile-handle-title">{"@" + handle}</div>
         <div style={{display: "flex", paddingBottom: '16px'}}>
           <div style={{display: "flex", paddingRight: '24px'}}>
-            <img width={30} height={24} src="./twitter-icon.png" style={{paddingRight: '8px'}} />
+            <img width={37} height={24} src="./twitter-icon.png" style={{paddingRight: '8px'}} />
             <div className="profile-medium-title">{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
           </div>
-          <div style={{display: "flex"}}>
-            <img width={24} height={24} src="./insta-icon.png" style={{paddingRight: '8px'}} />
+          <div style={{display: "flex", columnGap: "8px"}}>
+            <img width={24} height={24} src="./insta-icon.png" />
             <div className="profile-medium-title">{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
           </div>
         </div>
