@@ -96,11 +96,7 @@ const ScrollContainerContent = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const CardSectionItem = (
-  linkItems,
-  linkKey,
-  handleTabSelection
-) => {
+const CardSectionItem = (linkItems, linkKey, handleTabSelection) => {
   return {
     id: linkKey,
     renderItem: (
@@ -118,7 +114,7 @@ const CaurouselComponent = ({
   handleLinkSelection,
   selectedLinks,
 }) => {
-  const [selectedTab, setSelectedTab] = useState("Art");
+  const [selectedTab, setSelectedTab] = useState(0);
   const handleTabSelection = (key) => {
     setSelectedTab(key);
   };
@@ -135,23 +131,16 @@ const CaurouselComponent = ({
     ),
   });
 
-  // keep the order
-
-  const linksMap = new Map();
-  map(linksList, (links, key) => {
-    linksMap.set(key, links);
-  });
-
-  const currentSelectedItem = linksMap.get(selectedTab);
+  const currentSelectedItem = linksList[selectedTab];
   const handlePrev = () => {
     slideToPrevItem();
-    const { id } = getCurrentActiveItem();
-    setSelectedTab(id);
+    const { index } = getCurrentActiveItem();
+    setSelectedTab(index);
   };
   const handleNext = () => {
     slideToNextItem();
-    const { id } = getCurrentActiveItem();
-    setSelectedTab(id);
+    const { index } = getCurrentActiveItem();
+    setSelectedTab(index);
   };
   return (
     <CardSection>
@@ -170,7 +159,7 @@ const CaurouselComponent = ({
             return (
               <PLLinksBtn
                 key={index}
-                linkName={linkItem.item.domain}
+                linkName={linkItem.item.id}
                 galleryName={displayName}
                 selectLink={() =>
                   handleLinkSelection(linkItem.item.id, linkItem.item.active)
