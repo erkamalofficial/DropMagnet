@@ -1,4 +1,33 @@
 import initialState from "./initial-state";
+import { forEach, map, union, values } from "lodash";
+import emojis from "./emojiicons";
+
+const getAvailableLinks = (allLinks, availableLinks) => {
+  forEach(availableLinks, (avLink) => {
+    forEach(allLinks, (item) => {
+      const linkKey = Object.keys(avLink)[0];
+      if (linkKey === item.id && avLink[linkKey] === 1) {
+        item.active = "S";
+      }
+    });
+  });
+  return getGroupedLinks(allLinks);
+};
+
+const getGroupedLinks = (linkList) => {
+  const categories = union(...map(linkList, (item) => item.tags));
+  const groupedList = {};
+  linkList.forEach((link) => {
+    categories.forEach((key) => {
+      if (link.tags.includes(key)) {
+        groupedList[key] = groupedList[key] || [];
+        groupedList[key].push({ icon: emojis[key], title: key, item: link });
+      }
+    });
+  });
+
+  return values(groupedList);
+};
 
 const getProcessedCollection = (state, action, type) => {
   const general = { ...state.general, isLoading: false };
@@ -213,13 +242,46 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         general,
         links: action.payload,
+        groupedLinks: getGroupedLinks(action.payload),
       };
     }
-    case "PRICE_UPDATE_REQUEST": {
-      const general = { ...state.general, price: action.payload.price };
+    case "LINK_UPDATE_REQUEST": {
+      const general = {
+        ...state.general,
+        price: action.payload.price,
+        selectedLinksIds: action.payload.linkIds,
+      };
       return {
         ...state,
         general,
+      };
+    }
+    case "FETCH_AVAILABLE_LINKS_REQUEST": {
+      const general = {
+        ...state.general,
+        isLoading: true,
+        galleryName: action.payload,
+      };
+      window.localStorage.setItem("galleryName", action.payload);
+      return {
+        ...state,
+        general,
+      };
+    }
+    case "FETCH_AVAILABLE_LINKS_SUCCESS": {
+      const general = {
+        ...state.general,
+        isLoading: false,
+      };
+      // let availableLinks = map(action.payload, (x) => Object.keys(x)[0]);
+      const allLinks = [...state.links];
+      const newGrouped = getAvailableLinks(allLinks, action.payload);
+
+      return {
+        ...state,
+        general,
+        availableLinks: action.payload,
+        groupedLinks: newGrouped,
       };
     }
     default:

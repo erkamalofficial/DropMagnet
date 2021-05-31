@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
 import { Link } from "react-router-dom";
-import StripeCheckoutBtn from "../../components/blocks/stripe-btn";
+import StripeCheckoutButton from "../../components/blocks/stripe-btn";
 import { useSelector } from "react-redux";
+import { map } from "lodash";
 
 const PaymentsWrapper = styled.div`
   display: flex;
@@ -123,8 +124,19 @@ const BackBtn = styled(Link)`
   text-decoration: none;
 `;
 
-const PersonalLinksPayments = ({ idToken }) => {
+const PersonalLinksPayments = ({ idToken, uid }) => {
   const price = useSelector((state) => state.category.general.price);
+  const selectedLinksIds = useSelector(
+    (state) => state.category.general.selectedLinksIds
+  );
+  const galleryName = useSelector(
+    (state) => state.category.general.galleryName
+  );
+
+  const selectedLinksIdsWithPath = map(
+    selectedLinksIds,
+    (links) => `links_v1/${links}/${galleryName}`
+  );
 
   return (
     <LinksWrapper style={{ maxWidth: "600px", margin: "16px auto" }}>
@@ -139,7 +151,12 @@ const PersonalLinksPayments = ({ idToken }) => {
           Select one of the payment options below
         </PaymentOptionText>
         <CardSection>
-          <StripeCheckoutBtn price={price} idToken={idToken} />
+          <StripeCheckoutButton
+            price={price}
+            idToken={idToken}
+            uid={uid}
+            selectedLinksIds={selectedLinksIdsWithPath}
+          />
           <PaymentOptionSection>
             <img src="./wyre.svg" alt="Wyre" />
             <span className="paymentTitle">Wyre</span>

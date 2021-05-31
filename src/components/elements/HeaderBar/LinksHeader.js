@@ -3,7 +3,7 @@ import styled from "styled-components";
 const LinksHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 10px 10px 40px;
+  margin-bottom: 32px;
 `;
 const WhitePageLabel = styled.div`
   background: linear-gradient(to left, #ac43f1, #6620de);
