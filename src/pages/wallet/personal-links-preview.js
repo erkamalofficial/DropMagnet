@@ -85,7 +85,9 @@ const PersonalLinksPreview = ({ handleGalleryName }) => {
       />
       <PLSectionEmojiLine>Emoji's are allowed! ❤️</PLSectionEmojiLine>
       <PLSectionBtn>
-        <button>Learn More</button>
+        <Link to="/login">
+          <button>Sign In</button>
+        </Link>
         <Link to="/signup">
           <button>Sign Up</button>
         </Link>
