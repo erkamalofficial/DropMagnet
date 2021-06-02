@@ -35,7 +35,7 @@ const FixedHeaderWrapper = styled.div`
   width: 100%;
   left: 50%;
   transform: translate(-50%, 0%);
-  z-index: 1;
+  z-index: 1;;
   padding: 16px 0px;
   display: flex;
   flex-direction: row;

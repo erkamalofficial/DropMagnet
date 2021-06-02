@@ -388,7 +388,7 @@ p1 .medium {
   }
 }
 
-* {
+*{
   box-sizing: border-box;
 }
 
@@ -423,11 +423,9 @@ p1 .medium {
 .row {
   flex-direction: row !important;
 }
-
 .row > * {
   margin: 5px;
 }
-
 h1 {
   font-family: "Damion", cursive;
   color: #fff;
@@ -438,7 +436,6 @@ h3 {
   color: #fff;
   text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
 }
-
 h2 {
   color: #fff;
 } */

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Card from "./card";
 import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
+import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
 
 const ActionSection = styled.div`
   display: flex;
@@ -18,11 +19,15 @@ const CardContainer = styled.div`
 
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
-function Swiper({ db, reswipeModeActive }) {
+function Swiper(props) {
+
+  const { db, reswipeModeActive, detailView, setDetailView } = props
+
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
   // const [lastDirection, setLastDirection] = useState();
   const [newLoading, setNewLoading] = useState(true);
+  const [curDrop, setCurDrop] = useState({})
 
   const dispatch = useDispatch();
 
@@ -52,6 +57,7 @@ function Swiper({ db, reswipeModeActive }) {
     alreadyRemoved.push(drop_id);
   };
 
+
   const outOfFrame = (name) => {
     // if (allCards.length === alreadyRemoved.length) {
     //   //if all cards are removed, reload new cards
@@ -75,34 +81,56 @@ function Swiper({ db, reswipeModeActive }) {
     }
   };
 
-  return [
-    <CardContainer key="cardContainer">
-      {cards.map((cardDetails, index) => {
-        const { drop_id } = cardDetails;
-        return (
-          <TinderCard
-            ref={childRefs[index]}
-            className={`swipe ${drop_id}`}
-            data-id={drop_id}
-            key={drop_id}
-            onSwipe={(dir) => swiped(dir, drop_id)}
-            onCardLeftScreen={() => outOfFrame(drop_id)}
-            overlayLabels={true}
-          >
-            <Card {...cardDetails} />
-          </TinderCard>
-        );
-      })}
-    </CardContainer>,
-    <ActionSection key="footer">
-      <MinusBtn onClick={() => swipe("left")}>
-        <img src="./minus.svg" alt="minus" />
-      </MinusBtn>
-      <PlusBtn onClick={() => swipe("right")}>
-        <img src="./plus.svg" alt="plus" />
-      </PlusBtn>
-    </ActionSection>,
-  ];
+  function openDrop(drop, param) {
+    if (param === 'clicked') {
+
+      // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))
+      setCurDrop(drop)
+      setDetailView(true)
+    }
+  }
+
+  function renderDetail() {
+    return (
+      <div>
+        <DropDetail drop={curDrop} closeDetailView={() => setDetailView(false)} handleClick={() => console.log("Click")} />
+      </div>
+    )
+  }
+
+  return (
+    [
+      <div className="view-container home-container" style={{ display: `${!detailView ? 'none' : 'block'}` }} >
+        {renderDetail()}
+      </div>,
+      <CardContainer key="cardContainer" style={{ display: `${detailView ? 'none' : 'flex'}` }}>
+        {cards.map((cardDetails, index) => {
+          const { drop_id } = cardDetails;
+          return (
+            <TinderCard
+              ref={childRefs[index]}
+              className={`swipe ${drop_id}`}
+              data-id={drop_id}
+              key={drop_id}
+              onSwipe={(dir) => swiped(dir, drop_id)}
+              onCardLeftScreen={() => outOfFrame(drop_id)}
+              overlayLabels={true}
+            >
+              <Card {...cardDetails} handleDrop={openDrop} />
+            </TinderCard>
+          );
+        })}
+      </CardContainer>,
+      <ActionSection key="footer" style={{ display: `${detailView ? 'none' : 'flex'}` }}>
+        <MinusBtn onClick={() => swipe("left")}>
+          <img src="./minus.svg" alt="minus" />
+        </MinusBtn>
+        <PlusBtn onClick={() => swipe("right")}>
+          <img src="./plus.svg" alt="plus" />
+        </PlusBtn>
+      </ActionSection>,
+    ]
+  )
 }
 
 export default Swiper;

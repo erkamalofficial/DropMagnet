@@ -8,6 +8,7 @@ export default function DropDetail(props) {
     props.closeDetailView()
   }
 
+  
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
       <p2 style={{color: '#F5F5F5', opacity: '0.66', fontWeight: 'bold', transform: 'rotate(-90deg)', position: 'absolute', bottom: '24px', left: '8px', transformOrigin: '0 0', width: '164px'}} >30 Second Song Preview</p2>
@@ -25,7 +26,7 @@ export default function DropDetail(props) {
       <div className="detail-view-header">
         <img className="detail-view-header-image" src={props.drop.artist_image}/>
         <h1 className="drop-detail-title">{props.drop.artist}</h1>
-        <img onClick={() => closeDetail()} className="close-detail-button" src="./close-icon.png" />
+        <img style={{width: '39px', height: '39px'}} onClick={() => closeDetail()} className="close-detail-button" src="./close-icon.png" />
       </div>
       <div className="drop-detail-image" onClick={() => props.handleClick()}>
         {props.drop.type === "music" ? renderMusicSideDetails() : <></>}

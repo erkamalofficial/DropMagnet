@@ -1,4 +1,7 @@
+import { useState } from "react"
 import styled from "styled-components";
+import DropDetail from "../../components/detail_page/DropDetail/DropDetail.js"
+import "./card.css"
 
 const SwipeCard = styled.div`
   cursor: pointer;
@@ -95,9 +98,17 @@ const SwipeImage = styled.div`
   margin: var(--swipe-card-art-margin);
 `;
 
-const Card = ({ title, drop_image, artist_image, drop_id }) => {
+const Card = (props) => {
+
+  const { title, drop_image, artist_image, drop_id, handleDrop } = props
+
+  const handleClick = () => {
+    handleDrop(props, "clicked")
+  }
+
+
   return (
-    <SwipeCard data-key="card-bdr">
+    <SwipeCard data-key="card-bdr" onClick={handleClick}>
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
           <UserAvatar src={artist_image} />
