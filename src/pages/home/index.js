@@ -125,7 +125,7 @@ const Home = (props) => {
       />
       {/* <FixedHeader {...props} /> */}
       <div className="rel">
-        {!reswipeModeActive && (
+        {!reswipeModeActive && !detailView && (
           <Tabs
             activeTabIndex={activeTabIndex}
             handleActiveTabIndex={handleActiveTabIndex}
@@ -146,6 +146,8 @@ const Home = (props) => {
             key={uniqueId}
             reswipeModeActive={reswipeModeActive}
             db={reswipeModeActive ? reswipeBucket : activeBucket}
+            detailView={detailView}
+            setDetailView={setDetailView}
           />
         )}
       </div>
