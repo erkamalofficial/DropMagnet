@@ -114,13 +114,18 @@ export default function DropCreation(props) {
     }
   }
 
-  function setStepAction() {
-    if (dropCreationStep === 4) {
-      history.push("/")
-      createDrop()
-    } else {
-      setDropCreationStep(dropCreationStep + 1)
+  function setStepAction(type='increase') {
+    if(type==='increase'){
+      if (dropCreationStep === 4) {
+        history.push("/")
+        createDrop()
+      } else {
+        setDropCreationStep(dropCreationStep + 1)
+      }
+    }else{
+      setDropCreationStep(dropCreationStep - 1);
     }
+    
   }
 
   function renderFirstStep() {
@@ -205,7 +210,10 @@ export default function DropCreation(props) {
         <h1 style={{margin: '0px 0px 22px 0px', paddingTop: '12px', paddingBottom: '8px', color: '#B3BBC3', textAlign: 'center'}}>{getTitle()}</h1>
         {renderStep()}
       </div>
-      <button className="main-button" style={{position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)'}} onClick={() => setStepAction()}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
+      <div className={'main-button-container'} style={{position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)'}}>
+        {dropCreationStep >0  && <button className="main-button"  onClick={() => setStepAction('decrease')}>Back</button> } 
+        <button className="main-button"  onClick={() => setStepAction('increase')}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
+      </div>
     </div>
   );
 }
