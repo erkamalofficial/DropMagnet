@@ -23,7 +23,7 @@ export default function HeaderBar(props) {
   return (
     <div className="header-container">
       <div className="header-left-holder">
-        <img onClick={() => props.openHome()} className="header-left-image" src="./dropmagnet-small-logo.png" />
+        <img onClick={() => props.openHome()} className="header-left-image" src="./drop_icon.png" />
         { props.datePickerVisible ? 
           <div onClick={() => props.openDateMenu()} className="dropdown-button">
             <p1 className="dropdown-button-title">{epochToDayMonth(props.selectedDropdownDate)}</p1>
