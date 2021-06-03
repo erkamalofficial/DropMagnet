@@ -152,11 +152,24 @@ export default function Profile(props) {
         <div style={{display: "flex", paddingBottom: '16px'}}>
           <div style={{display: "flex", paddingRight: '24px'}}>
             <img width={37} height={24} src="./twitter-icon.png" style={{paddingRight: '8px'}} />
-            <div className="profile-medium-title">{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
+            <div 
+              className="profile-medium-title" 
+              onClick={() => {
+                if (twitterHandle !== "") {
+                  window.open(twitterHandle, "_blank");
+                }
+              }}
+            >{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
           </div>
           <div style={{display: "flex", columnGap: "8px"}}>
             <img width={24} height={24} src="./insta-icon.png" />
-            <div className="profile-medium-title">{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
+            <div className="profile-medium-title"
+              onClick={() => {
+                if (instaHandle !== "") {
+                  window.open('https://www.instagram.com/'+instaHandle.split("/").pop(), "_blank");
+                }
+              }}
+            >{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
           </div>
         </div>
         <div className="profile-bio-description">{bio === "" ? "Tap To Add Bio": bio}</div>
