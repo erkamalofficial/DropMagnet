@@ -161,7 +161,7 @@ export default function DropCreation(props) {
     return <div>
       <Dropdown title={"Marketplace"} items={["OpenSea","Mintable","Rarible","Other"]} />
       <TextField setInputValue={setMarketplaceId} title={"Your Profile Link on The Marketplace"} placeholder={"Enter your profile link"} />
-      <Dropdown title={"Pieces in Drop"} items={[1,2,3,4,5]}/>
+      <PriceTextField setInputValue={setDropPieces} value={dropPieces} title={"Pieces in Drop"} placeholder={"Enter Pieces in Drop"} isPositiveOnly isCounterPresent  />     
       <div style={{fontFamily: 'Quicksand', fontSize: '14px', fontWeight: '500', color: 'white', textAlign: 'center', padding: '24px 0'}}>You Can Add The item Link When You Mint The NFTs with *name of marketplace* forthis drop on *date user entered on previous page*</div>
     </div>
   }
@@ -172,7 +172,7 @@ export default function DropCreation(props) {
         <PriceOptionButton isSelected={listingType === 'auction'} setOptionSelected={() => setListingType('auction')} buttonType={'auction'} />
         <PriceOptionButton isSelected={listingType === 'fixed_price'} setOptionSelected={() => setListingType('fixed_price')} buttonType={'fixed_price'} />
       </div>
-      <PriceTextField setInputValue={setPrice} title={"Starting Bid"} placeholder={"Enter a price"} />
+      <PriceTextField setInputValue={setPrice} title={"Starting Bid"} placeholder={"Enter a price"} value={price}  />
     </div>
   }
 
@@ -211,8 +211,8 @@ export default function DropCreation(props) {
         {renderStep()}
       </div>
       <div className={'main-button-container'} style={{position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)'}}>
-        {dropCreationStep >0  && <button className="main-button"  onClick={() => setStepAction('decrease')}>Back</button> } 
-        <button className="main-button"  onClick={() => setStepAction('increase')}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
+        {dropCreationStep >0  && <button className="main-button create_drop_button"  onClick={() => setStepAction('decrease')}>Back</button> } 
+        <button className="main-button create_drop_button"  onClick={() => setStepAction('increase')}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
       </div>
     </div>
   );

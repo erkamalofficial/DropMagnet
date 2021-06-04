@@ -98,3 +98,8 @@
   outline: none;
   margin: 32px auto;
 }
+
+.create_drop_button{
+  width: 240px;
+  margin: 32px 10px;
+}

@@ -35,3 +35,32 @@ input {
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: var(--grayBlue);
 }
+
+
+/* Input type=number default styling removed and disabling counter */
+
+.no-number-counter[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  background: var(--whiteGray)
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=)
+    no-repeat center center;
+    ;
+  width: 1em;
+}
+
+
+input[type="number"]::-webkit-inner-spin-button:hover,
+input[type="number"]::-webkit-outer-spin-button:active {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+}
+.no-number-counter::-webkit-outer-spin-button,
+.no-number-counter::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+  margin: 0;
+}
