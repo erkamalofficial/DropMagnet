@@ -26,12 +26,12 @@ export default function DropDetail(props) {
       <div className="detail-view-header">
         <img className="detail-view-header-image" src={props.drop.artist_image}/>
         <h1 className="drop-detail-title">{props.drop.artist}</h1>
-        <img style={{width: '39px', height: '39px'}} onClick={() => closeDetail()} className="close-detail-button" src="./close-icon.png" />
+        <img style={{width: '39px', height: '39px',cursor: 'pointer'}} onClick={() => closeDetail()} className="close-detail-button" src="./close-icon.png" />
       </div>
       <div className="drop-detail-image" onClick={() => props.handleClick()}>
         {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
         {props.drop.type === "music" ? renderPlayButton() : <></>}
-        <img style={{height: '244px', width: '244px', borderRadius: '6px'}} src={props.drop.drop_image} />
+        <img style={{height: '244px', width: '244px', borderRadius: '6px'}}  src={props.drop.drop_image} />
       </div>
       <h1 className="drop-detail-title">{props.drop.title}</h1>
       <div style={{height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px'}} />
@@ -49,11 +49,11 @@ export default function DropDetail(props) {
       <div className="bottom-button-holder">
         <div className="dismiss-button-unselected">
           <div style={{margin: '-6px auto 0 auto'}}>
-            <img width={32} src="./discard-icon.png" />
+            <img width={32} src="./discard-icon.png" className={'clickable'} />
           </div>
         </div>
         <div className="add-button-unselected">
-        <img style={{margin: '0 auto'}} width={32} height={32} src="./add-icon.png" />
+        <img style={{margin: '0 auto'}} width={32} height={32} className={'clickable'} src="./add-icon.png" />
         </div>
       </div>
     </div>

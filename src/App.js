@@ -23,6 +23,10 @@ import PersonalLinksPayment from "./pages/wallet/personal-links-payments";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from "react";
 import { AuthProvider } from "../src/contexts/FirebaseAuthContext";
+import About from "./pages/about";
+import AboutDrop from "./pages/aboutDrop";
+import GetToken from "./pages/getToken";
+import EditBio from "./pages/edit_bio";
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
@@ -63,6 +67,7 @@ function App() {
       image:
         "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
     };
+    localStorage.setItem('userDetails',JSON.stringify(user))
     setUserDetails(user);
   }, []);
 
@@ -80,6 +85,22 @@ function App() {
             path="/terms"
             render={(props) => <TermsAndConditions {...props} />}
           />
+
+          <Route
+            path="/about"
+            render={(props) => <About {...props} />}
+          />
+
+          <Route
+            path="/aboutDrop"
+            render={(props) => <AboutDrop {...props} />}
+          />
+
+          <Route
+            path="/getToken"
+            render={(props) => <GetToken {...props} />}
+          />
+
           <Route
             path="/square_gallery"
             render={(props) => (
@@ -106,6 +127,13 @@ function App() {
               <DropCreation {...props} userHandle={userDetails.handle} />
             )}
           />
+          <Route
+            path="/edit_bio"
+            render={(props) => (
+              <EditBio {...props} userHandle={userDetails.handle} />
+            )}
+          />
+
           <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />

@@ -38,3 +38,10 @@
   font-style: bold;
   color: white;
 }
+
+.close-button{
+  width: 30px;
+  height: 30px;
+  margin-top: 20px;
+  cursor: pointer;
+}

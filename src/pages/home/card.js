@@ -98,6 +98,18 @@ const SwipeImage = styled.div`
   margin: var(--swipe-card-art-margin);
 `;
 
+const HeaderBarMenuIcon = styled.div`
+  height: 26px;
+  width: 26px;
+  border-radius: 19px;
+  cursor: pointer;
+  background: linear-gradient(#2e2e2e, #1e1e1e);
+  box-shadow: inset 0 -1px 0px rgba(40, 0, 65, 1), 0 2px 4px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-self: center;
+`;
+
 const Card = (props) => {
 
   const { title, drop_image, artist_image, drop_id, handleDrop } = props
@@ -108,12 +120,20 @@ const Card = (props) => {
 
 
   return (
-    <SwipeCard data-key="card-bdr" onClick={handleClick}>
+    <SwipeCard data-key="card-bdr">
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
           <UserAvatar src={artist_image} />
           <div className="card-title">Crypto Art Man - {drop_id}</div>
           <div className="empty">......</div>
+          <HeaderBarMenuIcon onClick={handleClick}>
+            <img 
+            height={7}
+            width={14}
+            alt="Menu"
+            style={{ margin: "auto" }}
+            src="./menu-bars-icon.png"/>
+          </HeaderBarMenuIcon>
         </HeaderSection>
         <SwipeImage
           data-key="art"

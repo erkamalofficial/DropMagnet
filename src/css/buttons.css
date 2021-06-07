@@ -97,6 +97,7 @@
   color: #ffffff;
   outline: none;
   margin: 32px auto;
+  cursor: pointer;
 }
 
 .create_drop_button{

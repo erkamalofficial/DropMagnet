@@ -3,7 +3,7 @@ import styled from "styled-components";
 const LinksHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin: 10px 10px 40px;
 `;
 const WhitePageLabel = styled.div`
   background: linear-gradient(to left, #ac43f1, #6620de);
@@ -33,6 +33,7 @@ const LogoSection = styled.div`
 const BrandLogo = styled.img`
   height: 36px;
   width: 36px;
+  cursor: pointer;
 `;
 const LogoTitleSection = styled.div`
   padding-left: 20px;
@@ -42,11 +43,13 @@ const LogoTitle = styled.div`
   font-weight: 400;
   font-size: var(--font-size-l);
 `;
-const LinksHeader = () => {
+const LinksHeader = (props) => {
   return (
     <LinksHeaderWrapper>
       <LogoSection>
-        <BrandLogo src="./drop_icon.png" alt="drop magnet" />
+        <BrandLogo onClick={()=>{
+          window.location.href = '/home'
+        }} src="./drop_icon.png" alt="drop magnet" />
         <LogoTitleSection>
           <LogoTitle>drop magnet</LogoTitle>
           <div>#ThreeTheWeb</div>

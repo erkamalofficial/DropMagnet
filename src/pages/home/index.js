@@ -1,13 +1,10 @@
 // import "../../server";
 import styled from "styled-components";
 import React, { useEffect, useMemo, useState } from "react";
-import FixedHeader from "../../components/elements/HeaderBar/FixedHeader";
-
+import DateMenu from '../../components/detail_page/DateMenu/DateMenu';
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 import Tabs from "./tabs";
 import ProgressBar from "./progress-bar";
-import DateMenu from '../../components/detail_page/DateMenu/DateMenu'
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchMusic,
@@ -36,20 +33,10 @@ const Home = (props) => {
   useEffect(() => {
     dispatch(fetchArt({ activeTabIndex: 0 }));
   }, []);
+
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941)
   const [detailView, setDetailView] = useState(false)
   const [dateMenuOpen, setDateMenuOpen] = useState(false)
-
-  function selectDate(date) {
-    console.log('opened item', date)
-  }
-
-  function setSelectedDate(date) {
-    console.log('selected date is', date)
-    setSelectedDropdownDate(date.date)
-  }
-
-
   const tabList = ["arts", "music", "collectables", "fashion"];
   const activeTabIndex = useSelector((state) => {
     return state.category.general.activeTabIndex;
@@ -73,6 +60,27 @@ const Home = (props) => {
     [reswipeBucket.length, uidChanged]
   );
 
+  function selectDate(date) {
+    console.log('opened item', date)
+  }
+
+  function setSelectedDate(date) {
+    console.log('selected date is', date)
+    setSelectedDropdownDate(date.date)
+  }
+
+  const openHome = ()=>{
+
+  }
+
+  const openMenu = ()=>{
+
+  }
+
+  const openDateMenu = ()=>{
+    setDateMenuOpen(true)
+  }
+
   const handleActiveTabIndex = (index) => {
     const activeTab = tabList[index];
     if (activeTab === "music") {
@@ -91,19 +99,6 @@ const Home = (props) => {
   const handleReswipe = () => {
     dispatch(fetchReswipeList(activeTabIndex));
   };
-
-  const openHome = ()=>{
-
-  }
-
-  const openMenu = ()=>{
-
-  }
-
-  const openDateMenu = ()=>{
-    setDateMenuOpen(true)
-  }
-
   return (
     <HomeContainer>
       <DateMenu 
@@ -121,9 +116,9 @@ const Home = (props) => {
         datePickerVisible={detailView ? false : true}
         userLoggedIn={props.userLoggedIn}
         userImage={props.userDetails.image}
+        userDetails={props.userDetails}
         userImageVisible={true}
       />
-      {/* <FixedHeader {...props} /> */}
       <div className="rel">
         {!reswipeModeActive && !detailView && (
           <Tabs

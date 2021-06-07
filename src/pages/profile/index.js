@@ -18,7 +18,6 @@ export default function Profile(props) {
   const [instaHandle, setInstaHandle] = useState('')
   const [bio, setBio] = useState('dsadasdasdas')
   const [categoryList, setCategoryList] = useState([])
-  const [mainMenuOpen, setMainMenuOpen] = useState(false)
   const [selectedProfileList, setSelectedProfileList] = useState('scheduled')
   const [scheduledPosts, setScheduledPosts] = useState([])
   const [savedPosts, setSavedPosts] = useState([])
@@ -121,13 +120,9 @@ export default function Profile(props) {
 
   }
 
-  function openItem(item) {
-    console.log('opened item', item)
-  }
 
-  function openMenu() {
-    setMainMenuOpen(true)
-  }
+
+
 
   function openHome() {
     history.push("/");
@@ -141,38 +136,34 @@ export default function Profile(props) {
 
   return (
     <div className="profile-container">
-      <MainMenu userDetails={props.userDetails} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
       <div className="fixed-container">
-        <HeaderBar openHome={() => openHome()} openMenu={() => openMenu()} userLoggedIn={props.userLoggedIn} userImage={userImage} />
+        <HeaderBar openHome={() => openHome()}  userLoggedIn={props.userLoggedIn} userImage={userImage} userDetails={props.userDetails} />
       </div>
       <div className="profile-detail-container">
         <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/>
         <div className="profile-large-title">{firstName + " " + lastName}</div>
         <div className="profile-handle-title">{"@" + handle}</div>
         <div style={{display: "flex", paddingBottom: '16px'}}>
-          <div style={{display: "flex", paddingRight: '24px'}}>
+          <div style={{display: "flex", paddingRight: '24px', cursor: 'pointer'}} onClick={()=>{
+            if(twitterHandle!==''){
+              window.open('https://www.twitter.com/'+twitterHandle.split("/").pop(),'_blank')
+            }
+          }}>
             <img width={37} height={24} src="./twitter-icon.png" style={{paddingRight: '8px'}} />
-            <div 
-              className="profile-medium-title" 
-              onClick={() => {
-                if (twitterHandle !== "") {
-                  window.open(twitterHandle, "_blank");
-                }
-              }}
-            >{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
+            <div className="profile-medium-title">{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
           </div>
-          <div style={{display: "flex", columnGap: "8px"}}>
+          <div style={{display: "flex", columnGap: "8px",cursor: 'pointer'}} onClick={()=>{
+            if(instaHandle!==''){
+              window.open('https://www.instagram.com/'+instaHandle.split("/").pop(),'_blank')
+            }
+          }}> 
             <img width={24} height={24} src="./insta-icon.png" />
-            <div className="profile-medium-title"
-              onClick={() => {
-                if (instaHandle !== "") {
-                  window.open('https://www.instagram.com/'+instaHandle.split("/").pop(), "_blank");
-                }
-              }}
-            >{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
+            <div className="profile-medium-title">{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
           </div>
         </div>
-        <div className="profile-bio-description">{bio === "" ? "Tap To Add Bio": bio}</div>
+        {bio && <div className="profile-bio-description">{bio}</div>}
+        <div className="profile-bio-edit-button clickable" onClick={()=>props.history.push('/edit_bio')}>{'Tap to Edit Bio'}</div>
+        
       </div>
       <div style={{margin: '0 auto', maxWidth: '600px'}}>
         <div className="profile-button-option-holder">

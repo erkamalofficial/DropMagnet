@@ -13,10 +13,10 @@ export default function PriceTextField(props) {
                }
               props.setInputValue(event.target.value)
              }}  
-             className={props.isCounterPresent ? 'text-field-form':'text-field-form no-number-counter'} 
+             className={props.isCounterRequired ? 'text-field-form':'text-field-form no-number-counter'} 
              placeholder={props.placeholder} 
              value={props.value}
-      />    
+      />
     </div>
   )
 }

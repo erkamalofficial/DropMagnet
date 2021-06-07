@@ -94,9 +94,8 @@
   font-weight: 600;
   padding-top: 2px;
   letter-spacing: 0.4px;
-  cursor: pointer;
 }
 
-.profile-menu-open {
-
+.profile-bio-edit-button{
+  margin-bottom: 20px;
 }

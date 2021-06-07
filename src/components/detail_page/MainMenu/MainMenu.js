@@ -5,7 +5,13 @@ import { Link } from 'react-router-dom'
 export default function MainMenu(props) {
   const [open, setOpen] = useState(false)
 
-  var menuList = ["Get drop token", "About", "What's a drop?"]
+  var menuList = [
+    {title: "Create a Drop", link: 'create_drop'},
+    {title:"Get drop token", link: "/getToken"}, 
+    {title:"About",link:'/about'}, 
+    {title:"What's a drop?",link:'/aboutDrop'},
+    {title: "Terms and Conditions",link: "/term"},
+  ]
 
   useEffect(() => {
     setOpen(props.open)
@@ -20,10 +26,9 @@ export default function MainMenu(props) {
     props.setOpen(false)
   }
 
-  function renderMenuItem(item) {
-    return <div onClick={() => openItem(item)} style={{marginTop: '16px'}}>
-      <h1 style={{margin: 'auto', marginBottom: '16px'}} className="main-menu-item">{item}</h1>
-    </div>
+  function renderMenuItem(item,index) {
+    return  <Link className="main-menu-item" style={{marginBottom: '16px'}} key={index} to={item.link}>{item.title}</Link>
+
   }
 
   let menuClass = open ? "main-menu-open" : "main-menu-closed"
@@ -42,9 +47,7 @@ export default function MainMenu(props) {
           :
           <></>
         }
-        <Link className="main-menu-item" style={{marginBottom: '16px'}} to={`/create_drop`}>Create a drop</Link>
         {menuList.map(renderMenuItem)}
-        <Link className="main-menu-item" style={{marginBottom: '16px'}} to={`/terms`}>Terms and Conditions</Link>
       </div>
     </div>
   );

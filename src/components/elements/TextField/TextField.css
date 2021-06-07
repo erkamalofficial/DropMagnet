@@ -36,7 +36,6 @@ input {
   color: var(--grayBlue);
 }
 
-
 /* Input type=number default styling removed and disabling counter */
 
 .no-number-counter[type="number"] {
@@ -63,4 +62,4 @@ input[type="number"]::-webkit-outer-spin-button:active {
   -webkit-appearance: none;
   display: none;
   margin: 0;
-}
+} 
