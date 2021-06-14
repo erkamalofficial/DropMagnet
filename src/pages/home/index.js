@@ -16,6 +16,7 @@ import {
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
 import "./index.css";
+import { useHistory } from "react-router";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -30,9 +31,12 @@ const HomeContainer = styled.div`
 
 const Home = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     dispatch(fetchArt({ activeTabIndex: 0 }));
   }, []);
+
+  
 
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941)
   const [detailView, setDetailView] = useState(false)
@@ -54,6 +58,12 @@ const Home = (props) => {
       return state.category[currentTabId];
     }
   );
+
+  useEffect(()=>{
+    if(reswipeBucket.length >= 10){
+      history.push(`/reswipe?tab=${currentTabId}`);
+    }
+  }, [reswipeBucket.length,history])
   const uidChanged = useSelector((state) => state.category.general.uidChanged);
   const uniqueId = useMemo(
     () => Date.now(),

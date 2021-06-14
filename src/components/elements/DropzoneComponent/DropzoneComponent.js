@@ -29,7 +29,7 @@ const rejectStyle = {
 };
 
 function DropzoneComponent(props) {
-  const [files, setFiles] = useState([]);
+const {files, setFiles} = props
 
   const onDrop = useCallback(acceptedFiles => {
     setFiles(acceptedFiles.map(file => Object.assign(file, {

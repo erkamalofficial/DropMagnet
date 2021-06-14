@@ -15,3 +15,8 @@ code {
 .clickable{
   cursor: pointer;
 }
+
+.container-reswipe  .swipe{
+  max-width: 440px;
+  width: 100%;
+}

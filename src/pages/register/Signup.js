@@ -10,6 +10,7 @@ import {
   FormSuccess,
   GridItem,
 } from "./FormComponents";
+import * as DropMagnetAPI from '../../DropMagnetAPI'
 
 var VERIFY_EMAIL_PATH;
 if (process.env === "development") {
@@ -18,21 +19,22 @@ if (process.env === "development") {
   VERIFY_EMAIL_PATH = "https://fb-web-763f4.web.app";
 }
 
-export default function Signup() {
+export default function Signup(props) {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signup } = useAuth();
+  const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords do not match");
     }
+
+
 
     try {
       setError("");
@@ -41,6 +43,19 @@ export default function Signup() {
         emailRef.current.value,
         passwordRef.current.value
       );
+
+      let username = res.user.email.split('@')[0]
+      let name = res.user.displayName === null ? username : res.user.displayName
+      let email = res.user.email
+      
+      currentUser.getIdToken(true).then(function (idToken) {
+        DropMagnetAPI.createNewUserProfile(name, username, email, idToken).then(function (response) {
+          if (response.status === "error") {
+            console.log('error', response)
+          }
+        })
+      })
+
       try {
         window.localStorage.setItem("emailForSignIn", emailRef.current.value);
         await res.user.sendEmailVerification({

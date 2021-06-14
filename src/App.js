@@ -22,11 +22,12 @@ import PersonalLinksPayment from "./pages/wallet/personal-links-payments";
 // import SelectLinks from "./pages/wallet/select-links";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from "react";
-import { AuthProvider } from "../src/contexts/FirebaseAuthContext";
+import { AuthProvider, useAuth } from "../src/contexts/FirebaseAuthContext";
 import About from "./pages/about";
 import AboutDrop from "./pages/aboutDrop";
 import GetToken from "./pages/getToken";
 import EditBio from "./pages/edit_bio";
+import Reswipe from "./pages/reswipe";
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
@@ -56,8 +57,9 @@ function App() {
   // Its at this point we can either show the NFT in a Gallery or store it in the Firebase DB.
   // THIS WORK STILL NEEDS TO BE IMPLEMENTED.
   // window.addEventListener("load",  Nft);
-
   const [userDetails, setUserDetails] = useState({});
+
+  const {logout} = useAuth();
 
   useEffect(() => {
     let user = {
@@ -73,12 +75,12 @@ function App() {
 
   return (
     <Router>
-      <AuthProvider>
         <Switch>
           <PrivateRoute
             exact
             path="/home"
             userDetails={userDetails}
+            isLogged
             component={HomePage}
           />
           <Route
@@ -134,6 +136,11 @@ function App() {
             )}
           />
 
+          <Route 
+            path="/reswipe"
+            component={Reswipe}
+          />
+
           <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
@@ -181,6 +188,17 @@ function App() {
           />
 
           <Route exact path="/" component={PersonalLinksHome} />
+
+          <Route exact path="/logout" render={(props)=>{
+            logout()
+            .then(()=>{
+              props.history.push('/')
+            })
+            .catch(()=>{
+              props.history.push('/')
+            })
+            return null
+          }} />
           <PrivateRoute
             exact
             path="/links-payment"
@@ -188,7 +206,6 @@ function App() {
           />
           <PrivateRoute path="/buy-links" exact component={BuyLinks} />
         </Switch>
-      </AuthProvider>
     </Router>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 
-const AuthContext = React.createContext();
+const AuthContext = React.createContext({currentUser: {}});
 export function useAuth() {
   return useContext(AuthContext);
 }
@@ -40,11 +40,9 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
-      if (user) {
-        user.getIdToken().then(function (idToken) {
-          setIdToken(idToken);
-        });
-      }
+      user.getIdToken().then(function (idToken) {
+        setIdToken(idToken);
+      });
     });
 
     return unsubscribe;

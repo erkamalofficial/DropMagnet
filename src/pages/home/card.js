@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styled from "styled-components";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail.js"
 import "./card.css"
@@ -66,17 +66,24 @@ const FooterButtons = styled.div`
   justify-content: center;
   font-weight: 700;
   line-height: 22px;
+  column-gap: 16px;
   margin-bottom: var(--card-title-section-text-margin);
   div {
     padding: 0 10px;
     border-radius: 3px;
+    font-size: 14px
   }
   .rare {
     background: var(--corePurple);
-    margin-right: 16px;
   }
   .art {
     background: var(--coreBlue);
+  }
+  .price {
+    width: 48px;
+    height: 24px;
+    border-radius: 3px;
+    background-color: #6a8ad5;
   }
 `;
 const FooterTitle = styled.div`
@@ -112,28 +119,32 @@ const HeaderBarMenuIcon = styled.div`
 
 const Card = (props) => {
 
-  const { title, drop_image, artist_image, drop_id, handleDrop } = props
-
-  const handleClick = () => {
-    handleDrop(props, "clicked")
-  }
-
+  const { title, drop_image, artist_image, drop_id, handleDrop, price, swiping, setSwiping } = props
 
   return (
-    <SwipeCard data-key="card-bdr">
+    <SwipeCard data-key="card-bdr"
+      onMouseDown={() => setSwiping(false) }
+      onMouseMove={() => setSwiping(true) }
+      onMouseUp={e => {
+        setSwiping(false);
+        if(!swiping){
+          handleDrop(props)
+        }
+      }}
+      onTouchStart={() => setSwiping(false) }
+      onTouchMove={() => setSwiping(true) }
+      onTouchEnd={e => {
+        e.preventDefault();
+        setSwiping(false);
+        if(!swiping){
+          handleDrop(props)
+        }
+      }}>
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
           <UserAvatar src={artist_image} />
           <div className="card-title">Crypto Art Man - {drop_id}</div>
           <div className="empty">......</div>
-          <HeaderBarMenuIcon onClick={handleClick}>
-            <img 
-            height={7}
-            width={14}
-            alt="Menu"
-            style={{ margin: "auto" }}
-            src="./menu-bars-icon.png"/>
-          </HeaderBarMenuIcon>
         </HeaderSection>
         <SwipeImage
           data-key="art"
@@ -145,6 +156,7 @@ const Card = (props) => {
           <FooterButtons>
             <div className="rare">RARIBLE</div>
             <div className="art">ART</div>
+            <div className="price">ART</div>
           </FooterButtons>
         </FooterSection>
       </SwipeCardDeviceContainer>

@@ -11,6 +11,7 @@ export default function MainMenu(props) {
     {title:"About",link:'/about'}, 
     {title:"What's a drop?",link:'/aboutDrop'},
     {title: "Terms and Conditions",link: "/term"},
+    {title: "Logout", link: "/logout"}
   ]
 
   useEffect(() => {

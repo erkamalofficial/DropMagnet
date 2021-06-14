@@ -28,6 +28,7 @@ function Swiper(props) {
   // const [lastDirection, setLastDirection] = useState();
   const [newLoading, setNewLoading] = useState(true);
   const [curDrop, setCurDrop] = useState({})
+  const [swiping, setSwiping] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -46,12 +47,17 @@ function Swiper(props) {
 
   const swiped = (direction, drop_id) => {
     // console.log("direction:KKK " + direction);
-    if (direction === "right") {
-      dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
+    if(reswipeModeActive){
+
+    }else{
+      if (direction === "right") {
+        dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
+      }
+      if (direction === "left") {
+        dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
+      }
     }
-    if (direction === "left") {
-      dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
-    }
+
 
     // setLastDirection(direction);
     alreadyRemoved.push(drop_id);
@@ -81,13 +87,10 @@ function Swiper(props) {
     }
   };
 
-  function openDrop(drop, param) {
-    if (param === 'clicked') {
-
-      // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))
-      setCurDrop(drop)
-      setDetailView(true)
-    }
+  function openDrop(drop) {
+    // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))
+    setCurDrop(drop)
+    setDetailView(true)
   }
 
   function renderDetail() {
@@ -98,6 +101,7 @@ function Swiper(props) {
     )
   }
 
+
   return (
     [
       <div className="view-container home-container" style={{ display: `${!detailView ? 'none' : 'block'}` }} >
@@ -106,17 +110,22 @@ function Swiper(props) {
       <CardContainer key="cardContainer" style={{ display: `${detailView ? 'none' : 'flex'}` }}>
         {cards.map((cardDetails, index) => {
           const { drop_id } = cardDetails;
+
           return (
             <TinderCard
               ref={childRefs[index]}
               className={`swipe ${drop_id}`}
               data-id={drop_id}
               key={drop_id}
-              onSwipe={(dir) => swiped(dir, drop_id)}
+              onSwipe={(dir) => {
+                setSwiping(true)
+                return swiped(dir, drop_id)
+              }}
               onCardLeftScreen={() => outOfFrame(drop_id)}
               overlayLabels={true}
             >
-              <Card {...cardDetails} handleDrop={openDrop} />
+              <Card {...cardDetails} handleDrop={openDrop} swiping={swiping}
+                setSwiping={setSwiping} />
             </TinderCard>
           );
         })}

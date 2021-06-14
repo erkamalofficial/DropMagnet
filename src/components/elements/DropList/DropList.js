@@ -37,7 +37,9 @@ export default function DropList(props) {
   function renderDropCell(drop) {
     return <DropCell style={{
       position: "absolute"
-    }} key={drop.drop_id} drop={drop} onClick={() => props.onClick(drop)} />
+    }} key={drop.drop_id} drop={drop} user={props.user} onClick={() => props.onClick(drop)} 
+    setDetailView={props.setDetailView}
+    setCurDrop={props.setCurDrop}/>
   }
 
   return (

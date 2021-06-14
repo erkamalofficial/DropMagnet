@@ -83,15 +83,16 @@ export default function DropCreation(props) {
 
   const menu = Menu(list, selectedMonth)
 
+
   function createDrop() {
     currentUser.getIdToken(true).then(function (idToken) {
-      let drop_date = new Date().getMilliseconds()
+      let drop_date = new Date().getTime()
       DropMagnetAPI.createDrop(title,
         description,
         category,
         hashtag,
         drop_date,
-        launchDate,
+        launchDate.date,
         marketplace,
         marketplaceId,
         dropPieces,
@@ -144,7 +145,7 @@ export default function DropCreation(props) {
     return <div>
       <TextField setInputValue={setTitle} title={"Drop Title"} placeholder={"Enter a title for your masterpiece"} />
       <TextView height={'62px'} titleTopMargin={'12px'} setInputValue={setDescription} title={"The Story of the Drop"} placeholder={"Tell the story behind the drop (max 300 words)"} />
-      <Dropdown setInputValue={setCategory} title={"Category"} items={["Art", "Music", "Collectible", "Fashion"]} />
+      <Dropdown setSelected={setCategory} title={"Category"} items={["Art", "Music", "Collectible", "Fashion"]} />
       <TextView height={'62px'} titleTopMargin={'12px'} setInputValue={setHashtag} title={"# Hashtag"} placeholder={"Enter one i.e #Electronic if it’s music or #Abstract if it’s art."} />
     </div>
   }
@@ -171,7 +172,7 @@ export default function DropCreation(props) {
 
   function renderThirdStep() {
     return <div>
-      <Dropdown title={"Marketplace"} items={["OpenSea", "Mintable", "Rarible", "Other"]} />
+      <Dropdown setSelected={setMarketplace} title={"Marketplace"} items={["OpenSea", "Mintable", "Rarible", "Other"]} />
       <TextField setInputValue={setMarketplaceId} title={"Your Profile Link on The Marketplace"} placeholder={"Enter your profile link"} />
       <PriceTextField setInputValue={setDropPieces} value={dropPieces} title={"Drop Piece"} placeholder={"Enter Drop Piece"} isPositiveOnly isCounterRequired />
       <div style={{ fontFamily: 'Quicksand', fontSize: '14px', fontWeight: '500', color: 'white', textAlign: 'center', padding: '24px 0' }}>You Can Add The item Link When You Mint The NFTs with *name of marketplace* forthis drop on *date user entered on previous page*</div>
@@ -214,7 +215,7 @@ export default function DropCreation(props) {
 
   return (
     <div className="create-drop-container">
-      <img style={{ position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px',cursor:'pointer' }} onClick={() => history.push("/")} src="./close-icon.png" />
+      <img style={{ position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px',cursor:'pointer' }} onClick={() => history.goBack()} src="./close-icon.png" />
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 36px 128px 36px' }}>
         <div style={{ display: 'flex', maxWidth: "238px", margin: '40px auto 30px auto' }}>
           <PageIndexItem index={1} selected={dropCreationStep >= 0} />

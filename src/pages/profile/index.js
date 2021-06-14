@@ -7,6 +7,7 @@ import CategoryMenu from '../../components/elements/CategoryMenu/CategoryMenu'
 import "./Profile.css"
 import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
 import { useAuth } from "../../contexts/FirebaseAuthContext"
+import ProfileDropDetail from '../../components/detail_page/DropDetail/ProfileDropDetail'
 
 export default function Profile(props) {
 
@@ -16,11 +17,15 @@ export default function Profile(props) {
   const [userImage, setUserImage] = useState('')
   const [twitterHandle, setTwitterHandle] = useState('')
   const [instaHandle, setInstaHandle] = useState('')
-  const [bio, setBio] = useState('dsadasdasdas')
+  const [bio, setBio] = useState('Bio')
   const [categoryList, setCategoryList] = useState([])
   const [selectedProfileList, setSelectedProfileList] = useState('scheduled')
   const [scheduledPosts, setScheduledPosts] = useState([])
   const [savedPosts, setSavedPosts] = useState([])
+  const [user, setUser] = useState(null)
+
+  const [curDrop, setCurDrop] = useState({})
+  const [detailView, setDetailView] = useState(false)
 
   const { currentUser } = useAuth()
 
@@ -34,11 +39,11 @@ export default function Profile(props) {
       "artist": "Crypto Art Man",
       "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-			"category": "Art",
-			"drop_date": "22-03-2021",
-			"marketplace": "Rarible",
-			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
-			"drop_pieces": 9
+      "category": "Art",
+      "drop_date": "22-03-2021",
+      "marketplace": "Rarible",
+      "marketplace_id": "https://rarible.com/iconow?tab=collectibles",
+      "drop_pieces": 9
     },
     {
       "drop_id": 10,
@@ -47,11 +52,11 @@ export default function Profile(props) {
       "artist": "Crypto Art Man",
       "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-			"category": "Art",
-			"drop_date": "22-03-2021",
-			"marketplace": "Rarible",
-			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
-			"drop_pieces": 9
+      "category": "Art",
+      "drop_date": "22-03-2021",
+      "marketplace": "Rarible",
+      "marketplace_id": "https://rarible.com/iconow?tab=collectibles",
+      "drop_pieces": 9
     }
   ]
 
@@ -63,11 +68,11 @@ export default function Profile(props) {
       "artist": "Crypto Art Man",
       "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-			"category": "Art",
-			"drop_date": "22-03-2021",
-			"marketplace": "Rarible",
-			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
-			"drop_pieces": 9
+      "category": "Art",
+      "drop_date": "22-03-2021",
+      "marketplace": "Rarible",
+      "marketplace_id": "https://rarible.com/iconow?tab=collectibles",
+      "drop_pieces": 9
     },
     {
       "drop_id": 10,
@@ -76,23 +81,22 @@ export default function Profile(props) {
       "artist": "Crypto Art Man",
       "artist_image": "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
       "drop_image": "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-			"category": "Art",
-			"drop_date": "22-03-2021",
-			"marketplace": "Rarible",
-			"marketplace_id": "https://rarible.com/iconow?tab=collectibles",
-			"drop_pieces": 9
+      "category": "Art",
+      "drop_date": "22-03-2021",
+      "marketplace": "Rarible",
+      "marketplace_id": "https://rarible.com/iconow?tab=collectibles",
+      "drop_pieces": 9
     }
   ]
 
   useEffect(() => {
-    setScheduledPosts(collectibleArts)
     setCategoryList(collectibleArts)
-
-    currentUser.getIdToken(true).then(function(idToken) {
+    const user_id = currentUser.uid
+    currentUser.getIdToken(true).then(function (idToken) {
       // Send token to your backend via HTTPS
       // ...
       console.log('id token is', idToken)
-      DropMagnetAPI.getUserProfile("3H9hG6VA2AND6UosP23nzLyK5mZ2", idToken).then(function (response) {
+      DropMagnetAPI.getUserProfile(user_id, idToken).then(function (response) {
         console.log('user profile response', response)
         if (response.status === "error") {
           // setLoginError(response.message);
@@ -105,9 +109,15 @@ export default function Profile(props) {
           setInstaHandle(response.insta_url)
           setTwitterHandle(response.twitter_url)
           setUserImage(response.avatar_url)
+          setUser(response)
         }
       })
-    }).catch(function(error) {
+
+
+      DropMagnetAPI.getUserPosts(user_id, idToken)
+        .then(res => setScheduledPosts(res))
+
+    }).catch(function (error) {
       // Handle error
     });
   }, [])
@@ -130,51 +140,82 @@ export default function Profile(props) {
 
   function renderDrops() {
     return (
-      <DropList drops={categoryList} onClick={openDrop} />
+      <DropList
+        drops={scheduledPosts}
+        user={user}
+        onClick={openDrop}
+        setDetailView={setDetailView}
+        setCurDrop={setCurDrop} />
     )
   }
+
+  function renderDetail() {
+    return (
+      <div>
+        <ProfileDropDetail
+          drop={curDrop}
+          closeDetailView={() => setDetailView(false)}
+          handleClick={() => console.log("Click")}
+          user={user} />
+      </div>
+    )
+  }
+
 
   return (
     <div className="profile-container">
       <div className="fixed-container">
-        <HeaderBar openHome={() => openHome()}  userLoggedIn={props.userLoggedIn} userImage={userImage} userDetails={props.userDetails} />
+        <HeaderBar openHome={() => openHome()} userLoggedIn={props.userLoggedIn} userImage={userImage} userDetails={props.userDetails} />
       </div>
-      <div className="profile-detail-container">
-        <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/>
-        <div className="profile-large-title">{firstName + " " + lastName}</div>
+
+
+      <div className="profile-detail-container" style={{ display: `${detailView ? 'none' : 'flex'}` }}>
+        <img style={{ borderRadius: '70px' }} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage} />
+        <div className="profile-large-title">
+          {firstName !== null ? firstName : " " + " " + lastName !== null ? lastName : " "}
+        </div>
         <div className="profile-handle-title">{"@" + handle}</div>
-        <div style={{display: "flex", paddingBottom: '16px'}}>
-          <div style={{display: "flex", paddingRight: '24px', cursor: 'pointer'}} onClick={()=>{
-            if(twitterHandle!==''){
-              window.open('https://www.twitter.com/'+twitterHandle.split("/").pop(),'_blank')
+        <div style={{ display: "flex", paddingBottom: '16px' }}>
+          <div style={{ display: "flex", paddingRight: '24px', cursor: 'pointer' }} onClick={() => {
+            if (twitterHandle !== '') {
+              window.open('https://www.twitter.com/' + twitterHandle.split("/").pop(), '_blank')
             }
           }}>
-            <img width={37} height={24} src="./twitter-icon.png" style={{paddingRight: '8px'}} />
+            <img width={37} height={24} src="./twitter-icon.png" style={{ paddingRight: '8px' }} />
             <div className="profile-medium-title">{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
           </div>
-          <div style={{display: "flex", columnGap: "8px",cursor: 'pointer'}} onClick={()=>{
-            if(instaHandle!==''){
-              window.open('https://www.instagram.com/'+instaHandle.split("/").pop(),'_blank')
+          <div style={{ display: "flex", columnGap: "8px", cursor: 'pointer' }} onClick={() => {
+            if (instaHandle !== '') {
+              window.open('https://www.instagram.com/' + instaHandle.split("/").pop(), '_blank')
             }
-          }}> 
+          }}>
             <img width={24} height={24} src="./insta-icon.png" />
             <div className="profile-medium-title">{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
           </div>
         </div>
         {bio && <div className="profile-bio-description">{bio}</div>}
-        <div className="profile-bio-edit-button clickable" onClick={()=>props.history.push('/edit_bio')}>{'Tap to Edit Bio'}</div>
-        
+        <div className="profile-bio-edit-button clickable" onClick={() => props.history.push('/edit_bio')}>{'Tap to Edit Bio'}</div>
+
       </div>
-      <div style={{margin: '0 auto', maxWidth: '600px'}}>
+
+      <div style={{ margin: '0 auto', maxWidth: '600px', display: `${detailView ? 'none' : 'block'}` }}>
         <div className="profile-button-option-holder">
-          {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => {setSelectedProfileList("scheduled"); setCategoryList(collectibleArts)}}>Scheduled Drops</div> : <></> }
-          <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => {setSelectedProfileList("saved"); setCategoryList(fashionArts)}}>Saved Drops</div>
+          {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("scheduled"); setCategoryList(collectibleArts) }}>Scheduled Drops</div> : <></>}
+          <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("saved"); setCategoryList(fashionArts) }}>Saved Drops</div>
         </div>
         {savedPosts.length > 0 || scheduledPosts.length > 0 ?
-        renderDrops()
-        :
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} className="profile-bio-description">Your Saved Drops Will Appear Here</div>}
+          renderDrops()
+          :
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="profile-bio-description">Your Saved Drops Will Appear Here</div>}
       </div>
+
+      <div className="rel" style={{ display: `${!detailView ? 'none' : 'flex'}` }}>
+        <div className="home-container">
+          {detailView && renderDetail()}
+        </div>
+      </div>
+
     </div>
   );
+
 }

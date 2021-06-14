@@ -7,6 +7,7 @@
   background-color: #262626;
   min-width: 300px;
   max-width: 900px;
+  cursor: pointer;
 }
 
 .drop-inner {
