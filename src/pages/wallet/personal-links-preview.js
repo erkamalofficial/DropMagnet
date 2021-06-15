@@ -72,7 +72,7 @@ const GalleryNameTitle = styled.span`
   }
   font-weight: normal;
 `;
-const PersonalLinksPreview = ({ handleGalleryName }) => {
+const PersonalLinksPreview = ({ handleGalleryName, isLoggedIn }) => {
   return (
     <PLSectionThree>
       <PLSectionThreeTitle>
@@ -85,12 +85,24 @@ const PersonalLinksPreview = ({ handleGalleryName }) => {
       />
       <PLSectionEmojiLine>Emoji's are allowed! ❤️</PLSectionEmojiLine>
       <PLSectionBtn>
-        <Link to="/login">
-          <button>Sign In</button>
-        </Link>
-        <Link to="/signup">
-          <button>Sign Up</button>
-        </Link>
+
+        {
+          isLoggedIn
+            ?
+          <Link to="/home">
+            <button>Go To Home</button>
+          </Link>
+            :
+          <>
+          <Link to="/login">
+            <button>Sign In</button>
+          </Link>
+          <Link to="/signup">
+            <button>Sign Up</button>
+          </Link>
+          </>
+        }
+       
       </PLSectionBtn>
     </PLSectionThree>
   );

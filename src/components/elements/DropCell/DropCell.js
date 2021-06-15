@@ -1,40 +1,53 @@
 import React, { useState } from "react";
 import "./DropCell.css";
 import DropDetail from "../../detail_page/DropDetail/DropDetail";
+import UserIcon from "../../../asstes/add-user-icon.png"
 
 export default function DropCell(props) {
 
   const { user } = props
 
+  let dropTitle = props.drop.title
 
-  let artist_image = user !== null ? user.avatar_url : "./add-user-icon.png"
-  let artist_name = user !== null ? user.name : "Null"
+  let artist_image = user.avatar_url !== '' ? user.avatar_url : UserIcon
+  let artist_name = user.name
+
+  let marketPlace = props.drop.marketplace
+  let category = props.drop.category
 
   const getDate = (timestamp) => {
-    let date = new Date(timestamp)
-    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+    if (timestamp > 1000000) {
+      let date = new Date(timestamp)
+      return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+    }
+    else{
+      return ''
+    }
+
   }
 
   function renderDrop() {
     return <div key={props.drop.id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner" onClick={() => {
         props.setDetailView(true);
-        props.setCurDrop(props.drop)}
+        props.setCurDrop(props.drop)
+      }
       }>
         <div className="drop-details">
           <div className="drop-header">
             <img className="drop-artist-image" src={artist_image} />
+            {artist_name!=='' && 
             <div className="drop-header-title" >
               {/* <Marquee> */}
               {artist_name}
               {/* </Marquee> */}
-            </div>
+            </div>}
           </div>
-          <div className="drop-name">{props.drop.title}</div>
+          {dropTitle!=='' && <div className="drop-name">{dropTitle}</div>}
           <div className="drop-date">{getDate(props.drop.drop_date)}</div>
           <div className="drop-footer">
-            <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
-            <p2 className="drop-category-title">{props.drop.category}</p2>
+            {marketPlace !== '' && <p2 className="drop-marketplace-title">{marketPlace}</p2>}
+            {category !== '' && <p2 className="drop-category-title">{category}</p2>}
           </div>
         </div>
         <img className="drop-image" src={props.drop.media[0].url} />

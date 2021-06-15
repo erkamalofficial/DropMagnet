@@ -1,33 +1,4 @@
 import initialState from "./initial-state";
-import { forEach, map, union, values } from "lodash";
-import emojis from "./emojiicons";
-
-const getAvailableLinks = (allLinks, availableLinks) => {
-  forEach(availableLinks, (avLink) => {
-    forEach(allLinks, (item) => {
-      const linkKey = Object.keys(avLink)[0];
-      if (linkKey === item.id && avLink[linkKey] === 1) {
-        item.active = "S";
-      }
-    });
-  });
-  return getGroupedLinks(allLinks);
-};
-
-const getGroupedLinks = (linkList) => {
-  const categories = union(...map(linkList, (item) => item.tags));
-  const groupedList = {};
-  linkList.forEach((link) => {
-    categories.forEach((key) => {
-      if (link.tags.includes(key)) {
-        groupedList[key] = groupedList[key] || [];
-        groupedList[key].push({ icon: emojis[key], title: key, item: link });
-      }
-    });
-  });
-
-  return values(groupedList);
-};
 
 const getProcessedCollection = (state, action, type) => {
   const general = { ...state.general, isLoading: false };
@@ -177,14 +148,14 @@ const categoryReducer = (state = initialState, action) => {
         activeBucket.unshift(apiData[activeBucket.length]);
       }
 
-      if (isFavBucketHasTenItems) {
+      // if (isFavBucketHasTenItems) {
         const reswipeBucketContent = apiData.filter((card) =>
           favList.includes(card.drop_id)
         );
         Object.assign(activeTabContent, {
           reswipeBucket: reswipeBucketContent,
         });
-      }
+      // }
 
       if (reswipeModeActive) {
         duringReswipe(activeTabContent, drop_id, state);
@@ -195,6 +166,7 @@ const categoryReducer = (state = initialState, action) => {
         reswipeModeActive: reswipeModeActive,
         selectionCount: state.general.selectionCount + 1,
       };
+
 
       return { ...state, [currentTab]: activeTabContent, general };
     }
@@ -242,48 +214,39 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         general,
         links: action.payload,
-        groupedLinks: getGroupedLinks(action.payload),
       };
     }
-    case "LINK_UPDATE_REQUEST": {
-      const general = {
-        ...state.general,
-        price: action.payload.price,
-        selectedLinksIds: action.payload.linkIds,
-      };
+    case "PRICE_UPDATE_REQUEST": {
+      const general = { ...state.general, price: action.payload.price };
       return {
         ...state,
         general,
       };
     }
-    case "FETCH_AVAILABLE_LINKS_REQUEST": {
-      const general = {
-        ...state.general,
-        isLoading: true,
-        galleryName: action.payload,
-      };
-      window.localStorage.setItem("galleryName", action.payload);
-      return {
+    case "SET_RESWIPE_BUCKET": {
+      const {newBucket, tab} = action.payload;
+      return{
         ...state,
-        general,
-      };
+        general: {
+          ...state.general,
+          reswipeModeActive: false
+        },
+        [tab]: {...state[tab], reswipeBucket: newBucket}
+      }
     }
-    case "FETCH_AVAILABLE_LINKS_SUCCESS": {
-      const general = {
-        ...state.general,
-        isLoading: false,
-      };
-      // let availableLinks = map(action.payload, (x) => Object.keys(x)[0]);
-      const allLinks = [...state.links];
-      const newGrouped = getAvailableLinks(allLinks, action.payload);
 
-      return {
+    case "CLOSE_RESWIPE": {
+      const {tab} = action.payload;
+      return{
         ...state,
-        general,
-        availableLinks: action.payload,
-        groupedLinks: newGrouped,
-      };
+        general: {
+          ...state.general,
+          reswipeModeActive: false
+        },
+        [tab]: {...state[tab], reswipeBucket: []}
+      }
     }
+
     default:
       return state;
   }

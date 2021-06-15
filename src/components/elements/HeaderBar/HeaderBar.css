@@ -50,7 +50,7 @@
 }
 
 .header-profile-img-holder {
-  height: 36px;
+  height: auto;
   width: 36px;
   display: inline-block;
   position: relative;
@@ -64,7 +64,7 @@
 }
 
 .header-profile-img-holder img {
-  height: 36px;
+  height: auto;
   width: 36px;
   cursor: pointer;
   border-radius: 19px;
@@ -77,3 +77,14 @@
   display: block; /* ADDED */
 }
 
+
+/* .dropdown-button{
+  margin-left: 24px;
+  display: flex;
+  align-items: center;
+} */
+
+/* .dropdown-button > img{
+  width: 20px;
+  margin-left: 24px;
+} */

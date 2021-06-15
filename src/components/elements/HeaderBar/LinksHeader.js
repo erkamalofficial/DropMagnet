@@ -31,7 +31,7 @@ const LogoSection = styled.div`
   display: flex;
 `;
 const BrandLogo = styled.img`
-  height: 36px;
+  height: auto;
   width: 36px;
   cursor: pointer;
 `;

@@ -46,29 +46,24 @@ const Home = (props) => {
     return state.category.general.activeTabIndex;
   });
   const isLoading = useSelector((state) => state.category.general.isLoading);
-  const reswipeModeActive = useSelector(
-    (state) => state.category.general.reswipeModeActive
-  );
-  useSelector((state) => state.category.general.selectionCount);
-
+  const reswipeModeActive = useSelector((state) => state.category.general.reswipeModeActive);
+  
   const currentTabId = tabList[activeTabIndex];
 
-  const { activeBucket, reswipeBucket, selectionBucket } = useSelector(
+  const { activeBucket, reswipeBucket } = useSelector(
     (state) => {
       return state.category[currentTabId];
     }
   );
 
+
+  // const {reswipeModeActive} = useSelector((state)=>state.category.general)
   useEffect(()=>{
-    if(reswipeBucket.length >= 10){
+    if(reswipeModeActive){
       history.push(`/reswipe?tab=${currentTabId}`);
     }
-  }, [reswipeBucket.length,history])
-  const uidChanged = useSelector((state) => state.category.general.uidChanged);
-  const uniqueId = useMemo(
-    () => Date.now(),
-    [reswipeBucket.length, uidChanged]
-  );
+  }, [reswipeModeActive,currentTabId,history])
+  const uniqueId = Date.now()
 
   function selectDate(date) {
     console.log('opened item', date)
@@ -130,7 +125,7 @@ const Home = (props) => {
         userImageVisible={true}
       />
       <div className="rel">
-        {!reswipeModeActive && !detailView && (
+        {!detailView && (
           <Tabs
             activeTabIndex={activeTabIndex}
             handleActiveTabIndex={handleActiveTabIndex}
@@ -138,19 +133,12 @@ const Home = (props) => {
           />
         )}
         {isLoading && <Spinner />}
-        {reswipeModeActive && (
-          <ProgressBar
-            key="progressBar"
-            size={reswipeModeActive ? reswipeBucket.length : 10}
-            handleReswipe={handleReswipe}
-            selectedCount={selectionBucket.fav.length}
-          />
-        )}
+        
         {!isLoading && (
           <Swiper
+            reswipeModeActive={false}
             key={uniqueId}
-            reswipeModeActive={reswipeModeActive}
-            db={reswipeModeActive ? reswipeBucket : activeBucket}
+            db={activeBucket}
             detailView={detailView}
             setDetailView={setDetailView}
           />

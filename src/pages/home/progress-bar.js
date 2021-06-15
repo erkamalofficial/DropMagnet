@@ -12,7 +12,7 @@ const ProgressBarWrapper = styled.div`
   padding: 6px 16px;
   border-radius: 22px;
   z-index: 1;
-  width: 100%;
+  width: 425px;
   top: 89px;
   background: #1d1c1c;
   span {

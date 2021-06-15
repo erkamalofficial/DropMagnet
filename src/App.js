@@ -26,7 +26,6 @@ import { AuthProvider, useAuth } from "../src/contexts/FirebaseAuthContext";
 import About from "./pages/about";
 import AboutDrop from "./pages/aboutDrop";
 import GetToken from "./pages/getToken";
-import EditBio from "./pages/edit_bio";
 import Reswipe from "./pages/reswipe";
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -129,12 +128,6 @@ function App() {
               <DropCreation {...props} userHandle={userDetails.handle} />
             )}
           />
-          <Route
-            path="/edit_bio"
-            render={(props) => (
-              <EditBio {...props} userHandle={userDetails.handle} />
-            )}
-          />
 
           <Route 
             path="/reswipe"
@@ -151,6 +144,7 @@ function App() {
             render={(props) => (
               <Profile
                 {...props}
+                userImage={userDetails.image}
                 userDetails={userDetails}
                 userLoggedIn={true}
               />

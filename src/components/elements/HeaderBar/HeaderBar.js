@@ -33,10 +33,10 @@ function HeaderBar(props) {
 
   return (
     <div className="header-container">
-      <MainMenu userDetails={props.userDetails} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
+      <MainMenu userDetails={props.userDetails} userImage={props.userImage} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
 
       <div className="header-left-holder">
-        <img alt={'logo'} style={{width: 36, height:36}} onClick={() => {
+        <img alt={'logo'} style={{width: 36, height:'auto'}} onClick={() => {
           if(props.location.pathname === '/home'){
             props.history.push('/');
           }else{
@@ -45,8 +45,8 @@ function HeaderBar(props) {
         }}  className="header-left-image clickable" src="./drop_icon.png" />
         { props.datePickerVisible ? 
           <div onClick={() => props.openDateMenu()} className="dropdown-button">
-            <p1 className="dropdown-button-title">{epochToDayMonth(props.selectedDropdownDate)}</p1>
-            <img style={{objectFit: 'cover'}} className="dropdown-button-icon" src="./dropdown.png"/>
+            <p className="dropdown-button-title">{epochToDayMonth(props.selectedDropdownDate)}</p>
+            <img alt={'drop-down-btn'} className="dropdown-button-icon" src="./dropdown.png"/>
           </div>
           :
           <></>

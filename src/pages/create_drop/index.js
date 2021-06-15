@@ -100,11 +100,13 @@ export default function DropCreation(props) {
         listingType,
         Number(price),
         Number(auction_price),
-        files).
-        then(function (response) {
+        files)
+        .then(function (response) {
           if (response.status === "error") {
             // setLoginError(response.message);
           } else {
+            alert("Your drop successfully created.")
+            history.push("/profile")
             // setLoginError('');
             // props.saveCredentials(idToken, idToken);
             // history.push("/home");
@@ -130,7 +132,6 @@ export default function DropCreation(props) {
   function setStepAction(action = 'decrease') {
     if(action === 'increase'){
       if (dropCreationStep === 4) {
-        history.push("/")
         createDrop()
       } else {
         setDropCreationStep(dropCreationStep + 1)
@@ -215,7 +216,7 @@ export default function DropCreation(props) {
 
   return (
     <div className="create-drop-container">
-      <img style={{ position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px',cursor:'pointer' }} onClick={() => history.goBack()} src="./close-icon.png" />
+      <img style={{ position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px',cursor:'pointer' }} className={'close-button'} onClick={() => history.goBack()} src="./close-icon.png" />
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 36px 128px 36px' }}>
         <div style={{ display: 'flex', maxWidth: "238px", margin: '40px auto 30px auto' }}>
           <PageIndexItem index={1} selected={dropCreationStep >= 0} />

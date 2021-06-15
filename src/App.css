@@ -492,6 +492,11 @@ h2 {
   transform: scale(1.05);
 }
 
+.close-button{
+  width: 30px !important;
+  height: 30px !important;
+}
+
 /* @keyframes popup {
   0%   { transform: scale(1,1) }
   10%  { transform: scale(1.1,1.1) }

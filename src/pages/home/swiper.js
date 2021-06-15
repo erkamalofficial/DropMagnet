@@ -45,10 +45,10 @@ function Swiper(props) {
   );
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
-  const swiped = (direction, drop_id) => {
+  const swiped = (direction, drop_id,index) => {
     // console.log("direction:KKK " + direction);
     if(reswipeModeActive){
-
+        props.onReswipe(direction,drop_id,index);
     }else{
       if (direction === "right") {
         dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
@@ -65,15 +65,14 @@ function Swiper(props) {
 
 
   const outOfFrame = (name) => {
-    // if (allCards.length === alreadyRemoved.length) {
-    //   //if all cards are removed, reload new cards
-    //   setNewLoading(true);
-    //   return;
-    // }
-    //reset the cards to show
-    // const currIndex = allCards.length - alreadyRemoved.length;
-    // let start = currIndex < CARD_PRELOAD ? 0 : currIndex - CARD_PRELOAD;
-    // setCards(allCards.slice(start, currIndex));
+    if (allCards.length === alreadyRemoved.length) {
+      //if all cards are removed, reload new cards
+      setNewLoading(true);
+      return;
+    }
+    const currIndex = allCards.length - alreadyRemoved.length;
+    let start = currIndex < CARD_PRELOAD ? 0 : currIndex - CARD_PRELOAD;
+    setCards(allCards.slice(start, currIndex));
   };
 
   const swipe = (dir) => {

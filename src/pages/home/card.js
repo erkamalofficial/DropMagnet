@@ -84,6 +84,9 @@ const FooterButtons = styled.div`
     height: 24px;
     border-radius: 3px;
     background-color: #6a8ad5;
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
   }
 `;
 const FooterTitle = styled.div`
@@ -156,7 +159,7 @@ const Card = (props) => {
           <FooterButtons>
             <div className="rare">RARIBLE</div>
             <div className="art">ART</div>
-            <div className="price">ART</div>
+            <div className="price"><span>Ξ</span> 10</div>
           </FooterButtons>
         </FooterSection>
       </SwipeCardDeviceContainer>

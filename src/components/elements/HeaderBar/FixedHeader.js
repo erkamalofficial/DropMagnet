@@ -48,8 +48,8 @@ const HeaderHolder = styled.div`
   padding: 0 20px;
 `;
 const Logo = styled.img`
-  height: 34px;
-  width: 30px;
+  height: auto;
+  width: 36px;
 `;
 
 const HeaderBarMenuIcon = styled.div`
