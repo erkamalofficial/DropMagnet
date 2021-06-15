@@ -124,6 +124,7 @@ const Card = (props) => {
 
   const { title, drop_image, artist_image, drop_id, handleDrop, price, swiping, setSwiping } = props
 
+  
   return (
     <SwipeCard data-key="card-bdr"
       onMouseDown={() => setSwiping(false) }
