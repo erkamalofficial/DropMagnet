@@ -305,7 +305,7 @@ export default function Profile(props) {
       <>
         <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
           {renderInput()}
-          <div className={'main-button-container'} >
+          <div className={'main-button-container'} style={{textAlign: "center"}} >
             <button className="main-button" onClick={saveForm}>{"Save"}</button>
           </div>
         </Modal>
