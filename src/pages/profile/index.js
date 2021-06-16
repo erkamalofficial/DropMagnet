@@ -133,7 +133,7 @@ export default function Profile(props) {
         .then(res => {
           setScheduledPosts(res)
           setLoading(false)
-      })
+        })
 
     }).catch(function (error) {
       // Handle error
@@ -293,10 +293,10 @@ export default function Profile(props) {
     return (
       <div>
         <HeaderBar openHome={() => openHome()} userLoggedIn={props.userLoggedIn} userImage={userImage} userDetails={props.userDetails} />
-        <div style={{marginTop: '60px'}}>
+        <div style={{ marginTop: '60px' }}>
           <Spinner />
         </div>
-        
+
       </div>
     )
   }
@@ -352,13 +352,19 @@ export default function Profile(props) {
               {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("scheduled"); setCategoryList(collectibleArts) }}>My Drops ({scheduledPosts.length})</div> : <></>}
               <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("saved"); setCategoryList(fashionArts) }}>Saved Drops ({savedPosts.length})</div>
             </div>
-            {scheduledPosts.length > 0 && selectedProfileList==='scheduled' ?
+            {scheduledPosts.length > 0 && selectedProfileList === 'scheduled' ?
               renderDrops(scheduledPosts)
-              : savedPosts.length > 0 && selectedProfileList==='saved' ?
-              renderDrops(savedPosts)
-              :
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }} className="profile-bio-description">You Don't Have Any Drops</div>
-              }
+              : savedPosts.length > 0 && selectedProfileList === 'saved' ?
+                renderDrops(savedPosts)
+                : savedPosts.length === 0 ?
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }} className="profile-bio-description">
+                    <p className="redirect-link">You don't have any drops saved yet. Go to the <span onClick={() => props.history.push("/home")}>swiper page</span> to explore.</p>
+                  </div>
+                  :
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }} className="profile-bio-description">
+                    <p className="redirect-link">You don't have any drops. <span onClick={() => props.history.push("/create_drop")}>Create drop</span> first.</p>
+                  </div>
+            }
           </div>
 
           <div className="rel" style={{ display: `${!detailView ? 'none' : 'flex'}` }}>
