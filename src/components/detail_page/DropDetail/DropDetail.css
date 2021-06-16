@@ -19,6 +19,12 @@
   box-sizing: inherit !important;
 }
 
+.view-close-btn{
+  margin: 0;
+  width: 39px !important;
+  height: 39px !important;
+}
+
 @media(min-width: 1000px) {
   .detail-view {
     width: 90%;

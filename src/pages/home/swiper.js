@@ -6,6 +6,7 @@ import Card from "./card";
 import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
+import Tabs from "./tabs";
 
 const ActionSection = styled.div`
   display: flex;
@@ -21,13 +22,14 @@ const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
 
-  const { db, reswipeModeActive, detailView, setDetailView } = props
+  const { db, reswipeModeActive, setDetailView } = props
 
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
+  const [openView, setOpenView] = useState(false)
+  const [curDrop, setCurDrop] = useState({})
   // const [lastDirection, setLastDirection] = useState();
   const [newLoading, setNewLoading] = useState(true);
-  const [curDrop, setCurDrop] = useState({})
   const [swiping, setSwiping] = useState(false)
 
   const dispatch = useDispatch();
@@ -45,11 +47,11 @@ function Swiper(props) {
   );
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
-  const swiped = (direction, drop_id,index) => {
+  const swiped = (direction, drop_id, index) => {
     // console.log("direction:KKK " + direction);
-    if(reswipeModeActive){
-        props.onReswipe(direction,drop_id,index);
-    }else{
+    if (reswipeModeActive) {
+      props.onReswipe(direction, drop_id, index);
+    } else {
       if (direction === "right") {
         dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
       }
@@ -86,27 +88,37 @@ function Swiper(props) {
     }
   };
 
-  function openDrop(drop) {
+  function openDrop(d) {
     // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))
-    setCurDrop(drop)
-    setDetailView(true)
+    setCurDrop(d)
+    setOpenView(true)
   }
 
   function renderDetail() {
     return (
       <div>
-        <DropDetail drop={curDrop} closeDetailView={() => setDetailView(false)} handleClick={() => console.log("Click")} />
+        <DropDetail 
+        drop={curDrop} 
+        closeDetailView={() => setOpenView(false)} 
+        handleClick={() => console.log("Click")}/>
       </div>
     )
   }
 
 
   return (
-    [
-      <div className="view-container home-container" style={{ display: `${!detailView ? 'none' : 'block'}` }} >
-        {renderDetail()}
-      </div>,
-      <CardContainer key="cardContainer" style={{ display: `${detailView ? 'none' : 'flex'}` }}>
+    <>
+      {!openView && (
+        <Tabs
+          activeTabIndex={props.activeTabIndex}
+          handleActiveTabIndex={props.handleActiveTabIndex}
+          tabList={props.tabList}
+        />
+      )}
+      <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
+        {openView && renderDetail()}
+      </div>
+      <CardContainer key="cardContainer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         {cards.map((cardDetails, index) => {
           const { drop_id } = cardDetails;
 
@@ -128,16 +140,16 @@ function Swiper(props) {
             </TinderCard>
           );
         })}
-      </CardContainer>,
-      <ActionSection key="footer" style={{ display: `${detailView ? 'none' : 'flex'}` }}>
+      </CardContainer>
+      <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         <MinusBtn onClick={() => swipe("left")}>
           <img src="./minus.svg" alt="minus" />
         </MinusBtn>
         <PlusBtn onClick={() => swipe("right")}>
           <img src="./plus.svg" alt="plus" />
         </PlusBtn>
-      </ActionSection>,
-    ]
+      </ActionSection>
+    </>
   )
 }
 

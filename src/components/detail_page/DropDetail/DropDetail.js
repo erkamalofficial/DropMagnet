@@ -26,7 +26,7 @@ export default function DropDetail(props) {
       <div className="detail-view-header">
         <img className="detail-view-header-image" src={props.drop.artist_image}/>
         <h1 className="drop-detail-title">{props.drop.artist}</h1>
-        <img style={{width: '39px', height: '39px',cursor: 'pointer'}} onClick={() => closeDetail()} className="close-detail-button close-button" src="./close-icon.png" />
+        <img style={{cursor: 'pointer'}} onClick={() => closeDetail()} className="close-detail-button close-button view-close-btn" src="./close-icon.png" />
       </div>
       <div className="drop-detail-image" onClick={() => props.handleClick()}>
         {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
