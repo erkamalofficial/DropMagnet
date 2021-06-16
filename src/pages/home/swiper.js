@@ -108,7 +108,7 @@ function Swiper(props) {
 
   return (
     <>
-      {!openView && (
+      {!openView && !reswipeModeActive && (
         <Tabs
           activeTabIndex={props.activeTabIndex}
           handleActiveTabIndex={props.handleActiveTabIndex}

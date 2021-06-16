@@ -298,7 +298,7 @@ export default function Profile(props) {
       <div className="fixed-container">
         <HeaderBar openHome={() => openHome()} userLoggedIn={props.userLoggedIn} userImage={userImage} userDetails={props.userDetails} />
       </div>
-      <div className="profile-detail-container">
+      <div className="profile-detail-container" style={{ display: `${detailView ? 'none' : 'flex'}` }}>
   
       <Avatar
             userImage={userImage}

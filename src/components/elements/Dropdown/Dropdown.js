@@ -10,12 +10,13 @@ export default function Dropdown(props) {
     setDisplayMenu(true)
   }
 
-  function hideDropdownMenu() {
+  function hideDropdownMenu(item) {
     setDisplayMenu(false)
+    props.setSelected(item)
   }
 
   function renderDropDownItem(item) {
-    return <div onClick={() => {setSelectedDropdownItem(item); hideDropdownMenu()}} className="dropdown-item">{item}</div>
+    return <div onClick={() => {setSelectedDropdownItem(item); hideDropdownMenu(item)}} className="dropdown-item">{item}</div>
   }
 
   let selectButtonStyle = displayMenu ? "main-dropdown-button-selected" : "main-dropdown-button"

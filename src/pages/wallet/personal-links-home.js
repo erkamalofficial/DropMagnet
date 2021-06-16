@@ -67,6 +67,11 @@ const LinksHome = (props) => {
   const { viewportWidth } = useViewport();
   const breakpoint = 620;
   const isMobile = viewportWidth < breakpoint;
+  const [pageNos, setPageNos] = useState([0, 1]);
+
+  const getPageDetails = (pageNos) => {
+    setPageNos(pageNos);
+  };
 
   useEffect(() => {
     dispatch(fetchLinks());
@@ -98,6 +103,7 @@ const LinksHome = (props) => {
           selectedLinks={[]}
           displayName={displayName}
           handleGalleryName={handleGalleryName}
+          getPageDetails={getPageDetails}
         />
         <PersonalLinksPreview handleGalleryName={handleGalleryName} isLoggedIn={Boolean(currentUser)} />
       </PersonalLinksWrapper>
