@@ -21,11 +21,13 @@ import PersonalLinksPayment from "./pages/wallet/personal-links-payments";
 // import SelectLinks from "./pages/wallet/select-links";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useState, useEffect } from "react";
-import { AuthProvider, useAuth } from "../src/contexts/FirebaseAuthContext";
+import { useAuth } from "../src/contexts/FirebaseAuthContext";
 import About from "./pages/about";
 import AboutDrop from "./pages/aboutDrop";
 import GetToken from "./pages/getToken";
 import Reswipe from "./pages/reswipe";
+import {getUserProfile} from './DropMagnetAPI';
+
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
@@ -57,19 +59,25 @@ function App() {
   // window.addEventListener("load",  Nft);
   const [userDetails, setUserDetails] = useState({});
 
-  const {logout} = useAuth();
+  const {logout,currentUser,idToken} = useAuth();
 
   useEffect(() => {
-    let user = {
-      name: "Crypto Art Man",
-      handle: "cryptoartman",
-      bio: "The Drop From Space is a piece that signifies the launch of this incredible app — Drop Magnet! Designed by the lead designer of Drop Magnet, it’ll be available for auction on Crypto Art Man’s OpenSea page from this Friday onwards.",
-      image:
-        "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-    };
-    localStorage.setItem('userDetails',JSON.stringify(user))
-    setUserDetails(user);
-  }, []);
+      // Send token to your backend via HTTPS
+      // ...
+    if(currentUser.uid){
+      
+      getUserProfile(currentUser.uid, idToken).then(function (response) {
+        console.log('user profile response', response)
+        if (response.status === "error") {
+          // setLoginError(response.message);
+        } else {
+          localStorage.setItem('userDetails',JSON.stringify(response));
+        }
+      })
+    }
+      
+
+  }, [idToken, currentUser]);
 
   return (
     <Router>
