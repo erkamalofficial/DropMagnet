@@ -291,8 +291,12 @@ export default function Profile(props) {
 
   if (loading) {
     return (
-      <div style={{marginTop: '60px'}}>
-        <Spinner />
+      <div>
+        <HeaderBar openHome={() => openHome()} userLoggedIn={props.userLoggedIn} userImage={userImage} userDetails={props.userDetails} />
+        <div style={{marginTop: '60px'}}>
+          <Spinner />
+        </div>
+        
       </div>
     )
   }
