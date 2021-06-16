@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./DropDetail.css"
-import { epochToDayMonthHour } from '../../../helpers/DateFormatter'
+import { formatDate } from '../../../helpers/DateFormatter'
 import UserIcon from "../../../asstes/add-user-icon.png"
 
 export default function ProfileDropDetail(props) {
@@ -8,7 +8,6 @@ export default function ProfileDropDetail(props) {
   function closeDetail() {
     props.closeDetailView()
   }
-
   const { user } = props
 
   let artist_image = user !== null && user.avatar_url !== '' ? user.avatar_url : UserIcon
@@ -47,7 +46,7 @@ export default function ProfileDropDetail(props) {
       </div>
       <div className="drop-detail-holder" style={{marginTop: '0px'}}>
         {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
-        <p2 className="drop-detail-date">{epochToDayMonthHour(props.drop.drop_date)}</p2>
+        <p2 className="drop-detail-date">{formatDate(props.drop.drop_date,true)}</p2>
       </div>
       <div className="drop-description-holder">
         <p1 className="drop-detail-description-text">
