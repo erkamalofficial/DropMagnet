@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./DropCell.css";
 import DropDetail from "../../detail_page/DropDetail/DropDetail";
 import UserIcon from "../../../asstes/add-user-icon.png"
+import { formatDate } from "../../../helpers/DateFormatter";
 
 export default function DropCell(props) {
 
@@ -44,7 +45,7 @@ export default function DropCell(props) {
             </div>}
           </div>
           {dropTitle!=='' && <div className="drop-name">{dropTitle}</div>}
-          <div className="drop-date">{getDate(props.drop.drop_date)}</div>
+          <div className="drop-date">{formatDate(props.drop.drop_date,true)}</div>
           <div className="drop-footer">
             {marketPlace !== '' && <p2 className="drop-marketplace-title">{marketPlace}</p2>}
             {category !== '' && <p2 className="drop-category-title">{category}</p2>}

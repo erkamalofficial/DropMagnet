@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./DropDetail.css"
-import { epochToDayMonthHour } from '../../../helpers/DateFormatter'
+import { epochToDayMonthHour, formatDate } from '../../../helpers/DateFormatter'
 
 export default function DropDetail(props) {
 
@@ -41,7 +41,7 @@ export default function DropDetail(props) {
       </div>
       <div className="drop-detail-holder" style={{marginTop: '0px'}}>
         <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>
-        <p2 className="drop-detail-date">{epochToDayMonthHour(props.drop.drop_date)}</p2>
+        <p2 className="drop-detail-date">{formatDate(props.drop.drop_date,true)}</p2>
       </div>
       <div className="drop-description-holder">
         <p1 className="drop-detail-description-text">{props.drop.description}</p1>
