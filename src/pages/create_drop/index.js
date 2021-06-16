@@ -23,15 +23,16 @@ export default function DropCreation(props) {
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
   const [hashtag, setHashtag] = useState('')
-  const [launchDate, setLaunchDate] = useState('')
+  const [launchDate, setLaunchDate] = useState({})
   const [marketplace, setMarketplace] = useState('')
   const [marketplaceId, setMarketplaceId] = useState('')
-  const [dropPieces, setDropPieces] = useState('')
+  const [dropPieces, setDropPieces] = useState(null)
   const [listingType, setListingType] = useState('auction')
-  const [price, setPrice] = useState(0)
-  const [auction_price, setAuction_price] = useState(0)
+  const [price, setPrice] = useState(null)
+  const [auction_price, setAuction_price] = useState(null)
   const [selectedMonth, setSelectedMonth] = useState('April')
   const [files, setFiles] = useState([])
+  const [inComplete, setInComplete] = useState(false)
 
 
   const [date, setDate] = useState(new Date());
@@ -130,16 +131,53 @@ export default function DropCreation(props) {
   }
 
   function setStepAction(action = 'decrease') {
-    if(action === 'increase'){
-      if (dropCreationStep === 4) {
-        createDrop()
-      } else {
-        setDropCreationStep(dropCreationStep + 1)
+    if (action === 'increase') {
+      if (dropCreationStep === 0) {
+        if (title !== '' && category !== '' && description !== '' && hashtag !== '') {
+          setDropCreationStep(dropCreationStep + 1)
+        }
+        else{alert("Fill all the fields.")}
+      } 
+      
+      else if (dropCreationStep === 1) {
+        if (Object.keys(launchDate).length > 0) {
+          setDropCreationStep(dropCreationStep + 1)
+        }
+        else{
+          alert("Select launch date.")
+        }
+      } 
+      
+      else if (dropCreationStep === 2) {
+        if (marketplace !== '' && dropPieces !== null && marketplaceId !== '') {
+          setDropCreationStep(dropCreationStep + 1)
+        }
+        else{
+          alert("Fill all the fields.")
+        }
+      } 
+      
+      else if (dropCreationStep === 3) {
+        if(auction_price !== null || price !== null){
+          setDropCreationStep(dropCreationStep + 1)
+        }
+        else{
+          alert("Enter a price.")
+        }
+      } 
+      
+      else if (dropCreationStep === 4) {
+        if(files.length > 0){
+          createDrop()
+        }
+        else{
+          alert("Upload a file.")
+        }
       }
-    }else{
+    } else {
       setDropCreationStep(dropCreationStep - 1);
     }
-    
+
   }
 
   function renderFirstStep() {
@@ -186,11 +224,11 @@ export default function DropCreation(props) {
         <PriceOptionButton isSelected={listingType === 'auction'} setOptionSelected={() => setListingType('auction')} buttonType={'auction'} />
         <PriceOptionButton isSelected={listingType === 'fixed_price'} setOptionSelected={() => setListingType('fixed_price')} buttonType={'fixed_price'} />
       </div>
-      {listingType === 'fixed_price' ? 
+      {listingType === 'fixed_price' ?
         <PriceTextField setInputValue={setPrice} value={price} title={"Starting Bid"} placeholder={"Enter a price"} />
-        : <PriceTextField setInputValue={setAuction_price} value={auction_price}  title={"Starting Bid"} placeholder={"Enter a price"} />
+        : <PriceTextField setInputValue={setAuction_price} value={auction_price} title={"Starting Bid"} placeholder={"Enter a price"} />
       }
-      
+
     </div>
   }
 
@@ -203,20 +241,33 @@ export default function DropCreation(props) {
   function renderStep() {
     if (dropCreationStep === 0) {
       return renderFirstStep()
-    } else if (dropCreationStep === 1) {
-      return renderSecondStep()
-    } else if (dropCreationStep === 2) {
-      return renderThirdStep()
-    } else if (dropCreationStep === 3) {
-      return renderFourthStep()
-    } else if (dropCreationStep === 4) {
-      return renderFifthStep()
+    } 
+    else if (dropCreationStep === 1) {
+      if (title !== '' && category !== '' && description !== '' && hashtag !== '') {
+        return renderSecondStep()
+      }
+
+    } 
+    else if (dropCreationStep === 2) {
+      if(Object.keys(launchDate).length > 0){
+        return renderThirdStep()
+      }
+    } 
+    else if (dropCreationStep === 3) {
+      if(marketplace !== '' && dropPieces !== null && marketplaceId !== ''){
+        return renderFourthStep()
+      }
+    } 
+    else if (dropCreationStep === 4) {
+      if(auction_price !== null || price !== null){
+        return renderFifthStep()
+      }
     }
   }
 
   return (
     <div className="create-drop-container">
-      <img style={{ position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px',cursor:'pointer' }} className={'close-button'} onClick={() => history.goBack()} src="./close-icon.png" />
+      <img style={{ position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px', cursor: 'pointer' }} className={'close-button'} onClick={() => history.goBack()} src="./close-icon.png" />
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 36px 128px 36px' }}>
         <div style={{ display: 'flex', maxWidth: "238px", margin: '40px auto 30px auto' }}>
           <PageIndexItem index={1} selected={dropCreationStep >= 0} />
@@ -228,10 +279,10 @@ export default function DropCreation(props) {
         <h1 style={{ margin: '0px 0px 22px 0px', paddingTop: '12px', paddingBottom: '8px', color: '#B3BBC3', textAlign: 'center' }}>{getTitle()}</h1>
         {renderStep()}
       </div>
-    <div className={'main-button-container'} style={{ position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)' }} >
-      {dropCreationStep >0 && <button className="main-button create_drop_button"  onClick={() => setStepAction('decrease')}>{"Back"}</button>}
-      <button className="main-button create_drop_button"  onClick={() => setStepAction('increase')}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
-    </div>
+      <div className={'main-button-container'} style={{ position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)' }} >
+        {dropCreationStep > 0 && <button className="main-button create_drop_button" onClick={() => setStepAction('decrease')}>{"Back"}</button>}
+        <button className="main-button create_drop_button" onClick={() => setStepAction('increase')}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
+      </div>
     </div>
   );
 }
