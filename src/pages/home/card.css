@@ -9,6 +9,7 @@
 .swipe{
   /* width: 440px; */
   margin: auto;
+  cursor: pointer;
 }
 /* 
 div.rel{

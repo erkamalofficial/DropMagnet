@@ -125,13 +125,6 @@ const Home = (props) => {
         userImageVisible={true}
       />
       <div className="rel">
-        {!detailView && (
-          <Tabs
-            activeTabIndex={activeTabIndex}
-            handleActiveTabIndex={handleActiveTabIndex}
-            tabList={tabList}
-          />
-        )}
         {isLoading && <Spinner />}
         
         {!isLoading && (
@@ -139,7 +132,9 @@ const Home = (props) => {
             reswipeModeActive={false}
             key={uniqueId}
             db={activeBucket}
-            detailView={detailView}
+            activeTabIndex={activeTabIndex}
+            handleActiveTabIndex={handleActiveTabIndex}
+            tabList={tabList}
             setDetailView={setDetailView}
           />
         )}

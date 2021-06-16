@@ -140,6 +140,7 @@ const Card = (props) => {
       onTouchEnd={e => {
         e.preventDefault();
         setSwiping(false);
+        
         if(!swiping){
           handleDrop(props)
         }

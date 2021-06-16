@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./DropDetail.css"
 import { epochToDayMonthHour } from '../../../helpers/DateFormatter'
+import UserIcon from "../../../asstes/add-user-icon.png"
 
 export default function ProfileDropDetail(props) {
 
@@ -10,8 +11,8 @@ export default function ProfileDropDetail(props) {
 
   const { user } = props
 
-  let artist_image = user !== undefined ? user.avatar_url : "./add-user-icon.png"
-  let artist_name = user !== undefined ? user.name : "Null"
+  let artist_image = user !== null && user.avatar_url !== '' ? user.avatar_url : UserIcon
+  let artist_name = user !== null && user.name
   
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
@@ -30,7 +31,7 @@ export default function ProfileDropDetail(props) {
       <div className="detail-view-header">
         <img className="detail-view-header-image" src={artist_image}/>
         <h1 className="drop-detail-title">{artist_name}</h1>
-        <img style={{width: '39px', height: '39px',cursor: 'pointer'}} onClick={() => closeDetail()} className="close-detail-button close-button" src="./close-icon.png" />
+        <img className="close-detail-button close-button view-close-btn" style={{width: '39px', height: '39px',cursor: 'pointer'}} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>
       <div className="drop-detail-image" onClick={() => props.handleClick()}>
         {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
