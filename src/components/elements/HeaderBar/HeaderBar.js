@@ -55,14 +55,14 @@ function HeaderBar(props) {
         }
       </div>
       <div className="header-right-holder">
-        <div onClick={() => openMenu()} className="header-bar-menu-icon">
-          <img height={10} width={20} style={{margin: 'auto'}} src="./menu-bars-icon.png" />
-        </div>
         {props.userImageVisible ? 
           showUserAction()
         :
         <></> 
         }
+        <div onClick={() => openMenu()} className="header-bar-menu-icon">
+          <img height={10} width={20} style={{margin: 'auto'}} src="./menu-bars-icon.png" />
+        </div>
         
       </div>
     </div>

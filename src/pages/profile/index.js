@@ -156,10 +156,10 @@ export default function Profile(props) {
     history.push("/");
   }
 
-  function renderDrops() {
+  function renderDrops(drops) {
     return (
       <DropList
-        drops={scheduledPosts}
+        drops={drops}
         user={user}
         onClick={openDrop}
         setDetailView={setDetailView}
@@ -291,8 +291,12 @@ export default function Profile(props) {
 
   if (loading) {
     return (
-      <div style={{marginTop: '60px'}}>
-        <Spinner />
+      <div>
+        <HeaderBar openHome={() => openHome()} userLoggedIn={props.userLoggedIn} userImage={userImage} userDetails={props.userDetails} />
+        <div style={{marginTop: '60px'}}>
+          <Spinner />
+        </div>
+        
       </div>
     )
   }
@@ -348,10 +352,13 @@ export default function Profile(props) {
               {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("scheduled"); setCategoryList(collectibleArts) }}>My Drops ({scheduledPosts.length})</div> : <></>}
               <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("saved"); setCategoryList(fashionArts) }}>Saved Drops ({savedPosts.length})</div>
             </div>
-            {savedPosts.length > 0 || scheduledPosts.length > 0 ?
-              renderDrops()
+            {scheduledPosts.length > 0 && selectedProfileList==='scheduled' ?
+              renderDrops(scheduledPosts)
+              : savedPosts.length > 0 && selectedProfileList==='saved' ?
+              renderDrops(savedPosts)
               :
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="profile-bio-description">Your Saved Drops Will Appear Here</div>}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }} className="profile-bio-description">You Don't Have Any Drops</div>
+              }
           </div>
 
           <div className="rel" style={{ display: `${!detailView ? 'none' : 'flex'}` }}>
