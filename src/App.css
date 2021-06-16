@@ -497,6 +497,14 @@ h2 {
   height: 30px !important;
 }
 
+.formGrid a:link, .formGrid a:visited{
+  color: white;
+}
+
+.formGrid a:active,.formGrid a:hover{
+  opacity: .8;
+}
+
 /* @keyframes popup {
   0%   { transform: scale(1,1) }
   10%  { transform: scale(1.1,1.1) }
