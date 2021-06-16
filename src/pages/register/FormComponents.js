@@ -5,7 +5,6 @@ export const FormWrapper = styled.div`
   box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
   padding: 24px;
   width: 400px;
-  margin: 20% auto;
 `;
 export const GridItem = styled.div`
 padding-bottom 16px;

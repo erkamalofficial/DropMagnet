@@ -34,8 +34,6 @@ export default function Signup(props) {
       return setError("Passwords do not match");
     }
 
-
-
     try {
       setError("");
       setLoading(true);
@@ -47,7 +45,7 @@ export default function Signup(props) {
       let username = res.user.email.split('@')[0]
       let name = res.user.displayName === null ? username : res.user.displayName
       let email = res.user.email
-      
+
       currentUser.getIdToken(true).then(function (idToken) {
         DropMagnetAPI.createNewUserProfile(name, username, email, idToken).then(function (response) {
           if (response.status === "error") {
@@ -74,35 +72,50 @@ export default function Signup(props) {
   }
 
   return (
-    <FormWrapper>
-      <form className="formGrid" onSubmit={handleSubmit}>
-        <h2 className="text-center mb-4">Sign Up</h2>
-        {error && <FormAlert variant="danger">{error}</FormAlert>}
-        {message && <FormSuccess variant="success">{message}</FormSuccess>}
-        {!message && (
-          <>
-            <GridItem id="email">
-              <FormLabel>Email</FormLabel>
-              <FormInput type="email" ref={emailRef} required />
-            </GridItem>
-            <GridItem id="password">
-              <FormLabel>Password</FormLabel>
-              <FormInput type="password" ref={passwordRef} required />
-            </GridItem>
-            <GridItem id="password-confirm">
-              <FormLabel>Password Confirmation</FormLabel>
-              <FormInput type="password" ref={passwordConfirmRef} required />
-            </GridItem>
-            <FormBtn disabled={loading} type="submit">
-              Sign Up
-            </FormBtn>
-          </>
-        )}
+    <div>
+      <div className="header-container">
+        <div className="header-left-holder">
+          <img alt={'logo'} style={{ width: 36, height: 'auto' }} onClick={() => {
+            props.history.push('/');
+          }} className="header-left-image clickable" src="./drop_icon.png" />
 
-        <div>
-          Already have an account? <Link to="/login">Log In</Link>
         </div>
-      </form>
-    </FormWrapper>
+        {/* <div className="header-right-holder">
+          <h2 style={{ margin: '0' }}>Sign Up</h2>
+        </div> */}
+      </div>
+      <div style={{ height: 'calc(100vh - 68px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <FormWrapper>
+          <form className="formGrid" onSubmit={handleSubmit}>
+            <h2 className="text-center mb-4">Sign Up</h2>
+            {error && <FormAlert variant="danger">{error}</FormAlert>}
+            {message && <FormSuccess variant="success">{message}</FormSuccess>}
+            {!message && (
+              <>
+                <GridItem id="email">
+                  <FormLabel>Email</FormLabel>
+                  <FormInput type="email" ref={emailRef} required />
+                </GridItem>
+                <GridItem id="password">
+                  <FormLabel>Password</FormLabel>
+                  <FormInput type="password" ref={passwordRef} required />
+                </GridItem>
+                <GridItem id="password-confirm">
+                  <FormLabel>Password Confirmation</FormLabel>
+                  <FormInput type="password" ref={passwordConfirmRef} required />
+                </GridItem>
+                <FormBtn disabled={loading} type="submit">
+                  Sign Up
+                </FormBtn>
+              </>
+            )}
+
+            <div>
+              Already have an account? <Link to="/login">Log In</Link>
+            </div>
+          </form>
+        </FormWrapper>
+      </div>
+    </div>
   );
 }

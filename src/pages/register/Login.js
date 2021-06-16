@@ -9,6 +9,7 @@ import {
   FormLabel,
   GridItem,
 } from "./FormComponents";
+import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 
 export default function Login() {
   const emailRef = useRef();
@@ -42,29 +43,44 @@ export default function Login() {
   }
 
   return (
-    <FormWrapper>
-      <form className="formGrid" onSubmit={handleSubmit}>
-        <h2 className="text-center mb-4">Log In</h2>
-        {error && <FormAlert variant="danger">{error}</FormAlert>}
-        <GridItem id="email">
-          <FormLabel>Email</FormLabel>
-          <FormInput type="email" ref={emailRef} required />
-        </GridItem>
-        <GridItem id="password">
-          <FormLabel>Password</FormLabel>
-          <FormInput type="password" ref={passwordRef} required />
-        </GridItem>
-        <FormBtn disabled={loading} className="w-100" type="submit">
-          Log In
-        </FormBtn>
-        <GridItem>
-          <Link to="/forgot-password">Forgot Password?</Link>
-        </GridItem>
+    <div>
+      <div className="header-container">
+        <div className="header-left-holder">
+          <img alt={'logo'} style={{ width: 36, height: 'auto' }} onClick={() => {
+            history.push('/');
+          }} className="header-left-image clickable" src="./drop_icon.png" />
 
-        <GridItem>
-          Need an account? <Link to="/signup">Sign Up</Link>
-        </GridItem>
-      </form>
-    </FormWrapper>
+        </div>
+        {/* <div className="header-right-holder">
+          <h2 style={{ margin: '0' }}>Log In</h2>
+        </div> */}
+      </div>
+      <div style={{ height: 'calc(100vh - 68px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <FormWrapper>
+          <form className="formGrid" onSubmit={handleSubmit}>
+            <h2 className="text-center mb-4">Log In</h2>
+            {error && <FormAlert variant="danger">{error}</FormAlert>}
+            <GridItem id="email">
+              <FormLabel>Email</FormLabel>
+              <FormInput type="email" ref={emailRef} required />
+            </GridItem>
+            <GridItem id="password">
+              <FormLabel>Password</FormLabel>
+              <FormInput type="password" ref={passwordRef} required />
+            </GridItem>
+            <FormBtn disabled={loading} className="w-100" type="submit">
+              Log In
+            </FormBtn>
+            <GridItem>
+              <Link to="/forgot-password">Forgot Password?</Link>
+            </GridItem>
+
+            <GridItem>
+              Need an account? <Link to="/signup">Sign Up</Link>
+            </GridItem>
+          </form>
+        </FormWrapper>
+      </div>
+    </div>
   );
 }
