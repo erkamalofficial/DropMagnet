@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { LogoTitleSection,LogoTitle } from "./LogoTitles";
 
 const LinksHeaderWrapper = styled.div`
   display: flex;
@@ -34,14 +35,6 @@ const BrandLogo = styled.img`
   height: auto;
   width: 36px;
   cursor: pointer;
-`;
-const LogoTitleSection = styled.div`
-  padding-left: 20px;
-`;
-const LogoTitle = styled.div`
-  font-family: var(--font-bdcols);
-  font-weight: 400;
-  font-size: var(--font-size-l);
 `;
 const LinksHeader = (props) => {
   return (

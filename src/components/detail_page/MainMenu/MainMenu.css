@@ -64,6 +64,11 @@
   align-items: center;
 }
 
+.left-header{
+  display: flex;
+  margin-top: 4px;
+}
+
 .right-header{
   display: flex;
   align-items: center;

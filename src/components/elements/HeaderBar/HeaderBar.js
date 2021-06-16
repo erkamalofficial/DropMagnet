@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { LogoTitleSection,LogoTitle } from "./LogoTitles";
+
 import { Link, Redirect, useHistory, withRouter } from 'react-router-dom'
 import "./HeaderBar.css"
 import { epochToDayMonth } from '../../../helpers/DateFormatter';
@@ -45,6 +47,10 @@ function HeaderBar(props) {
             props.history.push('/home');
           }
         }}  className="header-left-image clickable" src="./drop_icon.png" />
+        <LogoTitleSection>
+          <LogoTitle>drop magnet</LogoTitle>
+          <div>#ThreeTheWeb</div>
+        </LogoTitleSection>
         { props.datePickerVisible ? 
           <div onClick={() => props.openDateMenu()} className="dropdown-button">
             <p className="dropdown-button-title">{epochToDayMonth(props.selectedDropdownDate)}</p>
@@ -53,6 +59,8 @@ function HeaderBar(props) {
           :
           <></>
         }
+        
+        
       </div>
       <div className="header-right-holder">
         {props.userImageVisible ? 

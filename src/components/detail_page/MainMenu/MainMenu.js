@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./MainMenu.css";
 import { Link } from "react-router-dom";
+import {LogoTitle, LogoTitleSection} from "../../elements/HeaderBar/LogoTitles";
 
 export default function MainMenu(props) {
   const [open, setOpen] = useState(false);
@@ -40,7 +41,7 @@ export default function MainMenu(props) {
     <div className={menuClass}>
       <div className="main-header">
         <div className="left-header">
-          <Link to={'/home'}>
+          <Link to={"/home"}>
             <img
               alt={"logo"}
               style={{ width: 36, height: "auto" }}
@@ -48,6 +49,10 @@ export default function MainMenu(props) {
               src="./drop_icon.png"
             />
           </Link>
+          <LogoTitleSection>
+            <LogoTitle>drop magnet</LogoTitle>
+            <div>#ThreeTheWeb</div>
+          </LogoTitleSection>
         </div>
         <div className="right-header">
           <img
