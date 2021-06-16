@@ -61,7 +61,7 @@ export default function MainMenu(props) {
               <img
                 className="header-right-image"
                 alt={"profile-img"}
-                src={props.userImage || "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg"}
+                src={props.userImage || "./add-user-icon.png"}
               />
             </div>
           </Link>
@@ -72,7 +72,7 @@ export default function MainMenu(props) {
         {props.userDetails !== {} && props.userDetails !== undefined ? (
           <div className="main-menu-header">
             <p1 style={{ fontWeight: "bold" }}>{props.userDetails.name}</p1>
-            <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.handle}</p2>
+            <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
           </div>
         ) : (
           <></>

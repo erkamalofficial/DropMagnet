@@ -7,13 +7,14 @@ import MainMenu from '../../detail_page/MainMenu/MainMenu'
 
 function HeaderBar(props) {
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
+  const userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
   function showUserAction() {
     if (props.userLoggedIn)
     {
       return <Link to={'/profile'}>
               <div className="header-profile-img-holder">
-                <img className="header-right-image" src={props.userImage}/>
+                <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/>
               </div>
             </Link> 
     } else {
@@ -31,9 +32,10 @@ function HeaderBar(props) {
     console.log(e);
   }
 
+
   return (
     <div className="header-container">
-      <MainMenu userDetails={props.userDetails} userImage={props.userImage} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
+      <MainMenu userDetails={userDetails} userImage={userDetails.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
 
       <div className="header-left-holder">
         <img alt={'logo'} style={{width: 36, height:'auto'}} onClick={() => {
