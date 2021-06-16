@@ -17,7 +17,6 @@ export default function Profile(props) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [userImage, setUserImage] = useState(props.userImage)
-  console.log(userImage);
   const [twitterHandle, setTwitterHandle] = useState('')
   const [instaHandle, setInstaHandle] = useState('')
   const [bio, setBio] = useState('Bio')
@@ -334,8 +333,8 @@ export default function Profile(props) {
 
       <div style={{ margin: '0 auto', maxWidth: '600px', display: `${detailView ? 'none' : 'block'}` }}>
         <div className="profile-button-option-holder">
-          {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("scheduled"); setCategoryList(collectibleArts) }}>My Drops</div> : <></>}
-          <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("saved"); setCategoryList(fashionArts) }}>Saved Drops</div>
+          {scheduledPosts.length > 0 ? <div className={selectedProfileList === "scheduled" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("scheduled"); setCategoryList(collectibleArts) }}>My Drops ({scheduledPosts.length})</div> : <></>}
+          <div className={selectedProfileList === "saved" ? "profile-button-option-selected" : "profile-button-option"} onClick={() => { setSelectedProfileList("saved"); setCategoryList(fashionArts) }}>Saved Drops ({savedPosts.length}) </div>
         </div>
         {savedPosts.length > 0 || scheduledPosts.length > 0 ?
           renderDrops()
