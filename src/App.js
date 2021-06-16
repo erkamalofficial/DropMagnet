@@ -3,7 +3,6 @@ import "./App.css";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "./components/wrappers/PrivateRoute";
 import React, { Suspense } from "react";
-
 import TermsAndConditions from "./pages/terms";
 import DropCreation from "./pages/create_drop";
 import Signup from "./pages/register/Signup";
