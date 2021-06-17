@@ -10,11 +10,13 @@ import {
   GridItem,
 } from "./FormComponents";
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
+import { getUserProfile } from "../../DropMagnetAPI";
+import Spinner from "../../components/blocks/spinner";
 
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const [error, setError] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -30,16 +32,26 @@ export default function Login() {
         emailRef.current.value,
         passwordRef.current.value
       );
-      if (res.user.emailVerified) {
-        history.push("/home");
-      } else {
-        setError("Email not verified!! check your inbox and verifiy");
-      }
+      getUserProfile(res.user.uid, res.user.za).then(function (response) {
+        console.log('user profile response', response)
+        if (response.status === "error") {
+          // setLoginError(response.message);
+        } else {
+          localStorage.setItem('userDetails', JSON.stringify(response));
+          if (res.user.emailVerified) {
+            history.push("/home");
+          } else {
+            setError("Email not verified!! check your inbox and verifiy");
+            setLoading(false);
+          }
+        }
+      })
     } catch {
       setError("Failed to log in");
+      setLoading(false);
     }
 
-    setLoading(false);
+    
   }
 
   return (
@@ -68,9 +80,12 @@ export default function Login() {
               <FormLabel>Password</FormLabel>
               <FormInput type="password" ref={passwordRef} required />
             </GridItem>
-            <FormBtn disabled={loading} className="w-100" type="submit">
-              Log In
-            </FormBtn>
+            {!loading && (
+              <FormBtn disabled={loading} className="w-100" type="submit">
+                Log In
+              </FormBtn>
+            )}
+            {loading && <Spinner />}
             <GridItem>
               <Link to="/forgot-password">Forgot Password?</Link>
             </GridItem>
