@@ -126,3 +126,11 @@ export function createDropImage(image) {
   }
   return customAPICall(createDropImageEndpoint, payload, "POST") 
 }
+
+
+// Get Feed
+
+export function getFeeds(token, category){
+  const feedDropsEndpoint = `drops/feed?from=16-06-2021&to=8-04-2021&category=${category}`
+  return customAPICall(feedDropsEndpoint, "", "GET", token)
+}
