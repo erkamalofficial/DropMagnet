@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import styled from "styled-components";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail.js"
 import "./card.css"
+import UserIcon from "../../asstes/add-user-icon.png"
 
 const SwipeCard = styled.div`
   cursor: pointer;
@@ -122,8 +123,9 @@ const HeaderBarMenuIcon = styled.div`
 
 const Card = (props) => {
 
-  const { title, drop_image, artist_image, drop_id, handleDrop, price, swiping, setSwiping } = props
+  const { artist_image, handleDrop, swiping, setSwiping } = props
 
+  let artistImg = artist_image !== undefined ? artist_image : UserIcon
   
   return (
     <SwipeCard data-key="card-bdr"
@@ -147,21 +149,28 @@ const Card = (props) => {
       }}>
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
-          <UserAvatar src={artist_image} />
-          <div className="card-title">Crypto Art Man - {drop_id}</div>
+          <UserAvatar src={artistImg} />
+          <div className="card-title">
+            Crypto Art Man 
+          {/* - {props.id} */}
+          </div>
           <div className="empty">......</div>
         </HeaderSection>
         <SwipeImage
           data-key="art"
           key={2}
-          style={{ backgroundImage: `url(${drop_image})` }}
+          style={{ backgroundImage: `url(${props.media[0].url})` }}
         />
         <FooterSection key={3}>
-          <FooterTitle>{title} </FooterTitle>
+          <FooterTitle>{props.title} </FooterTitle>
           <FooterButtons>
-            <div className="rare">RARIBLE</div>
-            <div className="art">ART</div>
-            <div className="price"><span>Ξ</span> 10</div>
+            <div className="rare">{props.marketplace.toUpperCase()}</div>
+            <div className="art">{props.category.toUpperCase()}</div>
+            <div className="price"><span>Ξ</span> 
+            {props.price !== '' && props.price!==undefined ? props.price 
+            : props.auction_price && props.auction_price!==undefined ? props.auction_price 
+            : 0}
+            </div>
           </FooterButtons>
         </FooterSection>
       </SwipeCardDeviceContainer>

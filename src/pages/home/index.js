@@ -17,6 +17,7 @@ import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
 import "./index.css";
 import { useHistory } from "react-router";
+import { useAuth } from "../../contexts/FirebaseAuthContext"
 
 const HomeContainer = styled.div`
   display: flex;
@@ -32,11 +33,17 @@ const HomeContainer = styled.div`
 const Home = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const { currentUser } = useAuth()
+
   useEffect(() => {
-    dispatch(fetchArt({ activeTabIndex: 0 }));
+    currentUser.getIdToken(true).then(function (idToken) {
+      dispatch(fetchArt({ activeTabIndex: 0, token: idToken }));
+    })
+
   }, []);
 
-  
+
 
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941)
   const [detailView, setDetailView] = useState(false)
@@ -47,7 +54,7 @@ const Home = (props) => {
   });
   const isLoading = useSelector((state) => state.category.general.isLoading);
   const reswipeModeActive = useSelector((state) => state.category.general.reswipeModeActive);
-  
+
   const currentTabId = tabList[activeTabIndex];
 
   const { activeBucket, reswipeBucket } = useSelector(
@@ -58,11 +65,11 @@ const Home = (props) => {
 
 
   // const {reswipeModeActive} = useSelector((state)=>state.category.general)
-  useEffect(()=>{
-    if(reswipeModeActive){
+  useEffect(() => {
+    if (reswipeModeActive) {
       history.push(`/reswipe?tab=${currentTabId}`);
     }
-  }, [reswipeModeActive,currentTabId,history])
+  }, [reswipeModeActive, currentTabId, history])
   const uniqueId = Date.now()
 
   function selectDate(date) {
@@ -74,31 +81,40 @@ const Home = (props) => {
     setSelectedDropdownDate(date.date)
   }
 
-  const openHome = ()=>{
+  const openHome = () => {
 
   }
 
-  const openMenu = ()=>{
+  const openMenu = () => {
 
   }
 
-  const openDateMenu = ()=>{
+  const openDateMenu = () => {
     setDateMenuOpen(true)
   }
 
   const handleActiveTabIndex = (index) => {
     const activeTab = tabList[index];
     if (activeTab === "music") {
-      dispatch(fetchMusic({ activeTabIndex: index }));
+      currentUser.getIdToken(true).then(function (idToken) {
+        dispatch(fetchMusic({ activeTabIndex: index, token: idToken }));
+      })
     }
     if (activeTab === "arts") {
-      dispatch(fetchArt({ activeTabIndex: index }));
+      currentUser.getIdToken(true).then(function (idToken) {
+        dispatch(fetchArt({ activeTabIndex: index, token: idToken }));
+      })
     }
     if (activeTab === "collectables") {
-      dispatch(fetchColletibles({ activeTabIndex: index }));
+      currentUser.getIdToken(true).then(function (idToken) {
+        dispatch(fetchColletibles({ activeTabIndex: index, token: idToken }));
+      })
     }
     if (activeTab === "fashion") {
-      dispatch(fetchFashion({ activeTabIndex: index }));
+      currentUser.getIdToken(true).then(function (idToken) {
+        dispatch(fetchFashion({ activeTabIndex: index, token: idToken }));
+      })
+
     }
   };
   const handleReswipe = () => {
@@ -106,11 +122,11 @@ const Home = (props) => {
   };
   return (
     <HomeContainer>
-      <DateMenu 
-        open={dateMenuOpen} 
-        setOpen={setDateMenuOpen} 
-        openItem={selectDate} 
-        setSelectedDate={setSelectedDate} 
+      <DateMenu
+        open={dateMenuOpen}
+        setOpen={setDateMenuOpen}
+        openItem={selectDate}
+        setSelectedDate={setSelectedDate}
       />
 
       <HeaderBar
@@ -126,7 +142,7 @@ const Home = (props) => {
       />
       <div className="rel">
         {isLoading && <Spinner />}
-        
+
         {!isLoading && (
           <Swiper
             reswipeModeActive={false}

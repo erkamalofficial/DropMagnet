@@ -120,19 +120,19 @@ function Swiper(props) {
       </div>
       <CardContainer key="cardContainer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         {cards.map((cardDetails, index) => {
-          const { drop_id } = cardDetails;
+          const { id } = cardDetails;
 
           return (
             <TinderCard
               ref={childRefs[index]}
-              className={`swipe ${drop_id}`}
-              data-id={drop_id}
-              key={drop_id}
+              className={`swipe ${id}`}
+              data-id={id}
+              key={id}
               onSwipe={(dir) => {
                 setSwiping(true)
-                return swiped(dir, drop_id)
+                return swiped(dir, id)
               }}
-              onCardLeftScreen={() => outOfFrame(drop_id)}
+              onCardLeftScreen={() => outOfFrame(id)}
               overlayLabels={true}
             >
               <Card {...cardDetails} handleDrop={openDrop} swiping={swiping}
