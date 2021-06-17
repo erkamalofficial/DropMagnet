@@ -32,12 +32,12 @@ const getGroupedLinks = (linkList) => {
 
 const getProcessedCollection = (state, action, type) => {
   const general = { ...state.general, isLoading: false };
-  const [first, second, third] = action.payload;
 
   const collection = {
     ...state[type],
-    apiData: [...action.payload],
-    activeBucket: [third, second, first],
+    // apiData: [...action.payload],
+    // activeBucket: [third, second, first],
+    activeBucket: [...action.payload].reverse()
   };
   return {
     ...state,
@@ -46,27 +46,6 @@ const getProcessedCollection = (state, action, type) => {
   };
 };
 
-const duringReswipe = (activeTabContent, drop_id, state) => {
-  const selectedIndex = activeTabContent.reswipeBucket.findIndex(
-    (card) => card.drop_id === drop_id
-  );
-
-  if (selectedIndex === 0) {
-    const cardIdsAlreadySwiped = [...activeTabContent.selectionBucket.fav];
-    const reswipeBucketContent = activeTabContent.apiData.filter((card) =>
-      cardIdsAlreadySwiped.includes(card.drop_id)
-    );
-    if (activeTabContent.reswipeBucket.length === reswipeBucketContent.length) {
-      Object.assign(state.general, {
-        uidChanged: Date.now(),
-      });
-    }
-    Object.assign(activeTabContent, {
-      reswipeBucket: reswipeBucketContent,
-    });
-  }
-  return activeTabContent;
-};
 
 const categoryReducer = (state = initialState, action) => {
   const tabList = ["arts", "music", "collectables", "fashion"];
@@ -137,30 +116,30 @@ const categoryReducer = (state = initialState, action) => {
       return fashionCollection;
     }
 
-    case "FETCH_RESWIPE_REQUEST": {
-      const currentTab = tabList[state.general.activeTabIndex];
-      const activeTabContent = state[currentTab];
+    // case "FETCH_RESWIPE_REQUEST": {
+    //   const currentTab = tabList[state.general.activeTabIndex];
+    //   const activeTabContent = state[currentTab];
 
-      const cardIdsAlreadySwiped = [
-        ...activeTabContent.selectionBucket.fav,
-        ...activeTabContent.selectionBucket.rem,
-      ];
-      const remainingCardsForSwipe = activeTabContent.apiData.filter(
-        (card) => !cardIdsAlreadySwiped.includes(card.drop_id)
-      );
+    //   const cardIdsAlreadySwiped = [
+    //     ...activeTabContent.selectionBucket.fav,
+    //     ...activeTabContent.selectionBucket.rem,
+    //   ];
+    //   const remainingCardsForSwipe = activeTabContent.apiData.filter(
+    //     (card) => !cardIdsAlreadySwiped.includes(card.drop_id)
+    //   );
 
-      const selectedTabContent = {
-        ...activeTabContent,
-        activeBucket: remainingCardsForSwipe,
-      };
-      const general = { ...state.general, reswipeModeActive: false };
+    //   const selectedTabContent = {
+    //     ...activeTabContent,
+    //     activeBucket: remainingCardsForSwipe,
+    //   };
+    //   const general = { ...state.general, reswipeModeActive: false };
 
-      return { ...state, general, [currentTab]: selectedTabContent };
-    }
+    //   return { ...state, general, [currentTab]: selectedTabContent };
+    // }
     case "ADD_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
-      const { selectionBucket, activeBucket, apiData } = activeTabContent;
+      const { selectionBucket, activeBucket } = activeTabContent;
       const { drop_id } = action.payload;
 
       var reswipeModeActive = state.general.reswipeModeActive;
@@ -174,12 +153,12 @@ const categoryReducer = (state = initialState, action) => {
         reswipeModeActive = true;
       }
 
-      if (activeBucket.length < apiData.length) {
-        activeBucket.unshift(apiData[activeBucket.length]);
-      }
+      // if (activeBucket.length < apiData.length) {
+      //   activeBucket.unshift(apiData[activeBucket.length]);
+      // }
 
       // if (isFavBucketHasTenItems) {
-        const reswipeBucketContent = apiData.filter((card) =>
+        const reswipeBucketContent = activeBucket.filter((card) =>
           favList.includes(card.drop_id)
         );
         Object.assign(activeTabContent, {
@@ -187,9 +166,9 @@ const categoryReducer = (state = initialState, action) => {
         });
       // }
 
-      if (reswipeModeActive) {
-        duringReswipe(activeTabContent, drop_id, state);
-      }
+      // if (reswipeModeActive) {
+      //   duringReswipe(activeTabContent, drop_id, state);
+      // }
 
       const general = {
         ...state.general,
@@ -203,7 +182,7 @@ const categoryReducer = (state = initialState, action) => {
     case "REMOVE_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
-      const { selectionBucket, activeBucket, apiData } = activeTabContent;
+      const { selectionBucket, activeBucket } = activeTabContent;
 
       const { drop_id } = action.payload;
 
@@ -216,13 +195,13 @@ const categoryReducer = (state = initialState, action) => {
         selectionBucket.rem.push(drop_id);
       }
 
-      if (activeBucket.length < apiData.length) {
-        activeBucket.unshift(apiData[activeBucket.length]);
-      }
+      // if (activeBucket.length < apiData.length) {
+      //   activeBucket.unshift(apiData[activeBucket.length]);
+      // }
 
-      if (state.general.reswipeModeActive) {
-        duringReswipe(activeTabContent, drop_id, state);
-      }
+      // if (state.general.reswipeModeActive) {
+      //   duringReswipe(activeTabContent, drop_id, state);
+      // }
 
       const general = {
         ...state.general,

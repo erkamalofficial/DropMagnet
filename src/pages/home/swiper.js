@@ -31,7 +31,8 @@ function Swiper(props) {
   // const [lastDirection, setLastDirection] = useState();
   const [newLoading, setNewLoading] = useState(true);
   const [swiping, setSwiping] = useState(false)
-
+  console.log(curDrop);
+  console.log(openView);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -118,7 +119,7 @@ function Swiper(props) {
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>
-      <CardContainer key="cardContainer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
+      <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
         {cards.map((cardDetails, index) => {
           const { drop_id } = cardDetails;
 
