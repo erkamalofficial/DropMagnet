@@ -31,8 +31,7 @@ function Swiper(props) {
   // const [lastDirection, setLastDirection] = useState();
   const [newLoading, setNewLoading] = useState(true);
   const [swiping, setSwiping] = useState(false)
-  console.log(curDrop);
-  console.log(openView);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -80,11 +79,11 @@ function Swiper(props) {
 
   const swipe = (dir) => {
     const cardsLeft = cards.filter(
-      (card) => !alreadyRemoved.includes(card.drop_id)
+      (card) => !alreadyRemoved.includes(card.id)
     ); //allCards
     if (cardsLeft.length) {
-      const toBeRemoved = cardsLeft[cardsLeft.length - 1].drop_id; // Find the card object to be removed
-      const index = cards.map((card) => card.drop_id).indexOf(toBeRemoved); // Find the index of which to make the reference to
+      const toBeRemoved = cardsLeft[cardsLeft.length - 1].id; // Find the card object to be removed
+      const index = cards.map((card) => card.id).indexOf(toBeRemoved); // Find the index of which to make the reference to
       childRefs[index].current.swipe(dir); // Swipe the card!
     }
   };
