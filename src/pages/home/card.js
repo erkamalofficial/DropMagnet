@@ -21,6 +21,8 @@ const SwipeCard = styled.div`
 `;
 const SwipeCardDeviceContainer = styled.div`
   position: var(--card-device-container-pos);
+  
+  /* width: 100%; */
 `;
 const UserAvatar = styled.img`
   height: var(--art-avatar-size);
