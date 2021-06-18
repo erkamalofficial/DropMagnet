@@ -47,7 +47,7 @@ function HeaderBar(props) {
             props.history.push('/home');
           }
         }}  className="header-left-image clickable" src="./drop_icon.png" />
-        <LogoTitleSection>
+        <LogoTitleSection style={{display: props.isLogoNotVisible ? 'none': 'block'}}>
           <LogoTitle>drop magnet</LogoTitle>
           <div>#ThreeTheWeb</div>
         </LogoTitleSection>

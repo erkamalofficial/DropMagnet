@@ -155,6 +155,7 @@ const Home = (props) => {
       <HeaderBar
         openHome={() => openHome()}
         openMenu={() => openMenu()}
+        isLogoNotVisible
         openDateMenu={() => openDateMenu()}
         selectedDropdownDate={selectedDropdownDate}
         datePickerVisible={detailView ? false : true}
