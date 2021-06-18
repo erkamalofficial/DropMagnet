@@ -38,7 +38,8 @@ const Home = (props) => {
 
   useEffect(() => {
     currentUser.getIdToken(true).then(function (idToken) {
-      dispatch(fetchArt({ activeTabIndex: 0, token: idToken }));
+      let today = getCurrentDate()
+      dispatch(fetchArt({ activeTabIndex: 0, token: idToken, fromDate: today }));
     })
 
   }, []);
@@ -63,6 +64,11 @@ const Home = (props) => {
     }
   );
 
+  const getCurrentDate = () => {
+    let d = new Date()
+    const curDate = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`
+    return curDate
+  }
 
   // const {reswipeModeActive} = useSelector((state)=>state.category.general)
   useEffect(() => {
@@ -95,24 +101,25 @@ const Home = (props) => {
 
   const handleActiveTabIndex = (index) => {
     const activeTab = tabList[index];
+    let today = getCurrentDate()
     if (activeTab === "music") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchMusic({ activeTabIndex: index, token: idToken }));
+        dispatch(fetchMusic({ activeTabIndex: index, token: idToken, fromDate: today }));
       })
     }
     if (activeTab === "arts") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchArt({ activeTabIndex: index, token: idToken }));
+        dispatch(fetchArt({ activeTabIndex: index, token: idToken, fromDate: today }));
       })
     }
     if (activeTab === "collectables") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchColletibles({ activeTabIndex: index, token: idToken }));
+        dispatch(fetchColletibles({ activeTabIndex: index, token: idToken, fromDate: today }));
       })
     }
     if (activeTab === "fashion") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchFashion({ activeTabIndex: index, token: idToken }));
+        dispatch(fetchFashion({ activeTabIndex: index, token: idToken, fromDate: today }));
       })
 
     }

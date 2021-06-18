@@ -111,10 +111,11 @@ export default function Profile(props) {
       // Send token to your backend via HTTPS
       // ...
       console.log('id token is', idToken)
+      console.log(currentUser)
       DropMagnetAPI.getUserProfile(user_id, idToken).then(function (response) {
         console.log('user profile response', response)
         if (response.status === "error") {
-          // setLoginError(response.message);
+          setLoading(false)
         } else {
           let splitName = response.name.split(" "); // split the name by spaces
           setFirstName(splitName[0])
@@ -132,6 +133,9 @@ export default function Profile(props) {
       DropMagnetAPI.getUserPosts(user_id, idToken)
         .then(res => {
           setScheduledPosts(res)
+          setLoading(false)
+        })
+        .catch(err => {
           setLoading(false)
         })
 

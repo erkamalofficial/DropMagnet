@@ -1,7 +1,7 @@
 import { db } from "../../firebase";
 import * as DropMagnetAPI from '../../DropMagnetAPI'
 
-const getDataFromDb = async (dispatch, categoryType, actionType, token) => {
+const getDataFromDb = async (dispatch, categoryType, actionType, token, fromDate) => {
 
   try {
     const querySnapshot = await db
@@ -17,7 +17,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, token) => {
     //   result.push(doc.data());
     // });
 
-    const response = await DropMagnetAPI.getFeeds(token, 'art')
+    const response = await DropMagnetAPI.getFeeds(token, 'art', fromDate)
     .then(function(res){
       let data= res.data
       let resData = []
@@ -39,7 +39,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, token) => {
   }
 };
 export const fetchArt =
-  ({ activeTabIndex, token }) =>
+  ({ activeTabIndex, token, fromDate }) =>
   async (dispatch, getState) => {
     dispatch({
       type: "FETCH_ARTS_REQUEST",
@@ -47,11 +47,11 @@ export const fetchArt =
         activeTabIndex,
       },
     });
-    getDataFromDb(dispatch, "Art", "FETCH_ARTS_SUCCESS", token);
+    getDataFromDb(dispatch, "Art", "FETCH_ARTS_SUCCESS", token, fromDate);
   };
 
 export const fetchMusic =
-  ({ activeTabIndex, token }) =>
+  ({ activeTabIndex, token, fromDate }) =>
   async (dispatch, getState) => {
     dispatch({
       type: "FETCH_MUSIC_REQUEST",
@@ -59,10 +59,10 @@ export const fetchMusic =
         activeTabIndex,
       },
     });
-    getDataFromDb(dispatch, "Music", "FETCH_MUSIC_SUCCESS", token);
+    getDataFromDb(dispatch, "Music", "FETCH_MUSIC_SUCCESS", token, fromDate);
   };
 export const fetchColletibles =
-  ({ activeTabIndex, token }) =>
+  ({ activeTabIndex, token, fromDate }) =>
   async (dispatch, getState) => {
     dispatch({
       type: "FETCH_COLLECTABLES_REQUEST",
@@ -70,10 +70,10 @@ export const fetchColletibles =
         activeTabIndex,
       },
     });
-    getDataFromDb(dispatch, "Collectables", "FETCH_COLLECTABLES_SUCCESS", token);
+    getDataFromDb(dispatch, "Collectables", "FETCH_COLLECTABLES_SUCCESS", token, fromDate);
   };
 export const fetchFashion =
-  ({ activeTabIndex, token }) =>
+  ({ activeTabIndex, token, fromDate }) =>
   async (dispatch, getState) => {
     dispatch({
       type: "FETCH_FASHION_REQUEST",
@@ -81,7 +81,7 @@ export const fetchFashion =
         activeTabIndex,
       },
     });
-    getDataFromDb(dispatch, "Fashion", "FETCH_FASHION_SUCCESS", token);
+    getDataFromDb(dispatch, "Fashion", "FETCH_FASHION_SUCCESS", token, fromDate);
   };
 export const fetchReswipeList = (tabIndex) => async (dispatch, getState) => {
   dispatch({

@@ -36,6 +36,7 @@ export default function Login() {
         console.log('user profile response', response)
         if (response.status === "error") {
           // setLoginError(response.message);
+          setLoading(false);
         } else {
           localStorage.setItem('userDetails', JSON.stringify(response));
           if (res.user.emailVerified) {
