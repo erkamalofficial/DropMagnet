@@ -16,7 +16,6 @@ code {
   cursor: pointer;
 }
 
-.container-reswipe  .swipe{
-  max-width: 440px;
-  width: 100%;
+.container-reswipe .swipe{
+  max-width: var(--card-container-width);
 }

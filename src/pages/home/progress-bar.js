@@ -15,6 +15,9 @@ const ProgressBarWrapper = styled.div`
   width: 425px;
   top: 89px;
   background: #1d1c1c;
+  @media(max-width: 500px){
+    width: 100%;
+  }
   span {
     line-height: 24px;
   }

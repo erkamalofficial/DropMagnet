@@ -137,7 +137,7 @@ function Reswipe() {
             />
           )}
           {isReswipeStarted && (
-            <>
+            <div classNAme="rel">
               <ProgressBar
                 key="progressBar"
                 size={roundLength}
@@ -155,7 +155,7 @@ function Reswipe() {
                 detailView={detailView}
                 setDetailView={setDetailView}
               />
-            </>
+            </div>
           )}
         </>
       ) : <ReswipeComplete />
