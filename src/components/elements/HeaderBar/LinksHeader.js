@@ -33,10 +33,12 @@ const WhitePageLabel = styled.div`
 `;
 const LogoSection = styled.div`
   display: flex;
+  max-height: 42px;
 `;
 const BrandLogo = styled.img`
   height: auto;
   width: 36px;
+  max-height: 42px;
   cursor: pointer;
 `;
 const LinksHeader = (props) => {
