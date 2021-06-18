@@ -128,6 +128,11 @@ export default function Profile(props) {
         }
       })
 
+      DropMagnetAPI.getSaveDrops(idToken).then((res)=>{
+        console.log(res);
+        setSavedPosts(res);
+      })
+
 
       DropMagnetAPI.getUserPosts(user_id, idToken)
         .then(res => {

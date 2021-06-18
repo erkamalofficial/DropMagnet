@@ -52,6 +52,7 @@ function Swiper(props) {
     if (reswipeModeActive) {
       props.onReswipe(direction, drop_id, index);
     } else {
+      props.onSwipe && props.onSwipe(direction,drop_id);
       if (direction === "right") {
         dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
       }

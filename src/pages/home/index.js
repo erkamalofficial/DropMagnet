@@ -1,7 +1,7 @@
 // import "../../server";
 import styled from "styled-components";
 import React, { useEffect, useMemo, useState } from "react";
-import DateMenu from '../../components/detail_page/DateMenu/DateMenu';
+import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 import Tabs from "./tabs";
 import ProgressBar from "./progress-bar";
@@ -17,7 +17,9 @@ import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
 import "./index.css";
 import { useHistory } from "react-router";
-import { useAuth } from "../../contexts/FirebaseAuthContext"
+import { useAuth } from "../../contexts/FirebaseAuthContext";
+import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
+import { set } from "lodash";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -34,91 +36,104 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { currentUser } = useAuth()
+  const { currentUser, idToken } = useAuth();
 
   useEffect(() => {
     currentUser.getIdToken(true).then(function (idToken) {
       dispatch(fetchArt({ activeTabIndex: 0, token: idToken }));
-    })
-
+    });
   }, []);
 
-
-
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941)
-  const [detailView, setDetailView] = useState(false)
-  const [dateMenuOpen, setDateMenuOpen] = useState(false)
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941);
+  const [detailView, setDetailView] = useState(false);
+  const [dateMenuOpen, setDateMenuOpen] = useState(false);
   const tabList = ["arts", "music", "collectables", "fashion"];
   const activeTabIndex = useSelector((state) => {
     return state.category.general.activeTabIndex;
   });
   const isLoading = useSelector((state) => state.category.general.isLoading);
-  const reswipeModeActive = useSelector((state) => state.category.general.reswipeModeActive);
-
-  const currentTabId = tabList[activeTabIndex];
-
-  const { activeBucket, reswipeBucket } = useSelector(
-    (state) => {
-      return state.category[currentTabId];
-    }
+  const reswipeModeActive = useSelector(
+    (state) => state.category.general.reswipeModeActive
   );
 
+  const currentTabId = tabList[activeTabIndex];
+  const [internalLoader, setInternalLoader] = useState(false);
+  const { activeBucket, reswipeBucket } = useSelector((state) => {
+    return state.category[currentTabId];
+  });
 
   // const {reswipeModeActive} = useSelector((state)=>state.category.general)
   useEffect(() => {
     if (reswipeModeActive) {
       history.push(`/reswipe?tab=${currentTabId}`);
     }
-  }, [reswipeModeActive, currentTabId, history])
-  const uniqueId = Date.now()
+  }, [reswipeModeActive, currentTabId, history]);
+  const uniqueId = Date.now();
 
   function selectDate(date) {
-    console.log('opened item', date)
+    console.log("opened item", date);
   }
 
   function setSelectedDate(date) {
-    console.log('selected date is', date)
-    setSelectedDropdownDate(date.date)
+    console.log("selected date is", date);
+    setSelectedDropdownDate(date.date);
   }
 
-  const openHome = () => {
+  const openHome = () => {};
 
-  }
-
-  const openMenu = () => {
-
-  }
+  const openMenu = () => {};
 
   const openDateMenu = () => {
-    setDateMenuOpen(true)
-  }
+    setDateMenuOpen(true);
+  };
 
   const handleActiveTabIndex = (index) => {
     const activeTab = tabList[index];
     if (activeTab === "music") {
       currentUser.getIdToken(true).then(function (idToken) {
         dispatch(fetchMusic({ activeTabIndex: index, token: idToken }));
-      })
+      });
     }
     if (activeTab === "arts") {
       currentUser.getIdToken(true).then(function (idToken) {
         dispatch(fetchArt({ activeTabIndex: index, token: idToken }));
-      })
+      });
     }
     if (activeTab === "collectables") {
       currentUser.getIdToken(true).then(function (idToken) {
         dispatch(fetchColletibles({ activeTabIndex: index, token: idToken }));
-      })
+      });
     }
     if (activeTab === "fashion") {
       currentUser.getIdToken(true).then(function (idToken) {
         dispatch(fetchFashion({ activeTabIndex: index, token: idToken }));
-      })
-
+      });
     }
   };
-  const handleReswipe = () => {
-    dispatch(fetchReswipeList(activeTabIndex));
+
+  const handleSwipe = (dir, drop_id) => {
+    if (dir === "right") {
+      // setInternalLoader(true);
+      saveDrop(idToken, drop_id)
+        .then(() => {
+          console.log("Success");
+        })
+        .catch(() => {})
+        .finally(() => {
+          // setInternalLoader(false);
+        });
+    }else if(dir === "left"){
+       unsaveDrop(idToken, drop_id)
+       .then(()=>{
+        console.log('Unsave Success');
+       })
+       .catch(()=>{
+
+       })
+       .finally(()=>{
+
+       })
+    }
   };
   return (
     <HomeContainer>
@@ -141,19 +156,21 @@ const Home = (props) => {
         userImageVisible={true}
       />
       <div className="rel">
-        {isLoading && <Spinner />}
-
-        {!isLoading && (
-          <Swiper
-            reswipeModeActive={false}
-            key={uniqueId}
-            db={activeBucket}
-            activeTabIndex={activeTabIndex}
-            handleActiveTabIndex={handleActiveTabIndex}
-            tabList={tabList}
-            setDetailView={setDetailView}
-          />
-        )}
+        {(isLoading) && <Spinner />}
+        {/* <div style={{display: internalLoader ? 'none': 'block'}}> */}
+          {!isLoading && (
+            <Swiper
+              reswipeModeActive={false}
+              key={uniqueId}
+              db={activeBucket}
+              activeTabIndex={activeTabIndex}
+              onSwipe={handleSwipe}
+              handleActiveTabIndex={handleActiveTabIndex}
+              tabList={tabList}
+              setDetailView={setDetailView}
+            />
+          )}
+        {/* </div> */}
       </div>
     </HomeContainer>
   );
