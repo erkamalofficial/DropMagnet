@@ -157,14 +157,16 @@ const categoryReducer = (state = initialState, action) => {
       //   activeBucket.unshift(apiData[activeBucket.length]);
       // }
 
-      // if (isFavBucketHasTenItems) {
-        const reswipeBucketContent = activeBucket.filter((card) =>
-          favList.includes(card.drop_id)
-        );
+        const reswipeBucketContent = activeBucket.filter((card) =>{
+          return favList.includes(card.id)
+
+        }
+      );
         Object.assign(activeTabContent, {
           reswipeBucket: reswipeBucketContent,
         });
-      // }
+
+        console.log(reswipeBucketContent);
 
       // if (reswipeModeActive) {
       //   duringReswipe(activeTabContent, drop_id, state);

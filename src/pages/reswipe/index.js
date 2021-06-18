@@ -58,6 +58,7 @@ function Reswipe() {
   const [reswipeComplete, setReswipeComplete] = useState(false);
   const [deletedFinalFour, setDeletedFinalFour] = useState(null);
 
+  console.log(reswipeBucket);
   const handleReswipe = (dir, drop_id) => {
     let newArray = tempReswipeBucket.filter(
       (value) => value.drop_id !== drop_id
@@ -112,25 +113,6 @@ function Reswipe() {
   //   console.log(reswipeBucket,selectionBucket);
   return (
     <MainContainer className={"container-reswipe"}>
-      <Header>
-        <img
-          alt={"close-btn"}
-          style={{
-            position: "fixed",
-            top: "26px",
-            right: "20px",
-            cursor: "pointer",
-          }}
-          className={'close-button'}
-          onClick={() => {
-            dispatch({type:'CLOSE_RESWIPE',payload: {tab: curTab}});
-            history.push('/home');
-          }}
-          src="./close-icon.png"
-        />
-
-        {/* <CircularButton className={'main-button'}>Back</CircularButton> */}
-      </Header>
 
       <Tabs
         activeTabIndex={tabList.indexOf(curTab)}
@@ -160,7 +142,10 @@ function Reswipe() {
               <ProgressBar
                 key="progressBar"
                 size={roundLength}
-                handleReswipe={() => null}
+                closeReswipe = {()=>{
+                  dispatch({type:'CLOSE_RESWIPE',payload: {tab: curTab}});
+                  history.push('/home');
+                }}
                 selectedCount={tempReswipeBucket.length}
               />
               <Swiper
