@@ -69,7 +69,6 @@ const FooterButtons = styled.div`
   justify-content: center;
   font-weight: 700;
   line-height: 22px;
-  column-gap: 16px;
   margin-bottom: var(--card-title-section-text-margin);
   div {
     padding: 0 10px;
@@ -78,9 +77,11 @@ const FooterButtons = styled.div`
   }
   .rare {
     background: var(--corePurple);
+    margin-right: 8px;
   }
   .art {
     background: var(--coreBlue);
+    margin: 0 8px;
   }
   .price {
     width: 48px;
@@ -90,6 +91,7 @@ const FooterButtons = styled.div`
     display: flex;
     align-items: center;
     column-gap: 4px;
+    margin-left: 8px;
   }
 `;
 const FooterTitle = styled.div`

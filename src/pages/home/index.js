@@ -29,6 +29,9 @@ const HomeContainer = styled.div`
     position: relative;
     user-select: none;
     padding-top: var(--main-header-margin-top);
+    @media (max-width: 500px) {
+      padding-top: 10px
+    }
   }
 `;
 
