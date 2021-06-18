@@ -136,3 +136,19 @@ export function getFeeds(token, category, fromDate){
   const feedDropsEndpoint = `drops/feed?from=${fromDate}&to=8-4-2021&category=${category}`
   return customAPICall(feedDropsEndpoint, "", "GET", token)
 }
+
+
+export function saveDrop(token='', dropid=''){
+  const saveDropEndPoint = `drops/${dropid}/save`;
+  return customAPICall(saveDropEndPoint, "","POST",token);
+}
+
+export function getSaveDrops(token=''){
+  const getSaveDropEndPoint = `drops/saved`;
+  return customAPICall(getSaveDropEndPoint, "","GET",token);
+}
+
+export function unsaveDrop(token='',dropid=''){
+  const unsaveDropEndPoint = `drops/${dropid}/unsave`;
+  return customAPICall(unsaveDropEndPoint, "","POST",token);
+}
