@@ -44,7 +44,7 @@ const StripeCheckoutButton = ({ price, idToken, selectedLinksIds, uid }) => {
       name="Dropmagnet"
       billingAddress
       shippingAddress
-      image="./drop_icon.png"
+      image="./drop_logo.png"
       description={`Your total is $${price}`}
       amount={priceForStripe}
       token={onToken}
