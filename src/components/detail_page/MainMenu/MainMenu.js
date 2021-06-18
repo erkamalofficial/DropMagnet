@@ -46,7 +46,7 @@ export default function MainMenu(props) {
               alt={"logo"}
               style={{ width: 36, height: "auto" }}
               className="header-left-image clickable"
-              src="./drop_icon.png"
+              src="./drop_logo.png"
             />
           </Link>
           <LogoTitleSection>

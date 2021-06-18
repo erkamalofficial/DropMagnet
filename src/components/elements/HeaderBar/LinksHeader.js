@@ -37,7 +37,7 @@ const LogoSection = styled.div`
 `;
 const BrandLogo = styled.img`
   height: auto;
-  width: 36px;
+  width: auto;
   max-height: 42px;
   cursor: pointer;
 `;
@@ -47,7 +47,7 @@ const LinksHeader = (props) => {
       <LogoSection>
         <BrandLogo onClick={()=>{
           window.location.href = '/home'
-        }} src="./drop_icon.png" alt="drop magnet" />
+        }} src="./drop_logo.png" alt="drop magnet" />
         <LogoTitleSection>
           <LogoTitle>drop magnet</LogoTitle>
           <div>#ThreeTheWeb</div>

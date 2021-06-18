@@ -77,7 +77,7 @@ export default function Signup(props) {
         <div className="header-left-holder">
           <img alt={'logo'} style={{ width: 36, height: 'auto' }} onClick={() => {
             props.history.push('/');
-          }} className="header-left-image clickable" src="./drop_icon.png" />
+          }} className="header-left-image clickable" src="./drop_logo.png" />
 
         </div>
         {/* <div className="header-right-holder">
