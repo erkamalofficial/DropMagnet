@@ -13,17 +13,20 @@ const WhitePageLabel = styled.div`
   font-size: 20px;
   padding: 1px;
   text-decoration: none;
+  max-height: 42px;
 
   span {
     background-color: rgba(0, 0, 0, 0.88);
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 10px 24px;
     border-radius: 40px;
     font-size: var(--font-size-s);
+    height: 100%;
     @media (max-width: 320px) {
       padding: 5px 12px;
       font-size: 12px;
-      line-height: 24px;
+      line-height: 26px;
       display: inline-block;
     }
   }
