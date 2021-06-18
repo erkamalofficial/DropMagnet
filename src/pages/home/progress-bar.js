@@ -23,13 +23,13 @@ const ProgressBarWrapper = styled.div`
   }
 `;
 
-const ProgressBar = ({ size, selectedCount, handleReswipe }) => {
+const ProgressBar = ({ size, selectedCount, closeReswipe }) => {
   return (
     <ProgressBarWrapper>
       <span>
         {selectedCount}/{size}
       </span>
-      <span className="reswipeBtn" onClick={() => handleReswipe()}>
+      <span className="reswipeBtn" onClick={() => closeReswipe()}>
         Exit reswipe
       </span>
     </ProgressBarWrapper>

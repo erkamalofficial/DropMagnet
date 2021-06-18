@@ -74,7 +74,7 @@ export default function FinalFour({bucket,deleted,onChange}){
               <Final4Grid>
                 {bucket.map((item,i)=>{
                  return <DropCard onClick={()=>handleChange(!deleted[i],i)} className={deleted[i]&&'delete-drop-card'}>
-                    <img src={item.drop_image} className={'drop-img'} alt={item.title} />
+                    <img src={item.media && item.media[0].url} className={'drop-img'} alt={item.title} />
                     <div className={'title-author'}>
                       <DropTitle> {item.title} </DropTitle>
                       <p> {item.artist} </p>

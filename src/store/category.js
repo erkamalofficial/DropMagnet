@@ -35,8 +35,6 @@ const getProcessedCollection = (state, action, type) => {
 
   const collection = {
     ...state[type],
-    // apiData: [...action.payload],
-    // activeBucket: [third, second, first],
     activeBucket: [...action.payload].reverse()
   };
   return {
@@ -157,14 +155,16 @@ const categoryReducer = (state = initialState, action) => {
       //   activeBucket.unshift(apiData[activeBucket.length]);
       // }
 
-      // if (isFavBucketHasTenItems) {
-        const reswipeBucketContent = activeBucket.filter((card) =>
-          favList.includes(card.drop_id)
-        );
+        const reswipeBucketContent = activeBucket.filter((card) =>{
+          return favList.includes(card.id)
+
+        }
+      );
         Object.assign(activeTabContent, {
           reswipeBucket: reswipeBucketContent,
         });
-      // }
+
+        console.log(reswipeBucketContent);
 
       // if (reswipeModeActive) {
       //   duringReswipe(activeTabContent, drop_id, state);
@@ -236,13 +236,15 @@ const categoryReducer = (state = initialState, action) => {
     }
     case "SET_RESWIPE_BUCKET": {
       const {newBucket, tab} = action.payload;
+      const newSelectionFav = newBucket.map((bucket)=>bucket.id);
+      
       return{
         ...state,
         general: {
           ...state.general,
           reswipeModeActive: false
         },
-        [tab]: {...state[tab], reswipeBucket: newBucket}
+        [tab]: {...state[tab], reswipeBucket: newBucket, selectionBucket: {fav: newSelectionFav, rem:[]}}
       }
     }
 
