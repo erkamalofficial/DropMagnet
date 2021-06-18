@@ -23,7 +23,7 @@
 
 
 .fix-minor-bug-swipe>.swipe:first-child>div>div{
-  width: 100%;
+  /* width: 100%; */
 }
 
 .card-container .animatedChild {
