@@ -64,8 +64,7 @@ const Home = (props) => {
     return curDate
   }
   const currentTabId = tabList[activeTabIndex];
-  const [internalLoader, setInternalLoader] = useState(false);
-  const { activeBucket, reswipeBucket } = useSelector((state) => {
+  const { activeBucket} = useSelector((state) => {
     return state.category[currentTabId];
   });
 

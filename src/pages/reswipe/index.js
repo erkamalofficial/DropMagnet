@@ -58,10 +58,9 @@ function Reswipe() {
   const [reswipeComplete, setReswipeComplete] = useState(false);
   const [deletedFinalFour, setDeletedFinalFour] = useState(null);
 
-  console.log(reswipeBucket);
   const handleReswipe = (dir, drop_id) => {
     let newArray = tempReswipeBucket.filter(
-      (value) => value.drop_id !== drop_id
+      (value) => value.id !== drop_id
     );
     let currCAndCurrL =  newArray.length;
 
@@ -94,7 +93,8 @@ function Reswipe() {
     setDeletedFinalFour(newDeletedFinal4);
   };
 
-  const handleFinish = () => {
+  const handleFinish = (isExit = false) => {
+    if(isExit) return dispatch({type: 'SET_RESWIPE_BUCKET', payload: { newBucket: tempReswipeBucket, tab: curTab }})
     const currentReswipeBucket = cloneDeep(tempReswipeBucket);
     if (deletedFinalFour !== null) {
       deletedFinalFour.map((isDeleted, index) => {
@@ -103,8 +103,7 @@ function Reswipe() {
         }
       });
     }
-
-    dispatch({type: 'SET_RESWIPE_BUCKET', payload: { newBucket: currentReswipeBucket, tab: curTab }})
+    dispatch({type: 'SET_RESWIPE_BUCKET', payload: { newBucket: tempReswipeBucket, tab: curTab }})
     // API to save on the backend
     setTempReswipeBucket(currentReswipeBucket);
     setReswipeComplete(true);
@@ -117,7 +116,7 @@ function Reswipe() {
       <Tabs
         activeTabIndex={tabList.indexOf(curTab)}
         handleActiveTabIndex={(index) =>{
-          dispatch({type:'CLOSE_RESWIPE',payload: {tab: curTab}});
+          handleFinish(true);
           history.push('/home');
         }}
         tabList={tabList}
@@ -143,7 +142,7 @@ function Reswipe() {
                 key="progressBar"
                 size={roundLength}
                 closeReswipe = {()=>{
-                  dispatch({type:'CLOSE_RESWIPE',payload: {tab: curTab}});
+                  handleFinish(true);
                   history.push('/home');
                 }}
                 selectedCount={tempReswipeBucket.length}
@@ -177,7 +176,7 @@ function Reswipe() {
               <>
                 <button
                   className={"main-button-2 clickable"}
-                  onClick={handleFinish}
+                  onClick={()=>handleFinish()}
                 >
                   <h1 style={{ textAlign: "center", width: "150px" }}>
                     I want {tempReswipeBucket.length}!
@@ -200,7 +199,7 @@ function Reswipe() {
               <>
                 <button
                   className={"main-button-2 clickable"}
-                  onClick={handleFinish}
+                  onClick={()=>handleFinish()}
                 >
                   <h1 style={{ textAlign: "center", width: "150px" }}>SAVE</h1>
                 </button>
@@ -209,7 +208,6 @@ function Reswipe() {
           </div>
         ) : (
           <button className={"main-button-2 clickable"} onClick={()=>{
-            dispatch({type:'CLOSE_RESWIPE',payload: {tab: curTab}});
             history.push("/home")
           }}>
             <h1 style={{ textAlign: "center", width: "100%" }}>Go To Collection Page</h1>
