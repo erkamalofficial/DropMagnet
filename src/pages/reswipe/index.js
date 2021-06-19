@@ -18,6 +18,7 @@ import { cloneDeep } from "lodash";
 import "./index.css";
 import ReswipeComplete from "./complete_reswipe";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
+import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
 
 const MainContainer = styled.div`
   display: flex;
@@ -51,7 +52,6 @@ function Reswipe(props) {
   }
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
 
-
   const [isReswipeStarted, setIsReswipeStarted] = useState(false);
   const curTab = qs.parse(useLocation().search, "?").tab;
   const [detailView, setDetailView] = useState(false);
@@ -59,6 +59,7 @@ function Reswipe(props) {
     useState(false);
 
   const [isFinal4Left, setIsFinal4Left] = useState(false);
+  const { idToken } = useAuth();
 
   const tabList = ["arts", "music", "collectables", "fashion"];
 
@@ -66,7 +67,7 @@ function Reswipe(props) {
     return state.category[curTab];
   });
 
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
 
   const [tempReswipeBucket, setTempReswipeBucket] = useState(reswipeBucket);
 
@@ -79,24 +80,24 @@ function Reswipe(props) {
   };
 
   const handleReswipe = (dir, drop_id) => {
-    let newArray = tempReswipeBucket.filter(
-      (value) => value.id !== drop_id
-    );
-    let currCAndCurrL =  newArray.length;
+    let newArray = tempReswipeBucket.filter((value) => value.id !== drop_id);
+    let currCAndCurrL = newArray.length;
 
     if (dir === "right") {
-      currCAndCurrL +=1;
+      saveDrop(idToken, drop_id);
+      currCAndCurrL += 1;
     } else {
+      unsaveDrop(idToken, drop_id);
       setTempReswipeBucket(newArray);
     }
     if (currentCounter - 1 === 0) {
-      if(newArray.length === 0){
+      if (newArray.length === 0) {
         return handleFinish();
       }
       setRoundLength(currCAndCurrL);
       setCurrentCounter(currCAndCurrL);
       setIsReswipeStarted(false);
-      if (currCAndCurrL <= 4 ) {
+      if (currCAndCurrL <= 4) {
         setDeletedFinalFour(new Array(currCAndCurrL).fill(false));
         setIsFinal4Left(true);
       } else {
@@ -114,16 +115,29 @@ function Reswipe(props) {
   };
 
   const handleFinish = (isExit = false) => {
-    if(isExit) return dispatch({type: 'SET_RESWIPE_BUCKET', payload: { newBucket: tempReswipeBucket, tab: curTab }})
+    if (isExit)
+      return dispatch({
+        type: "SET_RESWIPE_BUCKET",
+        payload: { newBucket: tempReswipeBucket, tab: curTab },
+      });
     const currentReswipeBucket = cloneDeep(tempReswipeBucket);
     if (deletedFinalFour !== null) {
       deletedFinalFour.map((isDeleted, index) => {
-        if (isDeleted) {
-          currentReswipeBucket.splice(index, 1);
+        if (currentReswipeBucket[index]) {
+          const id = currentReswipeBucket[index].id;
+          if (isDeleted) {
+            unsaveDrop(idToken, id);
+            currentReswipeBucket.splice(index, 1);
+          } else {
+            saveDrop(idToken,id);
+          }
         }
       });
     }
-    dispatch({type: 'SET_RESWIPE_BUCKET', payload: { newBucket: tempReswipeBucket, tab: curTab }})
+    dispatch({
+      type: "SET_RESWIPE_BUCKET",
+      payload: { newBucket: tempReswipeBucket, tab: curTab },
+    });
     // API to save on the backend
     setTempReswipeBucket(currentReswipeBucket);
     setReswipeComplete(true);
@@ -151,9 +165,9 @@ function Reswipe(props) {
 
       <Tabs
         activeTabIndex={tabList.indexOf(curTab)}
-        handleActiveTabIndex={(index) =>{
+        handleActiveTabIndex={(index) => {
           handleFinish(true);
-          history.push('/home');
+          history.push("/home");
         }}
         tabList={tabList}
       />
@@ -177,9 +191,9 @@ function Reswipe(props) {
               <ProgressBar
                 key="progressBar"
                 size={roundLength}
-                closeReswipe = {()=>{
+                closeReswipe={() => {
                   handleFinish(true);
-                  history.push('/home');
+                  history.push("/home");
                 }}
                 selectedCount={tempReswipeBucket.length}
               />
@@ -194,8 +208,9 @@ function Reswipe(props) {
             </div>
           )}
         </>
-      ) : <ReswipeComplete />
-      }
+      ) : (
+        <ReswipeComplete />
+      )}
 
       <ReswipedButtonContainer>
         {!reswipeComplete ? (
@@ -212,7 +227,7 @@ function Reswipe(props) {
               <>
                 <button
                   className={"main-button-2 clickable"}
-                  onClick={()=>handleFinish()}
+                  onClick={() => handleFinish()}
                 >
                   <h1 style={{ textAlign: "center", width: "150px" }}>
                     I want {tempReswipeBucket.length}!
@@ -235,7 +250,7 @@ function Reswipe(props) {
               <>
                 <button
                   className={"main-button-2 clickable"}
-                  onClick={()=>handleFinish()}
+                  onClick={() => handleFinish()}
                 >
                   <h1 style={{ textAlign: "center", width: "150px" }}>SAVE</h1>
                 </button>
@@ -243,10 +258,15 @@ function Reswipe(props) {
             )}
           </div>
         ) : (
-          <button className={"main-button-2 clickable"} onClick={()=>{
-            history.push("/home")
-          }}>
-            <h1 style={{ textAlign: "center", width: "100%" }}>Go To Collection Page</h1>
+          <button
+            className={"main-button-2 clickable"}
+            onClick={() => {
+              history.push("/home");
+            }}
+          >
+            <h1 style={{ textAlign: "center", width: "100%" }}>
+              Go To Collection Page
+            </h1>
           </button>
         )}
       </ReswipedButtonContainer>
