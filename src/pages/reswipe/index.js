@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import styled from "styled-components";
 import IntroScreen from "./intro_screen";
+import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
+import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
+
 import { useSelector, useDispatch } from "react-redux";
 import qs from "querystring";
 import Tabs from "../home/tabs";
@@ -14,11 +17,12 @@ import { cloneDeep } from "lodash";
 
 import "./index.css";
 import ReswipeComplete from "./complete_reswipe";
+import { useAuth } from "../../contexts/FirebaseAuthContext";
 
 const MainContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 80px;
+  /* margin-top: 80px; */
   flex-direction: column;
 `;
 
@@ -33,9 +37,20 @@ const Header = styled.div`
   margin-bottom: auto;
 `;
 
-function Reswipe() {
+function Reswipe(props) {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941);
+  function selectDate(date) {
+    console.log("opened item", date);
+  }
+
+  function setSelectedDate(date) {
+    console.log("selected date is", date);
+    setSelectedDropdownDate(date.date);
+  }
+  const [dateMenuOpen, setDateMenuOpen] = useState(false);
+
 
   const [isReswipeStarted, setIsReswipeStarted] = useState(false);
   const curTab = qs.parse(useLocation().search, "?").tab;
@@ -51,12 +66,17 @@ function Reswipe() {
     return state.category[curTab];
   });
 
+  const {currentUser} = useAuth();
+
   const [tempReswipeBucket, setTempReswipeBucket] = useState(reswipeBucket);
 
   const [currentCounter, setCurrentCounter] = useState(reswipeBucket.length);
   const [roundLength, setRoundLength] = useState(reswipeBucket.length);
   const [reswipeComplete, setReswipeComplete] = useState(false);
   const [deletedFinalFour, setDeletedFinalFour] = useState(null);
+  const openDateMenu = () => {
+    setDateMenuOpen(true);
+  };
 
   const handleReswipe = (dir, drop_id) => {
     let newArray = tempReswipeBucket.filter(
@@ -112,6 +132,22 @@ function Reswipe() {
   //   console.log(reswipeBucket,selectionBucket);
   return (
     <MainContainer className={"container-reswipe"}>
+      <DateMenu
+        open={dateMenuOpen}
+        setOpen={setDateMenuOpen}
+        openItem={selectDate}
+        setSelectedDate={setSelectedDate}
+      />
+      <HeaderBar
+        // openHome={() => openHome()}
+        // openMenu={() => openMenu()}
+        isLogoNotVisible
+        openDateMenu={() => openDateMenu()}
+        selectedDropdownDate={selectedDropdownDate}
+        datePickerVisible={detailView ? false : true}
+        userLoggedIn={currentUser && currentUser.uid}
+        userImageVisible={true}
+      />
 
       <Tabs
         activeTabIndex={tabList.indexOf(curTab)}
