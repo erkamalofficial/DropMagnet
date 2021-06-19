@@ -148,12 +148,6 @@ const Home = (props) => {
   };
   return (
     <HomeContainer>
-      <DateMenu
-        open={dateMenuOpen}
-        setOpen={setDateMenuOpen}
-        openItem={selectDate}
-        setSelectedDate={setSelectedDate}
-      />
 
       <HeaderBar
         openHome={() => openHome()}
