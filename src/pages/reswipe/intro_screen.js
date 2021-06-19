@@ -17,8 +17,8 @@ margin-bottom: 26px;
 export default function IntroScreen(props){
     return(
         <ReswipeCard>
-            <h3 style={{fontSize: '18px',textAlign: 'center'}}>You’re On Your Way To Becoming A Top Art Collector!</h3>
-            <h1 className={'h1-large'} style={{fontSize: '32px',textAlign: 'center'}}>It's Time To Reswipe</h1>
+            <h3 className={'top-title'} style={{fontSize: '18px',textAlign: 'center'}}>You’re On Your Way To Becoming A Top Art Collector!</h3>
+            <h1 className={'h1-large mid-title'} style={{fontSize: '32px',textAlign: 'center'}}>It's Time To Reswipe</h1>
             <VideoHolder className={'video-playback'}>
                 <h1 style={{"text-align": "center", fontSize: "22px"}}>What Is ReSwipe?</h1>
                 <div className={'play-button-icon'}>

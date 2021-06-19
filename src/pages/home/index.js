@@ -19,7 +19,6 @@ import "./index.css";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
-import { set } from "lodash";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -157,8 +156,6 @@ const Home = (props) => {
         selectedDropdownDate={selectedDropdownDate}
         datePickerVisible={detailView ? false : true}
         userLoggedIn={props.userLoggedIn}
-        userImage={props.userDetails.image}
-        userDetails={props.userDetails}
         userImageVisible={true}
       />
       <div className="rel">
