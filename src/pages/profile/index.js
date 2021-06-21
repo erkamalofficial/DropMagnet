@@ -242,18 +242,26 @@ export default function Profile(props) {
     }
   }
 
+  const updateDetails = (field, value) => {
+    currentUser.getIdToken(true).then(function (idToken) {
+      DropMagnetAPI.updateUserDetails(field, value, idToken)
+      .then(res => alert("Successfully updated."))
+    })
+  }
   const saveForm = () => {
     switch (currentEditField) {
 
       case 'username': {
         /*API Call*/
         setHandle(usernameForm);
+        updateDetails('username', usernameForm);
         setUsernameForm('');
         break;
       }
       case 'insta': {
         /*API Call to save*/
         setInstaHandle('https://www.instagram.com/' + instaHandleForm);
+        updateDetails('insta_url', instaHandleForm);
         setInstaHandleForm('');
         break;
       }
@@ -261,6 +269,7 @@ export default function Profile(props) {
       case 'twitter': {
         // API Call TO Save
         setTwitterHandle('https://www.twitter.com/' + twitterHandleForm)
+        updateDetails('twitter_url', twitterHandleForm);
         setTwitterHandleForm('');
         break;
       }
@@ -268,6 +277,7 @@ export default function Profile(props) {
       case 'bio': {
         // API Call To Save
         setBio(descriptionForm);
+        updateDetails('bio', descriptionForm);
         setDescriptionForm('');
         break;
       }

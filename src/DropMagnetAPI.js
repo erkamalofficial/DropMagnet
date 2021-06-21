@@ -25,7 +25,7 @@ async function customAPICall(endpoint, data, method, access_token) {
     method: method,
     body: data === "" ? null : JSON.stringify(data),
     mode: 'cors', // no-cors, *cors, same-origin
-    headers: { 
+    headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${access_token}`
     },
@@ -39,15 +39,14 @@ async function customAPICall(endpoint, data, method, access_token) {
 async function customAPICallAddDrop(endpoint, data, method, access_token) {
 
   const uri = host + endpoint
-
-  // Firebase Auth Token
-  console.log('endpoint', uri)
+    // Firebase Auth Token
+    console.log('endpoint', uri)
   console.log('data is', JSON.stringify(data))
   console.log('access token', access_token)
 
-  const formData  = new FormData()
+  const formData = new FormData()
 
-  for(const name in data) {
+  for (const name in data) {
     formData.append(name, data[name]);
   }
 
@@ -55,7 +54,7 @@ async function customAPICallAddDrop(endpoint, data, method, access_token) {
     method: method,
     body: data === "" ? null : formData,
     mode: 'cors', // no-cors, *cors, same-origin
-    headers: { 
+    headers: {
       'Authorization': `Bearer ${access_token}`
     },
     redirect: 'follow', // manual, *follow, error
@@ -91,13 +90,19 @@ export function changeUserImage(image, access_token) {
   const payload = {
     image
   }
-  return customAPICall(createDropImageEndpoint, payload, "POST", access_token) 
+  return customAPICall(createDropImageEndpoint, payload, "POST", access_token)
 }
+
+export function updateUserDetails(field, value, access_token) {
+  const updateEndpoint = `profiles/${field}?v=${value}`
+  return customAPICall(updateEndpoint, {}, "PUT", access_token)
+}
+
 
 // Drop creation
 
 
-export function createDrop(title, desc, category, hashtag,drop_date, launchDate, marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
+export function createDrop(title, desc, category, hashtag, drop_date, launchDate, marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
   const createDropEndpoint = 'drops'
   const content = files[0]
 
@@ -124,31 +129,31 @@ export function createDropImage(image) {
   const payload = {
     image
   }
-  return customAPICall(createDropImageEndpoint, payload, "POST") 
+  return customAPICall(createDropImageEndpoint, payload, "POST")
 }
 
 
 // Get Feed
 
-export function getFeeds(token, category, fromDate){
+export function getFeeds(token, category, fromDate) {
   let d = new Date()
-  const toDate = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`
+  const toDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
   const feedDropsEndpoint = `drops/feed?from=${fromDate}&to=8-4-2021&category=${category}`
   return customAPICall(feedDropsEndpoint, "", "GET", token)
 }
 
 
-export function saveDrop(token='', dropid=''){
+export function saveDrop(token = '', dropid = '') {
   const saveDropEndPoint = `drops/${dropid}/save`;
-  return customAPICall(saveDropEndPoint, "","POST",token);
+  return customAPICall(saveDropEndPoint, "", "POST", token);
 }
 
-export function getSaveDrops(token=''){
+export function getSaveDrops(token = '') {
   const getSaveDropEndPoint = `drops/saved`;
-  return customAPICall(getSaveDropEndPoint, "","GET",token);
+  return customAPICall(getSaveDropEndPoint, "", "GET", token);
 }
 
-export function unsaveDrop(token='',dropid=''){
+export function unsaveDrop(token = '', dropid = '') {
   const unsaveDropEndPoint = `drops/${dropid}/unsave`;
-  return customAPICall(unsaveDropEndPoint, "","POST",token);
+  return customAPICall(unsaveDropEndPoint, "", "POST", token);
 }

@@ -5,11 +5,14 @@ import { Link, Redirect, useHistory, withRouter } from 'react-router-dom'
 import "./HeaderBar.css"
 import { epochToDayMonth } from '../../../helpers/DateFormatter';
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
+import DatePicker from 'react-datepicker'
+// import "./DatePicker.css"
 
 
 function HeaderBar(props) {
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
   const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+  const [startDate, setStartDate] = useState(new Date());
 
   function showUserAction() {
     if (props.userLoggedIn)
@@ -52,9 +55,11 @@ function HeaderBar(props) {
           <div>#ThreeTheWeb</div>
         </LogoTitleSection>
         { props.datePickerVisible ? 
-          <div onClick={() => props.openDateMenu()} className="dropdown-button">
-            <p className="dropdown-button-title">{epochToDayMonth(props.selectedDropdownDate)}</p>
-            <img alt={'drop-down-btn'} className="dropdown-button-icon" src="./dropdown.png"/>
+          <div className="react-datepicker-container" style={{zIndex: '9999999999'}}>
+            <DatePicker 
+            selected={startDate} 
+            onChange={(date) => setStartDate(date)}
+             />
           </div>
           :
           <></>

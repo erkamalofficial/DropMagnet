@@ -16,6 +16,8 @@ import ScrollMenu from 'react-horizontal-scrolling-menu';
 import { Menu, ArrowLeft, ArrowRight } from '../../components/elements/DateDragBarComponent/DateDragBarComponent'
 import { useAuth } from "../../contexts/FirebaseAuthContext"
 import '../../components/detail_page/DateMenu/DateMenu.css'
+import DatePicker from 'react-datepicker'
+import "./CreateDrop.css"
 
 export default function DropCreation(props) {
 
@@ -23,7 +25,7 @@ export default function DropCreation(props) {
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
   const [hashtag, setHashtag] = useState('')
-  const [launchDate, setLaunchDate] = useState({})
+  const [launchDate, setLaunchDate] = useState(new Date())
   const [marketplace, setMarketplace] = useState('')
   const [marketplaceId, setMarketplaceId] = useState('')
   const [dropPieces, setDropPieces] = useState(null)
@@ -136,41 +138,41 @@ export default function DropCreation(props) {
         if (title !== '' && category !== '' && description !== '' && hashtag !== '') {
           setDropCreationStep(dropCreationStep + 1)
         }
-        else{alert("Fill all the fields.")}
-      } 
-      
+        else { alert("Fill all the fields.") }
+      }
+
       else if (dropCreationStep === 1) {
         if (Object.keys(launchDate).length > 0) {
           setDropCreationStep(dropCreationStep + 1)
         }
-        else{
+        else {
           alert("Select launch date.")
         }
-      } 
-      
+      }
+
       else if (dropCreationStep === 2) {
         if (marketplace !== '' && dropPieces !== null && marketplaceId !== '') {
           setDropCreationStep(dropCreationStep + 1)
         }
-        else{
+        else {
           alert("Fill all the fields.")
         }
-      } 
-      
+      }
+
       else if (dropCreationStep === 3) {
-        if(auction_price !== null || price !== null){
+        if (auction_price !== null || price !== null) {
           setDropCreationStep(dropCreationStep + 1)
         }
-        else{
+        else {
           alert("Enter a price.")
         }
-      } 
-      
+      }
+
       else if (dropCreationStep === 4) {
-        if(files.length > 0){
+        if (files.length > 0) {
           createDrop()
         }
-        else{
+        else {
           alert("Upload a file.")
         }
       }
@@ -192,21 +194,27 @@ export default function DropCreation(props) {
   function renderSecondStep() {
     return <div>
       <div className="main-menu-holder">
-        <ScrollMenu
+        {/* <ScrollMenu
           style={{ boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5)', backgroundColor: 'rgba(19, 19, 19, 0.56)', marginBottom: '14px' }}
           data={menu}
           arrowLeft={ArrowLeft}
           arrowRight={ArrowRight}
           selected={selectedMonth}
           onSelect={onSelect}
+        /> */}
+        <DatePicker
+          selected={launchDate}
+          onChange={(date) => setLaunchDate(date)}
         />
-        {days.map(renderDateCell)}
       </div>
     </div>
   }
 
   function renderDateCell(date) {
-    return <DateCell day={date} cellSelected={date.date === launchDate.date} setSelectedDate={() => { setLaunchDate(date) }} />
+    return <DatePicker
+      selected={launchDate}
+      onChange={(date) => setLaunchDate(date)}
+    />
   }
 
   function renderThirdStep() {
@@ -241,25 +249,25 @@ export default function DropCreation(props) {
   function renderStep() {
     if (dropCreationStep === 0) {
       return renderFirstStep()
-    } 
+    }
     else if (dropCreationStep === 1) {
       if (title !== '' && category !== '' && description !== '' && hashtag !== '') {
         return renderSecondStep()
       }
 
-    } 
+    }
     else if (dropCreationStep === 2) {
-      if(Object.keys(launchDate).length > 0){
+      if (Object.keys(launchDate).length > 0) {
         return renderThirdStep()
       }
-    } 
+    }
     else if (dropCreationStep === 3) {
-      if(marketplace !== '' && dropPieces !== null && marketplaceId !== ''){
+      if (marketplace !== '' && dropPieces !== null && marketplaceId !== '') {
         return renderFourthStep()
       }
-    } 
+    }
     else if (dropCreationStep === 4) {
-      if(auction_price !== null || price !== null){
+      if (auction_price !== null || price !== null) {
         return renderFifthStep()
       }
     }
