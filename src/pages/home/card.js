@@ -127,30 +127,13 @@ const HeaderBarMenuIcon = styled.div`
 
 const Card = (props) => {
 
-  const { artist_image, handleDrop, swiping, setSwiping } = props
+  const { artist_image } = props
 
   let artistImg = artist_image !== undefined ? artist_image : UserIcon
   
   return (
     <SwipeCard data-key="card-bdr"
-      onMouseDown={() => setSwiping(false) }
-      onMouseMove={() => setSwiping(true) }
-      onMouseUp={e => {
-        setSwiping(false);
-        if(!swiping){
-          handleDrop(props)
-        }
-      }}
-      onTouchStart={() => setSwiping(false) }
-      onTouchMove={() => setSwiping(true) }
-      onTouchEnd={e => {
-        e.preventDefault();
-        setSwiping(false);
-        
-        if(!swiping){
-          handleDrop(props)
-        }
-      }}>
+      >
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
           <UserAvatar src={artistImg} />

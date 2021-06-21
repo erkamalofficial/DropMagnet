@@ -76,7 +76,7 @@ const getSwipeDirectionBasedOnLocation = (location) => {
   } else if (location.x > settings.swipeThreshold) {
     return "right";
   }
-}
+};
 
 const calcSpeed = (oldLocation, newLocation) => {
   const dx = newLocation.x - oldLocation.x;
@@ -135,6 +135,7 @@ const TinderCard = React.forwardRef(
       children,
       onSwipe,
       onCardLeftScreen,
+      onClickSwiperMain,
       className,
       preventSwipe = ["up", "down"],
       overlayLabels = false,
@@ -205,8 +206,7 @@ const TinderCard = React.forwardRef(
                 onCardLeftScreen(dir);
               }
               return;
-            }
-            else {
+            } else {
               console.log("Ignored direction - " + dir);
             }
           }
@@ -239,11 +239,13 @@ const TinderCard = React.forwardRef(
         let speed = { x: 0, y: 0 };
         let lastLocation = { x: 0, y: 0, time: new Date().getTime() };
         let mouseIsClicked = false;
+        let evtMouseOnly = false;
 
         element.addEventListener("touchstart", (ev) => {
           ev.preventDefault();
           ev.stopImmediatePropagation();
           mouseIsClicked = true;
+          evtMouseOnly = true;
           handleSwipeStart();
           offset = {
             x: -touchCoordinatesFromEvent(ev).x,
@@ -254,6 +256,7 @@ const TinderCard = React.forwardRef(
         element.addEventListener("mousedown", (ev) => {
           ev.preventDefault();
           mouseIsClicked = true;
+          evtMouseOnly = true;
           handleSwipeStart();
           offset = {
             x: -mouseCoordinatesFromEvent(ev).x,
@@ -265,6 +268,7 @@ const TinderCard = React.forwardRef(
           ev.preventDefault();
           ev.stopImmediatePropagation();
           if (mouseIsClicked) {
+            evtMouseOnly = false;
             const newLocation = dragableTouchmove(
               touchCoordinatesFromEvent(ev),
               element,
@@ -279,6 +283,7 @@ const TinderCard = React.forwardRef(
         element.addEventListener("mousemove", (ev) => {
           ev.preventDefault();
           if (mouseIsClicked) {
+            evtMouseOnly = false;
             const newLocation = dragableTouchmove(
               mouseCoordinatesFromEvent(ev),
               element,
@@ -292,18 +297,27 @@ const TinderCard = React.forwardRef(
 
         element.addEventListener("touchend", (ev) => {
           if (mouseIsClicked) {
-            ev.preventDefault();
-            ev.stopImmediatePropagation();
-            handleSwipeReleased(element, speed, lastLocation);
+            if (evtMouseOnly) {
+              onClickSwiperMain();
+            } else {
+              ev.preventDefault();
+              ev.stopImmediatePropagation();
+              handleSwipeReleased(element, speed, lastLocation);
+            }
           }
         });
 
         element.addEventListener("mouseup", (ev) => {
           if (mouseIsClicked) {
-            ev.preventDefault();
-            mouseIsClicked = false;
-            //console.log('mouseup', offset.x, lastLocation)
-            handleSwipeReleased(element, speed, lastLocation);
+            if (evtMouseOnly) {
+              evtMouseOnly = false;
+              onClickSwiperMain();
+            } else {
+              ev.preventDefault();
+              mouseIsClicked = false;
+              //console.log('mouseup', offset.x, lastLocation)
+              handleSwipeReleased(element, speed, lastLocation);
+            }
           }
         });
 
@@ -311,6 +325,7 @@ const TinderCard = React.forwardRef(
           if (mouseIsClicked) {
             ev.preventDefault();
             mouseIsClicked = false;
+            evtMouseOnly = false;
             handleSwipeReleased(element, speed, lastLocation);
           }
         });

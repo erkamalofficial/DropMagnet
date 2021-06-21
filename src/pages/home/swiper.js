@@ -133,11 +133,11 @@ function Swiper(props) {
                 setSwiping(true)
                 return swiped(dir, id)
               }}
+              onClickSwiperMain = {()=>openDrop(cardDetails)}
               onCardLeftScreen={() => outOfFrame(id)}
               overlayLabels={true}
             >
-              <Card {...cardDetails} handleDrop={openDrop} swiping={swiping}
-                setSwiping={setSwiping} />
+              <Card {...cardDetails} />
             </TinderCard>
           );
         })}
