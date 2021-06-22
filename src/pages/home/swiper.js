@@ -115,6 +115,7 @@ function Swiper(props) {
           handleActiveTabIndex={props.handleActiveTabIndex}
           tabList={props.tabList}
         />
+        
       )}
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
