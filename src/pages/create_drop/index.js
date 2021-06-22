@@ -89,13 +89,12 @@ export default function DropCreation(props) {
 
   function createDrop() {
     currentUser.getIdToken(true).then(function (idToken) {
-      let drop_date = new Date().getTime()
+      let drop_date = new Date(launchDate).getTime()
       DropMagnetAPI.createDrop(title,
         description,
-        category,
+        category.toLowerCase(),
         hashtag,
         drop_date,
-        launchDate.date,
         marketplace,
         marketplaceId,
         dropPieces,
@@ -132,6 +131,8 @@ export default function DropCreation(props) {
     }
   }
 
+  console.log(launchDate)
+
   function setStepAction(action = 'decrease') {
     if (action === 'increase') {
       if (dropCreationStep === 0) {
@@ -142,7 +143,7 @@ export default function DropCreation(props) {
       }
 
       else if (dropCreationStep === 1) {
-        if (Object.keys(launchDate).length > 0) {
+        if (launchDate !== '') {
           setDropCreationStep(dropCreationStep + 1)
         }
         else {
@@ -257,7 +258,7 @@ export default function DropCreation(props) {
 
     }
     else if (dropCreationStep === 2) {
-      if (Object.keys(launchDate).length > 0) {
+      if (launchDate !== '') {
         return renderThirdStep()
       }
     }

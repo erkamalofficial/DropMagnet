@@ -102,7 +102,7 @@ export function updateUserDetails(field, value, access_token) {
 // Drop creation
 
 
-export function createDrop(title, desc, category, hashtag, drop_date, launchDate, marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
+export function createDrop(title, desc, category, hashtag, drop_date,  marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
   const createDropEndpoint = 'drops'
   const content = files[0]
 
@@ -112,7 +112,6 @@ export function createDrop(title, desc, category, hashtag, drop_date, launchDate
     category,
     // hashtag,
     drop_date,
-    // launchDate,
     marketplace,
     // marketplaceProfileLink,
     // piecesInDrop,
@@ -135,11 +134,11 @@ export function createDropImage(image) {
 
 // Get Feed
 
-export function getFeeds(token, category, fromDate) {
+export function getFeeds(category, extras) {
   let d = new Date()
   const toDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
-  const feedDropsEndpoint = `drops/feed?from=${fromDate}&to=8-4-2021&category=${category}`
-  return customAPICall(feedDropsEndpoint, "", "GET", token)
+  const feedDropsEndpoint = `drops/feed?from=${extras.fromDate}&to=8-4-2021&category=${category}`
+  return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 
 

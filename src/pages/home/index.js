@@ -40,15 +40,7 @@ const Home = (props) => {
 
   const { currentUser, idToken } = useAuth();
 
-  useEffect(() => {
-    currentUser.getIdToken(true).then(function (idToken) {
-      let today = getCurrentDate()
-      dispatch(fetchArt({ activeTabIndex: 0, token: idToken, fromDate: today }));
-    })
-
-  }, []);
-
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941);
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date());
   const [detailView, setDetailView] = useState(false);
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
   const tabList = ["arts", "music", "collectables", "fashion"];
@@ -60,13 +52,28 @@ const Home = (props) => {
     (state) => state.category.general.reswipeModeActive
   );
 
-  const getCurrentDate = () => {
-    let d = new Date()
-    const curDate = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`
+
+  useEffect(() => {
+    console.log(selectedDropdownDate)
+    currentUser.getIdToken(true).then(function (idToken) {
+      let today = getCurrentDate(selectedDropdownDate)
+      let extras = {
+        token: idToken,
+        fromDate: today,
+        userID: currentUser.uid
+      }
+      dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
+    })
+
+  }, [selectedDropdownDate]);
+
+  const getCurrentDate = (date) => {
+    let d = new Date(date)
+    const curDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
     return curDate
   }
   const currentTabId = tabList[activeTabIndex];
-  const { activeBucket} = useSelector((state) => {
+  const { activeBucket } = useSelector((state) => {
     return state.category[currentTabId];
   });
 
@@ -87,9 +94,9 @@ const Home = (props) => {
     setSelectedDropdownDate(date.date);
   }
 
-  const openHome = () => {};
+  const openHome = () => { };
 
-  const openMenu = () => {};
+  const openMenu = () => { };
 
   const openDateMenu = () => {
     setDateMenuOpen(true);
@@ -98,24 +105,29 @@ const Home = (props) => {
   const handleActiveTabIndex = (index) => {
     const activeTab = tabList[index];
     let today = getCurrentDate()
+    let extras = {
+      token: idToken,
+      fromDate: today,
+      userID: currentUser.uid
+    }
     if (activeTab === "music") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchMusic({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchMusic({ activeTabIndex: index, extras: extras }));
       })
     }
     if (activeTab === "arts") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchArt({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchArt({ activeTabIndex: index, extras: extras }));
       })
     }
     if (activeTab === "collectables") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchColletibles({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchColletibles({ activeTabIndex: index, extras: extras }));
       })
     }
     if (activeTab === "fashion") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchFashion({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchFashion({ activeTabIndex: index, extras: extras }));
       })
 
     }
@@ -128,21 +140,21 @@ const Home = (props) => {
         .then(() => {
           console.log("Success");
         })
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => {
           // setInternalLoader(false);
         });
-    }else if(dir === "left"){
-       unsaveDrop(idToken, drop_id)
-       .then(()=>{
-        console.log('Unsave Success');
-       })
-       .catch(()=>{
+    } else if (dir === "left") {
+      unsaveDrop(idToken, drop_id)
+        .then(() => {
+          console.log('Unsave Success');
+        })
+        .catch(() => {
 
-       })
-       .finally(()=>{
+        })
+        .finally(() => {
 
-       })
+        })
     }
   };
   return (
@@ -154,6 +166,7 @@ const Home = (props) => {
         isLogoNotVisible
         openDateMenu={() => openDateMenu()}
         selectedDropdownDate={selectedDropdownDate}
+        setSelectedDropdownDate={setSelectedDropdownDate}
         datePickerVisible={detailView ? false : true}
         userLoggedIn={props.userLoggedIn}
         userImageVisible={true}
@@ -161,18 +174,18 @@ const Home = (props) => {
       <div className="rel">
         {(isLoading) && <Spinner />}
         {/* <div style={{display: internalLoader ? 'none': 'block'}}> */}
-          {!isLoading && (
-            <Swiper
-              reswipeModeActive={false}
-              key={uniqueId}
-              db={activeBucket}
-              activeTabIndex={activeTabIndex}
-              onSwipe={handleSwipe}
-              handleActiveTabIndex={handleActiveTabIndex}
-              tabList={tabList}
-              setDetailView={setDetailView}
-            />
-          )}
+        {!isLoading && (
+          <Swiper
+            reswipeModeActive={false}
+            key={uniqueId}
+            db={activeBucket}
+            activeTabIndex={activeTabIndex}
+            onSwipe={handleSwipe}
+            handleActiveTabIndex={handleActiveTabIndex}
+            tabList={tabList}
+            setDetailView={setDetailView}
+          />
+        )}
         {/* </div> */}
       </div>
     </HomeContainer>
