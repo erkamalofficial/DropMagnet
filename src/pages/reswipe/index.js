@@ -162,15 +162,6 @@ function Reswipe(props) {
         userLoggedIn={currentUser && currentUser.uid}
         userImageVisible={true}
       />
-
-      <Tabs
-        activeTabIndex={tabList.indexOf(curTab)}
-        handleActiveTabIndex={(index) => {
-          handleFinish(true);
-          history.push("/home");
-        }}
-        tabList={tabList}
-      />
       {!reswipeComplete ? (
         <>
           {!isFinal4Left && !showRestartReSwipeMessage && !isReswipeStarted && (
