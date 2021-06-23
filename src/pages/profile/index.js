@@ -386,8 +386,8 @@ export default function Profile(props) {
             }
           </div>
 
-          <div className="rel" style={{ display: `${!detailView ? 'none' : 'flex'}` }}>
-            <div className="home-container">
+          <div style={{ display: `${!detailView ? 'none' : 'block'}` }}>
+            <div className="home-container profile-view-container">
               {detailView && renderDetail()}
             </div>
           </div>

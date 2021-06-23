@@ -57,8 +57,8 @@ function HeaderBar(props) {
         { props.datePickerVisible ? 
           <div className="react-datepicker-container" style={{zIndex: '9999999999'}}>
             <DatePicker 
-            selected={startDate} 
-            onChange={(date) => setStartDate(date)}
+            selected={props.selectedDropdownDate} 
+            onChange={(date) => props.setSelectedDropdownDate(date)}
              />
           </div>
           :

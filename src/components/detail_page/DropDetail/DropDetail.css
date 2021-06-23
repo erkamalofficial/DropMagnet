@@ -33,10 +33,13 @@
 
 @media(max-width: 600px) {
   .home-container {
-    width: 100%;
+    width: var(--card-container-width)
   }
   .detail-view{
     width: 100%;
+  }
+  .profile-view-container{
+    margin-top: -50px !important;
   }
 }
 

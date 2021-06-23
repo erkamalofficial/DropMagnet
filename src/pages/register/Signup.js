@@ -46,24 +46,24 @@ export default function Signup(props) {
       let name = res.user.displayName === null ? username : res.user.displayName
       let email = res.user.email
 
-      currentUser.getIdToken(true).then(function (idToken) {
-        DropMagnetAPI.createNewUserProfile(name, username, email, idToken).then(function (response) {
-          if (response.status === "error") {
-            console.log('error', response)
+      DropMagnetAPI.createNewUserProfile(name, username, email, res.user.za).then(async function (response) {
+        if (response.status === "error") {
+          console.log('error', response)
+        }
+        else {
+          try {
+            window.localStorage.setItem("emailForSignIn", emailRef.current.value);
+            await res.user.sendEmailVerification({
+              handleCodeInApp: true,
+              url: `${VERIFY_EMAIL_PATH}/buy-links`,
+            });
+            setMessage("Check your email inbox for further instructions");
+          } catch {
+            setError("Failed to send email");
           }
-        })
-      })
+        }
 
-      try {
-        window.localStorage.setItem("emailForSignIn", emailRef.current.value);
-        await res.user.sendEmailVerification({
-          handleCodeInApp: true,
-          url: `${VERIFY_EMAIL_PATH}/buy-links`,
-        });
-        setMessage("Check your email inbox for further instructions");
-      } catch {
-        setError("Failed to send email");
-      }
+      })
     } catch {
       setError("Failed to create an account");
     }

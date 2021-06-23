@@ -1,6 +1,6 @@
 // import "../../server";
 import styled from "styled-components";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 import Tabs from "./tabs";
@@ -40,17 +40,10 @@ const Home = (props) => {
 
   const { currentUser, idToken } = useAuth();
 
-  useEffect(() => {
-    currentUser.getIdToken(true).then(function (idToken) {
-      let today = getCurrentDate()
-      dispatch(fetchArt({ activeTabIndex: 0, token: idToken, fromDate: today }));
-    })
-
-  }, []);
-
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941);
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date());
   const [detailView, setDetailView] = useState(false);
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
+  const [loadMore, setLoadMore] = useState(false)
   const tabList = ["arts", "music", "collectables", "fashion"];
   const activeTabIndex = useSelector((state) => {
     return state.category.general.activeTabIndex;
@@ -60,13 +53,74 @@ const Home = (props) => {
     (state) => state.category.general.reswipeModeActive
   );
 
-  const getCurrentDate = () => {
-    let d = new Date()
-    const curDate = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`
+  useEffect(() => {
+    let date = new Date(selectedDropdownDate)
+    const FROM_DATE = date.setDate(date.getDate() + 5)
+
+    let toDate = getCurrentDate(selectedDropdownDate)
+    let fromDate = getCurrentDate(FROM_DATE)
+
+    let extras = {
+      token: idToken,
+      fromDate: fromDate, // Date in future
+      toDate: toDate, // Current date
+      userID: currentUser.uid,
+    }
+    if (activeTabIndex === 0) {
+      dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
+    }
+    else if (activeTabIndex === 1) {
+      dispatch(fetchMusic({ activeTabIndex: 1, token: idToken, extras: extras }));
+    }
+    else if (activeTabIndex === 2) {
+      dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
+    }
+    else {
+      dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
+    }
+  }, [selectedDropdownDate]);
+
+  // useEffect(() => {
+  //   console.log(loadMore)
+  //   if (loadMore) {
+  //     let date = new Date(selectedDropdownDate)
+  //     const TO_DATE = date.setDate(date.getDate() + 5)
+  //     const FROM_DATE = date.setDate(date.getDate() + 5)
+
+  //     let toDate = getCurrentDate(TO_DATE)
+  //     let fromDate = getCurrentDate(FROM_DATE)
+
+  //     let extras = {
+  //       token: idToken,
+  //       fromDate: fromDate, // Date in future
+  //       toDate: toDate, // Current date
+  //       userID: currentUser.uid,
+  //     }
+
+  //     if (activeTabIndex === 0) {
+  //       dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
+  //     }
+  //     else if (activeTabIndex === 1) {
+  //       dispatch(fetchMusic({ activeTabIndex: 1, token: idToken, extras: extras }));
+  //     }
+  //     else if (activeTabIndex === 2) {
+  //       dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
+  //     }
+  //     else {
+  //       dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
+  //     }
+  //     setLoadMore(false)
+      
+  //   }
+  // }, [loadMore])
+
+  const getCurrentDate = (date) => {
+    let d = new Date(date)
+    const curDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
     return curDate
   }
   const currentTabId = tabList[activeTabIndex];
-  const { activeBucket} = useSelector((state) => {
+  const { activeBucket } = useSelector((state) => {
     return state.category[currentTabId];
   });
 
@@ -87,35 +141,49 @@ const Home = (props) => {
     setSelectedDropdownDate(date.date);
   }
 
-  const openHome = () => {};
+  const openHome = () => { };
 
-  const openMenu = () => {};
+  const openMenu = () => { };
 
   const openDateMenu = () => {
     setDateMenuOpen(true);
   };
 
   const handleActiveTabIndex = (index) => {
+
     const activeTab = tabList[index];
-    let today = getCurrentDate()
+
+    let date = new Date(selectedDropdownDate)
+    const FROM_DATE = date.setDate(date.getDate() + 5)
+
+    let toDate = getCurrentDate(selectedDropdownDate)
+    let fromDate = getCurrentDate(FROM_DATE)
+
+    let extras = {
+      token: idToken,
+      fromDate: fromDate, // Date in future
+      toDate: toDate, // Current date
+      userID: currentUser.uid,
+    }
+
     if (activeTab === "music") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchMusic({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchMusic({ activeTabIndex: index, extras: extras }));
       })
     }
     if (activeTab === "arts") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchArt({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchArt({ activeTabIndex: index, extras: extras }));
       })
     }
     if (activeTab === "collectables") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchColletibles({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchColletibles({ activeTabIndex: index, extras: extras }));
       })
     }
     if (activeTab === "fashion") {
       currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchFashion({ activeTabIndex: index, token: idToken, fromDate: today }));
+        dispatch(fetchFashion({ activeTabIndex: index, extras: extras }));
       })
 
     }
@@ -128,23 +196,27 @@ const Home = (props) => {
         .then(() => {
           console.log("Success");
         })
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => {
           // setInternalLoader(false);
         });
-    }else if(dir === "left"){
-       unsaveDrop(idToken, drop_id)
-       .then(()=>{
-        console.log('Unsave Success');
-       })
-       .catch(()=>{
+    } else if (dir === "left") {
+      unsaveDrop(idToken, drop_id)
+        .then(() => {
+          console.log('Unsave Success');
+        })
+        .catch(() => {
 
-       })
-       .finally(()=>{
+        })
+        .finally(() => {
 
-       })
+        })
     }
   };
+
+  console.log("Re-rendered")
+
+
   return (
     <HomeContainer>
 
@@ -154,25 +226,28 @@ const Home = (props) => {
         isLogoNotVisible
         openDateMenu={() => openDateMenu()}
         selectedDropdownDate={selectedDropdownDate}
+        setSelectedDropdownDate={setSelectedDropdownDate}
         datePickerVisible={detailView ? false : true}
         userLoggedIn={props.userLoggedIn}
         userImageVisible={true}
       />
       <div className="rel">
-        {(isLoading) && <Spinner />}
+        {isLoading && <Spinner />}
         {/* <div style={{display: internalLoader ? 'none': 'block'}}> */}
-          {!isLoading && (
-            <Swiper
-              reswipeModeActive={false}
-              key={uniqueId}
-              db={activeBucket}
-              activeTabIndex={activeTabIndex}
-              onSwipe={handleSwipe}
-              handleActiveTabIndex={handleActiveTabIndex}
-              tabList={tabList}
-              setDetailView={setDetailView}
-            />
-          )}
+        {!isLoading && (
+          <Swiper
+            reswipeModeActive={false}
+            key={uniqueId}
+            db={activeBucket}
+            activeTabIndex={activeTabIndex}
+            onSwipe={handleSwipe}
+            handleActiveTabIndex={handleActiveTabIndex}
+            tabList={tabList}
+            setDetailView={setDetailView}
+            setLoadMore={setLoadMore}
+          />
+
+        )}
         {/* </div> */}
       </div>
     </HomeContainer>
