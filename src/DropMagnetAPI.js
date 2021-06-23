@@ -136,8 +136,7 @@ export function createDropImage(image) {
 
 export function getFeeds(category, extras) {
   let d = new Date()
-  const toDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
-  const feedDropsEndpoint = `drops/feed?from=${extras.fromDate}&to=8-4-2021&category=${category}`
+  const feedDropsEndpoint = `drops/feed?from=${extras.fromDate}&to=${extras.toDate}&category=${category}`
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 

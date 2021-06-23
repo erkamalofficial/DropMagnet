@@ -7,6 +7,7 @@ import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
 import Tabs from "./tabs";
+import { useAuth } from "../../contexts/FirebaseAuthContext";
 
 const ActionSection = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
 
-  const { db, reswipeModeActive, setDetailView } = props
+  const { db, reswipeModeActive, setDetailView, setLoadMore } = props
 
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
@@ -32,11 +33,22 @@ function Swiper(props) {
   const [newLoading, setNewLoading] = useState(true);
   const [swiping, setSwiping] = useState(false)
 
+
+  const {currentUser} = useAuth()
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     alreadyRemoved.length = 0;
   }, [reswipeModeActive]);
+
+  useEffect(() => {
+    if (cards.length <=1) {
+      setLoadMore(true)
+    }
+
+  }, [cards.length])
 
   const childRefs = useMemo(
     () =>
@@ -52,7 +64,7 @@ function Swiper(props) {
     if (reswipeModeActive) {
       props.onReswipe(direction, drop_id, index);
     } else {
-      props.onSwipe && props.onSwipe(direction,drop_id);
+      props.onSwipe && props.onSwipe(direction, drop_id);
       if (direction === "right") {
         dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
       }
@@ -98,10 +110,10 @@ function Swiper(props) {
   function renderDetail() {
     return (
       <div>
-        <DropDetail 
-        drop={curDrop} 
-        closeDetailView={() => setOpenView(false)} 
-        handleClick={() => console.log("Click")}/>
+        <DropDetail
+          drop={curDrop}
+          closeDetailView={() => setOpenView(false)}
+          handleClick={() => console.log("Click")} />
       </div>
     )
   }
@@ -134,7 +146,7 @@ function Swiper(props) {
                 setSwiping(true)
                 return swiped(dir, id)
               }}
-              onClickSwiperMain = {()=>openDrop(cardDetails)}
+              onClickSwiperMain={() => openDrop(cardDetails)}
               onCardLeftScreen={() => outOfFrame(id)}
               overlayLabels={true}
             >

@@ -34,6 +34,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
       })
       return resData
     })
+    response.reverse()
     dispatch({ type: actionType, payload: response });
   } catch (err) {
     dispatch({ type: actionType, payload: [] });

@@ -164,8 +164,6 @@ const categoryReducer = (state = initialState, action) => {
           reswipeBucket: reswipeBucketContent,
         });
 
-        console.log(reswipeBucketContent);
-
       // if (reswipeModeActive) {
       //   duringReswipe(activeTabContent, drop_id, state);
       // }
