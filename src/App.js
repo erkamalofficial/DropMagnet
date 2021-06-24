@@ -29,6 +29,7 @@ import UpgradeSub from "./pages/upgradeSub";
 
 import Reswipe from "./pages/reswipe";
 import {getUserProfile} from './DropMagnetAPI';
+import TestFinalFour from "./pages/test";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -194,6 +195,8 @@ function App() {
               />
             )}
           />
+
+          <Route exact path="/test" component={TestFinalFour} />
 
           <Route exact path="/" component={PersonalLinksHome} />
 

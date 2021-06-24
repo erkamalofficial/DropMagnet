@@ -1,6 +1,17 @@
+.delete-drop-card{
+    box-shadow: rgb(142, 145, 148) 0px 0px 0px 3px !important;
+}
 .delete-drop-card > .drop-img{
     filter: grayscale(1) blur(3px);
 } 
+
+.delete-svg-tick{
+    stroke-dashoffset: 16px !important;
+}
+.delete-svg-container-tick{
+    opacity: 0 !important;
+    transform: scale(0) !important;
+}
 
 .top-title{
     margin-bottom: 24px;
