@@ -34,7 +34,6 @@ function Swiper(props) {
   const [swiping, setSwiping] = useState(false)
 
 
-  const {currentUser} = useAuth()
 
 
   const dispatch = useDispatch();
@@ -44,11 +43,11 @@ function Swiper(props) {
   }, [reswipeModeActive]);
 
   useEffect(() => {
-    if (cards.length <=1) {
+    if (cards.length <=1 && !(reswipeModeActive)) {
       setLoadMore(true)
     }
 
-  }, [cards.length])
+  }, [cards.length,reswipeModeActive])
 
   const childRefs = useMemo(
     () =>

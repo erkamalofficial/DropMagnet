@@ -47,7 +47,7 @@ export default function Signup(props) {
   }
 
   function setUserDetails() {
-    currentUser.getIdToken(true).then(function(idToken) {
+    currentUser.getIdToken(false).then(function(idToken) {
       let name = firstName + " " + lastName
       DropMagnetAPI.createNewUserProfile(name, handle, email, idToken).then(function (response) {
         if (response.status === "error") {

@@ -107,7 +107,7 @@ export default function Profile(props) {
   useEffect(() => {
     setCategoryList(collectibleArts)
     const user_id = currentUser.uid
-    currentUser.getIdToken(true).then(function (idToken) {
+    currentUser.getIdToken(false).then(function (idToken) {
       // Send token to your backend via HTTPS
       // ...
       console.log('id token is', idToken)
@@ -243,7 +243,7 @@ export default function Profile(props) {
   }
 
   const updateDetails = (field, value) => {
-    currentUser.getIdToken(true).then(function (idToken) {
+    currentUser.getIdToken(false).then(function (idToken) {
       DropMagnetAPI.updateUserDetails(field, value, idToken)
       .then(res => alert("Successfully updated."))
     })

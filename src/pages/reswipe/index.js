@@ -7,7 +7,6 @@ import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
 
 import { useSelector, useDispatch } from "react-redux";
 import qs from "querystring";
-import Tabs from "../home/tabs";
 
 import Swiper from "../home/swiper";
 import ProgressBar from "../home/progress-bar";
@@ -53,7 +52,7 @@ function Reswipe(props) {
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
 
   const [isReswipeStarted, setIsReswipeStarted] = useState(false);
-  const curTab = qs.parse(useLocation().search, "?").tab;
+  const curTab = qs.parse(useLocation().search, "?").tabs;
   const [detailView, setDetailView] = useState(false);
   const [showRestartReSwipeMessage, setShowRestartReSwipeMessage] =
     useState(false);
@@ -161,15 +160,6 @@ function Reswipe(props) {
         datePickerVisible={detailView ? false : true}
         userLoggedIn={currentUser && currentUser.uid}
         userImageVisible={true}
-      />
-
-      <Tabs
-        activeTabIndex={tabList.indexOf(curTab)}
-        handleActiveTabIndex={(index) => {
-          handleFinish(true);
-          history.push("/home");
-        }}
-        tabList={tabList}
       />
       {!reswipeComplete ? (
         <>

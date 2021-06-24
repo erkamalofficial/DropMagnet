@@ -25,6 +25,8 @@ import { useAuth } from "../src/contexts/FirebaseAuthContext";
 import About from "./pages/about";
 import AboutDrop from "./pages/aboutDrop";
 import GetToken from "./pages/getToken";
+import UpgradeSub from "./pages/upgradeSub";
+
 import Reswipe from "./pages/reswipe";
 import {getUserProfile} from './DropMagnetAPI';
 
@@ -107,6 +109,11 @@ function App() {
           <Route
             path="/getToken"
             render={(props) => <GetToken {...props} />}
+          />
+
+          <Route 
+            path="/upgradeSub"
+            render = {(props)=> <UpgradeSub {...props} /> }
           />
 
           <Route

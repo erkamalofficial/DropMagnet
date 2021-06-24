@@ -77,11 +77,8 @@ export default function FinalFour({bucket,deleted,onChange}){
                     <img src={item.media && item.media[0].url} className={'drop-img'} alt={item.title} />
                     <div className={'title-author'}>
                       <DropTitle> {item.title} </DropTitle>
-                      <p> {item.artist} </p>
+                      <p> {item.artist && item.artist.name} </p>
                     </div>
-                    {/* <DeletedBadge style={{opacity: deleted[i]?1: 0}}> 
-                      <img src={'./close-icon.png'} alt={'Delete-icon'} style={{width: "12px"}} />
-                    </DeletedBadge>  */}
                  </DropCard>
                 })}
               </Final4Grid>
