@@ -127,9 +127,9 @@ const HeaderBarMenuIcon = styled.div`
 
 const Card = (props) => {
 
-  const { artist_image } = props
+  const { artist_image, artist } = props
 
-  let artistImg = artist_image !== undefined ? artist_image : UserIcon
+  let artistImg = artist.avatar_url !== '' ? artist.avatar_url : UserIcon
   
   return (
     <SwipeCard data-key="card-bdr"
@@ -138,7 +138,7 @@ const Card = (props) => {
         <HeaderSection key={1}>
           <UserAvatar src={artistImg} />
           <div className="card-title">
-            Crypto Art Man 
+            {artist.username}
           {/* - {props.id} */}
           </div>
           <div className="empty">......</div>
