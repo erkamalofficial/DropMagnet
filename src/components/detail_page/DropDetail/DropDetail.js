@@ -9,8 +9,8 @@ export default function DropDetail(props) {
     props.closeDetailView()
   }
 
-  let artist_image = props.artist_image !== undefined && props.artist_image !== '' ? props.artist_image : UserIcon
-  let artist_name = props.name !== undefined ? props.name : 'Crypto Art Man'
+  let artist_image = props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : UserIcon
+  let artist_name = props.drop.artist.username
 
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
