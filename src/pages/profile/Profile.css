@@ -94,6 +94,9 @@
   font-weight: 600;
   padding-top: 2px;
   letter-spacing: 0.4px;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile-bio-edit-button{

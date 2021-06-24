@@ -118,6 +118,7 @@ export default function Profile(props) {
           setLoading(false)
         } else {
           let splitName = response.name.split(" "); // split the name by spaces
+          console.log(splitName)
           setFirstName(splitName[0])
           setLastName(splitName[1])
           setHandle(response.username)
@@ -350,16 +351,16 @@ export default function Profile(props) {
               onRemove={() => setUserImage('')}
             />
             {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
-            <div className="profile-large-title clickable" onClick={() => handleProfileEdit('name')} >{firstName + " " + lastName !== undefined ? lastName : ''}</div>
+            <div className="profile-large-title clickable" onClick={() => handleProfileEdit('name')} >{`${firstName} ${lastName !== undefined ? lastName : ''}`}</div>
             <div className="profile-handle-title clickable" onClick={() => handleProfileEdit('username')}>{"@" + handle}</div>
             <div style={{ display: "flex", paddingBottom: '16px' }}>
               <div style={{ display: "flex", paddingRight: '24px', cursor: 'pointer' }} onClick={() => handleProfileEdit('twitter')} >
                 <img width={37} height={24} src="./twitter-icon.png" style={{ paddingRight: '8px' }} />
                 <div className="profile-medium-title">{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
               </div>
-              <div style={{ display: "flex", columnGap: "8px", cursor: 'pointer' }} onClick={() => handleProfileEdit('insta')}>
+              <div style={{ display: "flex", cursor: 'pointer' }} onClick={() => handleProfileEdit('insta')}>
                 <img width={24} height={24} src="./insta-icon.png" />
-                <div className="profile-medium-title">{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
+                <div className="profile-medium-title" style={{marginLeft: '10px'}}>{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
               </div>
             </div>
             <div className="profile-bio-edit-button clickable" onClick={() => handleProfileEdit('bio')}>{bio ? bio : 'Tap to Add Bio'}</div>
