@@ -7,7 +7,6 @@ import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
 
 import { useSelector, useDispatch } from "react-redux";
 import qs from "querystring";
-import Tabs from "../home/tabs";
 
 import Swiper from "../home/swiper";
 import ProgressBar from "../home/progress-bar";

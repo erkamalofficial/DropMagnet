@@ -139,7 +139,6 @@ const categoryReducer = (state = initialState, action) => {
       const activeTabContent = state[currentTab];
       const { selectionBucket, activeBucket } = activeTabContent;
       const { drop_id } = action.payload;
-
       var reswipeModeActive = state.general.reswipeModeActive;
       const favList = selectionBucket.fav;
       if (favList.length < 10 && !favList.includes(drop_id)) {
@@ -163,6 +162,8 @@ const categoryReducer = (state = initialState, action) => {
         Object.assign(activeTabContent, {
           reswipeBucket: reswipeBucketContent,
         });
+
+        console.log(reswipeBucketContent);
 
       // if (reswipeModeActive) {
       //   duringReswipe(activeTabContent, drop_id, state);

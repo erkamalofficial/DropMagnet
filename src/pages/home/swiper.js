@@ -44,11 +44,11 @@ function Swiper(props) {
   }, [reswipeModeActive]);
 
   useEffect(() => {
-    if (cards.length <=1) {
+    if (cards.length <=1 && !(reswipeModeActive)) {
       setLoadMore(true)
     }
 
-  }, [cards.length])
+  }, [cards.length,reswipeModeActive])
 
   const childRefs = useMemo(
     () =>
