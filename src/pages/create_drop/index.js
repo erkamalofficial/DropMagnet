@@ -88,7 +88,7 @@ export default function DropCreation(props) {
 
 
   function createDrop() {
-    currentUser.getIdToken(true).then(function (idToken) {
+    currentUser.getIdToken(false).then(function (idToken) {
       let drop_date = new Date(launchDate).getTime()
       DropMagnetAPI.createDrop(title,
         description,

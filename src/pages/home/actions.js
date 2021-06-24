@@ -86,6 +86,17 @@ export const fetchFashion =
     });
     getDataFromDb(dispatch, "Fashion", "FETCH_FASHION_SUCCESS", extras);
   };
+
+export const fetchReswipeBuckets = (idToken)=>{
+  return dispatch => {
+    DropMagnetAPI.getSaveDrops(idToken).then((data)=>{
+      dispatch({type: 'SAVE_RESWIPE_BUCKETS',payload: data});
+    }).catch((e)=>{
+      console.log(e);
+    })
+  }
+    
+}
 export const fetchReswipeList = (tabIndex) => async (dispatch, getState) => {
   dispatch({
     type: "FETCH_RESWIPE_REQUEST",

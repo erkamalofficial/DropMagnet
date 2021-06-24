@@ -11,7 +11,7 @@ import {
   fetchArt,
   fetchColletibles,
   fetchFashion,
-  fetchReswipeList,
+  fetchReswipeBuckets,
 } from "./actions";
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
@@ -54,6 +54,7 @@ const Home = (props) => {
   );
 
   useEffect(() => {
+    
     let date = new Date(selectedDropdownDate)
     const FROM_DATE = date.setDate(date.getDate() + 5)
 
@@ -66,19 +67,36 @@ const Home = (props) => {
       toDate: toDate, // Current date
       userID: currentUser.uid,
     }
-    if (activeTabIndex === 0) {
-      dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
+    if (activeTabIndex === 1) {
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchMusic({ activeTabIndex: 1, extras: {...extras,token: idToken} }));
+      })
     }
-    else if (activeTabIndex === 1) {
-      dispatch(fetchMusic({ activeTabIndex: 1, token: idToken, extras: extras }));
+    else if (activeTabIndex === 0) {
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchArt({ activeTabIndex: 0, extras: {...extras,token: idToken} }));
+      })
     }
     else if (activeTabIndex === 2) {
-      dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchColletibles({ activeTabIndex: 2, extras: {...extras,token: idToken} }));
+      })
     }
     else {
-      dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchFashion({ activeTabIndex: 3, extras: {...extras,token: idToken} }));
+      })
+
     }
+
   }, [selectedDropdownDate]);
+
+  useEffect(()=>{
+    currentUser && currentUser.getIdToken().then((idToken)=>{
+      dispatch(fetchReswipeBuckets(idToken));
+
+    })
+  }, [dispatch,currentUser]);
 
   // useEffect(() => {
   //   console.log(loadMore)
@@ -160,58 +178,62 @@ const Home = (props) => {
     let fromDate = getCurrentDate(FROM_DATE)
 
     let extras = {
-      token: idToken,
       fromDate: fromDate, // Date in future
       toDate: toDate, // Current date
       userID: currentUser.uid,
     }
 
     if (activeTab === "music") {
-      currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchMusic({ activeTabIndex: index, extras: extras }));
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchMusic({ activeTabIndex: index, extras: {...extras,token: idToken} }));
       })
     }
     if (activeTab === "arts") {
-      currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchArt({ activeTabIndex: index, extras: extras }));
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchArt({ activeTabIndex: index, extras: {...extras,token: idToken} }));
       })
     }
     if (activeTab === "collectables") {
-      currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchColletibles({ activeTabIndex: index, extras: extras }));
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchColletibles({ activeTabIndex: index, extras: {...extras,token: idToken} }));
       })
     }
     if (activeTab === "fashion") {
-      currentUser.getIdToken(true).then(function (idToken) {
-        dispatch(fetchFashion({ activeTabIndex: index, extras: extras }));
+      currentUser.getIdToken(false).then(function (idToken) {
+        dispatch(fetchFashion({ activeTabIndex: index, extras: {...extras,token: idToken} }));
       })
 
     }
   };
 
   const handleSwipe = (dir, drop_id) => {
-    if (dir === "right") {
-      // setInternalLoader(true);
-      saveDrop(idToken, drop_id)
-        .then(() => {
-          console.log("Success");
-        })
-        .catch(() => { })
-        .finally(() => {
-          // setInternalLoader(false);
-        });
-    } else if (dir === "left") {
-      unsaveDrop(idToken, drop_id)
-        .then(() => {
-          console.log('Unsave Success');
-        })
-        .catch(() => {
-
-        })
-        .finally(() => {
-
-        })
-    }
+    currentUser.getIdToken().then((idToken)=>{
+      if (dir === "right") {
+        // setInternalLoader(true);
+        saveDrop(idToken, drop_id)
+          .then(() => {
+            console.log("Success");
+          })
+          .catch(() => { })
+          .finally(() => {
+            // setInternalLoader(false);
+          });
+      } else if (dir === "left") {
+        unsaveDrop(idToken, drop_id)
+          .then(() => {
+            console.log('Unsave Success');
+          })
+          .catch(() => {
+  
+          })
+          .finally(() => {
+  
+          })
+      }
+      
+    }).catch(()=>{
+      console.log('Error While Getting token');
+    })
   };
 
   console.log("Re-rendered")
