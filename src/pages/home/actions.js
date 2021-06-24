@@ -18,23 +18,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
     // });
 
     const response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras)
-    .then(function(res){
-      let data= res.data
-      let resData = []
-      Object.keys(data).forEach((k) => {
-        let obj = {
-          date: k,
-          drops: data[k]
-        }
-        obj.drops.forEach(d => {
-          if(d.user_id !== extras.userID){
-            resData.push(d)
-          }
-        })
-      })
-      return resData
-    })
-    response.reverse()
+    .then((res) => res.data)
     dispatch({ type: actionType, payload: response });
   } catch (err) {
     dispatch({ type: actionType, payload: [] });

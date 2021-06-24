@@ -54,49 +54,34 @@ const Home = (props) => {
   );
 
   useEffect(() => {
-    
-    let date = new Date(selectedDropdownDate)
-    const FROM_DATE = date.setDate(date.getDate() + 5)
 
-    let toDate = getCurrentDate(selectedDropdownDate)
-    let fromDate = getCurrentDate(FROM_DATE)
-
+    let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
       token: idToken,
-      fromDate: fromDate, // Date in future
-      toDate: toDate, // Current date
+      curTime: curTime,
       userID: currentUser.uid,
     }
     if (activeTabIndex === 1) {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchMusic({ activeTabIndex: 1, extras: {...extras,token: idToken} }));
-      })
+      dispatch(fetchMusic({ activeTabIndex: 1, extras: { ...extras, token: idToken } }));
     }
     else if (activeTabIndex === 0) {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchArt({ activeTabIndex: 0, extras: {...extras,token: idToken} }));
-      })
+      dispatch(fetchArt({ activeTabIndex: 0, extras: { ...extras, token: idToken } }));
     }
     else if (activeTabIndex === 2) {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchColletibles({ activeTabIndex: 2, extras: {...extras,token: idToken} }));
-      })
+      dispatch(fetchColletibles({ activeTabIndex: 2, extras: { ...extras, token: idToken } }));
     }
     else {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchFashion({ activeTabIndex: 3, extras: {...extras,token: idToken} }));
-      })
-
+      dispatch(fetchFashion({ activeTabIndex: 3, extras: { ...extras, token: idToken } }));
     }
 
   }, [selectedDropdownDate]);
 
-  useEffect(()=>{
-    currentUser && currentUser.getIdToken().then((idToken)=>{
+  useEffect(() => {
+    currentUser && currentUser.getIdToken().then((idToken) => {
       dispatch(fetchReswipeBuckets(idToken));
 
     })
-  }, [dispatch,currentUser]);
+  }, [dispatch, currentUser]);
 
   // useEffect(() => {
   //   console.log(loadMore)
@@ -128,7 +113,7 @@ const Home = (props) => {
   //       dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
   //     }
   //     setLoadMore(false)
-      
+
   //   }
   // }, [loadMore])
 
@@ -145,9 +130,9 @@ const Home = (props) => {
   // const {reswipeModeActive} = useSelector((state)=>state.category.general)
   useEffect(() => {
     if (reswipeModeActive) {
-      if(window.confirm("Your Bucket Limit has reached its End ? \n 1. Press ok to 'Upgrade Your Subscription' \n 2. Press Cancel to 'Go To Reswipe'?")){
+      if (window.confirm("Your Bucket Limit has reached its End ? \n 1. Press ok to 'Upgrade Your Subscription' \n 2. Press Cancel to 'Go To Reswipe'?")) {
         history.push('/upgradeSub');
-      }else{
+      } else {
         history.push(`/reswipe?tabs=${currentTabId}`);
       }
     }
@@ -175,43 +160,29 @@ const Home = (props) => {
 
     const activeTab = tabList[index];
 
-    let date = new Date(selectedDropdownDate)
-    const FROM_DATE = date.setDate(date.getDate() + 5)
-
-    let toDate = getCurrentDate(selectedDropdownDate)
-    let fromDate = getCurrentDate(FROM_DATE)
-
+    let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
-      fromDate: fromDate, // Date in future
-      toDate: toDate, // Current date
+      token: idToken,
+      curTime: curTime,
       userID: currentUser.uid,
     }
 
     if (activeTab === "music") {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchMusic({ activeTabIndex: index, extras: {...extras,token: idToken} }));
-      })
+      dispatch(fetchMusic({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
     if (activeTab === "arts") {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchArt({ activeTabIndex: index, extras: {...extras,token: idToken} }));
-      })
+      dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
     if (activeTab === "collectables") {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchColletibles({ activeTabIndex: index, extras: {...extras,token: idToken} }));
-      })
+      dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
     if (activeTab === "fashion") {
-      currentUser.getIdToken(false).then(function (idToken) {
-        dispatch(fetchFashion({ activeTabIndex: index, extras: {...extras,token: idToken} }));
-      })
-
+      dispatch(fetchFashion({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
   };
 
   const handleSwipe = (dir, drop_id) => {
-    currentUser.getIdToken().then((idToken)=>{
+    currentUser.getIdToken().then((idToken) => {
       if (dir === "right") {
         // setInternalLoader(true);
         saveDrop(idToken, drop_id)
@@ -228,19 +199,17 @@ const Home = (props) => {
             console.log('Unsave Success');
           })
           .catch(() => {
-  
+
           })
           .finally(() => {
-  
+
           })
       }
-      
-    }).catch(()=>{
+
+    }).catch(() => {
       console.log('Error While Getting token');
     })
   };
-
-
 
   return (
     <HomeContainer>

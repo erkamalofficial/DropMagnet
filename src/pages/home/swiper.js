@@ -132,7 +132,7 @@ function Swiper(props) {
         {openView && renderDetail()}
       </div>
       <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
-        {cards.map((cardDetails, index) => {
+        {cards.length > 0 ? cards.map((cardDetails, index) => {
           const { id } = cardDetails;
 
           return (
@@ -152,7 +152,7 @@ function Swiper(props) {
               <Card {...cardDetails} />
             </TinderCard>
           );
-        })}
+        }) : <h4 style={{textAlign: 'center', width: '100%'}}>No Drops Available</h4>}
       </CardContainer>
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         <MinusBtn onClick={() => swipe("left")}>
