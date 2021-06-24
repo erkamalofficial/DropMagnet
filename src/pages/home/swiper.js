@@ -34,7 +34,6 @@ function Swiper(props) {
   const [swiping, setSwiping] = useState(false)
 
 
-  const {currentUser} = useAuth()
 
 
   const dispatch = useDispatch();

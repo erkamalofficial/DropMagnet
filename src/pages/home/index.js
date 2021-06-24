@@ -145,7 +145,11 @@ const Home = (props) => {
   // const {reswipeModeActive} = useSelector((state)=>state.category.general)
   useEffect(() => {
     if (reswipeModeActive) {
-      history.push(`/reswipe?tab=${currentTabId}`);
+      if(window.confirm("Your Bucket Limit has reached its End ? \n 1. Press ok to 'Upgrade Your Subscription' \n 2. Press Cancel to 'Go To Reswipe'?")){
+        history.push('/upgradeSub');
+      }else{
+        history.push(`/reswipe?tabs=${currentTabId}`);
+      }
     }
   }, [reswipeModeActive, currentTabId, history]);
   const uniqueId = Date.now();
@@ -236,7 +240,6 @@ const Home = (props) => {
     })
   };
 
-  console.log("Re-rendered")
 
 
   return (

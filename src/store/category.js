@@ -247,18 +247,67 @@ const categoryReducer = (state = initialState, action) => {
       }
     }
 
-    case "CLOSE_RESWIPE": {
-      const {tab} = action.payload;
+    case 'SAVE_RESWIPE_BUCKETS': {
+      const savedDrops = action.payload;
+      const currentTab = tabList[state.general.activeTabIndex];
+
+      const reswipeBuckets = {
+        "arts": [],
+        "collectables": [],
+        "music": [],
+        "fashion": []
+      }
+      const selectionBuckets = {
+        "arts": {fav: [], rem: []},
+        "colllectables":{fav: [], rem: []},
+        "music":{fav: [], rem: []},
+        "fashion": {fav: [], rem: []}
+      }
+      savedDrops.map((d)=>{
+        switch(d.category){
+          case 'art': {
+            reswipeBuckets["arts"].push(d);
+            selectionBuckets["arts"].fav.push(d.id);
+            break;
+          }
+          case 'music': {
+            reswipeBuckets["music"].push(d);
+            selectionBuckets["music"].fav.push(d.id);
+            break;
+          }
+          case 'fashion': {
+            reswipeBuckets["fashion"].push(d);
+            selectionBuckets["fashion"].fav.push(d.id);
+            break;
+          }
+          case 'collectables': {
+            reswipeBuckets["collectables"].push(d);
+            selectionBuckets["collectables"].fav.push(d.id);
+            break;
+          }
+          default: ;
+        }
+        
+      })
+      console.log(reswipeBuckets[currentTab]);
+      if(reswipeBuckets[currentTab].length >= 10){
+        reswipeModeActive = true;
+      }else{
+        reswipeModeActive = false;
+      }
+      const general = {
+        ...state.general,
+        reswipeModeActive
+      }
       return{
         ...state,
-        general: {
-          ...state.general,
-          reswipeModeActive: false
-        },
-        [tab]: {...state[tab], reswipeBucket: []}
+        general,
+        "arts": {...state.arts, reswipeBucket: reswipeBuckets['arts'], selectionBucket: selectionBuckets["arts"]},
+        "collectables": {...state.collectables, reswipeBucket: reswipeBuckets['collectables'], selectionBucket: selectionBuckets["collectables"]},
+        "music": {...state.music, reswipeBucket: reswipeBuckets['music'], selectionBucket: selectionBuckets["music"]},
+        "fashion":{...state.fashion, reswipeBucket: reswipeBuckets['fashion'], selectionBucket: selectionBuckets["fashion"]}
       }
     }
-
     default:
       return state;
   }

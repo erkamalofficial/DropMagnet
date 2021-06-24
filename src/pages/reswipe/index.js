@@ -52,7 +52,7 @@ function Reswipe(props) {
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
 
   const [isReswipeStarted, setIsReswipeStarted] = useState(false);
-  const curTab = qs.parse(useLocation().search, "?").tab;
+  const curTab = qs.parse(useLocation().search, "?").tabs;
   const [detailView, setDetailView] = useState(false);
   const [showRestartReSwipeMessage, setShowRestartReSwipeMessage] =
     useState(false);
