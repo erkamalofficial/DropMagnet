@@ -89,7 +89,7 @@ function Reswipe(props) {
       unsaveDrop(idToken, drop_id);
       setTempReswipeBucket(newArray);
     }
-    if (currentCounter - 1 === 0) {
+    if (currentCounter - 1 === 0 ) {
       if (newArray.length === 0) {
         return handleFinish();
       }
@@ -102,7 +102,13 @@ function Reswipe(props) {
       } else {
         setShowRestartReSwipeMessage(true);
       }
-    } else {
+    } else if(newArray.length === 4) {
+      setRoundLength(4);
+      setCurrentCounter(4);
+      setIsReswipeStarted(false);
+      setIsFinal4Left(true);
+      setDeletedFinalFour(new Array(4).fill(false));
+    }else{
       setCurrentCounter(currentCounter - 1);
     }
   };

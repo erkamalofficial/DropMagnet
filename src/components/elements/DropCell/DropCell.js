@@ -10,8 +10,8 @@ export default function DropCell(props) {
 
   let dropTitle = props.drop.title
 
-  let artist_image = user !== null && user.avatar_url !== '' ? user.avatar_url : UserIcon
-  let artist_name = user !== null && user.name
+  let artist_image = user && user.avatar_url !== '' ? user.avatar_url : UserIcon
+  let artist_name = user && user.name
 
   let marketPlace = props.drop.marketplace
   let category = props.drop.category
