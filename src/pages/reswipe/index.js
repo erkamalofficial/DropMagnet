@@ -102,7 +102,7 @@ function Reswipe(props) {
       } else {
         setShowRestartReSwipeMessage(true);
       }
-    } else if(newArray.length === 4) {
+    } else if(newArray.length === 4 && dir!=="right") {
       setRoundLength(4);
       setCurrentCounter(4);
       setIsReswipeStarted(false);
