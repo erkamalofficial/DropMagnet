@@ -166,11 +166,12 @@ export default function Profile(props) {
     history.push("/");
   }
 
-  function renderDrops(drops) {
+  function renderDrops(drops,isSaved=false) {
     return (
       <DropList
         drops={drops}
         user={user}
+        isSaved={isSaved}
         onClick={openDrop}
         setDetailView={setDetailView}
         setCurDrop={setCurDrop} />
@@ -375,7 +376,7 @@ export default function Profile(props) {
             {scheduledPosts.length > 0 && selectedProfileList === 'scheduled' ?
               renderDrops(scheduledPosts)
               : savedPosts.length > 0 && selectedProfileList === 'saved' ?
-                renderDrops(savedPosts)
+                renderDrops(savedPosts,true)
                 : savedPosts.length === 0 ?
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }} className="profile-bio-description">
                     <p className="redirect-link">You don't have any drops saved yet. Go to the <span onClick={() => props.history.push("/home")}>swiper page</span> to explore.</p>
