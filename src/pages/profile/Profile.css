@@ -94,9 +94,31 @@
   font-weight: 600;
   padding-top: 2px;
   letter-spacing: 0.4px;
-  width: 100px;
+}
+
+.profile-medium-title p{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.socialHandle{
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.profile-medium-title .truncate{
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+@media(max-width: 660px){
+  .profile-medium-title .truncate{
+    max-width: 54px;
+  }
 }
 
 .profile-bio-edit-button{

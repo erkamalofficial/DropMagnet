@@ -123,14 +123,14 @@ export default function Profile(props) {
           setLastName(splitName[1])
           setHandle(response.username)
           setBio(response.bio)
-          setInstaHandle(response.insta_url)
-          setTwitterHandle(response.twitter_url)
+          setInstaHandle(response.insta_url.split('/').pop())
+          setTwitterHandle(response.twitter_url.split('/').pop())
           setUserImage(response.avatar_url || '')
           setUser(response)
         }
       })
 
-      DropMagnetAPI.getSaveDrops(idToken).then((res)=>{
+      DropMagnetAPI.getSaveDrops(idToken).then((res) => {
         console.log(res);
         setSavedPosts(res);
       })
@@ -166,7 +166,7 @@ export default function Profile(props) {
     history.push("/");
   }
 
-  function renderDrops(drops,isSaved=false) {
+  function renderDrops(drops, isSaved = false) {
     return (
       <DropList
         drops={drops}
@@ -182,8 +182,8 @@ export default function Profile(props) {
     setCurrentEditField(field);
     setOpenEditModal(true);
     setUsernameForm(handle);
-    setInstaHandleForm(instaHandle.split('/').pop());
-    setTwitterHandleForm(twitterHandle.split('/').pop());
+    setInstaHandleForm(instaHandle);
+    setTwitterHandleForm(twitterHandle);
     setDescriptionForm(bio);
     setLastNameForm(lastName);
     setFirstNameForm(firstName);
@@ -247,7 +247,7 @@ export default function Profile(props) {
   const updateDetails = (field, value) => {
     currentUser.getIdToken(false).then(function (idToken) {
       DropMagnetAPI.updateUserDetails(field, value, idToken)
-      .then(res => alert("Successfully updated."))
+        .then(res => alert("Successfully updated."))
     })
   }
   const saveForm = () => {
@@ -262,7 +262,7 @@ export default function Profile(props) {
       }
       case 'insta': {
         /*API Call to save*/
-        setInstaHandle('https://www.instagram.com/' + instaHandleForm);
+        setInstaHandle(instaHandleForm);
         updateDetails('insta_url', instaHandleForm);
         setInstaHandleForm('');
         break;
@@ -270,7 +270,7 @@ export default function Profile(props) {
 
       case 'twitter': {
         // API Call TO Save
-        setTwitterHandle('https://www.twitter.com/' + twitterHandleForm)
+        setTwitterHandle(twitterHandleForm)
         updateDetails('twitter_url', twitterHandleForm);
         setTwitterHandleForm('');
         break;
@@ -326,7 +326,7 @@ export default function Profile(props) {
       <>
         <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
           {renderInput()}
-          <div className={'main-button-container'} style={{textAlign: "center"}} >
+          <div className={'main-button-container'} style={{ textAlign: "center" }} >
             <button className="main-button" onClick={saveForm}>{"Save"}</button>
           </div>
         </Modal>
@@ -357,11 +357,28 @@ export default function Profile(props) {
             <div style={{ display: "flex", paddingBottom: '16px' }}>
               <div style={{ display: "flex", paddingRight: '24px', cursor: 'pointer' }} onClick={() => handleProfileEdit('twitter')} >
                 <img width={37} height={24} src="./twitter-icon.png" style={{ paddingRight: '8px' }} />
-                <div className="profile-medium-title">{twitterHandle !== "" ? "@" + twitterHandle.split("/").pop() : 'Add Twitter'}</div>
+                <div className="profile-medium-title">
+                  {twitterHandle !== "" && twitterHandle.length > 8 ?
+                    <div className="socialHandle">@
+                      <p className="truncate">{twitterHandle.substring(0, twitterHandle.length - 4)}</p>
+                      <p className="last">{twitterHandle.substring(twitterHandle.length - 4)}</p>
+                    </div>
+                    : twitterHandle.length <= 8 ? <p>@{twitterHandle}</p>
+                    : <p>Add Twitter</p>
+                  }
+                </div>
               </div>
               <div style={{ display: "flex", cursor: 'pointer' }} onClick={() => handleProfileEdit('insta')}>
                 <img width={24} height={24} src="./insta-icon.png" />
-                <div className="profile-medium-title" style={{marginLeft: '10px'}}>{instaHandle !== "" ? "@" + instaHandle.split("/").pop() : 'Add Instagram'}</div>
+                <div className="profile-medium-title" style={{ marginLeft: '10px' }}>
+                  {instaHandle !== "" && instaHandle.length > 8 ?
+                    <div className="socialHandle">@
+                      <p className="truncate">{instaHandle.substring(0, instaHandle.length - 4)}</p>
+                      <p className="last">{instaHandle.substring(instaHandle.length - 4)}</p>
+                    </div>
+                    : instaHandle.length <= 8 ? <p>@{instaHandle}</p>
+                    : <p>Add Instagram</p>}
+                </div>
               </div>
             </div>
             <div className="profile-bio-edit-button clickable" onClick={() => handleProfileEdit('bio')}>{bio ? bio : 'Tap to Add Bio'}</div>
@@ -376,7 +393,7 @@ export default function Profile(props) {
             {scheduledPosts.length > 0 && selectedProfileList === 'scheduled' ?
               renderDrops(scheduledPosts)
               : savedPosts.length > 0 && selectedProfileList === 'saved' ?
-                renderDrops(savedPosts,true)
+                renderDrops(savedPosts, true)
                 : savedPosts.length === 0 ?
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }} className="profile-bio-description">
                     <p className="redirect-link">You don't have any drops saved yet. Go to the <span onClick={() => props.history.push("/home")}>swiper page</span> to explore.</p>
