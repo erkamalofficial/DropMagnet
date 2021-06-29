@@ -41,6 +41,11 @@ export default function ProfileDropDetail(props) {
       <div className="drop-detail-holder" style={{marginTop: '12px'}}>
         <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
         <p2 className="drop-category-title">{props.drop.category}</p2>
+        <p2 className="drop-price"><span>Ξ</span> 
+             {props.drop.price !== '' && props.drop.price!==undefined ? props.drop.price 
+            : props.drop.auction_price && props.drop.auction_price!==undefined ? props.drop.auction_price 
+            : 0}
+        </p2>
       </div>
       <div className="drop-detail-holder" style={{marginTop: '0px'}}>
         {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}

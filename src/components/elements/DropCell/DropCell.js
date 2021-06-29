@@ -15,6 +15,9 @@ export default function DropCell(props) {
 
   let marketPlace = props.drop.marketplace
   let category = props.drop.category
+  let price = props.drop.price !== "" && props.drop.price !== undefined ? props.drop.price 
+  : props.drop.auction_price !== undefined ? props.drop.auction_price
+  : 0
 
   const getDate = (timestamp) => {
     if (timestamp > 1000000) {
@@ -49,6 +52,7 @@ export default function DropCell(props) {
           <div className="drop-footer">
             {marketPlace !== '' && <p2 className="drop-marketplace-title">{marketPlace}</p2>}
             {category !== '' && <p2 className="drop-category-title">{category}</p2>}
+            {price !== '' && <p2 className="drop-price"><span>Ξ</span> {price}</p2>}
           </div>
         </div>
         <img className="drop-image" src={props.drop.media[0].url} />
