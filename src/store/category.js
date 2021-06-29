@@ -1,7 +1,7 @@
 import initialState from "./initial-state";
 import { forEach, map, union, values } from "lodash";
 import emojis from "./emojiicons";
-
+const MAX_BUCKET_SIZE = 10;
 const getAvailableLinks = (allLinks, availableLinks) => {
   forEach(availableLinks, (avLink) => {
     forEach(allLinks, (item) => {
@@ -139,75 +139,44 @@ const categoryReducer = (state = initialState, action) => {
     case "ADD_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
-      const { selectionBucket, activeBucket } = activeTabContent;
-      const { drop_id } = action.payload;
-      var reswipeModeActive = state.general.reswipeModeActive;
-      const favList = selectionBucket.fav;
-      if (favList.length < 10 && !favList.includes(drop_id)) {
-        favList.push(drop_id);
+      const { reswipedDrops,activeBucket } = activeTabContent;
+      const {drop_id, dropIndex } = action.payload;
+      if(!state.general.reswipeModeActive){
+        reswipedDrops[activeBucket[dropIndex].id] = activeBucket[dropIndex];
+
+        Object.assign(activeTabContent, {reswipedDrops});
+        let reswipeModeActive = false;
+        if(Object.keys(reswipedDrops).length >=MAX_BUCKET_SIZE){
+          reswipeModeActive = true;        
+        }      
+  
+        const general = {
+          ...state.general,
+          reswipeModeActive: reswipeModeActive,
+        };
+  
+        console.log(reswipedDrops);
+        return { ...state, [currentTab]: activeTabContent, general };
+  
+      }else{
+        return state;
       }
-
-      const isFavBucketHasTenItems = favList.length === 10;
-      if (isFavBucketHasTenItems && !state.general.reswipeModeActive) {
-        reswipeModeActive = true;
-      }
-
-      // if (activeBucket.length < apiData.length) {
-      //   activeBucket.unshift(apiData[activeBucket.length]);
-      // }
-
-        const reswipeBucketContent = activeBucket.filter((card) =>{
-          return favList.includes(card.id)
-
-        }
-      );
-        Object.assign(activeTabContent, {
-          reswipeBucket: reswipeBucketContent,
-        });
-
-        console.log(reswipeBucketContent);
-
-      // if (reswipeModeActive) {
-      //   duringReswipe(activeTabContent, drop_id, state);
-      // }
-
-      const general = {
-        ...state.general,
-        reswipeModeActive: reswipeModeActive,
-        selectionCount: state.general.selectionCount + 1,
-      };
-
-
-      return { ...state, [currentTab]: activeTabContent, general };
     }
     case "REMOVE_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
-      const { selectionBucket, activeBucket } = activeTabContent;
+      const { reswipedDrops } = activeTabContent;
 
       const { drop_id } = action.payload;
 
-      var userRem = selectionBucket.rem;
-      var userFav = selectionBucket.fav;
-      if (userFav.includes(drop_id)) {
-        selectionBucket.fav = userFav.filter((item) => item !== drop_id);
-      }
-      if (!userRem.includes(drop_id)) {
-        selectionBucket.rem.push(drop_id);
-      }
-
-      // if (activeBucket.length < apiData.length) {
-      //   activeBucket.unshift(apiData[activeBucket.length]);
-      // }
-
-      // if (state.general.reswipeModeActive) {
-      //   duringReswipe(activeTabContent, drop_id, state);
-      // }
-
+      delete reswipedDrops[drop_id];
+      console.log()
       const general = {
         ...state.general,
         selectionCount: state.general.selectionCount - 1,
       };
+
+      Object.assign(activeTabContent, {reswipedDrops});
 
       return { ...state, general, [currentTab]: activeTabContent };
     }
@@ -237,65 +206,55 @@ const categoryReducer = (state = initialState, action) => {
     }
     case "SET_RESWIPE_BUCKET": {
       const {newBucket, tab} = action.payload;
-      const newSelectionFav = newBucket.map((bucket)=>bucket.id);
-      
       return{
         ...state,
         general: {
           ...state.general,
           reswipeModeActive: false
         },
-        [tab]: {...state[tab], reswipeBucket: newBucket, selectionBucket: {fav: newSelectionFav, rem:[]}}
+        [tab]: {...state[tab], reswipedDrops: newBucket}
       }
+      
     }
+    
 
     case 'SAVE_RESWIPE_BUCKETS': {
       const savedDrops = action.payload;
       const currentTab = tabList[state.general.activeTabIndex];
-
-      const reswipeBuckets = {
-        "arts": [],
-        "collectables": [],
-        "music": [],
-        "fashion": []
-      }
-      const selectionBuckets = {
-        "arts": {fav: [], rem: []},
-        "colllectables":{fav: [], rem: []},
-        "music":{fav: [], rem: []},
-        "fashion": {fav: [], rem: []}
-      }
+      const reswipedDrops = {
+        "arts": {},
+        "music": {},
+        "fashion": {},
+        "collectables": {}
+      };
       savedDrops.map((d)=>{
         switch(d.category){
           case 'art': {
-            reswipeBuckets["arts"].push(d);
-            selectionBuckets["arts"].fav.push(d.id);
+            reswipedDrops["arts"][d.id] = d;
             break;
           }
           case 'music': {
-            reswipeBuckets["music"].push(d);
-            selectionBuckets["music"].fav.push(d.id);
+            reswipedDrops["music"][d.id] = d;
             break;
           }
           case 'fashion': {
-            reswipeBuckets["fashion"].push(d);
-            selectionBuckets["fashion"].fav.push(d.id);
+            reswipedDrops["fashion"][d.id] = d;
+
             break;
           }
           case 'collectables': {
-            reswipeBuckets["collectables"].push(d);
-            selectionBuckets["collectables"].fav.push(d.id);
+            reswipedDrops["collectables"][d.id] = d;
             break;
           }
           default: ;
         }
         
       })
-      console.log(reswipeBuckets[currentTab]);
-      if(reswipeBuckets[currentTab].length >= 10){
+      console.log(reswipedDrops);
+
+      let reswipeModeActive = false;
+      if(Object.keys(reswipedDrops[currentTab]).length>=MAX_BUCKET_SIZE ){
         reswipeModeActive = true;
-      }else{
-        reswipeModeActive = false;
       }
       const general = {
         ...state.general,
@@ -304,10 +263,10 @@ const categoryReducer = (state = initialState, action) => {
       return{
         ...state,
         general,
-        "arts": {...state.arts, reswipeBucket: reswipeBuckets['arts'], selectionBucket: selectionBuckets["arts"]},
-        "collectables": {...state.collectables, reswipeBucket: reswipeBuckets['collectables'], selectionBucket: selectionBuckets["collectables"]},
-        "music": {...state.music, reswipeBucket: reswipeBuckets['music'], selectionBucket: selectionBuckets["music"]},
-        "fashion":{...state.fashion, reswipeBucket: reswipeBuckets['fashion'], selectionBucket: selectionBuckets["fashion"]}
+        "arts": {...state.arts,reswipedDrops: reswipedDrops["arts"]},
+        "collectables": {...state.collectables, reswipedDrops: reswipedDrops["collectables"]},
+        "music": {...state.music,reswipedDrops: reswipedDrops["music"]},
+        "fashion":{...state.fashion,reswipedDrops: reswipedDrops["fashion"]}
       }
     }
     case 'FETCH_MORE_FEEDS': {

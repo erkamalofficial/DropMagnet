@@ -62,16 +62,21 @@ function Reswipe(props) {
 
   const tabList = ["arts", "music", "collectables", "fashion"];
 
-  const { reswipeBucket } = useSelector((state) => {
+  const { reswipedDrops } = useSelector((state) => {
     return state.category[curTab];
   });
 
+  const {reswipeModeActive} = useSelector((state)=>state.category.general)
+  if(!reswipeModeActive){
+    history.push('/home');
+  }
+  
   const { currentUser } = useAuth();
 
-  const [tempReswipeBucket, setTempReswipeBucket] = useState(reswipeBucket);
+  const [tempReswipeBucket, setTempReswipeBucket] = useState(Object.keys(reswipedDrops).map((key)=>reswipedDrops[key]));
 
-  const [currentCounter, setCurrentCounter] = useState(reswipeBucket.length);
-  const [roundLength, setRoundLength] = useState(reswipeBucket.length);
+  const [currentCounter, setCurrentCounter] = useState(tempReswipeBucket.length);
+  const [roundLength, setRoundLength] = useState(tempReswipeBucket.length);
   const [reswipeComplete, setReswipeComplete] = useState(false);
   const [deletedFinalFour, setDeletedFinalFour] = useState(null);
   const openDateMenu = () => {
@@ -89,26 +94,21 @@ function Reswipe(props) {
       unsaveDrop(idToken, drop_id);
       setTempReswipeBucket(newArray);
     }
-    if (currentCounter - 1 === 0 ) {
-      if (newArray.length === 0) {
-        return handleFinish();
-      }
-      setRoundLength(currCAndCurrL);
-      setCurrentCounter(currCAndCurrL);
-      setIsReswipeStarted(false);
-      if (currCAndCurrL <= 4) {
-        setDeletedFinalFour(new Array(currCAndCurrL).fill(false));
-        setIsFinal4Left(true);
-      } else {
-        setShowRestartReSwipeMessage(true);
-      }
-    } else if(newArray.length === 4 && dir!=="right") {
+    if(newArray.length === 4 && dir!=="right") {
       setRoundLength(4);
       setCurrentCounter(4);
       setIsReswipeStarted(false);
       setIsFinal4Left(true);
       setDeletedFinalFour(new Array(4).fill(false));
-    }else{
+    }else if((newArray.length === 0 && dir === "right") || (newArray.length === 0 && dir === "left")){
+      setReswipeComplete(true);
+      setIsReswipeStarted(false);
+    }else if (currentCounter - 1 === 0 ) {
+      setRoundLength(currCAndCurrL);
+      setCurrentCounter(currCAndCurrL);
+      setIsReswipeStarted(false);
+      setShowRestartReSwipeMessage(true);
+    } else{
       setCurrentCounter(currentCounter - 1);
     }
   };
@@ -119,35 +119,45 @@ function Reswipe(props) {
     setDeletedFinalFour(newDeletedFinal4);
   };
 
-  const handleFinish = (isExit = false) => {
-    if (isExit)
-      return dispatch({
-        type: "SET_RESWIPE_BUCKET",
-        payload: { newBucket: tempReswipeBucket, tab: curTab },
-      });
-    const currentReswipeBucket = [...tempReswipeBucket];
-    console.log(currentReswipeBucket,deletedFinalFour);
-    if (deletedFinalFour !== null) {
-      deletedFinalFour.map((isDeleted, index) => {
-        if (tempReswipeBucket[index]) {
-          const id = tempReswipeBucket[index].id;
-          if (isDeleted) {
-            unsaveDrop(idToken, id);
-            currentReswipeBucket.splice(index, 1);
-          } else {
-            saveDrop(idToken,id);
-          }
-        }
-      });
+  const handleFinalFourClose = () => {
+    setIsFinal4Left(false);
+    console.log(deletedFinalFour)    
+    let newTempReswipeBuckets = [];
+    tempReswipeBucket.map((drop,index)=>{
+      if(deletedFinalFour[index]){
+        unsaveDrop(idToken,drop.id);
+      }else{
+        saveDrop(idToken,drop.id);
+        newTempReswipeBuckets.push(drop);
+      }
+    })
+    if(newTempReswipeBuckets.length === 4){
+      setRoundLength(4);
+      setCurrentCounter(4);
+      setIsReswipeStarted(false);
+      setShowRestartReSwipeMessage(true);
+    }else if(newTempReswipeBuckets.length >1){
+      setRoundLength(newTempReswipeBuckets.length);
+      setCurrentCounter(newTempReswipeBuckets.length);
+      setIsReswipeStarted(true);
+    }else{
+      setReswipeComplete(true);
+      setIsReswipeStarted(false);
     }
-    dispatch({
-      type: "SET_RESWIPE_BUCKET",
-      payload: { newBucket: tempReswipeBucket, tab: curTab },
-    });
-    // API to save on the backend
-    setTempReswipeBucket(currentReswipeBucket);
-    setReswipeComplete(true);
+    setTempReswipeBucket(newTempReswipeBuckets);
   };
+
+  const handleClose = ()=>{
+    const newBucket = {};
+    tempReswipeBucket.map((drop)=>{
+      newBucket[drop.id] = drop;
+    })
+    dispatch({
+          type: "SET_RESWIPE_BUCKET",
+          payload: { newBucket , tab: curTab },
+    });
+    history.push('/home');
+  }
 
   //   console.log(reswipeBucket,selectionBucket);
   return (
@@ -189,8 +199,7 @@ function Reswipe(props) {
                 key="progressBar"
                 size={roundLength}
                 closeReswipe={() => {
-                  handleFinish(true);
-                  history.push("/home");
+                  handleClose();
                 }}
                 selectedCount={tempReswipeBucket.length}
               />
@@ -224,7 +233,7 @@ function Reswipe(props) {
               <>
                 <button
                   className={"main-button-2 clickable"}
-                  onClick={() => handleFinish()}
+                  onClick={() => handleClose()}
                 >
                   <h1 style={{ textAlign: "center", width: "150px" }}>
                     I want {tempReswipeBucket.length}!
@@ -233,8 +242,14 @@ function Reswipe(props) {
                 <button
                   className={"main-button-2 clickable"}
                   onClick={() => {
-                    setIsReswipeStarted(true);
-                    setShowRestartReSwipeMessage(false);
+                    if(tempReswipeBucket.length !== 4){
+                      setIsReswipeStarted(true);
+                      setShowRestartReSwipeMessage(false);
+                    }else{
+                      setIsFinal4Left(true);
+                      setShowRestartReSwipeMessage(false);
+                      setDeletedFinalFour(new Array(4).fill(false));
+                    }
                   }}
                 >
                   <h1 style={{ textAlign: "center", width: "150px" }}>
@@ -247,7 +262,7 @@ function Reswipe(props) {
               <>
                 <button
                   className={"main-button-2 clickable"}
-                  onClick={() => handleFinish()}
+                  onClick={() => handleFinalFourClose()}
                 >
                   <h1 style={{ textAlign: "center", width: "150px" }}>SAVE</h1>
                 </button>
@@ -258,7 +273,7 @@ function Reswipe(props) {
           <button
             className={"main-button-2 clickable"}
             onClick={() => {
-              history.push("/home");
+              handleClose();
             }}
           >
             <h1 style={{ textAlign: "center", width: "100%" }}>

@@ -65,7 +65,7 @@ function Swiper(props) {
     } else {
       props.onSwipe && props.onSwipe(direction, drop_id);
       if (direction === "right") {
-        dispatch({ type: "ADD_USER_DATA", payload: { drop_id } });
+        dispatch({ type: "ADD_USER_DATA", payload: { drop_id,dropIndex: index } });
       }
       if (direction === "left") {
         dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
@@ -144,7 +144,7 @@ function Swiper(props) {
               key={id}
               onSwipe={(dir) => {
                 setSwiping(true)
-                return swiped(dir, id)
+                return swiped(dir, id,index)
               }}
               onClickSwiperMain={() => openDrop(cardDetails)}
               onCardLeftScreen={() => outOfFrame(id)}

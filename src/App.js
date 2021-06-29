@@ -1,6 +1,6 @@
 import "./App.css";
 // import Home from "./pages/home/index";
-import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import PrivateRoute from "./components/wrappers/PrivateRoute";
 import React, { Suspense } from "react";
 import TermsAndConditions from "./pages/terms";
@@ -29,6 +29,8 @@ import UpgradeSub from "./pages/upgradeSub";
 
 import Reswipe from "./pages/reswipe";
 import {getUserProfile} from './DropMagnetAPI';
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -147,6 +149,7 @@ function App() {
             path="/reswipe"
             component={Reswipe}
           />
+          
 
           <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/signup" component={Signup} />

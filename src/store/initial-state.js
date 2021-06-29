@@ -1,8 +1,8 @@
 const buckets = {
   apiData: [],
-  reswipeBucket: [],
-  activeBucket: [],
-  selectionBucket: { fav: [], rem: [] },
+  reswipedDrops: {},
+  activeBucket: []
+  
 };
 const initialState = {
   general: {
