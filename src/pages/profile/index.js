@@ -302,6 +302,7 @@ export default function Profile(props) {
     return (
       <div>
         <ProfileDropDetail
+          isSaved={selectedProfileList === "saved"}
           drop={curDrop}
           closeDetailView={() => setDetailView(false)}
           handleClick={() => console.log("Click")}

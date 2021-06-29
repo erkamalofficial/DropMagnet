@@ -125,11 +125,12 @@ function Reswipe(props) {
         type: "SET_RESWIPE_BUCKET",
         payload: { newBucket: tempReswipeBucket, tab: curTab },
       });
-    const currentReswipeBucket = cloneDeep(tempReswipeBucket);
+    const currentReswipeBucket = [...tempReswipeBucket];
+    console.log(currentReswipeBucket,deletedFinalFour);
     if (deletedFinalFour !== null) {
       deletedFinalFour.map((isDeleted, index) => {
-        if (currentReswipeBucket[index]) {
-          const id = currentReswipeBucket[index].id;
+        if (tempReswipeBucket[index]) {
+          const id = tempReswipeBucket[index].id;
           if (isDeleted) {
             unsaveDrop(idToken, id);
             currentReswipeBucket.splice(index, 1);

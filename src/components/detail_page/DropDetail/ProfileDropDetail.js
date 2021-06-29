@@ -9,10 +9,8 @@ export default function ProfileDropDetail(props) {
     props.closeDetailView()
   }
   const { user } = props
-
-  let artist_image = user !== null && user.avatar_url !== '' ? user.avatar_url : UserIcon
-  let artist_name = user !== null && user.name
-  
+  let artist_image = props.isSaved ? (props.drop.artist.avatar_url || UserIcon):(user ? (user.avatar_url || UserIcon): UserIcon)
+  let artist_name = props.isSaved ? props.drop.artist.name: (user ? user.name: '')
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
       <p2 style={{color: '#F5F5F5', opacity: '0.66', fontWeight: 'bold', transform: 'rotate(-90deg)', position: 'absolute', bottom: '24px', left: '8px', transformOrigin: '0 0', width: '164px'}} >30 Second Song Preview</p2>
