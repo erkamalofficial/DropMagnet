@@ -23,7 +23,7 @@ const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
 
-  const { db, reswipeModeActive, setDetailView, setLoadMore } = props
+  const { db, reswipeModeActive, setDetailView, nextIndex } = props
 
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
@@ -43,8 +43,8 @@ function Swiper(props) {
   }, [reswipeModeActive]);
 
   useEffect(() => {
-    if (cards.length <=1 && !(reswipeModeActive)) {
-      setLoadMore(true)
+    if (cards.length <=1 && !(reswipeModeActive) && nextIndex!==null) {
+      dispatch({type: "FETCH_MORE_FEEDS", payload: true})
     }
 
   }, [cards.length,reswipeModeActive])
@@ -99,6 +99,7 @@ function Swiper(props) {
       childRefs[index].current.swipe(dir); // Swipe the card!
     }
   };
+
 
   function openDrop(d) {
     // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))

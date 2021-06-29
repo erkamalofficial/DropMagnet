@@ -23,6 +23,8 @@ const initialState = {
   links: {},
   groupedLinks: [],
   availableLinks: [],
+  nextIndex: 0,
+  fetchMore: false
 };
 
 export default initialState;

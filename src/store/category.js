@@ -35,12 +35,14 @@ const getProcessedCollection = (state, action, type) => {
 
   const collection = {
     ...state[type],
-    activeBucket: [...action.payload].reverse()
+    activeBucket: [...action.payload.data].reverse()
   };
   return {
     ...state,
     [type]: collection,
     general,
+    nextIndex: action.payload.index,
+    fetchMore: false
   };
 };
 
@@ -307,6 +309,9 @@ const categoryReducer = (state = initialState, action) => {
         "music": {...state.music, reswipeBucket: reswipeBuckets['music'], selectionBucket: selectionBuckets["music"]},
         "fashion":{...state.fashion, reswipeBucket: reswipeBuckets['fashion'], selectionBucket: selectionBuckets["fashion"]}
       }
+    }
+    case 'FETCH_MORE_FEEDS': {
+      return { ...state, fetchMore: action.payload };
     }
     default:
       return state;

@@ -8,20 +8,12 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
       .collection("drops_v1")
       .where("category", "==", categoryType)
       .get();
-    
-
-    // https://drop-backend-rnd454q4pa-ew.a.run.app/drops/feed?from=15-04-2021&to=8-04-2021&category=art
-    // DropMagnetAPI.getFeeds(token)
-    // const result = []
-    // querySnapshot.forEach((doc) => {
-    //   result.push(doc.data());
-    // });
 
     const response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras)
-    .then((res) => res.data)
+    .then((res) => res)
     dispatch({ type: actionType, payload: response });
   } catch (err) {
-    dispatch({ type: actionType, payload: [] });
+    dispatch({ type: actionType, payload: {data: [], index: null} });
     console.log(`error while fetching ${categoryType}`, err);
   }
 };

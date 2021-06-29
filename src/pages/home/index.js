@@ -52,6 +52,8 @@ const Home = (props) => {
   const reswipeModeActive = useSelector(
     (state) => state.category.general.reswipeModeActive
   );
+  const nextIndex = useSelector((state) => state.category.nextIndex);
+  const fetchMore = useSelector((state) => state.category.fetchMore);
 
   useEffect(() => {
 
@@ -83,39 +85,31 @@ const Home = (props) => {
     })
   }, [dispatch, currentUser]);
 
-  // useEffect(() => {
-  //   console.log(loadMore)
-  //   if (loadMore) {
-  //     let date = new Date(selectedDropdownDate)
-  //     const TO_DATE = date.setDate(date.getDate() + 5)
-  //     const FROM_DATE = date.setDate(date.getDate() + 5)
+  useEffect(() => {
+    console.log(fetchMore, nextIndex)
+    if (fetchMore) {
+      let extras = {
+        token: idToken,
+        curTime: nextIndex,
+        userID: currentUser.uid,
+      }
 
-  //     let toDate = getCurrentDate(TO_DATE)
-  //     let fromDate = getCurrentDate(FROM_DATE)
+      if (activeTabIndex === 0) {
+        dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
+      }
+      else if (activeTabIndex === 1) {
+        dispatch(fetchMusic({ activeTabIndex: 1, token: idToken, extras: extras }));
+      }
+      else if (activeTabIndex === 2) {
+        dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
+      }
+      else {
+        dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
+      }
+      setLoadMore(false)
 
-  //     let extras = {
-  //       token: idToken,
-  //       fromDate: fromDate, // Date in future
-  //       toDate: toDate, // Current date
-  //       userID: currentUser.uid,
-  //     }
-
-  //     if (activeTabIndex === 0) {
-  //       dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
-  //     }
-  //     else if (activeTabIndex === 1) {
-  //       dispatch(fetchMusic({ activeTabIndex: 1, token: idToken, extras: extras }));
-  //     }
-  //     else if (activeTabIndex === 2) {
-  //       dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
-  //     }
-  //     else {
-  //       dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
-  //     }
-  //     setLoadMore(false)
-
-  //   }
-  // }, [loadMore])
+    }
+  }, [fetchMore])
 
   const getCurrentDate = (date) => {
     let d = new Date(date)
@@ -238,7 +232,7 @@ const Home = (props) => {
             handleActiveTabIndex={handleActiveTabIndex}
             tabList={tabList}
             setDetailView={setDetailView}
-            setLoadMore={setLoadMore}
+            nextIndex={nextIndex}
           />
 
         )}
