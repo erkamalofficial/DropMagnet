@@ -12,12 +12,13 @@ import Swiper from "../home/swiper";
 import ProgressBar from "../home/progress-bar";
 import RestartScreen from "./restart_screen";
 import FinalFour from "./final_4";
-import { cloneDeep } from "lodash";
 
 import "./index.css";
 import ReswipeComplete from "./complete_reswipe";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
+import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDropDetail";
+import ReswipeCard from './reswipe_card';
 
 const MainContainer = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ const MainContainer = styled.div`
 const ReswipedButtonContainer = styled.div`
   margin-top: 20px;
   width: 426px;
-  @media(max-width: 576px) {
+  @media (max-width: 576px) {
     width: 386px;
   }
 `;
@@ -70,19 +71,25 @@ function Reswipe(props) {
     return state.category[curTab];
   });
 
-  const {reswipeModeActive} = useSelector((state)=>state.category.general)
-  if(!reswipeModeActive){
-    history.push('/home');
+  const { reswipeModeActive } = useSelector((state) => state.category.general);
+  if (!reswipeModeActive) {
+    history.push("/home");
   }
-  
+
   const { currentUser } = useAuth();
 
-  const [tempReswipeBucket, setTempReswipeBucket] = useState(Object.keys(reswipedDrops).map((key)=>reswipedDrops[key]));
+  const [tempReswipeBucket, setTempReswipeBucket] = useState(
+    Object.keys(reswipedDrops).map((key) => reswipedDrops[key])
+  );
 
-  const [currentCounter, setCurrentCounter] = useState(tempReswipeBucket.length);
+  const [currentCounter, setCurrentCounter] = useState(
+    tempReswipeBucket.length
+  );
   const [roundLength, setRoundLength] = useState(tempReswipeBucket.length);
   const [reswipeComplete, setReswipeComplete] = useState(false);
   const [deletedFinalFour, setDeletedFinalFour] = useState(null);
+  const [currentDetailIndex, setCurrentDetailIndex] = useState(null);
+
   const openDateMenu = () => {
     setDateMenuOpen(true);
   };
@@ -98,21 +105,24 @@ function Reswipe(props) {
       unsaveDrop(idToken, drop_id);
       setTempReswipeBucket(newArray);
     }
-    if(newArray.length === 4 && dir!=="right") {
+    if (newArray.length === 4 && dir !== "right") {
       setRoundLength(4);
       setCurrentCounter(4);
       setIsReswipeStarted(false);
       setIsFinal4Left(true);
       setDeletedFinalFour(new Array(4).fill(false));
-    }else if((newArray.length === 0 && dir === "right") || (newArray.length === 0 && dir === "left")){
+    } else if (
+      (newArray.length === 0 && dir === "right") ||
+      (newArray.length === 0 && dir === "left")
+    ) {
       setReswipeComplete(true);
       setIsReswipeStarted(false);
-    }else if (currentCounter - 1 === 0 ) {
+    } else if (currentCounter - 1 === 0) {
       setRoundLength(currCAndCurrL);
       setCurrentCounter(currCAndCurrL);
       setIsReswipeStarted(false);
       setShowRestartReSwipeMessage(true);
-    } else{
+    } else {
       setCurrentCounter(currentCounter - 1);
     }
   };
@@ -125,43 +135,43 @@ function Reswipe(props) {
 
   const handleFinalFourClose = () => {
     setIsFinal4Left(false);
-    console.log(deletedFinalFour)    
+    console.log(deletedFinalFour);
     let newTempReswipeBuckets = [];
-    tempReswipeBucket.map((drop,index)=>{
-      if(deletedFinalFour[index]){
-        unsaveDrop(idToken,drop.id);
-      }else{
-        saveDrop(idToken,drop.id);
+    tempReswipeBucket.map((drop, index) => {
+      if (deletedFinalFour[index]) {
+        unsaveDrop(idToken, drop.id);
+      } else {
+        saveDrop(idToken, drop.id);
         newTempReswipeBuckets.push(drop);
       }
-    })
-    if(newTempReswipeBuckets.length === 4){
+    });
+    if (newTempReswipeBuckets.length === 4) {
       setRoundLength(4);
       setCurrentCounter(4);
       setIsReswipeStarted(false);
       setShowRestartReSwipeMessage(true);
-    }else if(newTempReswipeBuckets.length >1){
+    } else if (newTempReswipeBuckets.length > 1) {
       setRoundLength(newTempReswipeBuckets.length);
       setCurrentCounter(newTempReswipeBuckets.length);
       setIsReswipeStarted(true);
-    }else{
+    } else {
       setReswipeComplete(true);
       setIsReswipeStarted(false);
     }
     setTempReswipeBucket(newTempReswipeBuckets);
   };
 
-  const handleClose = ()=>{
+  const handleClose = () => {
     const newBucket = {};
-    tempReswipeBucket.map((drop)=>{
+    tempReswipeBucket.map((drop) => {
       newBucket[drop.id] = drop;
-    })
-    dispatch({
-          type: "SET_RESWIPE_BUCKET",
-          payload: { newBucket , tab: curTab },
     });
-    history.push('/home');
-  }
+    dispatch({
+      type: "SET_RESWIPE_BUCKET",
+      payload: { newBucket, tab: curTab },
+    });
+    history.push("/home");
+  };
 
   //   console.log(reswipeBucket,selectionBucket);
   return (
@@ -182,79 +192,113 @@ function Reswipe(props) {
         userLoggedIn={currentUser && currentUser.uid}
         userImageVisible={true}
       />
-      {!reswipeComplete ? (
-        <>
-          {!isFinal4Left && !showRestartReSwipeMessage && !isReswipeStarted && (
-            <IntroScreen />
-          )}
-          {showRestartReSwipeMessage && (
-            <RestartScreen selectionCount={tempReswipeBucket.length} />
-          )}
-          {isFinal4Left && (
-            <FinalFour
-              deleted={deletedFinalFour}
-              bucket={tempReswipeBucket}
-              onChange={onChangeFinalFourDelete}
-            />
-          )}
-          {isReswipeStarted && (
-            <div classNAme="rel">
-              <ProgressBar
-                key="progressBar"
-                size={roundLength}
-                closeReswipe={() => {
-                  handleClose();
-                }}
-                selectedCount={tempReswipeBucket.length}
+      {currentDetailIndex === null ? (
+        !reswipeComplete ? (
+          <>
+            {!isFinal4Left &&
+              !showRestartReSwipeMessage &&
+              !isReswipeStarted && <IntroScreen />}
+            {showRestartReSwipeMessage && (
+              <RestartScreen selectionCount={tempReswipeBucket.length} />
+            )}
+            {isFinal4Left && (
+              <FinalFour
+                deleted={deletedFinalFour}
+                bucket={tempReswipeBucket}
+                onChange={onChangeFinalFourDelete}
+                onExpand={(index) => setCurrentDetailIndex(index)}
               />
-              <Swiper
-                key={"a000"}
-                reswipeModeActive={true}
-                onReswipe={handleReswipe}
-                db={tempReswipeBucket}
-                detailView={detailView}
-                setDetailView={setDetailView}
-              />
-            </div>
-          )}
-        </>
+            )}
+            {isReswipeStarted && (
+              <div classNAme="rel">
+                <ProgressBar
+                  key="progressBar"
+                  size={roundLength}
+                  closeReswipe={() => {
+                    handleClose();
+                  }}
+                  selectedCount={tempReswipeBucket.length}
+                />
+                <Swiper
+                  key={"a000"}
+                  reswipeModeActive={true}
+                  onReswipe={handleReswipe}
+                  db={tempReswipeBucket}
+                  detailView={detailView}
+                  setDetailView={setDetailView}
+                />
+              </div>
+            )}
+          </>
+        ) : (
+          <ReswipeComplete />
+        )
       ) : (
-        <ReswipeComplete />
+        <ReswipeCard>
+          <ProfileDropDetail
+            drop={tempReswipeBucket[currentDetailIndex]}
+            isSaved={true}
+            closeDetailView={() => {
+              setCurrentDetailIndex(null);
+            }}
+            style={{width: '100%'}}
+          />
+        </ReswipeCard>
+        
       )}
+      {}
 
-      <ReswipedButtonContainer>
+      <ReswipedButtonContainer
+        style={{ display: currentDetailIndex === null ? "block" : "none" }}
+      >
         {!reswipeComplete ? (
-          <div style={{ display: "flex",width: '100%', justifyContent: 'center' }}>
+          <div
+            style={{ display: "flex", width: "100%", justifyContent: "center" }}
+          >
             {!isFinal4Left && !showRestartReSwipeMessage && !isReswipeStarted && (
               <button
                 className={"main-button-2 clickable"}
                 onClick={() => setIsReswipeStarted(true)}
-                style={{width: 'calc(100% - 50px )', textAlign: 'center'}}
+                style={{ width: "calc(100% - 50px )", textAlign: "center" }}
               >
-                <h1 style={{ textAlign: "center",width: '100%' }}> Start </h1>
+                <h1 style={{ textAlign: "center", width: "100%" }}> Start </h1>
               </button>
             )}
             {showRestartReSwipeMessage && (
-              <div style={{width: 'calc(100% - 50px)', borderRadius: '8px',display: 'flex'}}>
+              <div
+                style={{
+                  width: "calc(100% - 50px)",
+                  borderRadius: "8px",
+                  display: "flex",
+                }}
+              >
                 <button
                   className={"main-button-2 clickable"}
                   onClick={() => handleClose()}
-                  style={{width: '50%',borderRadius: '0px',borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px'}}
-
+                  style={{
+                    width: "50%",
+                    borderRadius: "0px",
+                    borderTopLeftRadius: "8px",
+                    borderBottomLeftRadius: "8px",
+                  }}
                 >
-                  <h1 style={{ textAlign: "center",width: '100%'}}>
+                  <h1 style={{ textAlign: "center", width: "100%" }}>
                     I want {tempReswipeBucket.length}!
                   </h1>
                 </button>
                 <button
                   className={"main-button-2 clickable"}
-                  style={{width: '50%',borderRadius: '0px',borderTopRightRadius: '8px', borderBottomRightRadius: '8px'}}
-
+                  style={{
+                    width: "50%",
+                    borderRadius: "0px",
+                    borderTopRightRadius: "8px",
+                    borderBottomRightRadius: "8px",
+                  }}
                   onClick={() => {
-                    if(tempReswipeBucket.length !== 4){
+                    if (tempReswipeBucket.length !== 4) {
                       setIsReswipeStarted(true);
                       setShowRestartReSwipeMessage(false);
-                    }else{
+                    } else {
                       setIsFinal4Left(true);
                       setShowRestartReSwipeMessage(false);
                       setDeletedFinalFour(new Array(4).fill(false));
@@ -272,8 +316,7 @@ function Reswipe(props) {
                 <button
                   className={"main-button-2 clickable"}
                   onClick={() => handleFinalFourClose()}
-                  style={{width: 'calc(100% - 50px )'}}
-                
+                  style={{ width: "calc(100% - 50px )" }}
                 >
                   <h1 style={{ textAlign: "center", width: "100%" }}>Save</h1>
                 </button>
@@ -283,7 +326,7 @@ function Reswipe(props) {
         ) : (
           <button
             className={"main-button-2 clickable"}
-            style={{width: 'calc(100% - 50px )',margin: '0 auto'}}
+            style={{ width: "calc(100% - 50px )", margin: "0 auto" }}
             onClick={() => {
               handleClose();
             }}

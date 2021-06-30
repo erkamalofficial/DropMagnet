@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import "./DropDetail.css"
 import { formatDate } from '../../../helpers/DateFormatter'
 import UserIcon from "../../../asstes/add-user-icon.png"
@@ -23,8 +23,10 @@ export default function ProfileDropDetail(props) {
     </div>
   }
 
+  const style = props.style || {};
+
   return (
-    <div className="detail-view">
+    <div className="detail-view" style={style}>
       <div className="detail-view-header">
         <img className="detail-view-header-image" src={artist_image}/>
         <h1 className="drop-detail-title">{artist_name}</h1>
@@ -56,7 +58,7 @@ export default function ProfileDropDetail(props) {
           {props.drop.desc}
         </p1>
       </div>
-      <div className="bottom-button-holder">
+      {/* <div className="bottom-button-holder" style={{display: props.hideNavButtons? 'block': 'none'}}>
         <div className="dismiss-button-unselected">
           <div style={{margin: '-6px auto 0 auto'}}>
             <img width={32} src="./discard-icon.png" className={'clickable'} />
@@ -65,7 +67,7 @@ export default function ProfileDropDetail(props) {
         <div className="add-button-unselected">
         <img style={{margin: '0 auto'}} width={32} height={32} className={'clickable'} src="./add-icon.png" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import ReswipeCard from "./reswipe_card";
 import styled from "styled-components";
+import {ReactComponent as MaximizeIcon} from '../../asstes/capture.svg';
 
 const Final4Grid = styled.div`
   display: grid;
@@ -26,24 +27,6 @@ const DropCard = styled.div`
     width: 100%;
     height: 100%;
     /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 67% 92%, 33% 99%, 0% 93%); */
-  }
-  > .title-author {
-    padding: 4px 8px;
-    width: 100%;
-    transition: all 0.2s;
-    > h3,
-    p {
-      margin: 0 auto;
-    }
-    > h3 {
-      font-size: 16px;
-      margin-bottom: 2px;
-    }
-    > p {
-      font-size: 13px;
-      color: rgb(102, 102, 102);
-      font-weight: 500;
-    }
   }
   :active {
     transform: scale(0.9);
@@ -77,17 +60,30 @@ const CloseSVGContainer = styled.span`
     position: absolute;
     border-radius: 50%;
     right: 10px;
-    top: 10px;
+    bottom: 10px;
     z-index: 1;
     width: 28px;
     height: 28px;
     opacity: 1;
     transition: transform .15s, opacity calc(.15s * 1.2) linear;
     transform: scale(1);
+`;
+
+const MaximizeSVGContainer = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  z-index: 3;
+  >svg{
+    width: inherit;
+    height: inherit;
+  }
 `
 
 
-export default function FinalFour({ bucket, deleted, onChange }) {
+export default function FinalFour({ bucket, deleted, onChange,onExpand }) {
   const handleChange = (isDeleted, index) => {
     onChange(isDeleted, index);
   };
@@ -103,9 +99,11 @@ export default function FinalFour({ bucket, deleted, onChange }) {
         {bucket.map((item, i) => {
           return (
             <DropCard
-              onClick={() => handleChange(!deleted[i], i)}
               className={deleted[i] && "delete-drop-card"}
             >
+            <MaximizeSVGContainer onClick={()=>onExpand(i)} >
+                <MaximizeIcon title={'Maximize'} />
+            </MaximizeSVGContainer> 
             <CloseSVGContainer className={deleted[i] && "delete-svg-container-tick"}>
               <CloseSVG viewBox="0 0 12 10" className={deleted[i] && "delete-svg-tick"}>
                 <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
@@ -113,6 +111,7 @@ export default function FinalFour({ bucket, deleted, onChange }) {
             </CloseSVGContainer> 
             
               <img
+                onClick={() => handleChange(!deleted[i], i)}
                 src={item.media && item.media[0].url}
                 className={"drop-img"}
                 alt={item.title}
