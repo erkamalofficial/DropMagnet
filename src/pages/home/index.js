@@ -19,6 +19,8 @@ import "./index.css";
 import { useHistory } from "react-router";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
+import LazyCard from "./LazyCard";
+import LazyTab from "./LazyTab";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -32,6 +34,12 @@ const HomeContainer = styled.div`
       padding-top: 10px
     }
   }
+`;
+
+const CardContainer = styled.div`
+  width: var(--card-container-width);
+  height: var(--card-container-height);
+  margin-bottom: var(--gap-bottom);
 `;
 
 const Home = (props) => {
@@ -220,8 +228,15 @@ const Home = (props) => {
         userImageVisible={true}
       />
       <div className="rel">
-        {isLoading && <Spinner />}
-        {/* <div style={{display: internalLoader ? 'none': 'block'}}> */}
+        {isLoading && (
+          <>
+
+            <LazyTab/>
+            <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
+              <LazyCard />
+            </CardContainer>
+          </>
+        )}
         {!isLoading && (
           <Swiper
             reswipeModeActive={false}
