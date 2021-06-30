@@ -28,6 +28,10 @@ const MainContainer = styled.div`
 
 const ReswipedButtonContainer = styled.div`
   margin-top: 20px;
+  width: 426px;
+  @media(max-width: 576px) {
+    width: 386px;
+  }
 `;
 
 const Header = styled.div`
@@ -220,27 +224,32 @@ function Reswipe(props) {
 
       <ReswipedButtonContainer>
         {!reswipeComplete ? (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex",width: '100%', justifyContent: 'center' }}>
             {!isFinal4Left && !showRestartReSwipeMessage && !isReswipeStarted && (
               <button
                 className={"main-button-2 clickable"}
                 onClick={() => setIsReswipeStarted(true)}
+                style={{width: 'calc(100% - 50px )', textAlign: 'center'}}
               >
-                <h1 style={{ textAlign: "center", width: "300px" }}> Start </h1>
+                <h1 style={{ textAlign: "center",width: '100%' }}> Start </h1>
               </button>
             )}
             {showRestartReSwipeMessage && (
-              <>
+              <div style={{width: 'calc(100% - 50px)', borderRadius: '8px',display: 'flex'}}>
                 <button
                   className={"main-button-2 clickable"}
                   onClick={() => handleClose()}
+                  style={{width: '50%',borderRadius: '0px',borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px'}}
+
                 >
-                  <h1 style={{ textAlign: "center", width: "150px" }}>
+                  <h1 style={{ textAlign: "center",width: '100%'}}>
                     I want {tempReswipeBucket.length}!
                   </h1>
                 </button>
                 <button
                   className={"main-button-2 clickable"}
+                  style={{width: '50%',borderRadius: '0px',borderTopRightRadius: '8px', borderBottomRightRadius: '8px'}}
+
                   onClick={() => {
                     if(tempReswipeBucket.length !== 4){
                       setIsReswipeStarted(true);
@@ -252,19 +261,21 @@ function Reswipe(props) {
                     }
                   }}
                 >
-                  <h1 style={{ textAlign: "center", width: "150px" }}>
+                  <h1 style={{ textAlign: "center", width: "100%" }}>
                     Reswipe
                   </h1>
                 </button>
-              </>
+              </div>
             )}
             {isFinal4Left && (
               <>
                 <button
                   className={"main-button-2 clickable"}
                   onClick={() => handleFinalFourClose()}
+                  style={{width: 'calc(100% - 50px )'}}
+                
                 >
-                  <h1 style={{ textAlign: "center", width: "150px" }}>SAVE</h1>
+                  <h1 style={{ textAlign: "center", width: "100%" }}>Save</h1>
                 </button>
               </>
             )}
@@ -272,6 +283,7 @@ function Reswipe(props) {
         ) : (
           <button
             className={"main-button-2 clickable"}
+            style={{width: 'calc(100% - 50px )',margin: '0 auto'}}
             onClick={() => {
               handleClose();
             }}

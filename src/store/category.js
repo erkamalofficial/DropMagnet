@@ -217,6 +217,52 @@ const categoryReducer = (state = initialState, action) => {
       
     }
     
+    case "START_RESWIPE": {
+      const {newBucket}=action.payload;
+      const currentTab = tabList[state.general.activeTabIndex];
+      const reswipedDrops = {
+          "arts": {},
+          "music": {},
+          "fashion": {},
+          "collectables": {}
+        };
+      newBucket.map((d)=>{
+          switch(d.category){
+            case 'art': {
+              reswipedDrops["arts"][d.id] = d;
+              break;
+            }
+            case 'music': {
+              reswipedDrops["music"][d.id] = d;
+              break;
+            }
+            case 'fashion': {
+              reswipedDrops["fashion"][d.id] = d;
+  
+              break;
+            }
+            case 'collectables': {
+              reswipedDrops["collectables"][d.id] = d;
+              break;
+            }
+            default: ;
+          }
+          
+        })
+  
+        const general = {
+          ...state.general,
+          reswipeModeActive:Object.keys(reswipedDrops['arts']).length>=1?true:false 
+        }
+        return{
+          ...state,
+          general,
+          "arts": {...state.arts,reswipedDrops: reswipedDrops["arts"]},
+          "collectables": {...state.collectables, reswipedDrops: reswipedDrops["collectables"]},
+          "music": {...state.music,reswipedDrops: reswipedDrops["music"]},
+          "fashion":{...state.fashion,reswipedDrops: reswipedDrops["fashion"]}
+        }
+    }
 
     case 'SAVE_RESWIPE_BUCKETS': {
       const savedDrops = action.payload;
