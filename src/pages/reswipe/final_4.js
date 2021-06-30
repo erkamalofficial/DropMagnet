@@ -12,7 +12,7 @@ const Final4Grid = styled.div`
 
 const DropCard = styled.div`
   width: 150px;
-  height: 180px;
+  height: 150px;
   border-radius: 12px;
   position: relative;
   overflow: hidden;
@@ -24,8 +24,8 @@ const DropCard = styled.div`
   transition: all 0.4s;
   > .drop-img {
     width: 100%;
-    height: calc(100% - 40px);
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 67% 92%, 33% 99%, 0% 93%);
+    height: 100%;
+    /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 67% 92%, 33% 99%, 0% 93%); */
   }
   > .title-author {
     padding: 4px 8px;
@@ -117,10 +117,6 @@ export default function FinalFour({ bucket, deleted, onChange }) {
                 className={"drop-img"}
                 alt={item.title}
               />
-              <div className={"title-author"}>
-                <DropTitle> {item.title} </DropTitle>
-                <p> {item.artist && item.artist.name} </p>
-              </div>
             </DropCard>
           );
         })}

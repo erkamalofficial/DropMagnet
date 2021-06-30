@@ -155,7 +155,6 @@ const categoryReducer = (state = initialState, action) => {
           reswipeModeActive: reswipeModeActive,
         };
   
-        console.log(reswipedDrops);
         return { ...state, [currentTab]: activeTabContent, general };
   
       }else{
@@ -296,7 +295,6 @@ const categoryReducer = (state = initialState, action) => {
         }
         
       })
-      console.log(reswipedDrops);
 
       let reswipeModeActive = false;
       if(Object.keys(reswipedDrops[currentTab]).length>=MAX_BUCKET_SIZE ){
