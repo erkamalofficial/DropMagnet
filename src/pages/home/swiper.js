@@ -43,11 +43,11 @@ function Swiper(props) {
   }, [reswipeModeActive]);
 
   useEffect(() => {
-    if (cards.length <=1 && !(reswipeModeActive) && nextIndex!==null) {
-      dispatch({type: "FETCH_MORE_FEEDS", payload: true})
+    if (cards.length <= 1 && !(reswipeModeActive) && nextIndex !== null) {
+      dispatch({ type: "FETCH_MORE_FEEDS", payload: true })
     }
 
-  }, [cards.length,reswipeModeActive])
+  }, [cards.length, reswipeModeActive])
 
   const childRefs = useMemo(
     () =>
@@ -65,7 +65,7 @@ function Swiper(props) {
     } else {
       props.onSwipe && props.onSwipe(direction, drop_id);
       if (direction === "right") {
-        dispatch({ type: "ADD_USER_DATA", payload: { drop_id,dropIndex: index } });
+        dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index } });
       }
       if (direction === "left") {
         dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
@@ -144,7 +144,7 @@ function Swiper(props) {
               key={id}
               onSwipe={(dir) => {
                 setSwiping(true)
-                return swiped(dir, id,index)
+                return swiped(dir, id, index)
               }}
               onClickSwiperMain={() => openDrop(cardDetails)}
               onCardLeftScreen={() => outOfFrame(id)}
@@ -153,7 +153,7 @@ function Swiper(props) {
               <Card {...cardDetails} />
             </TinderCard>
           );
-        }) : <h4 style={{textAlign: 'center', width: '100%'}}>No Drops Available</h4>}
+        }) : <h4 style={{ textAlign: 'center', width: '100%' }}>No Drops Available</h4>}
       </CardContainer>
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         <MinusBtn onClick={() => swipe("left")}>
