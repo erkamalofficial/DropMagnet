@@ -1,6 +1,7 @@
 import React from 'react';
 import ReswipeCard from './reswipe_card';
 import styled from 'styled-components';
+import VideoPlayer from '../../components/VideoPlayer';
 
 const VideoHolder = styled.div`
 height: 300px;
@@ -20,10 +21,7 @@ export default function IntroScreen(props){
             <h3 className={'top-title'} style={{fontSize: '18px',textAlign: 'center'}}>You’re On Your Way To Becoming A Top Art Collector!</h3>
             <h1 className={'h1-large mid-title'} style={{fontSize: '32px',textAlign: 'center'}}>It's Time To Reswipe</h1>
             <VideoHolder className={'video-playback'}>
-                <h1 style={{"text-align": "center", fontSize: "22px"}}>What Is ReSwipe?</h1>
-                <div className={'play-button-icon'}>
-                    <img src= {'./play-icon.png'} height={38} width={38} alt={'play-btn'} />
-                </div>
+                <VideoPlayer url={'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'} caption={'What is ReSwipe?'} />
             </VideoHolder>
             <h1 style={{"text-align": "center", "margin-bottom": "22px", "margin-top": "0px"}}>You’ve Earned A Noob Gem!</h1>
         </ReswipeCard>
