@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import ReactPlayer from "react-player/lazy";
+import ReactPlayer from "react-player";
 import styled from "styled-components";
+import video from '../../asstes/sample-mp4-file.mp4';
 
 const VideoPlayerContainer = styled.div`
   position: relative;
@@ -33,7 +34,19 @@ const ExtraContainer = styled.div`
 
 export default function VideoPlayer({ url, caption }) {
   const [isPlaying, setIsPlaying] = useState(false);
+
   const [isPlayerReady, setIsPlayerReady] = useState(true);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
+
+  const config = {
+    file: {
+      forceHLS: !isSafari,
+      forceVideo: true,
+      hlsVersion: '0.12.4'
+    }
+  };
+
   return (
     <VideoPlayerContainer>
       {!isPlaying && isPlayerReady && (
@@ -57,7 +70,7 @@ export default function VideoPlayer({ url, caption }) {
       )}
 
       <VideoPlayerBody>
-        <ReactPlayer url={url} stopOnUnmount playing={isPlaying} controls={isPlaying && isPlayerReady} width={'100%'} height={'100%'} onReady={()=>{
+        <ReactPlayer url={video}  stopOnUnmount playing={isPlaying} controls={isPlaying && isPlayerReady} width={'100%'} height={'100%'} onReady={()=>{
             setIsPlayerReady(true);
         }}   />
       </VideoPlayerBody>
