@@ -8,6 +8,7 @@ import DropCreation from "./pages/create_drop";
 import Signup from "./pages/register/Signup";
 import Signup2 from "./pages/signup/index2";
 import Login from "./pages/register/Login";
+import MagicLogin from "./pages/magiclogin/MagicLogin";
 import ForgotPassword from "./pages/register/ForgotPassword";
 import Profile from "./pages/profile";
 import SquareGallery from "./pages/galleries/square-gallery";
@@ -154,6 +155,7 @@ function App() {
           <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
+          <Route path="/magic" component={MagicLogin} />
           <Route path="/forgot-password" component={ForgotPassword} />
 
           <Route
