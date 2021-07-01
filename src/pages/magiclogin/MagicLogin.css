@@ -1,4 +1,4 @@
-.magic-container{
+.custom-login-container{
     margin: auto;
     display: flex;
     align-items: center;
@@ -6,14 +6,22 @@
     height: calc(100vh - 68px);
 }
 
+.custom-login-container .options{
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+
 .magic-login-box{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 16px;
-    border: 1px solid white;
-    border-radius: 4px;
 }
 
 .magic-login-box h3{
@@ -21,7 +29,7 @@
     margin-bottom: 16px;
 }
 
-.magic-login-box button{
+.custom-login-container .options button{
     line-height: 40px;
     background-color: var(--darkBlue);
     color: var(--grey300);
