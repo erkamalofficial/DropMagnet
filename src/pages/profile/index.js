@@ -14,15 +14,28 @@ import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDr
 import Spinner from "../../components/blocks/spinner";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-
+import Tabs from "../home/tabs";
+import { getCategoryFromTab, tabList } from "../../constants";
 
 const ButtonContainer = styled.div`
-    margin-top: 16px ;
+  margin-top: 16px;
 `;
 
+const TabContainer = styled.div`
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  ul {
+    margin-bottom: 0;
+  }
+`;
 
 export default function Profile(props) {
   const [handle, setHandle] = useState("");
+
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userImage, setUserImage] = useState(props.userImage);
@@ -53,6 +66,10 @@ export default function Profile(props) {
   const { currentUser } = useAuth();
 
   let history = useHistory();
+
+  const currentTabName = getCategoryFromTab(tabList[activeTabIndex]);
+
+  const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
 
   let collectibleArts = [
     {
@@ -515,18 +532,32 @@ export default function Profile(props) {
                 Saved Drops ({savedPosts.length})
               </div>
             </div>
-            {selectedProfileList === "saved" && savedPosts.length!==0 && (
+            {selectedProfileList === "saved" && savedPosts.length !== 0 && (
+              <TabContainer>
+                <Tabs
+                  activeTabIndex={activeTabIndex}
+                  handleActiveTabIndex={(index) => {
+                    setActiveTabIndex(index);
+                  }}
+                  tabList={tabList}
+                />
+              </TabContainer>
+            )}
+            {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
               <ButtonContainer>
                 <button
                   className={"main-button-2 clickable"}
                   style={{ width: "calc(100% - 50px )", margin: "0 auto" }}
                   onClick={() => {
-                    dispatch({type: 'START_RESWIPE',payload: {newBucket: savedPosts}})
-                    history.push('/reswipe?tabs=arts');
+                    dispatch({
+                      type: "START_RESWIPE",
+                      payload: { newBucket: savedPosts },
+                    });
+                    history.push(`/reswipe?tabs=${tabList[activeTabIndex]}`);
                   }}
                 >
                   <h1 style={{ textAlign: "center", width: "100%" }}>
-                    Start Reswiping
+                    Start Reswipe
                   </h1>
                 </button>
               </ButtonContainer>
@@ -534,9 +565,12 @@ export default function Profile(props) {
             {scheduledPosts.length > 0 &&
             selectedProfileList === "scheduled" ? (
               renderDrops(scheduledPosts)
-            ) : savedPosts.length > 0 && selectedProfileList === "saved" ? (
-              renderDrops(savedPosts, true)
-            ) : savedPosts.length === 0 ? (
+            ) : currSavedPosts.length > 0 && selectedProfileList === "saved" ? (
+              renderDrops(
+                currSavedPosts,
+                true
+              )
+            ) : currSavedPosts.length === 0 ? (
               <div
                 style={{
                   display: "flex",
@@ -551,7 +585,7 @@ export default function Profile(props) {
                   <span onClick={() => props.history.push("/home")}>
                     swiper page
                   </span>{" "}
-                  to explore.
+                  to explore or change category.
                 </p>
               </div>
             ) : (

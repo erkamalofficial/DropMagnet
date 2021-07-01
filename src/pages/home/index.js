@@ -21,6 +21,7 @@ import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
 import LazyCard from "./LazyCard";
 import LazyTab from "./LazyTab";
+import { tabList } from "../../constants";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -52,7 +53,6 @@ const Home = (props) => {
   const [detailView, setDetailView] = useState(false);
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
   const [loadMore, setLoadMore] = useState(false)
-  const tabList = ["arts", "music", "collectables", "fashion"];
   const activeTabIndex = useSelector((state) => {
     return state.category.general.activeTabIndex;
   });
