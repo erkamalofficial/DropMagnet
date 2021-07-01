@@ -32,6 +32,7 @@ import Reswipe from "./pages/reswipe";
 import {getUserProfile} from './DropMagnetAPI';
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import LandingPage from "./pages/NewLandingPage";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -117,6 +118,11 @@ function App() {
           <Route 
             path="/upgradeSub"
             render = {(props)=> <UpgradeSub {...props} /> }
+          />
+
+          <Route
+            path="/newLandingPage"
+            component={LandingPage}
           />
 
           <Route
