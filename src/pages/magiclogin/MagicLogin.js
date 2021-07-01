@@ -3,7 +3,6 @@ import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
 import "./MagicLogin.css"
 import { useHistory } from "react-router-dom";
-// import { useWallet, UseWalletProvider } from 'use-wallet'
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
