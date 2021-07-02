@@ -3,9 +3,14 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import Tabs from "../Tabs";
 import { LogoTitleSection, LogoTitle } from "./LogoTitles";
+import Web3 from "web3";
+import Web3Modal, { getProviderInfoByName } from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Fortmatic from "fortmatic";
+import WalletLink from "walletlink"
 
 
-const TAB_LIST = ["Drop Swipe","NFT Galleries","SmartURLs"];
+const TAB_LIST = ["Drop Swipe", "NFT Galleries", "SmartURLs"];
 
 const LinksHeaderWrapper = styled.div`
   display: flex;
@@ -38,6 +43,62 @@ const RightSection = styled.div``;
 const LandingPageHeader = ({ isLoggedIn }) => {
   const history = useHistory();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+
+  const coinbase = getProviderInfoByName('Coinbase')
+
+  const walletLink = new WalletLink({
+    appName: "Dropmagnet",
+    appLogoUrl: "https://example.com/logo.png",
+    darkMode: "false"
+  })
+
+  const ethereum = walletLink.makeWeb3Provider(
+    "https://ropsten.infura.io/v3/a789adc9c04146d88b3fb64732fbf206", 1
+  )
+
+  const providerOptions = {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
+      }
+    },
+
+    fortmatic: {
+      package: Fortmatic,
+      options: {
+        key: "pk_test_AFA830F46E222207"
+      }
+    },
+    "custom-coinbase": {
+      display: {
+        logo: coinbase.logo,
+        name: coinbase.name
+      },
+      package: ethereum,
+      connector: async () => {
+        const provider = ethereum;
+        await provider.enable()
+        return provider;
+      }
+    }
+  };
+
+  const web3Modal = new Web3Modal({
+    cacheProvider: true,
+    providerOptions,
+    theme: "dark"
+  });
+
+
+  const connectWallet = async (e) => {
+    e.preventDefault()
+    const provider = await web3Modal.connect();
+    const web3 = new Web3(provider);
+    console.log(web3)
+  }
+
+
   return (
     <LinksHeaderWrapper>
       <LogoSection>
@@ -54,16 +115,17 @@ const LandingPageHeader = ({ isLoggedIn }) => {
         </LogoTitleSection>
       </LogoSection>
       <MiddleSection>
-        <Tabs tabs={TAB_LIST} activeTabIndex={activeTabIndex} onChangeTab={(index)=>setActiveTabIndex(index)}  />
+        <Tabs tabs={TAB_LIST} activeTabIndex={activeTabIndex} onChangeTab={(index) => setActiveTabIndex(index)} />
       </MiddleSection>
       <RightSection>
         {!isLoggedIn ? (
           <>
-            <button className={"blank-button"} onClick={()=>history.push('/login')}>Login</button>
-            <button className={"blank-button"} onClick={()=>history.push('/signup')}>Register</button>
+            <button className={"blank-button"} onClick={() => history.push('/login')}>Login</button>
+            <button className={"blank-button"} onClick={() => history.push('/signup')}>Register</button>
+            <button className={"blank-button"} onClick={connectWallet}>Wallet Login</button>
           </>
         ) : (
-          <button className={"blank-button"} onClick={()=>history.push('/home')}>Home</button>
+          <button className={"blank-button"} onClick={() => history.push('/home')}>Home</button>
         )}
       </RightSection>
     </LinksHeaderWrapper>
