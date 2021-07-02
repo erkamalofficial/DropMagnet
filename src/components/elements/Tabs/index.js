@@ -19,7 +19,6 @@ const TabContainer = styled.div`
 `;
 
 const Tab = styled.button`
-  cursor: pointer;
   width: ${WIDTH}px;
   text-align: center;
   color: #eaeaea;
@@ -30,7 +29,6 @@ const Tab = styled.button`
   letter-spacing: normal;
   line-height: normal;
   text-align: center;
-  padding: 4px 10px;
   text-overflow: ellipsis;
   background: inherit;
   position: relative;
@@ -39,6 +37,7 @@ const Tab = styled.button`
   @media(max-width: 576px){
     width: ${MOB_WIDTH}px;
     font-size: 15px;
+    
   }
 `;
 
@@ -65,7 +64,7 @@ export default function Tabs({ tabs,activeTabIndex ,onChangeTab }) {
     <TabContainer style={{width: "auto"}}>
       <ActiveTab style={{left: (activeTabIndex/tabs.length)*100+ "%"}} />
       {tabs.map((tab, index) => {
-        return <Tab onClick={() => onChangeTab(index)}>{tab}</Tab>;
+        return <Tab  onClick={() => onChangeTab(index)}>{tab}</Tab>;
       })}
     </TabContainer>
   );

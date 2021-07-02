@@ -5,106 +5,92 @@ const PLSectionThree = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  > * {
-    margin-bottom: 1rem;
-  }
-  @media (max-width: 340px) {
-    > * {
-      margin-bottom: 0.5rem;
-    }
-  }
-`;
-const PLSectionThreeTitle = styled.div`
-  line-height: 28px;
-  font-weight: 700;
-  color: var(--grey300);
-  font-size: var(--font-size-l);
-  @media (max-width: 340px) {
-    font-size: var(--font-size-s);
+  max-width: 412px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 14px 24px;
+  background-color: #2c2c2c;
+  @media(max-width:576px){
+    padding-bottom: 28px;
   }
 `;
+
 const PLSectionUserinput = styled.input`
   font-weight: normal;
   border: 1px solid var(--purple500);
-  color: var(--grey250);
-  font-size: var(--font-size-m);
+  color: #ffffff;
+  font-family: "Quicksand";
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: normal;
+  text-align: center;
   @media (max-width: 340px) {
     font-size: var(--font-size-s);
   }
   border-radius: 5px;
-  width: 398px;
+  width: 350px;
   @media (max-width: 600px) {
-    width: 90%;
+    width: 320px;
   }
   line-height: 48px;
   text-align: center;
+  ::placeholder{
+    color: #ffff;
+  }
 `;
 const PLSectionEmojiLine = styled.div`
   font-weight: 700;
   color: var(--grey250);
+  margin-top: 12px;
   font-size: var(--font-size-s);
   @media (max-width: 340px) {
     font-size: var(--font-size-xs);
   }
 `;
-const PLSectionBtn = styled.div`
-  button {
-    line-height: 40px;
-    background-color: var(--darkBlue);
-    color: var(--grey300);
-    border: 1px solid var(--purple500);
-    border-radius: 5px;
-    font-size: var(--font-size-xs);
-    @media (max-width: 340px) {
-      font-size: var(--font-size-xxs);
-    }
-    font-weight: 700;
-    padding: 0 14px;
-    margin-right: 16px;
-    cursor: pointer;
+
+const Button = styled.button`
+
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 16px;
+  padding: 10px;
+  @media (max-width:576px){
+    transform: translate(-10px,-40px);
+
   }
 `;
-const GalleryNameTitle = styled.span`
-  font-family: var(--font-bdcols);
-  font-size: 22px;
-  @media (max-width: 340px) {
-    font-size: var(--font-size-m);
-  }
-  font-weight: normal;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
+
+
+
+
+
 const PersonalLinksPreview = ({ handleGalleryName, isLoggedIn }) => {
   return (
-    <PLSectionThree>
-      <PLSectionThreeTitle>
-        <span>Reserve your </span>
-        <GalleryNameTitle> Gallery Name</GalleryNameTitle>
-      </PLSectionThreeTitle>
+    <MainContainer>
+      <PLSectionThree>
       <PLSectionUserinput
         placeholder="Enter your brand or name here"
         onChange={(e) => handleGalleryName(e.target.value)}
       />
       <PLSectionEmojiLine>Emoji's are allowed! ❤️</PLSectionEmojiLine>
-      {/* <PLSectionBtn>
-
-        {
-          isLoggedIn
-            ?
-          <Link to="/home">
-            <button>Go To Home</button>
-          </Link>
-            :
-          <>
-          <Link to="/login">
-            <button>Sign In</button>
-          </Link>
-          <Link to="/signup">
-            <button>Sign Up</button>
-          </Link>
-          </>
-        }
-       
-      </PLSectionBtn> */}
     </PLSectionThree>
+    <ButtonContainer>
+      <Button className={'blank-gradient-button'}>
+        <span className={'blank-gradient-text'}>Register SmartURL</span>
+      </Button>
+    </ButtonContainer>
+    </MainContainer>
+    
   );
 };
 

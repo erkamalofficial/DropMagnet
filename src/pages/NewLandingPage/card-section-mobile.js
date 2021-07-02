@@ -9,7 +9,7 @@ const CardSection = styled.div`
   flex-direction: column;
   align-items: center;
 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -4px 0 #161616;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -4px 0 #161616; */
   border-radius: 8px;
   background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%);
 

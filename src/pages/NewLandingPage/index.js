@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import LinksWrapper from "../../components/wrappers/LinksPageWrapper";
 
 import { fetchLinks } from "./actions";
 import PersonalLinksPreview from "./personal-links-preview";
@@ -14,13 +13,17 @@ import LandingPageWrapper from "../../components/wrappers/LandingPageWrapper";
 const PersonalLinksWrapper = styled.div`
   width: calc(100% - 32px);
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   margin: 16px;
 `;
 
 const PLSectionOne = styled.div`
   /* margin-top: 72px; */
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   @media (max-width: 600px) {
+    margin-bottom: 17px;
     margin-bottom: unset;
   }
   display: flex;
@@ -34,29 +37,15 @@ const PLSectionOneContent = styled.div`
   font-weight: 700;
   text-align: center;
 `;
-const HeaderTitle = styled.div`
-  font-size: var(--font-size-xxl);
-  @media (max-width: 340px) {
-    font-size: var(--font-size-m);
-  }
-  margin-bottom: 16px;
-`;
-const HeaderTitleTag = styled.div`
-  font-size: var(--font-size-xl);
-  @media (max-width: 340px) {
-    font-size: var(--font-size-s);
-  }
-  letter-spacing: 8px;
-  margin-bottom: 16px;
-  color: var(--grey400);
-`;
+
+
 const HeaderSubtitle = styled.div`
   max-width: 550px;
   font-size: 24px;
   margin-left: 30px;
-  @media (max-width: 340px) {
+  @media (max-width: 576px) {
     margin-left: 0px;
-    font-size: var(--font-size-s);
+    font-size: 15px;
   }
   margin-bottom: 16px;
   font-weight: 700;

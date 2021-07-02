@@ -18,6 +18,9 @@ const LinksHeaderWrapper = styled.div`
   justify-content: space-between;
   margin: 10px 10px 20px;
   flex-wrap: wrap;
+  @media (max-width: 576px){
+    margin-bottom: 0;
+  }
 `;
 
 const LogoSection = styled.div`
