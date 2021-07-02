@@ -12,13 +12,13 @@ import { useAuth } from "../../contexts/FirebaseAuthContext";
 import LandingPageWrapper from "../../components/wrappers/LandingPageWrapper";
 
 const PersonalLinksWrapper = styled.div`
-  width: 100%;
-  margin: 0 auto;
+  width: calc(100% - 32px);
   overflow: hidden;
+  margin: 16px;
 `;
 
 const PLSectionOne = styled.div`
-  margin-top: 72px;
+  /* margin-top: 72px; */
   margin-bottom: 40px;
   @media (max-width: 600px) {
     margin-bottom: unset;
@@ -53,7 +53,9 @@ const HeaderTitleTag = styled.div`
 const HeaderSubtitle = styled.div`
   max-width: 550px;
   font-size: 24px;
+  margin-left: 30px;
   @media (max-width: 340px) {
+    margin-left: 0px;
     font-size: var(--font-size-s);
   }
   margin-bottom: 16px;
@@ -90,7 +92,7 @@ const LinksHome = (props) => {
     setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
   };
   return (
-    <LandingPageWrapper isLoggedIn={true}>
+    <LandingPageWrapper isLoggedIn={Boolean(currentUser)}>
       <PersonalLinksWrapper>
         <PLSectionOne>
           <PLSectionOneContent>
