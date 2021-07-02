@@ -1,12 +1,18 @@
+import { useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import Tabs from "../Tabs";
 import { LogoTitleSection, LogoTitle } from "./LogoTitles";
+
+
+const TAB_LIST = ["Drop Swipe","NFT Galleries","SmartURLs"];
 
 const LinksHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 10px 10px 40px;
+  flex-wrap: wrap;
 `;
 
 const LogoSection = styled.div`
@@ -22,10 +28,16 @@ const BrandLogo = styled.img`
 
 const MiddleSection = styled.div`
   align-self: flex-end;
+  @media(max-width: 576px){
+    order: 3;
+    margin-top: 20px;
+    flex-basis: 100%;
+  }
 `;
 const RightSection = styled.div``;
 const LandingPageHeader = ({ isLoggedIn }) => {
   const history = useHistory();
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   return (
     <LinksHeaderWrapper>
       <LogoSection>
@@ -41,7 +53,9 @@ const LandingPageHeader = ({ isLoggedIn }) => {
           <div>#ThreeTheWeb</div>
         </LogoTitleSection>
       </LogoSection>
-      <MiddleSection></MiddleSection>
+      <MiddleSection>
+        <Tabs tabs={TAB_LIST} activeTabIndex={activeTabIndex} onChangeTab={(index)=>setActiveTabIndex(index)}  />
+      </MiddleSection>
       <RightSection>
         {!isLoggedIn ? (
           <>
