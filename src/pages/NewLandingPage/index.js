@@ -90,7 +90,7 @@ const LinksHome = (props) => {
     setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
   };
   return (
-    <LandingPageWrapper isLoggedIn={true}>
+    <LandingPageWrapper isLoggedIn={Boolean(currentUser)}>
       <PersonalLinksWrapper>
         <PLSectionOne>
           <PLSectionOneContent>

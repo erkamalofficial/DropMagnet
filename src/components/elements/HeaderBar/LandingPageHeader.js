@@ -43,10 +43,10 @@ const LandingPageHeader = ({ isLoggedIn }) => {
       </LogoSection>
       <MiddleSection></MiddleSection>
       <RightSection>
-        {isLoggedIn ? (
+        {!isLoggedIn ? (
           <>
             <button className={"blank-button"} onClick={()=>history.push('/login')}>Login</button>
-            {/* <button className={"blank-button"} onClick={()=>history.push('/signup')}>Register</button> */}
+            <button className={"blank-button"} onClick={()=>history.push('/signup')}>Register</button>
           </>
         ) : (
           <button className={"blank-button"} onClick={()=>history.push('/home')}>Home</button>

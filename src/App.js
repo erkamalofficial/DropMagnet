@@ -121,7 +121,8 @@ function App() {
           />
 
           <Route
-            path="/newLandingPage"
+            exact
+            path="/"
             component={LandingPage}
           />
 
@@ -207,7 +208,7 @@ function App() {
           />
 
 
-          <Route exact path="/" component={PersonalLinksHome} />
+          <Route exact path="/oldLandingPage" component={PersonalLinksHome} />
 
           <Route exact path="/logout" render={(props)=>{
             logout()
