@@ -4,11 +4,10 @@ import { OAuthExtension } from '@magic-ext/oauth';
 import "./MagicLogin.css"
 import { useHistory } from "react-router-dom";
 import Web3 from "web3";
-import Web3Modal from "web3modal";
+import Web3Modal, { getInjectedProvider, getInjectedProviderName, getProviderInfoByName } from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Fortmatic from "fortmatic";
-// import Coinbase from 'coinbase'
-
+import WalletLink from "walletlink"
 
 // const magic = new Magic(process.env.REACT_APP_MAGIC_API_KEY, {
 //     extensions: [new OAuthExtension()],
@@ -16,11 +15,17 @@ import Fortmatic from "fortmatic";
 
 
 const MagicLogin = () => {
+    const coinbase = getProviderInfoByName('Coinbase')
 
-    // var client = new Coinbase.Client({
-    //     'apiKey': 'c8b63cd9b440d6e4f965fa2c081cea563ca248a325d5115959777d8a3700247f', 
-    //     'apiSecret': '09308e58b1a3927533c6d7011841871a49b9ab4c6607a2652becdf01367a688f'
-    // });
+    const walletLink = new WalletLink({
+        appName: "Dropmagnet",
+        appLogoUrl: "https://example.com/logo.png",
+        darkMode: "false"
+    })
+
+    const ethereum = walletLink.makeWeb3Provider(
+        "https://ropsten.infura.io/v3/a789adc9c04146d88b3fb64732fbf206", 1
+    )
 
     const providerOptions = {
         walletconnect: {
@@ -36,14 +41,18 @@ const MagicLogin = () => {
                 key: "pk_test_AFA830F46E222207"
             }
         },
-
-        // coinbase: {
-        //     package: client,
-        //     options: {
-        //         apiKey: '',
-        //         apiSecret: '09308e58b1a3927533c6d7011841871a49b9ab4c6607a2652becdf01367a688f'
-        //     }
-        // }
+        "custom-coinbase": {
+            display: {
+                logo: coinbase.logo,
+                name: coinbase.name
+            },
+            package: ethereum,
+            connector: async () => {
+                const provider = ethereum;
+                await provider.enable()
+                return provider;
+            }
+        }
     };
 
     const web3Modal = new Web3Modal({
@@ -64,7 +73,6 @@ const MagicLogin = () => {
         const provider = await web3Modal.connect();
         const web3 = new Web3(provider);
     }
-
     const history = useHistory();
 
     return (
