@@ -95,6 +95,20 @@ const ScrollContainerContent = styled.div`
   align-items: center;
 `;
 
+const TitleButtonContainer = styled.div`
+  padding: 24px;
+`;
+
+const TitleButton = styled.button`
+  cursor: default;
+  padding: 8px 16px;
+`;
+
+const Text = styled.span`
+  margin-top: 8px;
+  margin-left: 8px;
+`;
+
 const CardSectionItem = (
   linkItems,
   linkKey,
@@ -108,8 +122,17 @@ const CardSectionItem = (
     renderItem: (
       <CardContainer>
         <CardSection>
-          <Circle>{linkItems[0].icon}</Circle>
-          <HeaderSubtitle>{linkItems[0].title}</HeaderSubtitle>
+          <TitleButtonContainer>
+            <TitleButton className={"blank-gradient-button"}>
+              <span className={"blank-gradient-text"}>
+                {linkItems[0].icon}
+                <Text>{linkItems[0].title}</Text>
+              </span>
+            </TitleButton>
+          </TitleButtonContainer>
+
+          {/* <Circle></Circle>
+          <HeaderSubtitle></HeaderSubtitle> */}
           <ScrollContainer>
             <ScrollContainerContent>
               {map(linkItems, (linkItem, index) => (

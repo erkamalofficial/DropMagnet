@@ -72,11 +72,15 @@ const TabItem = styled.div`
   display: flex;
   align-items: center;
   user-select: none;
+  cursor: default;
+  padding: 8px 16px;
+  margin-bottom: 2px;
   > * {
     margin-right: 0.3rem;
   }
   .icon {
     font-size: 12px;
+    margin-right: 8px;
   }
 `;
 const ScrollContainer = styled.div`
@@ -99,9 +103,11 @@ const CardSectionItem = (linkItems, linkKey, handleTabSelection) => {
   return {
     id: linkKey,
     renderItem: (
-      <TabItem onClick={() => handleTabSelection(linkKey)}>
-        <span className="icon">{linkItems[0].icon}</span>
-        <span>{linkItems[0].title}</span>
+      <TabItem onClick={() => handleTabSelection(linkKey)} className={'blank-gradient-button'}>
+        <span className={'blank-gradient-text'}>
+          <span className="icon">{linkItems[0].icon}</span>
+          <span>{linkItems[0].title}</span>
+        </span>
       </TabItem>
     ),
   };

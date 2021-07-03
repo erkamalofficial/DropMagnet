@@ -31,7 +31,7 @@ const LinksBtnWrapper = styled.div`
   }
 `;
 const LinksBtn = ({ galleryName, linkName, selectLink, ...rest }) => (
-  <LinksBtnWrapper {...rest} onClick={selectLink}>
+  <LinksBtnWrapper {...rest}  onClick={selectLink}>
     <span className="tagLink">{linkName}</span>
     <span className="tagYou">/{galleryName}</span>
   </LinksBtnWrapper>

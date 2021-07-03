@@ -82,7 +82,7 @@ const PersonalLinksPreview = ({ handleGalleryName, isLoggedIn }) => {
         placeholder="Enter your brand or name here"
         onChange={(e) => handleGalleryName(e.target.value)}
       />
-      <PLSectionEmojiLine>Emoji's are allowed! ❤️</PLSectionEmojiLine>
+      <PLSectionEmojiLine>Emoji’s & specials are allowed! 💜</PLSectionEmojiLine>
     </PLSectionThree>
     <ButtonContainer>
       <Button className={'blank-gradient-button'}>
