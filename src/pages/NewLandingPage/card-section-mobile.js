@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { useSpringCarousel } from "react-spring-carousel-js";
 import styled from "styled-components";
 import LinksBtn from "./links-btn";
@@ -181,5 +181,7 @@ const CaurouselComponent = ({
     </CardSection>
   );
 };
+
+
 
 export default CaurouselComponent;

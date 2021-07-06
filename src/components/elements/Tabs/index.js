@@ -7,7 +7,6 @@ const TabContainer = styled.div`
   margin: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   border-radius: 22px;
   border: 1px solid #000000;
   position: relative;
@@ -45,11 +44,11 @@ const ActiveTab = styled.div`
   width: ${WIDTH}px;
   height: 100%;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
   box-shadow: inset 0 3px 4px #000000;
   border-radius: 18px;
-  transition: all .4s ease-in;
+  transition: transform .3s 0ms ease;
   border: 2px solid transparent;
   background-image: linear-gradient(#000000, #000000), radial-gradient(circle at top left,#ac43f1,#6620de);
   background-origin: border-box;
@@ -62,7 +61,7 @@ const ActiveTab = styled.div`
 export default function Tabs({ tabs,activeTabIndex ,onChangeTab }) {
   return (
     <TabContainer style={{width: "auto"}}>
-      <ActiveTab style={{left: (activeTabIndex/tabs.length)*100+ "%"}} />
+      <ActiveTab style={{transform: 'translateX('+(activeTabIndex)*100+ "%"+")"}} />
       {tabs.map((tab, index) => {
         return <Tab  onClick={() => onChangeTab(index)}>{tab}</Tab>;
       })}

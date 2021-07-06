@@ -220,4 +220,5 @@ const CaurouselComponent = ({
   );
 };
 
+
 export default CaurouselComponent;
