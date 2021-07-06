@@ -108,6 +108,7 @@ const SwipeImage = styled.div`
   background-position: 50.4587% 0%;
   background-size: 120.527%;
   width: var(--swipe-card-art-width);
+  
   height: var(--swipe-card-art-width);
   background-repeat: no-repeat;
   margin: var(--swipe-card-art-margin);
