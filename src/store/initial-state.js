@@ -24,6 +24,7 @@ const initialState = {
   groupedLinks: [],
   availableLinks: [],
   nextIndex: 0,
+  curIndex: 0,
   fetchMore: false
 };
 

@@ -43,7 +43,7 @@ function Swiper(props) {
   }, [reswipeModeActive]);
 
   useEffect(() => {
-    if (cards.length <= 1 && !(reswipeModeActive) && nextIndex !== null) {
+    if (cards.length < 1 && !(reswipeModeActive) && nextIndex !== null) {
       dispatch({ type: "FETCH_MORE_FEEDS", payload: true })
     }
 
@@ -86,7 +86,7 @@ function Swiper(props) {
     }
     const currIndex = allCards.length - alreadyRemoved.length;
     let start = currIndex < CARD_PRELOAD ? 0 : currIndex - CARD_PRELOAD;
-    setCards(allCards.slice(start, currIndex));
+    setCards(allCards.slice(start, currIndex-1));
   };
 
   const swipe = (dir) => {

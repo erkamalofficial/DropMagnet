@@ -42,6 +42,7 @@ const getProcessedCollection = (state, action, type) => {
     [type]: collection,
     general,
     nextIndex: action.payload.index,
+    curIndex: action.payload.curIndex,
     fetchMore: false
   };
 };

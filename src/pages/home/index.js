@@ -49,6 +49,8 @@ const Home = (props) => {
 
   const { currentUser, idToken } = useAuth();
 
+  const curIndex = useSelector((state) => state.category.curIndex);
+
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date());
   const [detailView, setDetailView] = useState(false);
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
@@ -62,6 +64,12 @@ const Home = (props) => {
   );
   const nextIndex = useSelector((state) => state.category.nextIndex);
   const fetchMore = useSelector((state) => state.category.fetchMore);
+
+  useEffect(() => {
+    if(curIndex !== 0){
+      setSelectedDropdownDate(new Date(curIndex))
+    }
+  }, [curIndex])
 
   useEffect(() => {
 
