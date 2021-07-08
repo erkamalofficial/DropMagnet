@@ -4,6 +4,9 @@ const LinksPage = styled.div`
   display: flex;
   flex-direction: column;
   margin: 16px;
+  @media (max-width: 576px){
+    margin: 0;
+  }
 `;
 const LandingPageWrapper = ({ children, isLoggedIn , ...rest }) => {
   return (
