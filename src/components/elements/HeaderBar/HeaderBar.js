@@ -6,6 +6,7 @@ import "./HeaderBar.css"
 import { epochToDayMonth } from '../../../helpers/DateFormatter';
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
 import DatePicker from 'react-datepicker'
+import CustomDateInput from './CustomDateInput';
 // import "./DatePicker.css"
 
 
@@ -59,6 +60,7 @@ function HeaderBar(props) {
             <DatePicker 
             selected={props.selectedDropdownDate} 
             onChange={(date) => props.setSelectedDropdownDate(date)}
+            customInput={<CustomDateInput />}
              />
           </div>
           :
