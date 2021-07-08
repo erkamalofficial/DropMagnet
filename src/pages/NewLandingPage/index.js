@@ -17,6 +17,7 @@ const PersonalLinksWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   margin: 16px;
+  margin-top: 8px;
 `;
 
 const PLSectionOne = styled.div`

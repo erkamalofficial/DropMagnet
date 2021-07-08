@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import useViewport from "../../../pages/NewLandingPage/useViewport";
 
 const WIDTH = 128;
-const MOB_WIDTH = 110;
+const MOB_WIDTH = 126;
 const TabContainer = styled.div`
-  margin: 10px;
+  margin:10px auto;
   display: flex;
   align-items: center;
   border-radius: 22px;
@@ -59,8 +60,10 @@ const ActiveTab = styled.div`
 `;
 
 export default function Tabs({ tabs,activeTabIndex ,onChangeTab }) {
+  const {viewportWidth} = useViewport();
+  const breakpoint = 576;
   return (
-    <TabContainer style={{width: "auto"}}>
+    <TabContainer style={{width: viewportWidth <= breakpoint ? MOB_WIDTH* tabs.length: WIDTH* tabs.length}}>
       <ActiveTab style={{transform: 'translateX('+(activeTabIndex)*100+ "%"+")"}} />
       {tabs.map((tab, index) => {
         return <Tab  onClick={() => onChangeTab(index)}>{tab}</Tab>;

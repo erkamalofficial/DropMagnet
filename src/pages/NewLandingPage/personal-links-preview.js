@@ -11,7 +11,10 @@ const PLSectionThree = styled.div`
   padding: 14px 24px;
   background-color: #2c2c2c;
   @media(max-width:576px){
+    padding: 16px 32px;
     padding-bottom: 28px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
   }
 `;
 
@@ -85,7 +88,7 @@ const PersonalLinksPreview = ({ handleGalleryName, isLoggedIn }) => {
       <PLSectionEmojiLine>Emoji’s & specials are allowed! 💜</PLSectionEmojiLine>
     </PLSectionThree>
     <ButtonContainer>
-      <Button className={'blank-gradient-button'}>
+      <Button className={'blank-gradient-button'} style={{padding: "12px 45px"}}>
         <span className={'blank-gradient-text'}>Register SmartURL</span>
       </Button>
     </ButtonContainer>

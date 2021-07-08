@@ -17,9 +17,10 @@ const CardSection = styled.div`
   height: 320px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 -4px 0 #161616;
   border-radius: 8px;
-  background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%);
+  background-color: #262626;
+  /* background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%); */
 
-  opacity: 0.8;
+  /* opacity: 0.8; */
   margin-top: 36px;
 `;
 const Circle = styled.div`
@@ -39,9 +40,9 @@ const Circle = styled.div`
 `;
 const PLLinksBtn = styled(LinksBtn)`
   width: 95%;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); */
   border-radius: 23px;
-  background-color: rgba(23, 23, 24, 0.88);
+  background-color: rgba(0,0,0, 0.88);
   font-weight: 700;
   text-align: center;
   padding: 12px;

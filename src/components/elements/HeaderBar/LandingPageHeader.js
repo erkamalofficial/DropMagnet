@@ -16,7 +16,8 @@ const LinksHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 10px 20px;
+  margin: 16px;
+  margin-top: 20px;
   flex-wrap: wrap;
   @media (max-width: 576px){
     margin-bottom: 0;
@@ -38,7 +39,7 @@ const MiddleSection = styled.div`
   align-self: flex-end;
   @media(max-width: 576px){
     order: 3;
-    margin-top: 20px;
+    margin-top: 12px;
     flex-basis: 100%;
   }
 `;
@@ -123,12 +124,20 @@ const LandingPageHeader = ({ isLoggedIn }) => {
       <RightSection>
         {!isLoggedIn ? (
           <>
-            <button className={"blank-button"} onClick={() => history.push('/login')}>Login</button>
-            <button className={"blank-button"} onClick={() => history.push('/signup')}>Register</button>
-            <button className={"blank-button"} onClick={connectWallet}>Wallet Login</button>
+            <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
+              <span className={'text'}>Login</span>
+            </button>
+            <button className={"blank-button green-gradient"} onClick={() => history.push('/signup')}>
+              <span className={'text'}>Register</span>
+            </button>
+            <button className={"blank-button green-gradient"} onClick={connectWallet}>
+              <span className={'text'}> Walltet Login </span>
+            </button>
           </>
         ) : (
-          <button className={"blank-button"} onClick={() => history.push('/home')}>Home</button>
+          <button className={"blank-button green-gradient"} onClick={() => history.push('/home')}>
+            <span className={'text'}>Home</span>
+          </button>
         )}
       </RightSection>
     </LinksHeaderWrapper>
