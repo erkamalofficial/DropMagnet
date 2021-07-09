@@ -6,7 +6,7 @@ var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  host = 'http://localhost:8080/';
+  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
 } else {
   // pick up from .env
   host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
