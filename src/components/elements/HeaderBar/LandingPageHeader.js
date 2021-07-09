@@ -132,13 +132,9 @@ const LandingPageHeader = ({ isLoggedIn }) => {
       <RightSection>
         {!isLoggedIn ? (
           <>
-            <button className={"blank-button green-gradient"} style={{padding: '7px 14px'}} onClick={() => history.push('/login')}>
+            <button className={"blank-button green-gradient"}  onClick={() => history.push('/login')}>
               <span className={'text'}>Login</span>
             </button>
-            <button className={"blank-button green-gradient"} style={{padding: '7px 14px'}} onClick={() => history.push('/signup')}>
-              <span className={'text'}>Register</span>
-            </button>
-            
           </>
         ) : (
           <button className={"blank-button green-gradient"} onClick={() => history.push('/home')}>
