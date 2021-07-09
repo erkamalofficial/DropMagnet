@@ -15,6 +15,7 @@ const TAB_LIST = ["Drop Swipe", "NFT Galleries", "SmartURLs"];
 const LinksHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
   justify-content: space-between;
   margin: 16px;
   margin-top: 20px;
@@ -36,14 +37,21 @@ const BrandLogo = styled.img`
 `;
 
 const MiddleSection = styled.div`
-  align-self: flex-end;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% + 20px ),-50%);
   @media(max-width: 576px){
-    order: 3;
+    position: static;
+    transform: translate(0,0);
+  order: 3;
     margin-top: 12px;
     flex-basis: 100%;
   }
 `;
-const RightSection = styled.div``;
+const RightSection = styled.div`
+  display: flex;
+`;
 const LandingPageHeader = ({ isLoggedIn }) => {
   const history = useHistory();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -124,15 +132,13 @@ const LandingPageHeader = ({ isLoggedIn }) => {
       <RightSection>
         {!isLoggedIn ? (
           <>
-            <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
+            <button className={"blank-button green-gradient"} style={{padding: '7px 14px'}} onClick={() => history.push('/login')}>
               <span className={'text'}>Login</span>
             </button>
-            <button className={"blank-button green-gradient"} onClick={() => history.push('/signup')}>
+            <button className={"blank-button green-gradient"} style={{padding: '7px 14px'}} onClick={() => history.push('/signup')}>
               <span className={'text'}>Register</span>
             </button>
-            <button className={"blank-button green-gradient"} onClick={connectWallet}>
-              <span className={'text'}> Walltet Login </span>
-            </button>
+            
           </>
         ) : (
           <button className={"blank-button green-gradient"} onClick={() => history.push('/home')}>

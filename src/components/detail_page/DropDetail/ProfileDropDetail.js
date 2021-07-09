@@ -23,6 +23,8 @@ export default function ProfileDropDetail(props) {
     </div>
   }
 
+  console.log(props.drop.media);
+
   const style = props.style || {};
 
   return (

@@ -1,6 +1,10 @@
+// import { AlarmRounded } from '@material-ui/icons';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import styled from 'styled-components';
 import './DropzoneComponent.css'
+import { useSpringCarousel } from "react-spring-carousel-js";
+
 
 const baseStyle = {
   display: 'flex',
@@ -28,14 +32,50 @@ const rejectStyle = {
   borderColor: '#ff1744'
 };
 
+const ThumbnailContainer = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  overflow-x: auto;
+  grid-template-columns:repeat(8,150px); 
+  grid-template-columns:repeat(8,150px); 
+  &.one-grid-layout{
+    grid-template-rows: repeat(1,150px);
+  }
+  &.two-grid-layout{
+    grid-template-rows: repeat(2,150px);
+  
+  }
+  &.no-layout{
+    display: none;
+  }
+`;
+
+const Thumbnail = styled.div`
+  border-radius: 4;
+  background-color: #8888FF;
+  height: 150px;
+  width: 150px;
+  >img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 function DropzoneComponent(props) {
 const {files, setFiles} = props
-
   const onDrop = useCallback(acceptedFiles => {
-    setFiles(acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
-    })));
-  }, []);
+    const newFiles = [...acceptedFiles,...files];
+    console.log(newFiles.length);
+    if(newFiles.length <=16){
+      setFiles(newFiles.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      })));
+    }else{
+      alert('Not more than 16 files are allowed !!');
+    }
+    
+  }, [files,setFiles]);
 
   const {
     getRootProps,
@@ -45,7 +85,8 @@ const {files, setFiles} = props
     isDragReject
   } = useDropzone({
     onDrop,
-    accept: 'image/jpeg, image/png'
+    accept: 'image/jpeg, image/png',
+    maxFiles: 16
   });
 
   const style = useMemo(() => ({
@@ -59,13 +100,13 @@ const {files, setFiles} = props
     isDragAccept
   ]);
 
-  const thumbs = files.map(file => (
-    <div key={file.name}>
+  const thumbs = files.map((file,ind )=> (
+    <Thumbnail key={ind}>
       <img
         src={file.preview}
         alt={file.name}
       />
-    </div>
+    </Thumbnail>
   ));
 
   // clean up
@@ -73,16 +114,23 @@ const {files, setFiles} = props
     files.forEach(file => URL.revokeObjectURL(file.preview));
   }, [files]);
 
+  // const {carouselFragment} = useSpringCarousel({
+  //   items: thumbs
+  // })
+
+
   return (
     <section>
-      <div className="dropzone-style" {...getRootProps({style})}>
-        <input {...getInputProps()} />
-        <h2 style={{textAlign: 'center', marginTop: '24px', marginBottom: '24px'}}>Drop your files here (jpeg, png, gif, mov, mp4)</h2>
-        <img style={{paddingTop: "24px"}} width={138} height={138} src="./drop-box-icon.png" />
-      </div>
-      <aside>
+      <ThumbnailContainer className={(files.length >8) ? 'two-grid-layout': (files.length> 0 ? 'one-grid-layout': 'no-layout' )}>
         {thumbs}
-      </aside>
+      </ThumbnailContainer>
+      <div className={"dropzone-style "+(files.length > 0?'more-files': '')} {...getRootProps({style})}>
+        <input {...getInputProps()} />
+        <h2 style={{textAlign: 'center', marginTop: '24px', marginBottom: '24px'}}>
+          {files.length >0 ? "Add More Files": "Drop your files here (jpeg, png, gif, mov, mp4)"}
+        </h2>
+        <img style={{paddingTop: "24px"}} alt={'DropFilesHere'} width={138} height={138} src="./drop-box-icon.png" />
+      </div>
     </section>
   )
 }

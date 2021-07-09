@@ -242,7 +242,7 @@ export default function DropCreation(props) {
   }
 
   function renderFifthStep() {
-    return <div style={{ marginTop: '50px', marginBottom: '80px' }}>
+    return <div style={{  marginBottom: '80px' }}>
       <DropzoneComponent setFiles={setFiles} files={files} />
     </div>
   }
@@ -288,7 +288,7 @@ export default function DropCreation(props) {
         <h1 style={{ margin: '0px 0px 22px 0px', paddingTop: '12px', paddingBottom: '8px', color: '#B3BBC3', textAlign: 'center' }}>{getTitle()}</h1>
         {renderStep()}
       </div>
-      <div className={'main-button-container'} style={{ position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)' }} >
+      <div className={'main-button-container'} style={{ position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)',display: 'flex',alignItems: 'center',justifyContent: 'center' }} >
         {dropCreationStep > 0 && <button className="main-button create_drop_button" onClick={() => setStepAction('decrease')}>{"Back"}</button>}
         <button className="main-button create_drop_button" onClick={() => setStepAction('increase')}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
       </div>

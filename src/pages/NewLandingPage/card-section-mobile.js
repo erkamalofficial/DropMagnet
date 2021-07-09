@@ -21,7 +21,7 @@ const CardSection = styled.div`
     margin-bottom: 0.6rem;
   }
   /* opacity: 0.8; */
-  padding: 16px 0;
+  padding: 8px 0;
   @media (max-width: 340px) {
     margin: 8px;
     padding: 8px 0;
@@ -65,7 +65,7 @@ const NavIcon = styled.div`
 `;
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 30px 1fr 30px;
+  grid-template-columns: 0px 1fr 0px;
   align-items: center;
   justify-items: center;
   font-weight: 700;
@@ -128,7 +128,6 @@ const ScrollContainerContent = styled.div`
   align-items: center;
 `;
 const CardSectionItem = (linkItems, linkKey, handleTabSelection,isActive) => {
-  console.log(linkItems[0].icon);
   return {
     id: linkKey,
     renderItem: (
@@ -177,8 +176,8 @@ const CaurouselComponent = ({
     setSelectedTab(index);
   };
   return (
-    <CardSection>
-      <GridContainer>
+    <CardSection style={{width: '100%'}}>
+      <GridContainer style={{width: 'calc(100% - 60px)',overflow: 'hidden',margin: '0 auto',marginBottom: '12px'}}>
         <div>
 
         </div>
@@ -194,7 +193,7 @@ const CaurouselComponent = ({
         </NavIcon> */}
       </GridContainer>
       <ScrollContainer>
-        <ScrollContainerContent>
+        <ScrollContainerContent style={{width: "100%"}}>
           {map(currentSelectedItem, (linkItem, index) => {
             return (
               <PLLinksBtn
