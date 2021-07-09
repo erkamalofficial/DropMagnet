@@ -45,7 +45,7 @@ const Header = styled.div`
 function Reswipe(props) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState(1617985941);
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date());
   function selectDate(date) {
     console.log("opened item", date);
   }
@@ -186,6 +186,7 @@ function Reswipe(props) {
         // openHome={() => openHome()}
         // openMenu={() => openMenu()}
         isLogoNotVisible
+        curIndex={new Date().getTime()}
         openDateMenu={() => openDateMenu()}
         selectedDropdownDate={selectedDropdownDate}
         datePickerVisible={detailView ? false : true}
