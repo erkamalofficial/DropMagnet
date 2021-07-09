@@ -18,6 +18,7 @@ const SwipeCard = styled.div`
   flex-direction: column;
   will-change: transform;
   height: auto;
+  padding: 0 14px;
 `;
 const SwipeCardDeviceContainer = styled.div`
   position: var(--card-device-container-pos);
@@ -105,13 +106,19 @@ const FooterTitle = styled.div`
 `;
 
 const SwipeImage = styled.div`
-  background-position: 50.4587% 0%;
-  background-size: 120.527%;
+  /* background-position: 50.4587% 0%; */
+  /* background-size: 120.527%; */
   width: var(--swipe-card-art-width);
-  
+  /* background-clip: border-box;
+  background-size: cover; */
   height: var(--swipe-card-art-width);
   background-repeat: no-repeat;
   margin: var(--swipe-card-art-margin);
+  > img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const HeaderBarMenuIcon = styled.div`
@@ -147,8 +154,11 @@ const Card = (props) => {
         <SwipeImage
           data-key="art"
           key={2}
-          style={{ backgroundImage: `url(${props.media[0].url})` }}
-        />
+          // style={{ backgroundImage: `url(${props.media[0].url})` }}
+        >
+          <img src={props.media[0].url} alt={'CoverImage'} />
+        </SwipeImage>
+
         <FooterSection key={3}>
           <FooterTitle>{props.title} </FooterTitle>
           <FooterButtons>

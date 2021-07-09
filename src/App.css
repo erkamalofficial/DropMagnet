@@ -54,7 +54,7 @@
     --art-avatar-size: 30px;
     --art-avatar-left-margin: unset;
     --card-title-section-margin: 16px;
-    --card-title-text-margin: 14px;
+    --card-title-text-margin: 16px;
     --card-title-text-width: 250px;
     --card-title-section-text-margin: 0;
     --card-header-section-margin: 16px 0;
@@ -72,11 +72,11 @@
 @media (max-width: 600px) {
   :root {
     --main-header-margin-top: 68px;
-    --swipe-card-art-width: 354px;
-    --swipe-card-art-height: 354px;
+    --swipe-card-art-width: 338px;
+    --swipe-card-art-height: 338px;
     --swipe-card-art-margin: 0 0 14px;
-    --card-container-width: 386px;
-    --card-container-height: 512px;
+    --card-container-width: 370px;
+    --card-container-height: 496px;
     --card-elem-pos: static;
     --card-device-container-pos: static;
     --card-transparent-bg: none;
@@ -88,7 +88,7 @@
     --card-title-text-width: 210px;
     --card-title-section-text-margin: 0;
     --card-header-section-margin: 14px 0;
-    --gap-bottom: 16px;
+    --gap-bottom: 12px;
     --font-size-xs: 15px;
     --font-size-s: 16px;
     --font-size-m: 18px;
@@ -118,7 +118,7 @@
     --card-title-text-width: 210px;
     --card-title-section-text-margin: 0;
     --card-header-section-margin: 14px 0;
-    --gap-bottom: 16px;
+    --gap-bottom: 12px;
     --font-size-xs: 15px;
     --font-size-s: 16px;
     --font-size-m: 18px;
@@ -148,7 +148,7 @@
     --card-title-text-width: 210px;
     --card-title-section-text-margin: 8px;
     --card-header-section-margin: 16px 0;
-    --gap-bottom: 16px;
+    --gap-bottom: 12px;
     --font-size-xs: 10px;
     --font-size-s: 12px;
     --font-size-m: 15px;
@@ -179,7 +179,7 @@
     --card-title-text-width: 210px;
     --card-title-section-text-margin: 8px;
     --card-header-section-margin: 16px 0;
-    --gap-bottom: 16px;
+    --gap-bottom: 12px;
     --font-size-xs: 10px;
     --font-size-s: 12px;
     --font-size-m: 15px;
