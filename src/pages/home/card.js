@@ -155,8 +155,8 @@ const Card = (props) => {
             <div className="rare">{props.marketplace.toUpperCase()}</div>
             <div className="art">{props.category.toUpperCase()}</div>
             <div className="price"><span>Ξ</span> 
-            {props.price !== '' && props.price!==undefined ? props.price 
-            : props.auction_price && props.auction_price!==undefined ? props.auction_price 
+            {props.price !== '0' && props.price!==undefined ? props.price 
+            : props.auction_price !== '0' && props.auction_price!==undefined ? props.auction_price 
             : 0}
             </div>
           </FooterButtons>

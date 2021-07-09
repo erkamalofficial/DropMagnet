@@ -6,7 +6,7 @@ var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
+  host = 'http://localhost:8080/';
 } else {
   // pick up from .env
   host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
@@ -17,9 +17,9 @@ async function customAPICall(endpoint, data, method, access_token) {
   const uri = host + endpoint
 
   // Firebase Auth Token
-  console.log('endpoint', uri)
-  console.log('data is', JSON.stringify(data))
-  console.log('access token', access_token)
+  // console.log('endpoint', uri)
+  // console.log('data is', JSON.stringify(data))
+  // console.log('access token', access_token)
 
   const res = await fetch(uri, {
     method: method,
@@ -32,7 +32,6 @@ async function customAPICall(endpoint, data, method, access_token) {
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   })
-  console.log(res);
 
   return res.json()
 }
@@ -137,7 +136,7 @@ export function createDropImage(image) {
 // Get Feed
 
 export function getFeeds(category, extras) {
-  const feedDropsEndpoint = `drops/feed?index=${extras.curTime}&category=${category}`
+  const feedDropsEndpoint = `drops/feed?index=${extras.curTime}&category=${category}&userId=${extras.userID}`
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 

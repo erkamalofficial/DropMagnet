@@ -8,26 +8,32 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
     .where("category", "==", categoryType)
     .get();
 
-  let response = []
+  let response = {}
   let timeIndex = extras.curTime
+  var d = new Date(timeIndex);
+  console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
+  let error = true
   let i = 0;
-  while (Object.keys(response).length < 1) {
-    var d = new Date(timeIndex);
+
+  while (error) {
     d.setDate(d.getDate() - i);
-    console.log(d.getTime(), timeIndex)
-    extras ={...extras, curTime: d.getTime()}
+    let tx = d.getTime()
+    extras = { ...extras, curTime: tx }
     try {
+      dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
       response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras)
         .then((res) => res)
       response['curIndex'] = d.getTime()
+      dispatch({ type: actionType, payload: response });
+      error = false
     }
     catch (err) {
-      i += 1
+      d.setDate(d.getDate() - 1);
+      dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
+      error = true
+      i++
     }
   }
-  dispatch({ type: actionType, payload: response});
-
-  // dispatch({ type: actionType, payload: { data: [], index: null } });
 
 };
 export const fetchArt =

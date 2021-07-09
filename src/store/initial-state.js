@@ -24,7 +24,7 @@ const initialState = {
   groupedLinks: [],
   availableLinks: [],
   nextIndex: 0,
-  curIndex: 0,
+  curIndex: new Date().getTime(),
   fetchMore: false
 };
 

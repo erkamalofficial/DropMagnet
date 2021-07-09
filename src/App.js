@@ -73,7 +73,7 @@ function App() {
     if(currentUser && currentUser.uid){
       
       getUserProfile(currentUser.uid, idToken).then(function (response) {
-        console.log('user profile response', response)
+        // console.log('user profile response', response)
         if (response.status === "error") {
           // setLoginError(response.message);
         } else {
