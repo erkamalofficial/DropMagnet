@@ -43,8 +43,8 @@ export default function DropDetail(props) {
         <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
         <p2 className="drop-category-title">{props.drop.category}</p2>
         <p2 className="drop-price"><span>Ξ</span> 
-             {props.drop.price !== '' && props.drop.price!==undefined ? props.drop.price 
-            : props.drop.auction_price && props.drop.auction_price!==undefined ? props.drop.auction_price 
+             {props.drop.price !== '0' && props.drop.price!==undefined ? props.drop.price 
+            : props.drop.auction_price !== '0' && props.drop.auction_price!==undefined ? props.drop.auction_price 
             : 0}
         </p2>
       </div>

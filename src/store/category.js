@@ -32,17 +32,17 @@ const getGroupedLinks = (linkList) => {
 
 const getProcessedCollection = (state, action, type) => {
   const general = { ...state.general, isLoading: false };
+  const bucket = action.payload.data.reverse()
 
   const collection = {
     ...state[type],
-    activeBucket: [...action.payload.data].reverse()
+    activeBucket: bucket
   };
   return {
     ...state,
     [type]: collection,
     general,
     nextIndex: action.payload.index,
-    curIndex: action.payload.curIndex,
     fetchMore: false
   };
 };
@@ -58,6 +58,9 @@ const categoryReducer = (state = initialState, action) => {
         activeTabIndex: action.payload.activeTabIndex,
       };
       return { ...state, general };
+    }
+    case "CHANGE_CUR_INDEX": {
+      return { ...state, curIndex: action.payload }
     }
     case "FETCH_MUSIC_REQUEST": {
       const general = {

@@ -13,7 +13,6 @@ import CustomDateInput from './CustomDateInput';
 function HeaderBar(props) {
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
   const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-  const [startDate, setStartDate] = useState(new Date());
 
   function showUserAction() {
     if (props.userLoggedIn)
@@ -58,7 +57,7 @@ function HeaderBar(props) {
         { props.datePickerVisible ? 
           <div className="react-datepicker-container" style={{zIndex: '9999999999'}}>
             <DatePicker 
-            selected={props.selectedDropdownDate} 
+            selected={new Date(props.curIndex)} 
             onChange={(date) => props.setSelectedDropdownDate(date)}
             customInput={<CustomDateInput />}
              />

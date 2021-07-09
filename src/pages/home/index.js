@@ -51,7 +51,8 @@ const Home = (props) => {
 
   const curIndex = useSelector((state) => state.category.curIndex);
 
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date());
+
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date(curIndex));
   const [detailView, setDetailView] = useState(false);
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
   const [loadMore, setLoadMore] = useState(false)
@@ -65,11 +66,11 @@ const Home = (props) => {
   const nextIndex = useSelector((state) => state.category.nextIndex);
   const fetchMore = useSelector((state) => state.category.fetchMore);
 
-  useEffect(() => {
-    if(curIndex !== 0){
-      setSelectedDropdownDate(new Date(curIndex))
-    }
-  }, [curIndex])
+  // useEffect(() => {
+  //   if (curIndex !== 0) {
+  //     setSelectedDropdownDate(new Date(curIndex))
+  //   }
+  // }, [curIndex])
 
   useEffect(() => {
 
@@ -102,7 +103,6 @@ const Home = (props) => {
   }, [dispatch, currentUser]);
 
   useEffect(() => {
-    console.log(fetchMore, nextIndex)
     if (fetchMore) {
       let extras = {
         token: idToken,
@@ -229,6 +229,7 @@ const Home = (props) => {
         openMenu={() => openMenu()}
         isLogoNotVisible
         openDateMenu={() => openDateMenu()}
+        curIndex = {curIndex}
         selectedDropdownDate={selectedDropdownDate}
         setSelectedDropdownDate={setSelectedDropdownDate}
         datePickerVisible={detailView ? false : true}
@@ -236,29 +237,31 @@ const Home = (props) => {
         userImageVisible={true}
       />
       <div className="rel">
-        {isLoading && (
-          <>
+        {isLoading ?
+          (
+            <>
+              <LazyTab />
+              <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
+                <LazyCard />
+              </CardContainer>
+            </>
+          )
+          : (
+              <Swiper
+                reswipeModeActive={false}
+                key={uniqueId}
+                db={activeBucket}
+                activeTabIndex={activeTabIndex}
+                onSwipe={handleSwipe}
+                handleActiveTabIndex={handleActiveTabIndex}
+                tabList={tabList}
+                setDetailView={setDetailView}
+                nextIndex={nextIndex}
+              />
+            )
 
-            <LazyTab/>
-            <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
-              <LazyCard />
-            </CardContainer>
-          </>
-        )}
-        {!isLoading && (
-          <Swiper
-            reswipeModeActive={false}
-            key={uniqueId}
-            db={activeBucket}
-            activeTabIndex={activeTabIndex}
-            onSwipe={handleSwipe}
-            handleActiveTabIndex={handleActiveTabIndex}
-            tabList={tabList}
-            setDetailView={setDetailView}
-            nextIndex={nextIndex}
-          />
+        }
 
-        )}
         {/* </div> */}
       </div>
     </HomeContainer>

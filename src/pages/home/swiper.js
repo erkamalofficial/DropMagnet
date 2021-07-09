@@ -42,12 +42,12 @@ function Swiper(props) {
     alreadyRemoved.length = 0;
   }, [reswipeModeActive]);
 
-  useEffect(() => {
-    if (cards.length < 1 && !(reswipeModeActive) && nextIndex !== null) {
-      dispatch({ type: "FETCH_MORE_FEEDS", payload: true })
-    }
+  // useEffect(() => {
+  //   if (cards.length < 1 && !(reswipeModeActive) && nextIndex !== null) {
+  //     dispatch({ type: "FETCH_MORE_FEEDS", payload: true })
+  //   }
 
-  }, [cards.length, reswipeModeActive])
+  // }, [cards.length, reswipeModeActive])
 
   const childRefs = useMemo(
     () =>
@@ -81,12 +81,13 @@ function Swiper(props) {
   const outOfFrame = (name) => {
     if (allCards.length === alreadyRemoved.length) {
       //if all cards are removed, reload new cards
+      dispatch({ type: "FETCH_MORE_FEEDS", payload: true })
       setNewLoading(true);
       return;
     }
     const currIndex = allCards.length - alreadyRemoved.length;
     let start = currIndex < CARD_PRELOAD ? 0 : currIndex - CARD_PRELOAD;
-    setCards(allCards.slice(start, currIndex-1));
+    setCards(allCards.slice(start, currIndex));
   };
 
   const swipe = (dir) => {
