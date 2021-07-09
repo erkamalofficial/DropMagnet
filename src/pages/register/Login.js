@@ -90,10 +90,15 @@ export default function Login() {
             <GridItem>
               <Link to="/forgot-password">Forgot Password?</Link>
             </GridItem>
+            <GridItem>
+               <Link to="/magic">Sign In Using Wallet</Link>
+            </GridItem>
 
             <GridItem>
               Need an account? <Link to="/signup">Sign Up</Link>
             </GridItem>
+
+            
           </form>
         </FormWrapper>
       </div>
