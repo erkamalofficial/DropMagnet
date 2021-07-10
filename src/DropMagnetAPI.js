@@ -48,6 +48,11 @@ async function customAPICallAddDrop(endpoint, data, method, access_token) {
   const formData = new FormData()
 
   for (const name in data) {
+    if(name === 'content'){
+      data[name].map((image)=>{
+        formData.append('content',image);
+      })
+    }
     formData.append(name, data[name]);
   }
 
@@ -105,7 +110,7 @@ export function updateUserDetails(field, value, access_token) {
 
 export function createDrop(title, desc, category, hashtag, drop_date,  marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
   const createDropEndpoint = 'drops'
-  const content = files[0]
+  const content = files;
 
   const payload = {
     title,

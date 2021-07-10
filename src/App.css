@@ -75,7 +75,7 @@
     --swipe-card-art-width: 338px;
     --swipe-card-art-height: 338px;
     --swipe-card-art-margin: 0 0 14px;
-    --card-container-width: 370px;
+    --card-container-width: 374px;
     --card-container-height: 496px;
     --card-elem-pos: static;
     --card-device-container-pos: static;
@@ -266,7 +266,7 @@ p1 .medium {
 .home-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 120px 12px 100px 12px;
+  padding: 120px 0px 100px 0px;
   overflow-y: hidden;
   overflow-x: hidden;
 }
