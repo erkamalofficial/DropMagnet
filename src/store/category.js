@@ -34,6 +34,10 @@ const getProcessedCollection = (state, action, type) => {
   const general = { ...state.general, isLoading: false };
   const bucket = action.payload.data.reverse()
 
+  let goBack = action.payload.curIndex < new Date().setUTCHours(0,0,0,0) ? true : false
+  let d = new Date(action.payload.curIndex)
+  d.setDate(d.getDate()-1)
+
   const collection = {
     ...state[type],
     activeBucket: bucket
@@ -42,7 +46,7 @@ const getProcessedCollection = (state, action, type) => {
     ...state,
     [type]: collection,
     general,
-    nextIndex: action.payload.index,
+    nextIndex: !goBack ? action.payload.index : d.getTime(),
     fetchMore: false
   };
 };

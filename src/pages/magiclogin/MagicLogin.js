@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Magic } from 'magic-sdk';
 import { OAuthExtension } from '@magic-ext/oauth';
 import "./MagicLogin.css"
@@ -15,6 +15,11 @@ import WalletLink from "walletlink"
 
 
 const MagicLogin = () => {
+
+    // const [provider, setProvider] = useState(null)
+    const [addresses, setAddresses] = useState([])
+    const [web3, setWeb3] = useState(null)
+
     const coinbase = getProviderInfoByName('Coinbase')
 
     const walletLink = new WalletLink({
@@ -56,23 +61,33 @@ const MagicLogin = () => {
     };
 
     const web3Modal = new Web3Modal({
-        cacheProvider: true,
-        providerOptions,
-        theme: "dark"
+        cacheProvider: false,
+        providerOptions: providerOptions,
+        theme: "dark",
     });
 
-    const handleLogin = async () => {
-        // await magic.oauth.loginWithRedirect({
-        //     provider: 'google' /* '', 'facebook', 'apple', or 'github' */,
-        //     redirectURI: 'http://localhost:3000/home'
-        // });
+
+    const connectWallet = async () => {
+        const provider = await web3Modal.connect();
+        console.log(provider)
+        const wb = new Web3(provider);
+        // setProvider(pr)
+        // setWeb3(wb)
+        console.log(wb)
+        let acc = await wb.eth.getAccounts()
+        setAddresses(acc)
+        localStorage.setItem('wallet', JSON.stringify(web3))
     }
 
-    const connectWallet = async (e) => {
-        e.preventDefault()
-        const provider = await web3Modal.connect();
-        const web3 = new Web3(provider);
+    const disConnectWallet = async (e) => {
+        if (web3 && web3.currentProvider && web3.currentProvider.close) {
+            await web3.currentProvider.close();
+        }
+        await web3Modal.clearCachedProvider();
+        // setProvider(null)
+        setAddresses([])
     }
+
     const history = useHistory();
 
     return (
@@ -88,17 +103,10 @@ const MagicLogin = () => {
             </div>
             <div className="custom-login-container">
                 <div className="options">
-
-
-                    <div className="magic-login-box">
-                        <h3>Passwordless Login</h3>
-                        <button onClick={handleLogin}>Log In With Magic Link</button>
-                    </div>
-
-                    <p>or</p>
-
+                    {addresses.length > 0 !== '' && <p>Address: {addresses[0]}</p>}
                     <div className="connect-options">
                         <button onClick={connectWallet}>Connect Wallet</button>
+                        {/* {provider && <button onClick={() => disConnectWallet()}>Diconnect Wallet</button>} */}
                     </div>
                 </div>
             </div>
