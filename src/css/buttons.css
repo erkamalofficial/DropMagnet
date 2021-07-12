@@ -223,6 +223,8 @@ button{
 
 .active-tab{
   position: relative;
+  padding: 6px 6px !important;
+  padding-bottom: 5px !important;
   margin-right: 8px;
 }
 .active-tab::after{

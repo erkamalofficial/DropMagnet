@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 import styled from "styled-components";
 import IntroScreen from "./intro_screen";
@@ -90,6 +90,16 @@ function Reswipe(props) {
   const [deletedFinalFour, setDeletedFinalFour] = useState(null);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(null);
 
+  useEffect(() => {
+    if(Object.keys(reswipedDrops).length === 4){
+      setRoundLength(4);
+      setCurrentCounter(4);
+      setIsReswipeStarted(false);
+      setIsFinal4Left(true);
+      setDeletedFinalFour(new Array(4).fill(false));
+    }
+  }, []);
+
   const openDateMenu = () => {
     setDateMenuOpen(true);
   };
@@ -117,7 +127,10 @@ function Reswipe(props) {
     ) {
       setReswipeComplete(true);
       setIsReswipeStarted(false);
-    } else if (currentCounter - 1 === 0) {
+    }else if(newArray.length === 1 && dir==="left" && currentCounter - 1 === 0){
+      setReswipeComplete(true);
+      setIsReswipeStarted(false);
+    }else if (currentCounter - 1 === 0) {
       setRoundLength(currCAndCurrL);
       setCurrentCounter(currCAndCurrL);
       setIsReswipeStarted(false);
@@ -125,6 +138,9 @@ function Reswipe(props) {
     } else {
       setCurrentCounter(currentCounter - 1);
     }
+
+    console.log(currCAndCurrL);
+
   };
 
   const onChangeFinalFourDelete = (isDeleted, index) => {
@@ -173,7 +189,6 @@ function Reswipe(props) {
     history.push("/home");
   };
 
-  //   console.log(reswipeBucket,selectionBucket);
   return (
     <MainContainer className={"container-reswipe"}>
       <DateMenu
