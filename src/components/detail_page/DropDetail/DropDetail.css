@@ -69,8 +69,27 @@
 }
 
 .drop-detail-image {
+  width: calc(100% - 24px);
+
+  display: grid;
+  /* grid-template-columns: repeat(16,195px); */
+  grid-template-rows: repeat(1,195px);
+  place-items: center;
+  grid-gap: 10px;
+  overflow-x: auto;
   position: relative;
   margin: 12px auto;
+}
+
+.drop-detail-image > img{
+  box-shadow: 0 10px 20px rgba(0,0,0,.15);
+}
+
+.drop-detail-image-single{
+  margin: 12px auto;
+  width: 195px;
+  height: 195px;
+  position: relative;
 }
 
 .drop-detail-image img {

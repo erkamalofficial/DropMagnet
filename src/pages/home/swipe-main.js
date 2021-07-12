@@ -70,7 +70,6 @@ const getSwipeDirection = (speed) => {
 };
 
 const getSwipeDirectionBasedOnLocation = (location) => {
-  console.log("LocationX: " + location.x);
   if (location.x < -settings.swipeThreshold) {
     return "left";
   } else if (location.x > settings.swipeThreshold) {
@@ -180,7 +179,6 @@ const TinderCard = React.forwardRef(
         ) {
           // const dir = getSwipeDirection(speed);
           const dir = getSwipeDirectionBasedOnLocation(location);
-          console.log("DIRECTION - " + dir);
 
           if (onSwipe) onSwipe(dir);
 

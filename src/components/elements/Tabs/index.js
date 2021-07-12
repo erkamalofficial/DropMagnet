@@ -25,6 +25,7 @@ const Tab = styled.button`
   font-family: "Quicksand";
   font-size: 16px;
   font-weight: 700;
+  border-radius: 18px;
   font-style: normal;
   letter-spacing: normal;
   line-height: normal;

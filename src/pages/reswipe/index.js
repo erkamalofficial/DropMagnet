@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router";
 import styled from "styled-components";
 import IntroScreen from "./intro_screen";
@@ -82,20 +82,39 @@ function Reswipe(props) {
     Object.keys(reswipedDrops).map((key) => reswipedDrops[key])
   );
 
+  const tempRef = useRef(tempReswipeBucket);
+
   const [currentCounter, setCurrentCounter] = useState(
     tempReswipeBucket.length
   );
+
+  const counterRef = useRef(currentCounter);
   const [roundLength, setRoundLength] = useState(tempReswipeBucket.length);
   const [reswipeComplete, setReswipeComplete] = useState(false);
-  const [deletedFinalFour, setDeletedFinalFour] = useState(null);
+  const [deletedFinalFour, setDeletedFinalFour] = useState([false,false,false,false]);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(null);
+
+  useEffect(() => {
+    if(Object.keys(reswipedDrops).length === 4){
+      setRoundLength(4);
+      setCurrentCounter(4);
+      counterRef.current = 4;
+      setIsReswipeStarted(false);
+      setIsFinal4Left(true);
+      setDeletedFinalFour(new Array(4).fill(false));
+    }
+  }, []);
+
+  useEffect(()=>{
+    tempRef.current  = [...tempReswipeBucket];
+  },[tempReswipeBucket]);
 
   const openDateMenu = () => {
     setDateMenuOpen(true);
   };
 
   const handleReswipe = (dir, drop_id) => {
-    let newArray = tempReswipeBucket.filter((value) => value.id !== drop_id);
+    let newArray = tempRef.current.filter((value) => value.id !== drop_id);
     let currCAndCurrL = newArray.length;
 
     if (dir === "right") {
@@ -108,6 +127,7 @@ function Reswipe(props) {
     if (newArray.length === 4 && dir !== "right") {
       setRoundLength(4);
       setCurrentCounter(4);
+      counterRef.current = 4;
       setIsReswipeStarted(false);
       setIsFinal4Left(true);
       setDeletedFinalFour(new Array(4).fill(false));
@@ -117,14 +137,21 @@ function Reswipe(props) {
     ) {
       setReswipeComplete(true);
       setIsReswipeStarted(false);
-    } else if (currentCounter - 1 === 0) {
+    }else if(newArray.length === 1 && dir==="left" && counterRef.current - 1 === 0){
+      setReswipeComplete(true);
+      setIsReswipeStarted(false);
+    }else if (counterRef.current - 1 === 0) {
       setRoundLength(currCAndCurrL);
       setCurrentCounter(currCAndCurrL);
+      counterRef.current = counterRef.current - 1;
       setIsReswipeStarted(false);
       setShowRestartReSwipeMessage(true);
     } else {
-      setCurrentCounter(currentCounter - 1);
+      setCurrentCounter(counterRef.current - 1);
+      counterRef.current = counterRef.current - 1;
     }
+
+
   };
 
   const onChangeFinalFourDelete = (isDeleted, index) => {
@@ -135,9 +162,8 @@ function Reswipe(props) {
 
   const handleFinalFourClose = () => {
     setIsFinal4Left(false);
-    console.log(deletedFinalFour);
     let newTempReswipeBuckets = [];
-    tempReswipeBucket.map((drop, index) => {
+    tempRef.current.map((drop, index) => {
       if (deletedFinalFour[index]) {
         unsaveDrop(idToken, drop.id);
       } else {
@@ -148,11 +174,13 @@ function Reswipe(props) {
     if (newTempReswipeBuckets.length === 4) {
       setRoundLength(4);
       setCurrentCounter(4);
+      counterRef.current = 4;
       setIsReswipeStarted(false);
       setShowRestartReSwipeMessage(true);
     } else if (newTempReswipeBuckets.length > 1) {
       setRoundLength(newTempReswipeBuckets.length);
       setCurrentCounter(newTempReswipeBuckets.length);
+      counterRef.current = newTempReswipeBuckets.length;
       setIsReswipeStarted(true);
     } else {
       setReswipeComplete(true);
@@ -173,7 +201,6 @@ function Reswipe(props) {
     history.push("/home");
   };
 
-  //   console.log(reswipeBucket,selectionBucket);
   return (
     <MainContainer className={"container-reswipe"}>
       <DateMenu
