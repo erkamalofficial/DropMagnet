@@ -19,6 +19,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
     d.setDate(d.getDate() - i);
     let tx = d.getTime()
     extras = { ...extras, curTime: tx }
+
     try {
       dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
       response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras)
@@ -27,11 +28,19 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
       dispatch({ type: actionType, payload: response });
       error = false
     }
+    
     catch (err) {
-      d.setDate(d.getDate() - 1);
-      dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
-      error = true
-      i++
+      if (d.getTime() > new Date().getTime()) {
+        d = new Date();
+        dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
+        error = true
+        i++
+      }
+      else {
+        dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
+        error = true
+        i++
+      }
     }
   }
 
