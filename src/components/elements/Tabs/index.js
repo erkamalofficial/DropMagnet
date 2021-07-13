@@ -65,6 +65,9 @@ const ActiveTab = styled.div`
   @media(max-width: 576px){
     width: ${MOB_WIDTH}px;
   }
+  @media(max-width: 390px){
+    width: ${SMALL_MOB_WIDTH}px;
+  }
 `;
 
 export default function Tabs({ tabs,activeTabIndex ,onChangeTab }) {
