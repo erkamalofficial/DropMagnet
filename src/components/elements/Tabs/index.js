@@ -4,6 +4,8 @@ import useViewport from "../../../pages/NewLandingPage/useViewport";
 
 const WIDTH = 128;
 const MOB_WIDTH = 126;
+const SMALL_MOB_WIDTH = 100;
+
 const TabContainer = styled.div`
   margin:10px auto;
   display: flex;
@@ -16,6 +18,7 @@ const TabContainer = styled.div`
     rgba(24, 24, 24, 0.39) 0%,
     rgba(16, 16, 16, 0.39) 100%
   );
+  overflow: hidden;
 `;
 
 const Tab = styled.button`
@@ -25,20 +28,24 @@ const Tab = styled.button`
   font-family: "Quicksand";
   font-size: 16px;
   font-weight: 700;
-  border-radius: 18px;
+  background: transparent;
+  /* border-radius: 18px; */
   font-style: normal;
   letter-spacing: normal;
   line-height: normal;
   text-align: center;
   text-overflow: ellipsis;
-  background: inherit;
   position: relative;
   z-index: 10;
   padding: 8px 4px;
+  margin: 0 2px;
   @media(max-width: 576px){
     width: ${MOB_WIDTH}px;
     font-size: 15px;
-    
+  }
+  @media(max-width: 390px){
+    width: ${SMALL_MOB_WIDTH}px;
+    font-size: 14px;
   }
 `;
 
@@ -48,7 +55,7 @@ const ActiveTab = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
-  box-shadow: inset 0 3px 4px #000000;
+  box-shadow: inset 0px 0px 0px #000000;
   border-radius: 18px;
   transition: transform .3s 0ms ease;
   border: 2px solid transparent;
@@ -63,8 +70,10 @@ const ActiveTab = styled.div`
 export default function Tabs({ tabs,activeTabIndex ,onChangeTab }) {
   const {viewportWidth} = useViewport();
   const breakpoint = 576;
+  const s_breakp = 390;
+  const CONT_WIDTH = viewportWidth <= breakpoint ? ( viewportWidth<s_breakp?SMALL_MOB_WIDTH*tabs.length+2: MOB_WIDTH* tabs.length+2): WIDTH* tabs.length+2
   return (
-    <TabContainer style={{width: viewportWidth <= breakpoint ? MOB_WIDTH* tabs.length: WIDTH* tabs.length}}>
+    <TabContainer style={{width: CONT_WIDTH }}>
       <ActiveTab style={{transform: 'translateX('+(activeTabIndex)*100+ "%"+")"}} />
       {tabs.map((tab, index) => {
         return <Tab  onClick={() => onChangeTab(index)}>{tab}</Tab>;
