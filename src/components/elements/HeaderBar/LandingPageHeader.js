@@ -23,6 +23,10 @@ const LinksHeaderWrapper = styled.div`
   @media (max-width: 576px){
     margin-bottom: 0;
   }
+  @media(max-width: 400px){
+    margin-left: 8px ;
+    margin-right: 8px ;
+  }
 `;
 
 const LogoSection = styled.div`

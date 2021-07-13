@@ -4,7 +4,7 @@ import useViewport from "../../../pages/NewLandingPage/useViewport";
 
 const WIDTH = 128;
 const MOB_WIDTH = 126;
-const SMALL_MOB_WIDTH = 100;
+const SMALL_MOB_WIDTH = 102;
 
 const TabContainer = styled.div`
   margin:10px auto;
@@ -45,7 +45,7 @@ const Tab = styled.button`
   }
   @media(max-width: 390px){
     width: ${SMALL_MOB_WIDTH}px;
-    font-size: 14px;
+    font-size: 13px;
   }
 `;
 
