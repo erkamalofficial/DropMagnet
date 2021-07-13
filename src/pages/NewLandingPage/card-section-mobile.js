@@ -118,7 +118,7 @@ const ScrollContainer = styled.div`
   }
   margin-top: 6px;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
 `;
 const ScrollContainerContent = styled.div`
   height: 100%;
@@ -201,7 +201,7 @@ const CaurouselComponent = ({
   }
   return (
     <CardSection style={{width: '100%'}}>
-      <GridContainer style={{width: 'calc(100% - 60px)',overflow: 'auto',margin: '0 auto',marginBottom: '12px'}}
+      <GridContainer style={{width: 'calc(100% - 60px)',overflow: 'hidden',margin: '0 auto',marginBottom: '12px'}}
        onTouchStart={(e)=>{
         if(e.touches && e.touches[0]){
           mouseMovementRef.current  = e.touches[0].clientX;
