@@ -1,8 +1,9 @@
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useSpringCarousel } from "react-spring-carousel-js";
 import styled from "styled-components";
 import LinksBtn from "./links-btn";
-import { map } from "lodash";
+import { map, uniqueId } from "lodash";
+import { Transition } from "react-transition-group";
 
 const CardSection = styled.div`
   display: flex;
@@ -50,7 +51,7 @@ const PLLinksBtn = styled(LinksBtn)`
   @media (max-width: 340px) {
     padding: 8px;
   }
-  @media (max-width: 576px){
+  @media (max-width: 576px) {
     padding-bottom: 4px;
   }
 `;
@@ -65,7 +66,7 @@ const NavIcon = styled.div`
 `;
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr ;
+  grid-template-columns: 1fr;
   /* grid-template-rows: repeat(2,1fr); */
   align-items: center;
   justify-items: center;
@@ -77,19 +78,19 @@ const GridContainer = styled.div`
     padding: 10px 0;
     padding-bottom: 15px;
     ::before {
-      position  : absolute;
-      content: '';
+      position: absolute;
+      content: "";
       top: calc(100% - 2px);
       left: 10px;
       width: calc(100% - 10px);
       height: 2px;
-      background: rgba(0,0,0,.2);
+      background: rgba(0, 0, 0, 0.2);
     }
   }
   /* > div>div{
     align-items: center;
   } */
-  >div>div>div{
+  > div > div > div {
     flex: unset !important;
   }
 `;
@@ -109,7 +110,6 @@ const TabItem = styled.div`
     font-size: 12px;
     margin-right: 8px;
   }
-  
 `;
 const ScrollContainer = styled.div`
   height: 210px;
@@ -128,13 +128,61 @@ const ScrollContainerContent = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const CardSectionItem = (linkItems, linkKey, handleTabSelection,isActive) => {
+
+const transitionStyles = {
+  entering: {
+    opacity: 0,
+    transform: 'translateX(-100%)'
+  },
+  entered: {
+    opacity: 1,
+    transform: 'translateX(0)'
+  },
+  exiting: {
+    opacity: 1,
+    transform: 'translateX(0)'
+  },
+  exited: {
+    opacity: 0,
+    transform: 'translateX(100%)'
+  }
+};
+
+const oppositeTransitionStyles = {
+  exited: {
+    opacity: 0,
+    transform: 'translateX(-100%)'
+  },
+  exiting: {
+    opacity: 1,
+    transform: 'translateX(0)'
+  },
+  entered: {
+    opacity: 1,
+    transform: 'translateX(0)'
+  },
+  entering: {
+    opacity: 0,
+    transform: 'translateX(100%)'
+  }
+};
+
+const CardSectionItem = (linkItems, linkKey, handleTabSelection, isActive) => {
   return {
     id: linkKey,
     renderItem: (
-      <TabItem style={{width: "max-content" }} onClick={() => handleTabSelection(linkKey)} className={isActive?'active-tab blank-gradient-button': 'un-active-tab'}>
-        <span className={isActive ? 'blank-gradient-text': ''}>
-          {linkItems[0].icon && <span className="icon">{linkItems[0].icon}</span>}
+      <TabItem
+        style={{ width: "max-content" }}
+        onClick={() => handleTabSelection(linkKey)}
+        className={
+          "border-class "+
+          (isActive ? "active-tab blank-gradient-button" : "un-active-tab")
+        }
+      >
+        <span className={isActive ? "blank-gradient-text" : ""}>
+          {linkItems[0].icon && (
+            <span className="icon">{linkItems[0].icon}</span>
+          )}
           <span>{linkItems[0].title}</span>
         </span>
       </TabItem>
@@ -144,21 +192,16 @@ const CardSectionItem = (linkItems, linkKey, handleTabSelection,isActive) => {
 
 const ERROR_ENTRIES = 9;
 
-const getExtraItems = ()=>{
+const getExtraItems = () => {
   const data = [];
   for (let i = 0; i < ERROR_ENTRIES; i++) {
-     data.push(
-       {
-         id: 100+Math.floor(Math.random()*10),
-         renderItem: <div style={{flex: "1 0 20px"}}>
-
-         </div>
-       }
-     )
-    
+    data.push({
+      id: 100 + Math.floor(Math.random() * 10),
+      renderItem: <div style={{ flex: "1 0 20px" }}></div>,
+    });
   }
   return data;
-}
+};
 
 const CaurouselComponent = ({
   displayName,
@@ -167,29 +210,43 @@ const CaurouselComponent = ({
   selectedLinks,
 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [animateLeft, setIsAnimateLeft] = useState(true);
   const handleTabSelection = (key) => {
+    if(key < selectedTab){
+      setIsAnimateLeft(true);
+    }else{
+      setIsAnimateLeft(false);
+    }
     setSelectedTab(key);
   };
-  const {
-    carouselFragment,
-    slideToItem,
-    getCurrentActiveItem,
-  } = useSpringCarousel({
-    // itemsPerSlide: 2,
-    itemsPerSlide: 3,
-    // withLoop: true,
-    initialStartingPosition: "end",
-    disableGestures: false,
-    items: [...linksList.map((linkItem, index) => CardSectionItem(linkItem, index, handleTabSelection,selectedTab === index)),...getExtraItems() ],
-  });
+  const { carouselFragment, slideToItem, getCurrentActiveItem } =
+    useSpringCarousel({
+      // itemsPerSlide: 2,
+      itemsPerSlide: 3,
+      // withLoop: true,
+      initialStartingPosition: "end",
+      disableGestures: false,
+      items: [
+        ...linksList.map((linkItem, index) =>
+          CardSectionItem(
+            linkItem,
+            index,
+            handleTabSelection,
+            selectedTab === index
+          )
+        ),
+        ...getExtraItems(),
+      ],
+    });
 
   const mouseMovementRef = useRef();
 
   const currentSelectedItem = linksList[selectedTab];
-  const handleCarouselMovement = (step)=>{
+  const handleCarouselMovement = (step) => {
     // console.log(step);
     const {index} = getCurrentActiveItem();
     const nextStep = step+ index;
+    console.log(nextStep);
     // console.log(linksList.length, index,nextStep);
     if(nextStep >= (linksList.length+ERROR_ENTRIES)){
       slideToItem(linksList.length+ERROR_ENTRIES - 1);
@@ -200,45 +257,64 @@ const CaurouselComponent = ({
     }
   }
   return (
-    <CardSection style={{width: '100%'}}>
-      <GridContainer style={{width: 'calc(100% - 60px)',overflow: 'hidden',margin: '0 auto',marginBottom: '12px'}}
-       onTouchStart={(e)=>{
-        if(e.touches && e.touches[0]){
-          mouseMovementRef.current  = e.touches[0].clientX;
-        }
-      }} 
-      onTouchEnd={
-        (e)=>{
-          if(e.changedTouches && e.changedTouches[0]){
+    <CardSection style={{ width: "100%" }}>
+      <GridContainer
+        style={{
+          width: "calc(100% - 60px)",
+          overflow: "hidden",
+          margin: "0 auto",
+          marginBottom: "12px",
+        }}
+        onTouchStart={(e) => {
+          if (e.touches && e.touches[0]) {
+            mouseMovementRef.current = e.touches[0].clientX;
+          }
+        }}
+        onTouchEnd={(e) => {
+          if (e.changedTouches && e.changedTouches[0]) {
             const finalMovement = e.changedTouches[0].clientX;
-            const dist = Math.floor((mouseMovementRef.current - finalMovement)/(3*1.2*10));
-            if(dist !== 0){
+            const dist = Math.floor(
+              (mouseMovementRef.current - finalMovement) / (3 * 1.2 * 10)
+            );
+            if (dist !== 0) {
               handleCarouselMovement(dist);
             }
-
           }
-        }
-      } >
-        
+        }}
+      >
         {carouselFragment}
         {/* {thumbsFragment} */}
       </GridContainer>
       <ScrollContainer>
-        <ScrollContainerContent style={{width: "100%"}}>
+        <ScrollContainerContent style={{ width: "100%" }}>
           {map(currentSelectedItem, (linkItem, index) => {
             return (
-              <PLLinksBtn
-                key={index}
-                linkName={linkItem.item.id}
-                galleryName={displayName}
-                selectLink={() =>
-                  handleLinkSelection(linkItem.item.id, linkItem.item.active)
-                }
-                className={
-                  (linkItem.item.active === "S" && "button-disabled") ||
-                  (selectedLinks.includes(linkItem.item.id) && "button-active")
-                }
-              />
+              <Transition in={true} appear={true} mountOnEnter key={uniqueId('anai')}>
+                {(state) => {
+                  return (
+                    <PLLinksBtn
+                      key={linkItem}
+                      linkName={linkItem.item.id}
+                      galleryName={displayName}
+                      selectLink={() =>
+                        handleLinkSelection(
+                          linkItem.item.id,
+                          linkItem.item.active
+                        )
+                      }
+                      className={
+                        (linkItem.item.active === "S" && "button-disabled") ||
+                        (selectedLinks.includes(linkItem.item.id) &&
+                          "button-active")
+                      }
+                      style= {{
+                        transition: 'all .5s',
+                        ...(animateLeft?transitionStyles[state]: oppositeTransitionStyles[state])
+                      }}
+                    />
+                  );
+                }}
+              </Transition>
             );
           })}
         </ScrollContainerContent>
@@ -246,7 +322,5 @@ const CaurouselComponent = ({
     </CardSection>
   );
 };
-
-
 
 export default CaurouselComponent;

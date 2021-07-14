@@ -204,6 +204,25 @@ body {
   color: var(--grayWhite);
 }
 
+@keyframes animate-left {
+  0%{
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+.animate-tab-left{
+  /* transform: translateX(-100%);
+  opacity: 0; */
+  animation: animate-left .4s ease-in;
+  /* animation-fill-mode: backwards; */
+  /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+}
+
 .h1-large {
   font-size: 32px;
   font-family: Quicksand;

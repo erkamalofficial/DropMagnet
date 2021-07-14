@@ -194,7 +194,8 @@ button{
   background-image: linear-gradient(#000000, #000000), radial-gradient(circle at top left,#ac43f1,#6620de);
   background-origin: border-box;
   background-clip: content-box, border-box;
-  z-index: 0;  
+  z-index: 0;
+  opacity: 1 !important;  
 }
 
 .green-gradient::before{
@@ -222,23 +223,46 @@ button{
 }
 
 .active-tab{
-  position: relative;
+  margin-right: 8px;
   padding: 6px 6px !important;
   padding-bottom: 5px !important;
-  margin-right: 8px;
+
 }
-.active-tab::after{
+.active-tab::after{  
+  transform: scaleX(1);
+}
+
+.un-active-tab{
+  /* opacity: 0; */
+  padding: 6px 4px !important;
+  /* padding-left: px !important; */
+}
+
+.tab-buttons{
+  position: relative;
+  /* text-align: center; */
+}
+
+
+
+.un-active-tab::after{
+  transform: scalex(0);  
+}
+
+.border-class::after{
   background: #ededed;
   height: 2px;
   left: 10px;
   top: calc(100% + 15px);
   content: '';
-  width: calc(100% - 20px );
+  width: calc(100% - 20px);
   position: absolute;
+  transform-origin: center;
+  transition: transform .4s ease-in;
 }
 
-.un-active-tab{
-  padding: 6px 4px !important;
-  /* padding-left: px !important; */
+.border-class::before{
+  content: '';
+  transition: opacity .4s ease-in;
+  opacity: 0;
 }
-
