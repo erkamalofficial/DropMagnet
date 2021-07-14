@@ -50,6 +50,7 @@
     "swiper": "^6.5.9",
     "truffle": "^5.3.1",
     "use-nft": "^0.6.0",
+    "uuid": "^8.3.2",
     "walletlink": "^2.1.5",
     "web-vitals": "^1.0.1",
     "web3": "^1.4.0",

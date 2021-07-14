@@ -11,18 +11,22 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
   let response = {}
   let timeIndex = extras.curTime
   var d = new Date(timeIndex);
-  console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
   let error = true
+  let past = timeIndex < new Date().setUTCHours(0,0,0,0)
   let i = 0;
 
   while (error) {
     d.setDate(d.getDate() - i);
     let tx = d.getTime()
     extras = { ...extras, curTime: tx }
+    if(past){
+      d.setDate(d.getDate()-1)
+    }
+    console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
 
     try {
       dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
-      response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras)
+      response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras, past)
         .then((res) => res)
       response['curIndex'] = d.getTime()
       dispatch({ type: actionType, payload: response });
@@ -32,14 +36,15 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
     catch (err) {
       if (d.getTime() > new Date().getTime()) {
         d = new Date();
-        dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
+        let curIdx = new Date()
+        curIdx.setDate(curIdx.getDate()-1)
+        dispatch({ type: "CHANGE_CUR_INDEX", payload: curIdx.getTime() });
         error = true
-        i++
+        past = true
       }
       else {
-        dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
-        error = true
-        i++
+        dispatch({ type: actionType, payload: {data: [], count: 0, index: null} });
+        error = false
       }
     }
   }

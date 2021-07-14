@@ -32,11 +32,14 @@ const getGroupedLinks = (linkList) => {
 
 const getProcessedCollection = (state, action, type) => {
   const general = { ...state.general, isLoading: false };
-  const bucket = action.payload.data.reverse()
 
-  let goBack = action.payload.curIndex < new Date().setUTCHours(0,0,0,0) ? true : false
-  let d = new Date(action.payload.curIndex)
-  d.setDate(d.getDate()-1)
+  let goBack = action.payload.curIndex < new Date().setUTCHours(0,0,0,0) && action.payload.count !== 0
+  const bucket = !goBack ? action.payload.data.reverse() : action.payload.data
+
+  let pastIndex = goBack ? action.payload.data[0].drop_date : null
+  let pastDate = new Date(pastIndex)
+  pastDate.setDate(pastDate.getDate()-1)
+  pastIndex = pastDate.getTime()
 
   const collection = {
     ...state[type],
@@ -46,7 +49,7 @@ const getProcessedCollection = (state, action, type) => {
     ...state,
     [type]: collection,
     general,
-    nextIndex: !goBack ? action.payload.index : d.getTime(),
+    nextIndex: !goBack ? action.payload.index : pastIndex,
     fetchMore: false
   };
 };

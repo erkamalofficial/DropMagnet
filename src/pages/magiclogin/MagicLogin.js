@@ -8,6 +8,7 @@ import Web3Modal, { getInjectedProvider, getInjectedProviderName, getProviderInf
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
+import { v4 as uuidv4 } from 'uuid';
 
 // const magic = new Magic(process.env.REACT_APP_MAGIC_API_KEY, {
 //     extensions: [new OAuthExtension()],
@@ -16,9 +17,12 @@ import WalletLink from "walletlink"
 
 const MagicLogin = () => {
 
+    console.log(uuidv4())
+
     // const [provider, setProvider] = useState(null)
     const [addresses, setAddresses] = useState([])
-    const [web3, setWeb3] = useState(null)
+    const [signature, setSignature] = useState('')
+    // const [web3, setWeb3] = useState(null)
 
     const coinbase = getProviderInfoByName('Coinbase')
 
@@ -66,27 +70,32 @@ const MagicLogin = () => {
         theme: "dark",
     });
 
+    const signMessage = async (web3, provider) => {
+        let accounts = await web3.eth.getAccounts()
+            .then(acc => acc)
+        await web3.eth.personal.sign("Fsdfsdfsdfsdfsdf", accounts[0], function (error, result){
+            setSignature(result)
+        })
+        .then(console.log)
+
+    }
+
 
     const connectWallet = async () => {
         const provider = await web3Modal.connect();
         console.log(provider)
         const wb = new Web3(provider);
-        // setProvider(pr)
-        // setWeb3(wb)
-        console.log(wb)
-        let acc = await wb.eth.getAccounts()
-        setAddresses(acc)
-        localStorage.setItem('wallet', JSON.stringify(web3))
+        signMessage(wb, provider);
     }
 
-    const disConnectWallet = async (e) => {
-        if (web3 && web3.currentProvider && web3.currentProvider.close) {
-            await web3.currentProvider.close();
-        }
-        await web3Modal.clearCachedProvider();
-        // setProvider(null)
-        setAddresses([])
-    }
+    // const disConnectWallet = async (e) => {
+    //     if (web3 && web3.currentProvider && web3.currentProvider.close) {
+    //         await web3.currentProvider.close();
+    //     }
+    //     await web3Modal.clearCachedProvider();
+    //     // setProvider(null)
+    //     setAddresses([])
+    // }
 
     const history = useHistory();
 
@@ -103,7 +112,7 @@ const MagicLogin = () => {
             </div>
             <div className="custom-login-container">
                 <div className="options">
-                    {addresses.length > 0 !== '' && <p>Address: {addresses[0]}</p>}
+                    {signature !== '' && <p>Signature: {signature}</p>}
                     <div className="connect-options">
                         <button onClick={connectWallet}>Connect Wallet</button>
                         {/* {provider && <button onClick={() => disConnectWallet()}>Diconnect Wallet</button>} */}
