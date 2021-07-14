@@ -12,7 +12,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
   let timeIndex = extras.curTime
   var d = new Date(timeIndex);
   let error = true
-  let past = timeIndex < new Date().setUTCHours(0,0,0,0)
+  let past = timeIndex < new Date().setUTCHours(0,0,0,0) && !extras.random
   let i = 0;
 
   while (error) {
@@ -21,14 +21,17 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
     extras = { ...extras, curTime: tx }
     if(past){
       d.setDate(d.getDate()-1)
+      extras = {...extras, random: false}
     }
-    console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
+    // console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
 
     try {
       dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
       response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras, past)
         .then((res) => res)
+      
       response['curIndex'] = d.getTime()
+      response['random'] = extras.random
       dispatch({ type: actionType, payload: response });
       error = false
     }
