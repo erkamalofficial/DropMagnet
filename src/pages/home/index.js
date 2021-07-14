@@ -79,6 +79,7 @@ const Home = (props) => {
       token: idToken,
       curTime: curTime,
       userID: currentUser.uid,
+      random: true
     }
     if (activeTabIndex === 1) {
       dispatch(fetchMusic({ activeTabIndex: 1, extras: { ...extras, token: idToken } }));
@@ -108,6 +109,7 @@ const Home = (props) => {
         token: idToken,
         curTime: nextIndex,
         userID: currentUser.uid,
+        random: false
       }
 
       if (activeTabIndex === 0) {

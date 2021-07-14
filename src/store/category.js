@@ -32,11 +32,22 @@ const getGroupedLinks = (linkList) => {
 
 const getProcessedCollection = (state, action, type) => {
   const general = { ...state.general, isLoading: false };
-  const bucket = action.payload.data.reverse()
 
-  let goBack = action.payload.curIndex < new Date().setUTCHours(0,0,0,0) ? true : false
-  let d = new Date(action.payload.curIndex)
-  d.setDate(d.getDate()-1)
+  let goBack = action.payload.curIndex <= new Date().setUTCHours(0, 0, 0, 0)
+    && action.payload.count !== 0 && !action.payload.random
+
+  console.log(action.payload.curIndex <= new Date().setUTCHours(0, 0, 0, 0),!action.payload.random, action.payload.count !== 0)
+  const bucket = !goBack ? action.payload.data.reverse() : action.payload.data
+
+  let pastIndex = null
+
+  if (goBack) {
+    pastIndex = goBack ? action.payload.data[0].drop_date : null
+    let pastDate = new Date(pastIndex)
+    pastDate.setDate(pastDate.getDate() - 1)
+    pastIndex = pastDate.getTime()
+    console.log(`Current card fetched from : ${pastDate.getDate()}-${pastDate.getMonth() + 1}-${pastDate.getFullYear()}`)
+  }
 
   const collection = {
     ...state[type],
@@ -46,7 +57,7 @@ const getProcessedCollection = (state, action, type) => {
     ...state,
     [type]: collection,
     general,
-    nextIndex: !goBack ? action.payload.index : d.getTime(),
+    nextIndex: !goBack ? action.payload.index : pastIndex,
     fetchMore: false
   };
 };
@@ -147,25 +158,25 @@ const categoryReducer = (state = initialState, action) => {
     case "ADD_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
-      const { reswipedDrops,activeBucket } = activeTabContent;
-      const {drop_id, dropIndex } = action.payload;
-      if(!state.general.reswipeModeActive){
+      const { reswipedDrops, activeBucket } = activeTabContent;
+      const { drop_id, dropIndex } = action.payload;
+      if (!state.general.reswipeModeActive) {
         reswipedDrops[activeBucket[dropIndex].id] = activeBucket[dropIndex];
 
-        Object.assign(activeTabContent, {reswipedDrops});
+        Object.assign(activeTabContent, { reswipedDrops });
         let reswipeModeActive = false;
-        if(Object.keys(reswipedDrops).length >=MAX_BUCKET_SIZE){
-          reswipeModeActive = true;        
-        }      
-  
+        if (Object.keys(reswipedDrops).length >= MAX_BUCKET_SIZE) {
+          reswipeModeActive = true;
+        }
+
         const general = {
           ...state.general,
           reswipeModeActive: reswipeModeActive,
         };
-  
+
         return { ...state, [currentTab]: activeTabContent, general };
-  
-      }else{
+
+      } else {
         return state;
       }
     }
@@ -183,7 +194,7 @@ const categoryReducer = (state = initialState, action) => {
         selectionCount: state.general.selectionCount - 1,
       };
 
-      Object.assign(activeTabContent, {reswipedDrops});
+      Object.assign(activeTabContent, { reswipedDrops });
 
       return { ...state, general, [currentTab]: activeTabContent };
     }
@@ -212,67 +223,20 @@ const categoryReducer = (state = initialState, action) => {
       };
     }
     case "SET_RESWIPE_BUCKET": {
-      const {newBucket, tab} = action.payload;
-      return{
+      const { newBucket, tab } = action.payload;
+      return {
         ...state,
         general: {
           ...state.general,
           reswipeModeActive: false
         },
-        [tab]: {...state[tab], reswipedDrops: newBucket}
+        [tab]: { ...state[tab], reswipedDrops: newBucket }
       }
-      
-    }
-    
-    case "START_RESWIPE": {
-      const {newBucket}=action.payload;
-      const currentTab = tabList[state.general.activeTabIndex];
-      const reswipedDrops = {
-          "arts": {},
-          "music": {},
-          "fashion": {},
-          "collectables": {}
-        };
-      newBucket.map((d)=>{
-          switch(d.category){
-            case 'art': {
-              reswipedDrops["arts"][d.id] = d;
-              break;
-            }
-            case 'music': {
-              reswipedDrops["music"][d.id] = d;
-              break;
-            }
-            case 'fashion': {
-              reswipedDrops["fashion"][d.id] = d;
-  
-              break;
-            }
-            case 'collectables': {
-              reswipedDrops["collectables"][d.id] = d;
-              break;
-            }
-            default: ;
-          }
-          
-        })
-  
-        const general = {
-          ...state.general,
-          reswipeModeActive:Object.keys(reswipedDrops['arts']).length>=1?true:false 
-        }
-        return{
-          ...state,
-          general,
-          "arts": {...state.arts,reswipedDrops: reswipedDrops["arts"]},
-          "collectables": {...state.collectables, reswipedDrops: reswipedDrops["collectables"]},
-          "music": {...state.music,reswipedDrops: reswipedDrops["music"]},
-          "fashion":{...state.fashion,reswipedDrops: reswipedDrops["fashion"]}
-        }
+
     }
 
-    case 'SAVE_RESWIPE_BUCKETS': {
-      const savedDrops = action.payload;
+    case "START_RESWIPE": {
+      const { newBucket } = action.payload;
       const currentTab = tabList[state.general.activeTabIndex];
       const reswipedDrops = {
         "arts": {},
@@ -280,8 +244,8 @@ const categoryReducer = (state = initialState, action) => {
         "fashion": {},
         "collectables": {}
       };
-      savedDrops.map((d)=>{
-        switch(d.category){
+      newBucket.map((d) => {
+        switch (d.category) {
           case 'art': {
             reswipedDrops["arts"][d.id] = d;
             break;
@@ -301,24 +265,71 @@ const categoryReducer = (state = initialState, action) => {
           }
           default: ;
         }
-        
+
+      })
+
+      const general = {
+        ...state.general,
+        reswipeModeActive: Object.keys(reswipedDrops['arts']).length >= 1 ? true : false
+      }
+      return {
+        ...state,
+        general,
+        "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
+        "collectables": { ...state.collectables, reswipedDrops: reswipedDrops["collectables"] },
+        "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
+        "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
+      }
+    }
+
+    case 'SAVE_RESWIPE_BUCKETS': {
+      const savedDrops = action.payload;
+      const currentTab = tabList[state.general.activeTabIndex];
+      const reswipedDrops = {
+        "arts": {},
+        "music": {},
+        "fashion": {},
+        "collectables": {}
+      };
+      savedDrops.map((d) => {
+        switch (d.category) {
+          case 'art': {
+            reswipedDrops["arts"][d.id] = d;
+            break;
+          }
+          case 'music': {
+            reswipedDrops["music"][d.id] = d;
+            break;
+          }
+          case 'fashion': {
+            reswipedDrops["fashion"][d.id] = d;
+
+            break;
+          }
+          case 'collectables': {
+            reswipedDrops["collectables"][d.id] = d;
+            break;
+          }
+          default: ;
+        }
+
       })
 
       let reswipeModeActive = false;
-      if(Object.keys(reswipedDrops[currentTab]).length>=MAX_BUCKET_SIZE ){
+      if (Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE) {
         reswipeModeActive = true;
       }
       const general = {
         ...state.general,
         reswipeModeActive
       }
-      return{
+      return {
         ...state,
         general,
-        "arts": {...state.arts,reswipedDrops: reswipedDrops["arts"]},
-        "collectables": {...state.collectables, reswipedDrops: reswipedDrops["collectables"]},
-        "music": {...state.music,reswipedDrops: reswipedDrops["music"]},
-        "fashion":{...state.fashion,reswipedDrops: reswipedDrops["fashion"]}
+        "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
+        "collectables": { ...state.collectables, reswipedDrops: reswipedDrops["collectables"] },
+        "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
+        "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
       }
     }
     case 'FETCH_MORE_FEEDS': {
