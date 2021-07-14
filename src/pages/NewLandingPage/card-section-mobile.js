@@ -3,7 +3,7 @@ import { useSpringCarousel } from "react-spring-carousel-js";
 import styled from "styled-components";
 import LinksBtn from "./links-btn";
 import { map, uniqueId } from "lodash";
-import { Transition } from "react-transition-group";
+import { CSSTransition,SwitchTransition } from "react-transition-group";
 
 const CardSection = styled.div`
   display: flex;
@@ -132,39 +132,39 @@ const ScrollContainerContent = styled.div`
 const transitionStyles = {
   entering: {
     opacity: 0,
-    transform: 'translateX(-100%)'
+    transform: "translateX(-100%)",
   },
   entered: {
     opacity: 1,
-    transform: 'translateX(0)'
+    transform: "translateX(0)",
   },
   exiting: {
     opacity: 1,
-    transform: 'translateX(0)'
+    transform: "translateX(0)",
   },
   exited: {
     opacity: 0,
-    transform: 'translateX(100%)'
-  }
+    transform: "translateX(100%)",
+  },
 };
 
 const oppositeTransitionStyles = {
   exited: {
     opacity: 0,
-    transform: 'translateX(-100%)'
+    transform: "translateX(-100%)",
   },
   exiting: {
     opacity: 1,
-    transform: 'translateX(0)'
+    transform: "translateX(0)",
   },
   entered: {
     opacity: 1,
-    transform: 'translateX(0)'
+    transform: "translateX(0)",
   },
   entering: {
     opacity: 0,
-    transform: 'translateX(100%)'
-  }
+    transform: "translateX(100%)",
+  },
 };
 
 const CardSectionItem = (linkItems, linkKey, handleTabSelection, isActive) => {
@@ -175,7 +175,7 @@ const CardSectionItem = (linkItems, linkKey, handleTabSelection, isActive) => {
         style={{ width: "max-content" }}
         onClick={() => handleTabSelection(linkKey)}
         className={
-          "border-class "+
+          "border-class " +
           (isActive ? "active-tab blank-gradient-button" : "un-active-tab")
         }
       >
@@ -212,9 +212,9 @@ const CaurouselComponent = ({
   const [selectedTab, setSelectedTab] = useState(0);
   const [animateLeft, setIsAnimateLeft] = useState(true);
   const handleTabSelection = (key) => {
-    if(key < selectedTab){
+    if (key < selectedTab) {
       setIsAnimateLeft(true);
-    }else{
+    } else {
       setIsAnimateLeft(false);
     }
     setSelectedTab(key);
@@ -244,18 +244,17 @@ const CaurouselComponent = ({
   const currentSelectedItem = linksList[selectedTab];
   const handleCarouselMovement = (step) => {
     // console.log(step);
-    const {index} = getCurrentActiveItem();
-    const nextStep = step+ index;
-    console.log(nextStep);
+    const { index } = getCurrentActiveItem();
+    const nextStep = step + index;
     // console.log(linksList.length, index,nextStep);
-    if(nextStep >= (linksList.length+ERROR_ENTRIES)){
-      slideToItem(linksList.length+ERROR_ENTRIES - 1);
-    }else if(nextStep <0){
+    if (nextStep >= linksList.length + ERROR_ENTRIES) {
+      slideToItem(linksList.length + ERROR_ENTRIES - 1);
+    } else if (nextStep < 0) {
       slideToItem(0);
-    }else{
+    } else {
       slideToItem(nextStep);
     }
-  }
+  };
   return (
     <CardSection style={{ width: "100%" }}>
       <GridContainer
@@ -286,14 +285,26 @@ const CaurouselComponent = ({
         {/* {thumbsFragment} */}
       </GridContainer>
       <ScrollContainer>
-        <ScrollContainerContent style={{ width: "100%" }}>
-          {map(currentSelectedItem, (linkItem, index) => {
-            return (
-              <Transition in={true} appear={true} mountOnEnter key={uniqueId('anai')}>
-                {(state) => {
+
+        {/* <TransitionGroup> */}
+        <SwitchTransition mode={'out-in'}>
+        <CSSTransition 
+          key={selectedTab}
+          
+          addEndListener={(node, done) => {
+              node.addEventListener("transitionend", done, false);
+          }}
+          classNames="animate">
+          {/* {(state) => { */}
+            {/* return ( */}
+              <ScrollContainerContent style={{
+                width: "100%",
+                transition: "all .4s ease-in",
+              }}>
+                {map(currentSelectedItem, (linkItem, index) => {
                   return (
                     <PLLinksBtn
-                      key={linkItem}
+                      key={linkItem.item.id}
                       linkName={linkItem.item.id}
                       galleryName={displayName}
                       selectLink={() =>
@@ -307,17 +318,16 @@ const CaurouselComponent = ({
                         (selectedLinks.includes(linkItem.item.id) &&
                           "button-active")
                       }
-                      style= {{
-                        transition: 'all .5s',
-                        ...(animateLeft?transitionStyles[state]: oppositeTransitionStyles[state])
-                      }}
+                      
                     />
                   );
-                }}
-              </Transition>
-            );
-          })}
-        </ScrollContainerContent>
+                })}
+              </ScrollContainerContent>
+            {/* ); */}
+          {/* }} */}
+        </CSSTransition>
+        
+        </SwitchTransition>
       </ScrollContainer>
     </CardSection>
   );

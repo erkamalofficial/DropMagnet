@@ -223,9 +223,9 @@ button{
 }
 
 .active-tab{
-  margin-right: 8px;
+  /* margin-right: 8px;
   padding: 6px 6px !important;
-  padding-bottom: 5px !important;
+  padding-bottom: 5px !important; */
 
 }
 .active-tab::after{  
@@ -234,7 +234,7 @@ button{
 
 .un-active-tab{
   /* opacity: 0; */
-  padding: 6px 4px !important;
+  /* padding: 6px 4px !important; */
   /* padding-left: px !important; */
 }
 
