@@ -145,6 +145,11 @@ export function getFeeds(category, extras, past) {
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 
+export function getDrop(id, token) {
+  const dropEndpoint = `drops/${id}`
+  return customAPICall(dropEndpoint, "", "GET", token)
+}
+
 
 export function saveDrop(token = '', dropid = '') {
   const saveDropEndPoint = `drops/${dropid}/save`;
