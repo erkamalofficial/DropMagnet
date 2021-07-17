@@ -85,7 +85,6 @@ const FooterButtons = styled.div`
     margin: 0 8px;
   }
   .price {
-    width: 48px;
     height: 24px;
     border-radius: 3px;
     background-color: #6a8ad5;
