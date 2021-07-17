@@ -165,3 +165,17 @@ export function unsaveDrop(token = '', dropid = '') {
   const unsaveDropEndPoint = `drops/${dropid}/unsave`;
   return customAPICall(unsaveDropEndPoint, "", "POST", token);
 }
+
+
+
+// Wallet Login
+
+export function getNonce(address) {
+  const nonceEndPoint = `profiles/user/nonce?address=${address}`;
+  return customAPICall(nonceEndPoint, "", "POST", '');
+}
+
+export function getWalletUser(address) {
+  const userEndPoint = `profiles/getUser`;
+  return customAPICall(userEndPoint, {address: address}, "GET", '');
+}

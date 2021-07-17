@@ -47,6 +47,7 @@ const DropPage = () => {
         return (
           <div>
             <DropDetail
+              goBack={() => history.push("/home")}
               drop={drop}
               closeDetailView={() => {}}
               handleClick={() => console.log("Click")} />
@@ -61,12 +62,6 @@ const DropPage = () => {
                 openHome={() => { }}
                 openMenu={() => { }}
                 isLogoNotVisible
-            // curIndex={curIndex}
-            // selectedDropdownDate={selectedDropdownDate}
-            // setSelectedDropdownDate={setSelectedDropdownDate}
-            // datePickerVisible={detailView ? false : true}
-            // userLoggedIn={props.userLoggedIn}
-            // userImageVisible={true}
             />
             <div className="rel">
                 <div className="view-container home-container" id="detCnt" >
