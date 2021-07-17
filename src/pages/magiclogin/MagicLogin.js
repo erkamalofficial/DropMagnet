@@ -65,6 +65,7 @@ const MagicLogin = () => {
         cacheProvider: false,
         providerOptions: providerOptions,
         theme: "dark",
+
     });
 
     const signMessage = async (web3, accounts, nonce) => {
@@ -74,7 +75,12 @@ const MagicLogin = () => {
                 result);
             if(accounts[0] === signingAddress){
                 localStorage.setItem('publicAddress', accounts[0])
-                setAddress(accounts[0])
+                DropMagnetAPI.getWalletUser(accounts[0])
+                .then(res => {
+                    console.log(res)
+                    setAddress(accounts[0])
+                })
+                
             }
             else{
                 alert("Signature not verified.")
@@ -92,7 +98,6 @@ const MagicLogin = () => {
             .then(acc => acc)
 
         let nonce = await DropMagnetAPI.getNonce(accounts[0])
-        console.log(nonce)
 
         signMessage(wb, accounts, nonce.data);
     }

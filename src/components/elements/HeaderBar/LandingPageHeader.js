@@ -111,7 +111,6 @@ const LandingPageHeader = ({ isLoggedIn }) => {
     e.preventDefault()
     const provider = await web3Modal.connect();
     const web3 = new Web3(provider);
-    console.log(web3)
   }
 
 

@@ -176,6 +176,6 @@ export function getNonce(address) {
 }
 
 export function getWalletUser(address) {
-  const userEndPoint = `profiles/getUser`;
-  return customAPICall(userEndPoint, {address: address}, "GET", '');
+  const userEndPoint = `profiles/getUser?address=${address}`;
+  return customAPICall(userEndPoint, "", "GET", '');
 }
