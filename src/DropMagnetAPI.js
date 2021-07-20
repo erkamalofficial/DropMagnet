@@ -179,3 +179,14 @@ export function getWalletUser(address) {
   const userEndPoint = `profiles/getUser?address=${address}`;
   return customAPICall(userEndPoint, "", "GET", '');
 }
+
+export function createWalletUser(name, username, email, address, token) {
+  const userEndPoint = `profiles/createUser`;
+  const payload = {
+    email: email,
+    name: name,
+    username: username,
+    publicAddress: address
+  }
+  return customAPICall(userEndPoint, payload, "POST", token);
+}

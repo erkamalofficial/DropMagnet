@@ -34,6 +34,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
+import ProfileForm from "./pages/register/ProfileForm";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -106,6 +107,11 @@ function App() {
         <Route
           path="/terms"
           render={(props) => <TermsAndConditions {...props} />}
+        />
+
+        <Route
+          path="/create"
+          render={(props) => <ProfileForm /> }
         />
 
         <Route
