@@ -23,53 +23,49 @@ const HomeContainer = styled.div`
 
 const DropPage = () => {
 
-    let { id } = useParams()
-    let history = useHistory()
-    const [drop, setDrop] = useState(null)
+  let { id } = useParams()
+  let history = useHistory()
+  const [drop, setDrop] = useState(null)
 
-    const { currentUser } = useAuth();
+  const { currentUser } = useAuth();
 
-    useEffect(() => {
-        if (id) {
-            currentUser
-                .getIdToken(false)
-                .then(function (idToken) {
-                    DropMagnetAPI.getDrop(id, idToken).then(function (response) {
-                        console.log(response)
-                        setDrop(response)
-                    })
-                        .catch(function (error) { });
-                })
-        }
-    }, [id]);
+  useEffect(() => {
 
-    function renderDetail() {
-        return (
-          <div>
-            <DropDetail
-              goBack={() => history.push("/home")}
-              drop={drop}
-              closeDetailView={() => {}}
-              handleClick={() => console.log("Click")} />
-          </div>
-        )
-      }
+    if (id) {
+      DropMagnetAPI.getDrop(id, '').then(function (response) {
+        console.log(response)
+        setDrop(response)
+      })
+    }
+  }, [id]);
 
-
+  function renderDetail() {
     return (
-        <HomeContainer>
-            <HeaderBar
-                openHome={() => { }}
-                openMenu={() => { }}
-                isLogoNotVisible
-            />
-            <div className="rel">
-                <div className="view-container home-container" id="detCnt" >
-                    {drop && renderDetail()}
-                </div>
-            </div>
-        </HomeContainer>
+      <div>
+        <DropDetail
+          goBack={() => history.push("/home")}
+          drop={drop}
+          closeDetailView={() => { }}
+          handleClick={() => console.log("Click")} />
+      </div>
     )
+  }
+
+
+  return (
+    <HomeContainer>
+      <HeaderBar
+        openHome={() => { }}
+        openMenu={() => { }}
+        isLogoNotVisible
+      />
+      <div className="rel">
+        <div className="view-container home-container" id="detCnt" >
+          {drop && renderDetail()}
+        </div>
+      </div>
+    </HomeContainer>
+  )
 }
 
 export default DropPage

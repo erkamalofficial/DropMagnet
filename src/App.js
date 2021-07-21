@@ -97,11 +97,11 @@ function App() {
           isLogged
           component={HomePage}
         />
-        <PrivateRoute
+        <Route
           exact
           path="/drop/:id"
-          userDetails={userDetails}
-          isLogged
+          // userDetails={userDetails}
+          // isLogged
           component={DropPage}
         />
         <Route

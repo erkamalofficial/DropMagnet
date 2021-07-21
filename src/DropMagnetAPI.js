@@ -27,7 +27,7 @@ async function customAPICall(endpoint, data, method, access_token) {
     mode: 'cors', // no-cors, *cors, same-origin
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${access_token}`
+      'Authorization': access_token !== '' ? `Bearer ${access_token}` : ''
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -147,7 +147,7 @@ export function getFeeds(category, extras, past) {
 
 export function getDrop(id, token) {
   const dropEndpoint = `drops/${id}`
-  return customAPICall(dropEndpoint, "", "GET", token)
+  return customAPICall(dropEndpoint, "", "GET", '')
 }
 
 
