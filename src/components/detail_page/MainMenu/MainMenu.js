@@ -70,7 +70,7 @@ export default function MainMenu(props) {
                 initial = {getInitials(props.userDetails.username,'')}
                 view_only
                 small
-                style={{marginTop: 8}}
+                style={{width: 40, height: 40}}
               />
               {/* <img
                 className="header-right-image"
