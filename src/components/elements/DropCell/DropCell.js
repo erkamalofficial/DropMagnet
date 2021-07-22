@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./DropCell.css";
 import DropDetail from "../../detail_page/DropDetail/DropDetail";
-import UserIcon from "../../../asstes/add-user-icon.png"
 import { formatDate } from "../../../helpers/DateFormatter";
+import Avatar from "../Avatar/Avatar";
+import { getInitials } from "../../../utils";
 
 export default function DropCell(props) {
 
@@ -10,7 +11,7 @@ export default function DropCell(props) {
 
   let dropTitle = props.drop.title
 
-  let artist_image = user && user.avatar_url !== '' ? user.avatar_url : UserIcon
+  let artist_image = user && user.avatar_url !== '' ? user.avatar_url : ""
   let artist_name = user && user.name
 
   let marketPlace = props.drop.marketplace
@@ -39,7 +40,8 @@ export default function DropCell(props) {
       }>
         <div className="drop-details">
           <div className="drop-header">
-            <img className="drop-artist-image" src={artist_image} />
+            <Avatar initial={getInitials(artist_name,"")} userImage={artist_image} view_only small />
+            {/* <img className="drop-artist-image" src={artist_image} /> */}
             {artist_name!=='' && 
             <div className="drop-header-title" >
               {/* <Marquee> */}

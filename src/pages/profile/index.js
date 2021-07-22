@@ -16,6 +16,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Tabs from "../home/tabs";
 import { getCategoryFromTab, tabList } from "../../constants";
+import { getInitials } from "../../utils";
 
 const ButtonContainer = styled.div`
   margin-top: 16px;
@@ -399,8 +400,10 @@ export default function Profile(props) {
             className="profile-detail-container"
             style={{ display: `${detailView ? "none" : "flex"}` }}
           >
+            
             <Avatar
               userImage={userImage}
+              initial={getInitials(firstName, lastName)}
               onChange={(e) => {
                 if (e.target.files) {
                   if (e.target.files[0]) {

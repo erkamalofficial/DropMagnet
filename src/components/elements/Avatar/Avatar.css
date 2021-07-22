@@ -8,6 +8,20 @@
     position: relative;
 }
 
+.avatar-container.small-avatar{
+    width: 30px;
+    height: 30px;
+    box-shadow: none;
+    padding: 0;
+}
+
+
+.avatar-img-uploader.small-avatar-label > span > span{
+    font-size: 12px !important;
+    letter-spacing: 0;
+
+}
+
 .avatar-img{
     width: 100%;
     height: 100%;

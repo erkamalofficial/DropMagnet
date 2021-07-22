@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./MainMenu.css";
 import { Link } from "react-router-dom";
 import {LogoTitle, LogoTitleSection} from "../../elements/HeaderBar/LogoTitles";
+import Avatar from "../../elements/Avatar/Avatar";
+import { getInitials } from "../../../utils";
 
 export default function MainMenu(props) {
   const [open, setOpen] = useState(false);
@@ -62,12 +64,19 @@ export default function MainMenu(props) {
             src="./close-icon.png"
           />
           <Link to={"/profile"}>
-            <div className="header-profile-img-holder">
-              <img
+            <div className="header-profile-img-holder" >
+              <Avatar
+                userImage={props.userImage}
+                initial = {getInitials(props.userDetails.username,'')}
+                view_only
+                small
+                style={{marginTop: 8}}
+              />
+              {/* <img
                 className="header-right-image"
                 alt={"profile-img"}
                 src={props.userImage || "./add-user-icon.png"}
-              />
+              /> */}
             </div>
           </Link>
         </div>

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail.js"
 import "./card.css"
 import UserIcon from "../../asstes/add-user-icon.png"
+import Avatar from "../../components/elements/Avatar/Avatar.js";
+import { getInitials } from "../../utils/index.js";
 
 const SwipeCard = styled.div`
   cursor: pointer;
@@ -144,7 +146,8 @@ const Card = (props) => {
       >
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
-          <UserAvatar src={artistImg} />
+          <Avatar userImage={artist_image} initial={getInitials(artist.username,'')} view_only small />
+          {/* <UserAvatar src={artistImg} /> */}
           <div className="card-title">
             {artist.username}
           {/* - {props.id} */}
