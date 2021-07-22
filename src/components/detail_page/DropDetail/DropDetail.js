@@ -16,8 +16,8 @@ export default function DropDetail(props) {
 
   }
 
-  let artist_image = props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
-  let artist_name = props.drop.artist.username
+  let artist_image = props.drop.artist && props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
+  let artist_name = props.drop.artist ? props.drop.artist.username : 'Test User'
 
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
