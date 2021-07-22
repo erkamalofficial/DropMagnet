@@ -9,6 +9,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
 import { v4 as uuidv4 } from 'uuid';
+import * as DropMagnetAPI from "../../DropMagnetAPI"
 
 // const magic = new Magic(process.env.REACT_APP_MAGIC_API_KEY, {
 //     extensions: [new OAuthExtension()],
@@ -17,12 +18,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 const MagicLogin = () => {
 
-    console.log(uuidv4())
-
-    // const [provider, setProvider] = useState(null)
-    const [addresses, setAddresses] = useState([])
-    const [signature, setSignature] = useState('')
-    // const [web3, setWeb3] = useState(null)
+    let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
+    const [address, setAddress] = useState(pubAdd || '')
 
     const coinbase = getProviderInfoByName('Coinbase')
 
@@ -68,15 +65,27 @@ const MagicLogin = () => {
         cacheProvider: false,
         providerOptions: providerOptions,
         theme: "dark",
+
     });
 
-    const signMessage = async (web3, provider) => {
-        let accounts = await web3.eth.getAccounts()
-            .then(acc => acc)
-        await web3.eth.personal.sign("Fsdfsdfsdfsdfsdf", accounts[0], function (error, result){
-            setSignature(result)
+    const signMessage = async (web3, accounts, nonce) => {
+        let message = `You are signing in to DropMagnet: ${nonce}`
+        await web3.eth.personal.sign(message, accounts[0], async function (error, result) {
+            const signingAddress = await web3.eth.accounts.recover(message,
+                result);
+            if(accounts[0] === signingAddress){
+                localStorage.setItem('publicAddress', accounts[0])
+                DropMagnetAPI.getWalletUser(accounts[0])
+                .then(res => {
+                    console.log(res)
+                    setAddress(accounts[0])
+                })
+                
+            }
+            else{
+                alert("Signature not verified.")
+            }
         })
-        .then(console.log)
 
     }
 
@@ -85,7 +94,12 @@ const MagicLogin = () => {
         const provider = await web3Modal.connect();
         console.log(provider)
         const wb = new Web3(provider);
-        signMessage(wb, provider);
+        let accounts = await wb.eth.getAccounts()
+            .then(acc => acc)
+
+        let nonce = await DropMagnetAPI.getNonce(accounts[0])
+
+        signMessage(wb, accounts, nonce.data);
     }
 
     // const disConnectWallet = async (e) => {
@@ -112,7 +126,7 @@ const MagicLogin = () => {
             </div>
             <div className="custom-login-container">
                 <div className="options">
-                    {signature !== '' && <p>Signature: {signature}</p>}
+                    {address !== '' && <p>Address: {address}</p>}
                     <div className="connect-options">
                         <button onClick={connectWallet}>Connect Wallet</button>
                         {/* {provider && <button onClick={() => disConnectWallet()}>Diconnect Wallet</button>} */}

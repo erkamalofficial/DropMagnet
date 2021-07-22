@@ -12,41 +12,49 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
   let timeIndex = extras.curTime
   var d = new Date(timeIndex);
   let error = true
-  let past = timeIndex < new Date().setUTCHours(0,0,0,0) && !extras.random
+  let past = timeIndex < new Date().setUTCHours(0, 0, 0, 0) && !extras.random
   let i = 0;
 
   while (error) {
     d.setDate(d.getDate() - i);
     let tx = d.getTime()
     extras = { ...extras, curTime: tx }
-    if(past){
-      d.setDate(d.getDate()-1)
-      extras = {...extras, random: false}
+    if (past) {
+      d.setDate(d.getDate() - 1)
+      extras = { ...extras, random: false }
     }
-    // console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
+    console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
 
     try {
       dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
       response = await DropMagnetAPI.getFeeds(categoryType.toLowerCase(), extras, past)
         .then((res) => res)
-      
+
       response['curIndex'] = d.getTime()
       response['random'] = extras.random
       dispatch({ type: actionType, payload: response });
       error = false
     }
-    
+
     catch (err) {
-      if (d.getTime() > new Date().getTime()) {
+      if (d.getTime() >= new Date().setUTCHours(0, 0, 0, 0)) {
         d = new Date();
         let curIdx = new Date()
-        curIdx.setDate(curIdx.getDate()-1)
+        curIdx.setDate(curIdx.getDate() - 1)
+        dispatch({ type: "CHANGE_CUR_INDEX", payload: curIdx.getTime() });
+        error = true
+        past = true
+      }
+      else if (extras.random) {
+        d = new Date();
+        let curIdx = new Date()
+        curIdx.setDate(curIdx.getDate() - 1)
         dispatch({ type: "CHANGE_CUR_INDEX", payload: curIdx.getTime() });
         error = true
         past = true
       }
       else {
-        dispatch({ type: actionType, payload: {data: [], count: 0, index: null} });
+        dispatch({ type: actionType, payload: { data: [], count: 0, index: null } });
         error = false
       }
     }

@@ -7,7 +7,13 @@ import { getInitials } from '../../../utils'
 export default function DropDetail(props) {
 
   function closeDetail() {
-    props.closeDetailView()
+    if (typeof props.goBack !== "undefined") {
+      props.goBack()
+    }
+    else {
+      props.closeDetailView()
+    }
+
   }
 
   let artist_image = props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
@@ -33,24 +39,24 @@ export default function DropDetail(props) {
         <h1 className="drop-detail-title">{artist_name}</h1>
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>
-      {props.drop.media.length >1 ?
-        <div className="drop-detail-image" style={{gridTemplateColumns: `repeat(${props.drop.media.length}, 195px)`}} onClick={() => props.handleClick()}>
-        {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
-        {props.drop.type === "music" ? renderPlayButton() : <></>}
-        {
-          props.drop.media.map((img,index)=>{
-            return(
-              <img style={{height: '100%', width: '100%', borderRadius: '6px'}}  
-                src={img.url} alt={'Cover'+index+'Photo'} />
+      {props.drop.media.length > 1 ?
+        <div className="drop-detail-image" style={{ gridTemplateColumns: `repeat(${props.drop.media.length}, 195px)` }} onClick={() => props.handleClick()}>
+          {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
+          {props.drop.type === "music" ? renderPlayButton() : <></>}
+          {
+            props.drop.media.map((img, index) => {
+              return (
+                <img style={{ height: '100%', width: '100%', borderRadius: '6px' }}
+                  src={img.url} alt={'Cover' + index + 'Photo'} />
               )
             })
-        }
-        
+          }
+
         </div>
         :
         <div className={'drop-detail-image-single'}>
-          <img style={{height: '100%', width: '100%', borderRadius: '6px'}}  
-                src={props.drop.media[0].url} alt={'Cover'+1+'Photo'} />
+          <img style={{ height: '100%', width: '100%', borderRadius: '6px' }}
+            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'} />
         </div>
       }
       <h1 className="drop-detail-title">{props.drop.title}</h1>
@@ -58,10 +64,10 @@ export default function DropDetail(props) {
       <div className="drop-detail-holder" style={{ marginTop: '12px' }}>
         <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
         <p2 className="drop-category-title">{props.drop.category}</p2>
-        <p2 className="drop-price"><span>Ξ</span> 
-             {props.drop.price !== '0' && props.drop.price!==undefined ? props.drop.price 
-            : props.drop.auction_price !== '0' && props.drop.auction_price!==undefined ? props.drop.auction_price 
-            : 0}
+        <p2 className="drop-price"><span>Ξ</span>
+          {props.drop.price !== '0' && props.drop.price !== undefined ? props.drop.price
+            : props.drop.auction_price !== '0' && props.drop.auction_price !== undefined ? props.drop.auction_price
+              : 0}
         </p2>
       </div>
       <div className="drop-detail-holder" style={{ marginTop: '0px' }}>

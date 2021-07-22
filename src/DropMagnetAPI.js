@@ -27,7 +27,7 @@ async function customAPICall(endpoint, data, method, access_token) {
     mode: 'cors', // no-cors, *cors, same-origin
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${access_token}`
+      'Authorization': access_token !== '' ? `Bearer ${access_token}` : ''
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -146,6 +146,11 @@ export function getFeeds(category, extras, past) {
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 
+export function getDrop(id, token) {
+  const dropEndpoint = `drops/${id}`
+  return customAPICall(dropEndpoint, "", "GET", '')
+}
+
 
 export function saveDrop(token = '', dropid = '') {
   const saveDropEndPoint = `drops/${dropid}/save`;
@@ -160,4 +165,29 @@ export function getSaveDrops(token = '') {
 export function unsaveDrop(token = '', dropid = '') {
   const unsaveDropEndPoint = `drops/${dropid}/unsave`;
   return customAPICall(unsaveDropEndPoint, "", "POST", token);
+}
+
+
+
+// Wallet Login
+
+export function getNonce(address) {
+  const nonceEndPoint = `profiles/user/nonce?address=${address}`;
+  return customAPICall(nonceEndPoint, "", "POST", '');
+}
+
+export function getWalletUser(address) {
+  const userEndPoint = `profiles/getUser?address=${address}`;
+  return customAPICall(userEndPoint, "", "GET", '');
+}
+
+export function createWalletUser(name, username, email, address, token) {
+  const userEndPoint = `profiles/createUser`;
+  const payload = {
+    email: email,
+    name: name,
+    username: username,
+    publicAddress: address
+  }
+  return customAPICall(userEndPoint, payload, "POST", token);
 }

@@ -346,17 +346,18 @@ export default function Profile(props) {
     setOpenEditModal(false);
   };
   function renderDetail() {
-    return (
-      <div>
-        <ProfileDropDetail
-          isSaved={selectedProfileList === "saved"}
-          drop={curDrop}
-          closeDetailView={() => setDetailView(false)}
-          handleClick={() => console.log("Click")}
-          user={user}
-        />
-      </div>
-    );
+    history.push(`/drop/${curDrop.id}`)
+    // return (
+    //   <div>
+    //     <ProfileDropDetail
+    //       isSaved={selectedProfileList === "saved"}
+    //       drop={curDrop}
+    //       closeDetailView={() => setDetailView(false)}
+    //       handleClick={() => console.log("Click")}
+    //       user={user}
+    //     />
+    //   </div>
+    // );
   }
 
   if (loading) {

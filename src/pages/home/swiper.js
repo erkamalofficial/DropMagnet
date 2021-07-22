@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { useHistory } from "react-router";
 import TinderCard from "./swipe-main";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -33,8 +34,8 @@ function Swiper(props) {
   const [newLoading, setNewLoading] = useState(true);
   const [swiping, setSwiping] = useState(false)
 
-
-
+  const history = useHistory()
+  console.log(history)
 
   const dispatch = useDispatch();
 
@@ -109,14 +110,15 @@ function Swiper(props) {
   }
 
   function renderDetail() {
-    return (
-      <div>
-        <DropDetail
-          drop={curDrop}
-          closeDetailView={() => setOpenView(false)}
-          handleClick={() => console.log("Click")} />
-      </div>
-    )
+    history.push(`/drop/${curDrop.id}`)
+    // return (
+    //   <div>
+    //     <DropDetail
+    //       drop={curDrop}
+    //       closeDetailView={() => setOpenView(false)}
+    //       handleClick={() => console.log("Click")} />
+    //   </div>
+    // )
   }
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LogoTitleSection,LogoTitle } from "./LogoTitles";
+import { LogoTitleSection, LogoTitle } from "./LogoTitles";
 
 import { Link, Redirect, useHistory, withRouter } from 'react-router-dom'
 import "./HeaderBar.css"
@@ -17,8 +17,7 @@ function HeaderBar(props) {
   const userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
   function showUserAction() {
-    if (props.userLoggedIn)
-    {
+    if (props.userLoggedIn) {
       return <Link to={'/profile'}>
               <div className="header-profile-img-holder">
                 <Avatar userImage={userDetails.avatar_url} initial={getInitials(userDetails.name,'')} view_only small style={{marginTop: 2}} />
@@ -27,8 +26,8 @@ function HeaderBar(props) {
             </Link> 
     } else {
       return <Link to={'/login'}>
-              <button className="login-button">Log in</button>
-            </Link>
+        <button className="login-button">Log in</button>
+      </Link>
     }
   }
 
@@ -40,47 +39,51 @@ function HeaderBar(props) {
     console.log(e);
   }
 
+  console.log(userDetails)
+
 
   return (
     <div className="header-container">
-      <MainMenu userDetails={userDetails} userImage={userDetails.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />
+      {userDetails && <MainMenu userDetails={userDetails} userImage={userDetails.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />}
 
       <div className="header-left-holder">
-        <img alt={'logo'} style={{width: 36, height:'auto'}} onClick={() => {
-          if(props.location.pathname === '/home'){
+        <img alt={'logo'} style={{ width: 36, height: 'auto' }} onClick={() => {
+          if (props.location.pathname === '/home') {
             props.history.push('/');
-          }else{
+          } else {
             props.history.push('/home');
           }
-        }}  className="header-left-image clickable" src="./drop_logo.png" />
-        <LogoTitleSection style={{display: props.isLogoNotVisible ? 'none': 'block'}}>
+        }} className="header-left-image clickable" src="./drop_logo.png" />
+        <LogoTitleSection style={{ display: props.isLogoNotVisible ? 'none' : 'block' }}>
           <LogoTitle>drop magnet</LogoTitle>
           <div>#ThreeTheWeb</div>
         </LogoTitleSection>
-        { props.datePickerVisible ? 
-          <div className="react-datepicker-container" style={{zIndex: '9999999999'}}>
-            <DatePicker 
-            selected={new Date(props.curIndex)} 
-            onChange={(date) => props.setSelectedDropdownDate(date)}
-            customInput={<CustomDateInput />}
-             />
+        {props.datePickerVisible ?
+          <div className="react-datepicker-container" style={{ zIndex: '9999999999' }}>
+            <DatePicker
+              selected={new Date(props.curIndex)}
+              onChange={(date) => props.setSelectedDropdownDate(date)}
+              customInput={<CustomDateInput />}
+            />
           </div>
           :
           <></>
         }
-        
-        
+
+
       </div>
       <div className="header-right-holder">
-        {props.userImageVisible ? 
+        {props.userImageVisible ?
           showUserAction()
-        :
-        <></> 
+          :
+          <></>
         }
-        <div onClick={() => openMenu()} className="header-bar-menu-icon">
-          <img height={10} width={20} style={{margin: 'auto'}} src="./menu-bars-icon.png" />
-        </div>
-        
+        {userDetails ? (
+          <div onClick={() => openMenu()} className="header-bar-menu-icon">
+            <img height={10} width={20} style={{ margin: 'auto' }} src="./menu-bars-icon.png" />
+          </div>
+        ) : <Link to="/login" id="login-link">Log In</Link>}
+
       </div>
     </div>
 

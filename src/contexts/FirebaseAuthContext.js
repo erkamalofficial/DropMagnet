@@ -29,6 +29,9 @@ export function AuthProvider({ children }) {
   function signInWithEmailLink(email, url) {
     return auth.signInWithEmailLink(email, url);
   }
+  function signInWithCustomToken(token) {
+    return auth.signInWithCustomToken(token);
+  }
   function isSignInWithEmailLink(url) {
     return auth.isSignInWithEmailLink(url);
   }
@@ -56,6 +59,7 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     sendSignInLinkToEmail,
+    signInWithCustomToken,
     signInWithEmailLink,
     isSignInWithEmailLink,
   };

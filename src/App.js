@@ -29,10 +29,12 @@ import GetToken from "./pages/getToken";
 import UpgradeSub from "./pages/upgradeSub";
 
 import Reswipe from "./pages/reswipe";
-import {getUserProfile} from './DropMagnetAPI';
+import { getUserProfile } from './DropMagnetAPI';
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import LandingPage from "./pages/NewLandingPage";
+import DropPage from "./pages/home/DropPage";
+import ProfileForm from "./pages/register/ProfileForm";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -65,168 +67,180 @@ function App() {
   // window.addEventListener("load",  Nft);
   const [userDetails, setUserDetails] = useState({});
 
-  const {logout,currentUser,idToken} = useAuth();
+  const { logout, currentUser, idToken } = useAuth();
 
   useEffect(() => {
-      // Send token to your backend via HTTPS
-      // ...
-    if(currentUser && currentUser.uid){
-      
+    // Send token to your backend via HTTPS
+    // ...
+    if (currentUser && currentUser.uid) {
+
       getUserProfile(currentUser.uid, idToken).then(function (response) {
         // console.log('user profile response', response)
         if (response.status === "error") {
           // setLoginError(response.message);
         } else {
-          localStorage.setItem('userDetails',JSON.stringify(response));
+          localStorage.setItem('userDetails', JSON.stringify(response));
         }
       })
     }
-      
+
 
   }, [idToken, currentUser]);
 
   return (
     <Router>
-        <Switch>
-          <PrivateRoute
-            exact
-            path="/home"
-            userDetails={userDetails}
-            isLogged
-            component={HomePage}
-          />
-          <Route
-            path="/terms"
-            render={(props) => <TermsAndConditions {...props} />}
-          />
+      <Switch>
+        <PrivateRoute
+          exact
+          path="/home"
+          userDetails={userDetails}
+          isLogged
+          component={HomePage}
+        />
+        <Route
+          exact
+          path="/drop/:id"
+          // userDetails={userDetails}
+          // isLogged
+          component={DropPage}
+        />
+        <Route
+          path="/terms"
+          render={(props) => <TermsAndConditions {...props} />}
+        />
 
-          <Route
-            path="/about"
-            render={(props) => <About {...props} />}
-          />
+        <Route
+          path="/create"
+          render={(props) => <ProfileForm /> }
+        />
 
-          <Route
-            path="/aboutDrop"
-            render={(props) => <AboutDrop {...props} />}
-          />
+        <Route
+          path="/about"
+          render={(props) => <About {...props} />}
+        />
 
-          <Route
-            path="/getToken"
-            render={(props) => <GetToken {...props} />}
-          />
+        <Route
+          path="/aboutDrop"
+          render={(props) => <AboutDrop {...props} />}
+        />
 
-          <Route 
-            path="/upgradeSub"
-            render = {(props)=> <UpgradeSub {...props} /> }
-          />
+        <Route
+          path="/getToken"
+          render={(props) => <GetToken {...props} />}
+        />
 
-          <Route
-            exact
-            path="/"
-            component={LandingPage}
-          />
+        <Route
+          path="/upgradeSub"
+          render={(props) => <UpgradeSub {...props} />}
+        />
 
-          <Route
-            path="/square_gallery"
-            render={(props) => (
-              <SquareGallery
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
-              />
-            )}
-          />
-          <Route
-            path="/mag_gallery"
-            render={(props) => (
-              <MagGallery
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
-              />
-            )}
-          />
-          <Route
-            path="/create_drop"
-            render={(props) => (
-              <DropCreation {...props} userHandle={userDetails.handle} />
-            )}
-          />
+        <Route
+          exact
+          path="/"
+          component={LandingPage}
+        />
 
-          <Route 
-            path="/reswipe"
-            component={Reswipe}
-          />
-          
+        <Route
+          path="/square_gallery"
+          render={(props) => (
+            <SquareGallery
+              {...props}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+        <Route
+          path="/mag_gallery"
+          render={(props) => (
+            <MagGallery
+              {...props}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+        <Route
+          path="/create_drop"
+          render={(props) => (
+            <DropCreation {...props} userHandle={userDetails.handle} />
+          )}
+        />
 
-          <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/magic" component={MagicLogin} />
-          <Route path="/forgot-password" component={ForgotPassword} />
-
-          <Route
-            path="/profile"
-            render={(props) => (
-              <Profile
-                {...props}
-                userImage={userDetails.image}
-                userDetails={userDetails}
-                userLoggedIn={true}
-              />
-            )}
-          />
-          <Route
-            path="/wallet_links"
-            render={(props) => (
-              <WalletLinks
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
-              />
-            )}
-          />
-          <Route
-            path="/nfts"
-            render={(props) => (
-              <NftDisplay
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
-              />
-            )}
-          />
-          <Route
-            path="/cw"
-            render={(props) => (
-              <ConnectedWallets
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
-              />
-            )}
-          />
+        <Route
+          path="/reswipe"
+          component={Reswipe}
+        />
 
 
-          <Route exact path="/oldLandingPage" component={PersonalLinksHome} />
+        <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/login" component={Login} />
+        <Route path="/magic" component={MagicLogin} />
+        <Route path="/forgot-password" component={ForgotPassword} />
 
-          <Route exact path="/logout" render={(props)=>{
-            logout()
-            .then(()=>{
+        <Route
+          path="/profile"
+          render={(props) => (
+            <Profile
+              {...props}
+              userImage={userDetails.image}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+        <Route
+          path="/wallet_links"
+          render={(props) => (
+            <WalletLinks
+              {...props}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+        <Route
+          path="/nfts"
+          render={(props) => (
+            <NftDisplay
+              {...props}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+        <Route
+          path="/cw"
+          render={(props) => (
+            <ConnectedWallets
+              {...props}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+
+
+        <Route exact path="/oldLandingPage" component={PersonalLinksHome} />
+
+        <Route exact path="/logout" render={(props) => {
+          logout()
+            .then(() => {
               props.history.push('/')
             })
-            .catch(()=>{
+            .catch(() => {
               props.history.push('/')
             })
-            return null
-          }} />
-          <PrivateRoute
-            exact
-            path="/links-payment"
-            component={PersonalLinksPayment}
-          />
-          <PrivateRoute path="/buy-links" exact component={BuyLinks} />
-        </Switch>
+          return null
+        }} />
+        <PrivateRoute
+          exact
+          path="/links-payment"
+          component={PersonalLinksPayment}
+        />
+        <PrivateRoute path="/buy-links" exact component={BuyLinks} />
+      </Switch>
     </Router>
   );
 }
