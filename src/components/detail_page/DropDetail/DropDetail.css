@@ -52,6 +52,10 @@
   justify-content: space-between;
 }
 
+/* .detail-view-header > .avatar-container{
+  margin: 10px;
+} */
+
 .detail-view-header-image {
   height: 30px;
   width: 30px;

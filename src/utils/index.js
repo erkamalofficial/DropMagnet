@@ -10,3 +10,19 @@ export const getDominantColorFromImages = async (imageList) => {
     });
     return await Promise.all(imageFetchColorPromise);
 }
+
+export const getInitials = (firstName='',lastName='')=>{
+    if(firstName && lastName){
+        return firstName.charAt(0) + lastName.charAt(0);
+    }else if(firstName && firstName.length >= 1){
+        return firstName.charAt(0) + firstName.charAt(1);
+    }else if(firstName){
+        return firstName.charAt(0);
+    }else{
+        return null;
+    }
+}
+
+export const genARandomColor = ()=>{
+    const colorList = ['']
+}

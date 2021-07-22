@@ -299,7 +299,7 @@ const CaurouselComponent = ({
             {/* return ( */}
               <ScrollContainerContent style={{
                 width: "100%",
-                transition: "all .4s ease-in",
+                transition: "all .2s ease-in",
               }}>
                 {map(currentSelectedItem, (linkItem, index) => {
                   return (

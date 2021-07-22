@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import "./DropDetail.css"
 import { epochToDayMonthHour, formatDate } from '../../../helpers/DateFormatter'
-import UserIcon from "../../../asstes/add-user-icon.png"
+import Avatar from '../../elements/Avatar/Avatar'
+import { getInitials } from '../../../utils'
 
 export default function DropDetail(props) {
 
@@ -15,8 +16,8 @@ export default function DropDetail(props) {
 
   }
 
-  let artist_image = props.drop.artist && props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : UserIcon
-  let artist_name = props.drop.artist ? props.drop.artist.username : 'Test User'
+  let artist_image = props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
+  let artist_name = props.drop.artist.username
 
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
@@ -33,7 +34,8 @@ export default function DropDetail(props) {
   return (
     <div className="detail-view">
       <div className="detail-view-header">
-        <img className="detail-view-header-image" src={artist_image} />
+        <Avatar userImage={artist_image} initial={getInitials(artist_name, "")} view_only small style={{margin: 10}} />
+        {/* <img className="detail-view-header-image" src={artist_image} /> */}
         <h1 className="drop-detail-title">{artist_name}</h1>
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>

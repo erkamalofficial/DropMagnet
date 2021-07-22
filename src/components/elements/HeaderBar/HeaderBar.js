@@ -7,6 +7,8 @@ import { epochToDayMonth } from '../../../helpers/DateFormatter';
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
 import DatePicker from 'react-datepicker'
 import CustomDateInput from './CustomDateInput';
+import Avatar from '../Avatar/Avatar';
+import { getInitials } from '../../../utils';
 // import "./DatePicker.css"
 
 
@@ -17,10 +19,11 @@ function HeaderBar(props) {
   function showUserAction() {
     if (props.userLoggedIn) {
       return <Link to={'/profile'}>
-        <div className="header-profile-img-holder">
-          <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'} />
-        </div>
-      </Link>
+              <div className="header-profile-img-holder">
+                <Avatar userImage={userDetails.avatar_url} initial={getInitials(userDetails.name,'')} view_only small style={{marginTop: 2}} />
+                {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
+              </div>
+            </Link> 
     } else {
       return <Link to={'/login'}>
         <button className="login-button">Log in</button>

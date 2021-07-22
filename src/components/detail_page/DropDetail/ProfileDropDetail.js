@@ -1,7 +1,8 @@
 import React from 'react'
 import "./DropDetail.css"
 import { formatDate } from '../../../helpers/DateFormatter'
-import UserIcon from "../../../asstes/add-user-icon.png"
+import Avatar from '../../elements/Avatar/Avatar'
+import { getInitials } from '../../../utils'
 
 export default function ProfileDropDetail(props) {
 
@@ -9,7 +10,7 @@ export default function ProfileDropDetail(props) {
     props.closeDetailView()
   }
   const { user } = props
-  let artist_image = props.isSaved ? (props.drop.artist.avatar_url || UserIcon):(user ? (user.avatar_url || UserIcon): UserIcon)
+  let artist_image = props.isSaved ? (props.drop.artist.avatar_url || ""):(user ? (user.avatar_url || ""): "")
   let artist_name = props.isSaved ? props.drop.artist.name: (user ? user.name: '')
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
@@ -29,7 +30,9 @@ export default function ProfileDropDetail(props) {
   return (
     <div className="detail-view" style={style}>
       <div className="detail-view-header">
-        <img className="detail-view-header-image" src={artist_image}/>
+      <Avatar userImage={artist_image} style={{margin: 10}} initial={getInitials(artist_name, "")} view_only small />
+    
+        {/* <img className="detail-view-header-image" src={artist_image}/> */}
         <h1 className="drop-detail-title">{artist_name}</h1>
         <img className="close-detail-button close-button view-close-btn" style={{width: '39px', height: '39px',cursor: 'pointer'}} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>

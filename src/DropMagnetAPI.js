@@ -52,8 +52,9 @@ async function customAPICallAddDrop(endpoint, data, method, access_token) {
       data[name].map((image)=>{
         formData.append('content',image);
       })
+    }else{
+      formData.append(name, data[name]);
     }
-    formData.append(name, data[name]);
   }
 
   const res = await fetch(uri, {
