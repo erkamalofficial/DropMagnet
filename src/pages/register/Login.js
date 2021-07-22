@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { Link, useHistory } from "react-router-dom";
+import { useParams } from "react-router";
 import {
   FormWrapper,
   FormBtn,
@@ -23,6 +24,8 @@ import * as DropMagnetAPI from "../../DropMagnetAPI"
 export default function Login() {
 
   let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
+  const {id} = useParams()
+  console.log(id)
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -52,7 +55,12 @@ export default function Login() {
         } else {
           localStorage.setItem('userDetails', JSON.stringify(response));
           if (res.user.emailVerified) {
-            history.push("/home");
+            if(id){
+              history.push(`/drop/${id}`);
+            }
+            else{
+              history.push("/home");
+            }
           } else {
             setError("Email not verified!! check your inbox and verifiy");
             setLoading(false);
@@ -123,7 +131,12 @@ export default function Login() {
         setLoading(false);
       } else {
         localStorage.setItem('userDetails', JSON.stringify(response));
-        history.push("/home");
+        if(id){
+          history.push(`/drop/${id}`);
+        }
+        else{
+          history.push("/home");
+        }
       }
     })
   }

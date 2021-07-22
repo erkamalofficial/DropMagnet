@@ -79,7 +79,7 @@ function HeaderBar(props) {
           <div onClick={() => openMenu()} className="header-bar-menu-icon">
             <img height={10} width={20} style={{ margin: 'auto' }} src="./menu-bars-icon.png" />
           </div>
-        ) : <Link to="/login" id="login-link">Log In</Link>}
+        ) : <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>}
 
       </div>
     </div>

@@ -175,6 +175,7 @@ function App() {
 
         <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
         <Route path="/signup" component={Signup} />
+        <Route path="/login/redirect/:id" component={Login} />
         <Route path="/login" component={Login} />
         <Route path="/magic" component={MagicLogin} />
         <Route path="/forgot-password" component={ForgotPassword} />
@@ -227,6 +228,7 @@ function App() {
         <Route exact path="/logout" render={(props) => {
           logout()
             .then(() => {
+              localStorage.removeItem('userDetails')
               props.history.push('/')
             })
             .catch(() => {
