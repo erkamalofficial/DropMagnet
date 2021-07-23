@@ -3,6 +3,7 @@ import "./DropDetail.css"
 import { epochToDayMonthHour, formatDate } from '../../../helpers/DateFormatter'
 import Avatar from '../../elements/Avatar/Avatar'
 import { getInitials } from '../../../utils'
+import { FormBtn } from '../../../pages/register/FormComponents'
 
 export default function DropDetail(props) {
 
@@ -16,8 +17,8 @@ export default function DropDetail(props) {
 
   }
 
-  let artist_image = props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
-  let artist_name = props.drop.artist.username
+  let artist_image = props.drop.artist && props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
+  let artist_name = props.drop.artist ? props.drop.artist.username : 'Test User'
 
   function renderMusicSideDetails() {
     return <div className="music-info-detail">
@@ -31,10 +32,20 @@ export default function DropDetail(props) {
     </div>
   }
 
+  const copyURL = () => {
+    let origin = window.location.origin
+    let url = origin + `/drop/${props.drop.id}`
+    navigator.clipboard.writeText(url).then(function () {
+      alert('Copying to clipboard was successful!');
+    }, function (err) {
+      console.error('Async: Could not copy text: ', err);
+    });
+  }
+
   return (
     <div className="detail-view">
       <div className="detail-view-header">
-        <Avatar userImage={artist_image} initial={getInitials(artist_name, "")} view_only small style={{margin: 10}} />
+        <Avatar userImage={artist_image} initial={getInitials(artist_name, "")} view_only small style={{ margin: 10 }} />
         {/* <img className="detail-view-header-image" src={artist_image} /> */}
         <h1 className="drop-detail-title">{artist_name}</h1>
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
@@ -74,6 +85,13 @@ export default function DropDetail(props) {
         {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
         <p2 className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p2>
       </div>
+      {props.show && (
+        <FormBtn className="w-100" type="submit"
+          onClick={copyURL}
+          style={{ margin: "10px auto", width: "fit-content" }}>
+          Get Sharable URL
+        </FormBtn>
+      )}
       <div className="drop-description-holder">
         <p1 className="drop-detail-description-text">
           {props.drop.desc}
