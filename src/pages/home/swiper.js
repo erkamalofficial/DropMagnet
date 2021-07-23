@@ -110,15 +110,15 @@ function Swiper(props) {
   }
 
   function renderDetail() {
-    history.push(`/drop/${curDrop.id}`)
-    // return (
-    //   <div>
-    //     <DropDetail
-    //       drop={curDrop}
-    //       closeDetailView={() => setOpenView(false)}
-    //       handleClick={() => console.log("Click")} />
-    //   </div>
-    // )
+    return (
+      <div>
+        <DropDetail
+          show={true}
+          drop={curDrop}
+          closeDetailView={() => setOpenView(false)}
+          handleClick={() => console.log("Click")} />
+      </div>
+    )
   }
 
 
