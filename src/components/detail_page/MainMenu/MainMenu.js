@@ -67,7 +67,7 @@ export default function MainMenu(props) {
             <div className="header-profile-img-holder" >
               <Avatar
                 userImage={props.userImage}
-                initial = {getInitials(props.userDetails.username,'')}
+                initial = {getInitials(props.userDetails.name)}
                 view_only
                 small
                 style={{width: 40, height: 40}}

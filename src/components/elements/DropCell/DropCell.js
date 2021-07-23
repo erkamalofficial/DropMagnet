@@ -40,7 +40,7 @@ export default function DropCell(props) {
       }>
         <div className="drop-details">
           <div className="drop-header">
-            <Avatar initial={getInitials(artist_name,"")} userImage={artist_image} view_only small />
+            <Avatar initial={getInitials(artist_name)} userImage={artist_image} view_only small />
             {/* <img className="drop-artist-image" src={artist_image} /> */}
             {artist_name!=='' && 
             <div className="drop-header-title" >

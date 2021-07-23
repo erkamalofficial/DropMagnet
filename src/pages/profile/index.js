@@ -399,7 +399,7 @@ export default function Profile(props) {
             
             <Avatar
               userImage={userImage}
-              initial={getInitials(firstName.split(' ')[0],firstName.split(' ')?.[1] )}
+              initial={getInitials(firstName)}
               onChange={(e) => {
                 if (e.target.files) {
                   if (e.target.files[0]) {
