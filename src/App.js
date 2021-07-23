@@ -39,10 +39,21 @@ import ProfileForm from "./pages/register/ProfileForm";
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
+const DummyHomeComponent = React.lazy(() => import("./pages/home/dummyIndex"));
 
 const HomePage = (props) => (
   <Suspense fallback={<div>Loading...</div>}>
     <HomeComponent
+      {...props}
+      userDetails={props.userDetails}
+      userLoggedIn={true}
+    />
+  </Suspense>
+);
+
+const DummyHomePage = (props) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <DummyHomeComponent
       {...props}
       userDetails={props.userDetails}
       userLoggedIn={true}
@@ -92,11 +103,19 @@ function App() {
       <Switch>
         <PrivateRoute
           exact
+          path="/home/dummy"
+          userDetails={userDetails}
+          isLogged
+          component={DummyHomePage}
+        />
+        <PrivateRoute
+          exact
           path="/home"
           userDetails={userDetails}
           isLogged
           component={HomePage}
         />
+
         <Route
           exact
           path="/drop/:id"
@@ -111,7 +130,7 @@ function App() {
 
         <Route
           path="/create"
-          render={(props) => <ProfileForm /> }
+          render={(props) => <ProfileForm />}
         />
 
         <Route
