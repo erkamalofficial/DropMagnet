@@ -41,7 +41,7 @@ export default function ProfileDropDetail(props) {
   return (
     <div className="detail-view" style={style}>
       <div className="detail-view-header">
-        <Avatar userImage={artist_image} style={{ margin: 10 }} initial={getInitials(artist_name, "")} view_only small />
+        <Avatar userImage={artist_image} style={{ margin: 10 }} initial={getInitials(artist_name)} view_only small />
 
         {/* <img className="detail-view-header-image" src={artist_image}/> */}
         <h1 className="drop-detail-title">{artist_name}</h1>

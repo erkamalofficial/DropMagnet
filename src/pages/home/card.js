@@ -145,7 +145,7 @@ const Card = (props) => {
       >
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
-          <Avatar userImage={artist_image} initial={getInitials(artist.username,'')} view_only small />
+          <Avatar userImage={artist_image} initial={getInitials(artist.name)} view_only small />
           {/* <UserAvatar src={artistImg} /> */}
           <div className="card-title">
             {artist.username}

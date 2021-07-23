@@ -11,7 +11,9 @@ export const getDominantColorFromImages = async (imageList) => {
     return await Promise.all(imageFetchColorPromise);
 }
 
-export const getInitials = (firstName='',lastName='')=>{
+export const getInitials = (fullName='')=>{
+    fullName = typeof fullName === 'string'?fullName: '';
+    const [firstName,lastName] = fullName.split(' ');
     if(firstName && lastName){
         return firstName.charAt(0) + lastName.charAt(0);
     }else if(firstName && firstName.length >= 1){

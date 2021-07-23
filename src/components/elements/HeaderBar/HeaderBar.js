@@ -20,7 +20,7 @@ function HeaderBar(props) {
     if (props.userLoggedIn) {
       return <Link to={'/profile'}>
               <div className="header-profile-img-holder">
-                <Avatar userImage={userDetails.avatar_url} initial={getInitials(userDetails.name,'')} view_only small style={{marginTop: 2}} />
+                <Avatar userImage={userDetails.avatar_url} initial={getInitials(userDetails.name)} view_only small style={{marginTop: 2}} />
                 {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
               </div>
             </Link> 
