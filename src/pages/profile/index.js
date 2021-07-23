@@ -38,7 +38,7 @@ export default function Profile(props) {
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  // const [lastName, setLastName] = useState("");
   const [userImage, setUserImage] = useState(props.userImage);
   const [twitterHandle, setTwitterHandle] = useState("");
   const [instaHandle, setInstaHandle] = useState("");
@@ -54,7 +54,6 @@ export default function Profile(props) {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [usernameForm, setUsernameForm] = useState("");
   const [firstNameForm, setFirstNameForm] = useState("");
-  const [lastNameForm, setLastNameForm] = useState("");
   const [currentEditField, setCurrentEditField] = useState("");
   const [descriptionForm, setDescriptionForm] = useState("");
   const [twitterHandleForm, setTwitterHandleForm] = useState("");
@@ -155,10 +154,7 @@ export default function Profile(props) {
           if (response.status === "error") {
             setLoading(false);
           } else {
-            let splitName = response.name.split(" "); // split the name by spaces
-            console.log(splitName);
-            setFirstName(splitName[0]);
-            setLastName(splitName[1]);
+            setFirstName(response.name);
             setHandle(response.username);
             setBio(response.bio);
             setInstaHandle(response.insta_url.split("/").pop());
@@ -215,7 +211,7 @@ export default function Profile(props) {
     setInstaHandleForm(instaHandle);
     setTwitterHandleForm(twitterHandle);
     setDescriptionForm(bio);
-    setLastNameForm(lastName);
+    // setLastNameForm(lastName);
     setFirstNameForm(firstName);
   };
 
@@ -270,18 +266,18 @@ export default function Profile(props) {
           <>
             <TextField
               setInputValue={setFirstNameForm}
-              title={"First Name"}
+              title={"Full Name"}
               titleTopMargin={"24px"}
               value={firstNameForm}
-              placeholder={"Enter your First Name"}
+              placeholder={"Enter your Full Name"}
             />
-            <TextField
+            {/* <TextField
               setInputValue={setLastNameForm}
               title={"Last Name"}
               titleTopMargin={"24px"}
               value={lastNameForm}
               placeholder={"Enter your Last Name"}
-            />
+            /> */}
           </>
         );
 
@@ -333,9 +329,8 @@ export default function Profile(props) {
       case "name": {
         // API Call To Save
         setFirstName(firstNameForm);
-        setLastName(lastNameForm);
+        updateDetails("name",firstNameForm);
         setFirstNameForm("");
-        setLastNameForm("");
 
         break;
       }
@@ -404,7 +399,7 @@ export default function Profile(props) {
             
             <Avatar
               userImage={userImage}
-              initial={getInitials(firstName, lastName)}
+              initial={getInitials(firstName.split(' ')[0],firstName.split(' ')?.[1] )}
               onChange={(e) => {
                 if (e.target.files) {
                   if (e.target.files[0]) {
@@ -422,7 +417,7 @@ export default function Profile(props) {
             <div
               className="profile-large-title clickable"
               onClick={() => handleProfileEdit("name")}
-            >{`${firstName} ${lastName !== undefined ? lastName : ""}`}</div>
+            >{`${firstName}`}</div>
             <div
               className="profile-handle-title clickable"
               onClick={() => handleProfileEdit("username")}
