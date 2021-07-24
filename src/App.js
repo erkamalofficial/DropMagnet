@@ -35,6 +35,8 @@ import styled from "styled-components";
 import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
+import dummyIndex from "./pages/home/dummyIndex";
+import Home from "./pages/home/index";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -46,7 +48,9 @@ const HomePage = (props) => (
     <HomeComponent
       {...props}
       userDetails={props.userDetails}
-      userLoggedIn={true}
+      userLoggedIn={
+        localStorage.getItem('userDetails') !== null ? true
+          : false}
     />
   </Suspense>
 );
@@ -56,7 +60,9 @@ const DummyHomePage = (props) => (
     <DummyHomeComponent
       {...props}
       userDetails={props.userDetails}
-      userLoggedIn={true}
+      userLoggedIn={
+        localStorage.getItem('userDetails') !== null ? true
+          : false}
     />
   </Suspense>
 );
@@ -101,14 +107,14 @@ function App() {
   return (
     <Router>
       <Switch>
-        <PrivateRoute
+        <Route
           exact
           path="/home/dummy"
           userDetails={userDetails}
           isLogged
           component={DummyHomePage}
         />
-        <PrivateRoute
+        <Route
           exact
           path="/home"
           userDetails={userDetails}
@@ -119,8 +125,6 @@ function App() {
         <Route
           exact
           path="/drop/:id"
-          // userDetails={userDetails}
-          // isLogged
           component={DropPage}
         />
         <Route

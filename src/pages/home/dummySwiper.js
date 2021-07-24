@@ -29,8 +29,8 @@ function DummySwiper(props) {
 
   const { db, reswipeModeActive, setDetailView, nextIndex } = props
 
-  const [allCards, setAllCards] = useState(db);
-  const [cards, setCards] = useState(db);
+  const [allCards, setAllCards] = useState([data]);
+  const [cards, setCards] = useState([data]);
   const [openView, setOpenView] = useState(false)
   const [curDrop, setCurDrop] = useState({})
   // const [lastDirection, setLastDirection] = useState();
@@ -136,7 +136,7 @@ function DummySwiper(props) {
         {openView && renderDetail()}
       </div>
       <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
-        {[data].length > 0 ? [data].map((cardDetails, index) => {
+        {cards.length > 0 ? cards.map((cardDetails, index) => {
           const { id } = cardDetails;
 
           return (
@@ -146,8 +146,12 @@ function DummySwiper(props) {
               data-id={id}
               key={id}
               onSwipe={(dir) => {
-                setSwiping(true)
-                return swiped(dir, id, index)
+                const u = JSON.parse(localStorage.getItem('userDetails'));
+                if (u) {
+                  setSwiping(true)
+                  return swiped(dir, id, index)
+                }
+                else { history.push("/login") }
               }}
               onClickSwiperMain={() => openDrop(cardDetails)}
               onCardLeftScreen={() => outOfFrame(id)}
@@ -159,10 +163,18 @@ function DummySwiper(props) {
         }) : <h4 style={{ textAlign: 'center', width: '100%' }}>No Drops Available</h4>}
       </CardContainer>
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
-        <MinusBtn onClick={() => swipe("left")}>
+        <MinusBtn onClick={() => {
+          const u = JSON.parse(localStorage.getItem('userDetails'));
+          if (u) { swipe("left") }
+          else { history.push("/login") }
+        }}>
           <img src="./minus.svg" alt="minus" />
         </MinusBtn>
-        <PlusBtn onClick={() => swipe("right")}>
+        <PlusBtn onClick={() => {
+          const u = JSON.parse(localStorage.getItem('userDetails'));
+          if (u) { swipe("right") }
+          else { history.push("/login") }
+        }}>
           <img src="./plus.svg" alt="plus" />
         </PlusBtn>
       </ActionSection>

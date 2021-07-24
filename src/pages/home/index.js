@@ -78,7 +78,7 @@ const Home = (props) => {
     let extras = {
       token: idToken,
       curTime: curTime,
-      userID: currentUser.uid,
+      userID: "",
       random: true
     }
     if (activeTabIndex === 1) {
@@ -108,7 +108,7 @@ const Home = (props) => {
       let extras = {
         token: idToken,
         curTime: nextIndex,
-        userID: currentUser.uid,
+        userID: "",
         random: false
       }
 
@@ -176,7 +176,7 @@ const Home = (props) => {
     let extras = {
       token: idToken,
       curTime: curTime,
-      userID: currentUser.uid,
+      userID: "",
     }
 
     if (activeTab === "music") {

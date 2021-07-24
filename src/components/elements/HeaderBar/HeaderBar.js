@@ -17,7 +17,7 @@ function HeaderBar(props) {
   const userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
   function showUserAction() {
-    if (props.userLoggedIn) {
+    if (props && props.userLoggedIn && userDetails) {
       return <Link to={'/profile'}>
               <div className="header-profile-img-holder">
                 <Avatar userImage={userDetails.avatar_url} initial={getInitials(userDetails.name)} view_only small style={{marginTop: 2}} />
@@ -25,10 +25,10 @@ function HeaderBar(props) {
               </div>
             </Link> 
     } else {
-      return <Link to={'/login'}>
-        <button className="login-button">Log in</button>
-      </Link>
+      return null
     }
+    
+    
   }
 
   function openMenu() {

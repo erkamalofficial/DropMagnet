@@ -130,7 +130,7 @@ function Swiper(props) {
           handleActiveTabIndex={props.handleActiveTabIndex}
           tabList={props.tabList}
         />
-        
+
       )}
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
@@ -146,8 +146,12 @@ function Swiper(props) {
               data-id={id}
               key={id}
               onSwipe={(dir) => {
-                setSwiping(true)
-                return swiped(dir, id, index)
+                const u = JSON.parse(localStorage.getItem('userDetails'));
+                if (u) {
+                  setSwiping(true)
+                  return swiped(dir, id, index)
+                }
+                else { history.push("/login") }
               }}
               onClickSwiperMain={() => openDrop(cardDetails)}
               onCardLeftScreen={() => outOfFrame(id)}
@@ -159,10 +163,18 @@ function Swiper(props) {
         }) : <h4 style={{ textAlign: 'center', width: '100%' }}>No Drops Available</h4>}
       </CardContainer>
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
-        <MinusBtn onClick={() => swipe("left")}>
+        <MinusBtn onClick={() => {
+          const u = JSON.parse(localStorage.getItem('userDetails'));
+          if (u) { swipe("left") }
+          else { history.push("/login") }
+        }}>
           <img src="./minus.svg" alt="minus" />
         </MinusBtn>
-        <PlusBtn onClick={() => swipe("right")}>
+        <PlusBtn onClick={() => {
+          const u = JSON.parse(localStorage.getItem('userDetails'));
+          if (u) { swipe("right") }
+          else { history.push("/login") }
+        }}>
           <img src="./plus.svg" alt="plus" />
         </PlusBtn>
       </ActionSection>
