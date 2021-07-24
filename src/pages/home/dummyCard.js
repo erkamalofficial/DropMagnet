@@ -125,15 +125,14 @@ const SwipeImage = styled.div`
 `;
 
 const VideoHolder = styled.div`
-height: 300px;
-width: 300px;
+height: var(--swipe-card-art-width);
+width: var(--swipe-card-art-width);;
 cursor: pointer;
 border-radius: 3px;
 position: relative;
 align-self: center;
 background-color: #000;
-margin-top: 24px;
-margin-bottom: 26px;
+margin: var(--swipe-card-art-margin);
 border-radius: 6px;
 overflow: hidden
 `
@@ -175,7 +174,7 @@ const DummyCard = (props) => {
                 </HeaderSection>
                 <VideoHolder className={'video-playback'} ref={videoRef}>
                     
-                    <video width="300" height="100%" controls>
+                    <video width="100%" height="100%" controls>
                         <source src={video} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
