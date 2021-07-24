@@ -1,10 +1,7 @@
 // import "../../server";
 import styled from "styled-components";
 import React, { useEffect, useMemo, useState, useCallback } from "react";
-import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
-import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
-import Tabs from "./tabs";
-import ProgressBar from "./progress-bar";
+import HeaderBar from "../../../components/elements/HeaderBar/HeaderBar";
 import { useSelector, useDispatch } from "react-redux";
 import {
     fetchMusic,
@@ -12,17 +9,15 @@ import {
     fetchColletibles,
     fetchFashion,
     fetchReswipeBuckets,
-} from "./actions";
-import Spinner from "../../components/blocks/spinner";
-import Swiper from "./swiper";
-import "./index.css";
+} from "../actions";
+import "../index.css";
 import { useHistory } from "react-router";
-import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
-import LazyCard from "./LazyCard";
-import LazyTab from "./LazyTab";
-import { tabList } from "../../constants";
+import { useAuth } from "../../../contexts/FirebaseAuthContext";
+import { saveDrop, unsaveDrop } from "../../../DropMagnetAPI";
+import { tabList } from "../../../constants";
 import DummySwiper from "./dummySwiper";
+import LandingPageHeader from "../../../components/elements/HeaderBar/LandingPageHeader";
+import PersonalLinksPreview from "../../wallet/personal-links-preview";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -31,10 +26,20 @@ const HomeContainer = styled.div`
   div.rel {
     position: relative;
     user-select: none;
+    // margin-bottom: 30px;
     padding-top: var(--main-header-margin-top);
     @media (max-width: 500px) {
       padding-top: 10px
     }
+  }
+`;
+
+const LinksPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+  @media (max-width: 576px){
+    margin: 0;
   }
 `;
 
@@ -225,35 +230,26 @@ const DummyHome = (props) => {
     };
 
     return (
-        <HomeContainer>
+        <LinksPage>
 
-            <HeaderBar
-                openHome={() => openHome()}
-                openMenu={() => openMenu()}
-                isLogoNotVisible
-                openDateMenu={() => openDateMenu()}
-                curIndex={curIndex}
-                selectedDropdownDate={selectedDropdownDate}
-                setSelectedDropdownDate={setSelectedDropdownDate}
-                datePickerVisible={detailView ? false : true}
-                userLoggedIn={props.userLoggedIn}
-                userImageVisible={true}
-            />
-            <div className="rel">
-                <DummySwiper
-                    reswipeModeActive={false}
-                    key={uniqueId}
-                    db={activeBucket}
-                    activeTabIndex={activeTabIndex}
-                    onSwipe={handleSwipe}
-                    handleActiveTabIndex={handleActiveTabIndex}
-                    tabList={tabList}
-                    setDetailView={setDetailView}
-                    nextIndex={nextIndex}
-                />
-
-            </div>
-        </HomeContainer>
+            <LandingPageHeader 
+            isLoggedIn={localStorage.getItem("userDetails") ? true : false} />
+            <HomeContainer>
+                <div className="rel">
+                    <DummySwiper
+                        reswipeModeActive={false}
+                        key={uniqueId}
+                        db={activeBucket}
+                        activeTabIndex={activeTabIndex}
+                        onSwipe={handleSwipe}
+                        handleActiveTabIndex={handleActiveTabIndex}
+                        tabList={tabList}
+                        setDetailView={setDetailView}
+                        nextIndex={nextIndex}
+                    />
+                </div>
+            </HomeContainer>
+        </LinksPage>
     );
 };
 

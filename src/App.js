@@ -35,13 +35,11 @@ import styled from "styled-components";
 import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
-import dummyIndex from "./pages/home/dummyIndex";
-import Home from "./pages/home/index";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
-const DummyHomeComponent = React.lazy(() => import("./pages/home/dummyIndex"));
+const DummyHomeComponent = React.lazy(() => import("./pages/home/DummyPage/dummyIndex"));
 
 const HomePage = (props) => (
   <Suspense fallback={<div>Loading...</div>}>

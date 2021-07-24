@@ -1,17 +1,14 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useHistory } from "react-router";
-import TinderCard from "./swipe-main";
+import TinderCard from "../swipe-main";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import Card from "./card";
-import PlusBtn from "../../components/blocks/plus-btn";
-import MinusBtn from "../../components/blocks/minus-btn";
-import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
-import Tabs from "./tabs";
-import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { data } from "../../utils/DummyCardData"
+import PlusBtn from "../../../components/blocks/plus-btn";
+import MinusBtn from "../../../components/blocks/minus-btn";
+import Tabs from "../tabs";
+import { data } from "../../../utils/DummyCardData"
 import DummyCard from "./dummyCard";
-import DummyDropDetail from "../../components/detail_page/DropDetail/DummyDropDetail";
+import DummyDropDetail from "../../../components/detail_page/DropDetail/DummyDropDetail";
 
 const ActionSection = styled.div`
   display: flex;
@@ -124,14 +121,6 @@ function DummySwiper(props) {
 
   return (
     <>
-      {!openView && !reswipeModeActive && (
-        <Tabs
-          activeTabIndex={props.activeTabIndex}
-          handleActiveTabIndex={props.handleActiveTabIndex}
-          tabList={props.tabList}
-        />
-
-      )}
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>

@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react"
 import styled from "styled-components";
-import DropDetail from "../../components/detail_page/DropDetail/DropDetail.js"
-import "./card.css"
-import UserIcon from "../../asstes/add-user-icon.png"
-import Avatar from "../../components/elements/Avatar/Avatar.js";
-import { getInitials } from "../../utils/index.js";
-import video from '../../asstes/sample-mp4-file.mp4';
-import VideoPlayer from '../../components/VideoPlayer';
+import DropDetail from "../../../components/detail_page/DropDetail/DropDetail.js"
+import "../card.css"
+import UserIcon from "../../../asstes/add-user-icon.png"
+import Avatar from "../../../components/elements/Avatar/Avatar.js";
+import { getInitials } from "../../../utils/index.js";
+import video from '../../../asstes/sample-mp4-file.mp4';
+import VideoPlayer from '../../../components/VideoPlayer';
 
 const SwipeCard = styled.div`
   cursor: pointer;
