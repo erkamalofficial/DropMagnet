@@ -104,11 +104,7 @@ function DummySwiper(props) {
   function openDrop(d) {
     // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))
     let element = document.getElementsByClassName("swipe")[0]
-    window.removeEventListener("mouseup", func, true)
-    window.removeEventListener("mousedown", func, true)
-    window.removeEventListener("mousemove", func, true)
-    window.removeEventListener("click", func, true)
-    window.addEventListener("click", func, true)
+    window.addEventListener("mouseup", func, true)
     setCurDrop(d)
     setOpenView(true)
   }

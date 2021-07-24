@@ -6,6 +6,8 @@ import { getInitials } from '../../../utils'
 import { FormBtn } from '../../../pages/register/FormComponents'
 import VideoPlayer from '../../VideoPlayer'
 import styled from "styled-components";
+import video from '../../../asstes/sample-mp4-file.mp4';
+
 
 const VideoHolder = styled.div`
 height: 195px;
@@ -14,9 +16,11 @@ cursor: pointer;
 border-radius: 3px;
 position: relative;
 align-self: center;
-background-color: #262626;
-margin-top: 24px;
+background-color: #000;
+margin-top: 2px;
 margin-bottom: 26px;
+border-radius: 6px;
+overflow: hidden
 `
 
 export default function DummyDropDetail(props) {
@@ -48,7 +52,7 @@ export default function DummyDropDetail(props) {
 
     const copyURL = () => {
         let origin = window.location.origin
-        let url = origin + `/drop/${props.drop.id}`
+        let url = origin + `/drop/dummydrop123`
         navigator.clipboard.writeText(url).then(function () {
             alert('Copying to clipboard was successful!');
         }, function (err) {
@@ -81,8 +85,8 @@ export default function DummyDropDetail(props) {
                 :
                 <div className={'drop-detail-video-single'}>
                     <VideoHolder className={'video-playback'}>
-                        <video width="195" controls>
-                            <source src={props.drop.media[0].url} type="video/mp4" />
+                        <video width="195" height="100%" controls>
+                            <source src={video} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     </VideoHolder>

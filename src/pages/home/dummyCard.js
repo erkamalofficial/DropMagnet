@@ -5,6 +5,7 @@ import "./card.css"
 import UserIcon from "../../asstes/add-user-icon.png"
 import Avatar from "../../components/elements/Avatar/Avatar.js";
 import { getInitials } from "../../utils/index.js";
+import video from '../../asstes/sample-mp4-file.mp4';
 import VideoPlayer from '../../components/VideoPlayer';
 
 const SwipeCard = styled.div`
@@ -130,9 +131,11 @@ cursor: pointer;
 border-radius: 3px;
 position: relative;
 align-self: center;
-background-color: #262626;
+background-color: #000;
 margin-top: 24px;
 margin-bottom: 26px;
+border-radius: 6px;
+overflow: hidden
 `
 
 const HeaderBarMenuIcon = styled.div`
@@ -155,6 +158,8 @@ const DummyCard = (props) => {
 
     let artistImg = artist.avatar_url !== '' ? artist.avatar_url : UserIcon
 
+    console.log(props.media[0].url)
+
     return (
         <SwipeCard data-key="card-bdr"
         >
@@ -169,8 +174,9 @@ const DummyCard = (props) => {
                     <div className="empty">......</div>
                 </HeaderSection>
                 <VideoHolder className={'video-playback'} ref={videoRef}>
-                    <video width="300" controls>
-                        <source src={props.media[0].url} type="video/mp4" />
+                    
+                    <video width="300" height="100%" controls>
+                        <source src={video} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </VideoHolder>
