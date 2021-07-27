@@ -21,9 +21,11 @@ const ProfileForm = () => {
 
     const [error, setError] = useState("");
     const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(false)
     const history = useHistory();
 
     const registerUser = async (e) => {
+        setLoading(true)
         const address = localStorage.getItem('publicAddress')
         e.preventDefault()
         try {
@@ -38,6 +40,7 @@ const ProfileForm = () => {
                 else {
                     await signInWithCustomToken(response.token)
                     .then(cred => {
+                        setLoading(false)
                         history.push("/home")
                         localStorage.setItem('userDetails', JSON.stringify(cred));
                     })
@@ -66,18 +69,18 @@ const ProfileForm = () => {
                         <h2 className="text-center mb-4">Enter Details</h2>
                         {error && <FormAlert variant="danger">{error}</FormAlert>}
                         {message && <FormSuccess variant="success">{message}</FormSuccess>}
-                        {message === '' && (
+                        {message === '' && !loading ? (
                             <>
                                 <GridItem id="name">
                                     <FormLabel>Name</FormLabel>
                                     <FormInput type="text" ref={nameRef} required />
                                 </GridItem>
                             </>
-                        )}
+                        ) : <Spinner />}
 
                     </form>
 
-                    {message === "" &&
+                    {message === "" && !loading &&
                         <FormBtn className="w-100"
                             onClick={registerUser}
                             style={{ marginTop: "20px" }}>
