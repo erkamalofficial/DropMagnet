@@ -16,9 +16,8 @@ if (process.env === "development") {
 
 const ProfileForm = () => {
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const { signup } = useAuth();
+    const nameRef = useRef();
+    const { signInWithCustomToken } = useAuth();
 
     const [error, setError] = useState("");
     const [message, setMessage] = useState("")
@@ -29,29 +28,19 @@ const ProfileForm = () => {
         e.preventDefault()
         try {
             setError("");
-            const res = await signup(
-                emailRef.current.value,
-                passwordRef.current.value
-            );
+            let name = nameRef.current.value
+            let username = name.split(" ")[0].toLowerCase()
 
-            let username = res.user.email.split('@')[0]
-            let name = res.user.displayName === null ? username : res.user.displayName
-            let email = res.user.email
-
-            DropMagnetAPI.createWalletUser(name, username, email, address, res.user.za).then(async function (response) {
+            DropMagnetAPI.createWalletUser(username, name, address).then(async function (response) {
                 if (response.status === "error") {
                     console.log('error', response)
                 }
                 else {
-                    try {
-                        await res.user.sendEmailVerification({
-                            handleCodeInApp: true,
-                            url: `${VERIFY_EMAIL_PATH}/buy-links`,
-                        });
-                        setMessage("Check your email inbox for further instructions");
-                    } catch {
-                        setError("Failed to send email");
-                    }
+                    await signInWithCustomToken(response.token)
+                    .then(cred => {
+                        history.push("/home")
+                        localStorage.setItem('userDetails', JSON.stringify(cred));
+                    })
                 }
 
             })
@@ -81,15 +70,7 @@ const ProfileForm = () => {
                             <>
                                 <GridItem id="name">
                                     <FormLabel>Name</FormLabel>
-                                    <FormInput type="text" required />
-                                </GridItem>
-                                <GridItem id="email">
-                                    <FormLabel>Email</FormLabel>
-                                    <FormInput type="email" ref={emailRef} required />
-                                </GridItem>
-                                <GridItem id="password">
-                                    <FormLabel>Password</FormLabel>
-                                    <FormInput type="password" ref={passwordRef} required />
+                                    <FormInput type="text" ref={nameRef} required />
                                 </GridItem>
                             </>
                         )}

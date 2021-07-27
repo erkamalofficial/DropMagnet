@@ -6,7 +6,7 @@ var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
+  host = 'http://localhost:8080/';
 } else {
   // pick up from .env
   host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
@@ -181,13 +181,12 @@ export function getWalletUser(address) {
   return customAPICall(userEndPoint, "", "GET", '');
 }
 
-export function createWalletUser(name, username, email, address, token) {
+export function createWalletUser(username, name, address) {
   const userEndPoint = `profiles/createUser`;
   const payload = {
-    email: email,
-    name: name,
     username: username,
-    publicAddress: address
+    name: name,
+    address: address
   }
-  return customAPICall(userEndPoint, payload, "POST", token);
+  return customAPICall(userEndPoint, payload, "POST", "");
 }
