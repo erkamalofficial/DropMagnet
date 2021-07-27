@@ -8,7 +8,7 @@ import * as DropMagnetAPI from '../../DropMagnetAPI'
 
 var VERIFY_EMAIL_PATH;
 if (process.env === "development") {
-    VERIFY_EMAIL_PATH = "http://localhost:3000";
+    VERIFY_EMAIL_PATH = "https://fb-web-763f4.web.app";
 } else {
     VERIFY_EMAIL_PATH = "https://fb-web-763f4.web.app";
 }
