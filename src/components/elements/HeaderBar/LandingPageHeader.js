@@ -56,7 +56,7 @@ const MiddleSection = styled.div`
 const RightSection = styled.div`
   display: flex;
 `;
-const LandingPageHeader = ({ isLoggedIn }) => {
+const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
   const history = useHistory();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
@@ -130,12 +130,17 @@ const LandingPageHeader = ({ isLoggedIn }) => {
         </LogoTitleSection>
       </LogoSection>
       <MiddleSection>
-        <Tabs tabs={TAB_LIST} activeTabIndex={activeTabIndex} onChangeTab={(index) => setActiveTabIndex(index)} />
+        <Tabs tabs={TAB_LIST} activeTabIndex={activeTabIndex} onChangeTab={(index) => {
+          setActiveTabIndex(index)
+          if(typeof setCurTab !== undefined){
+            setCurTab(index)
+          }
+        }} />
       </MiddleSection>
       <RightSection>
         {!isLoggedIn ? (
           <>
-            <button className={"blank-button green-gradient"}  onClick={() => history.push('/login')}>
+            <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
               <span className={'text'}>Login</span>
             </button>
           </>

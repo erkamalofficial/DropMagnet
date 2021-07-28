@@ -18,6 +18,7 @@ import { tabList } from "../../../constants";
 import DummySwiper from "./dummySwiper";
 import LandingPageHeader from "../../../components/elements/HeaderBar/LandingPageHeader";
 import PersonalLinksPreview from "../../wallet/personal-links-preview";
+import LinksCard from "../../NewLandingPage/links-card";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -49,6 +50,48 @@ const CardContainer = styled.div`
   margin-bottom: var(--gap-bottom);
 `;
 
+const PersonalLinksWrapper = styled.div`
+  width: calc(100% - 32px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 16px;
+  margin-top: 8px;
+`;
+
+const PLSectionOne = styled.div`
+  /* margin-top: 72px; */
+  margin-bottom: 32px;
+  @media (max-width: 600px) {
+    margin-bottom: 17px;
+    margin-bottom: unset;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const PLSectionOneContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  text-align: center;
+`;
+
+
+const HeaderSubtitle = styled.div`
+  max-width: 550px;
+  font-size: 24px;
+  margin-left: 30px;
+  @media (max-width: 576px) {
+    margin-left: 0px;
+    font-size: 15px;
+  }
+  margin-bottom: 16px;
+  font-weight: 700;
+`;
+
 const DummyHome = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -62,6 +105,10 @@ const DummyHome = (props) => {
     const [detailView, setDetailView] = useState(false);
     const [dateMenuOpen, setDateMenuOpen] = useState(false);
     const [loadMore, setLoadMore] = useState(false)
+    const [galleryName, setGalleryName] = useState("");
+
+    const [curTab, setCurTab] = useState(0)
+
     const activeTabIndex = useSelector((state) => {
         return state.category.general.activeTabIndex;
     });
@@ -71,6 +118,8 @@ const DummyHome = (props) => {
     );
     const nextIndex = useSelector((state) => state.category.nextIndex);
     const fetchMore = useSelector((state) => state.category.fetchMore);
+
+    const displayName = galleryName === "" ? "You" : galleryName;
 
     // useEffect(() => {
     //   if (curIndex !== 0) {
@@ -229,26 +278,54 @@ const DummyHome = (props) => {
         })
     };
 
+    console.log(curTab)
+
     return (
         <LinksPage>
 
-            <LandingPageHeader 
-            isLoggedIn={localStorage.getItem("userDetails") ? true : false} />
-            <HomeContainer>
-                <div className="rel">
-                    <DummySwiper
-                        reswipeModeActive={false}
-                        key={uniqueId}
-                        db={activeBucket}
-                        activeTabIndex={activeTabIndex}
-                        onSwipe={handleSwipe}
-                        handleActiveTabIndex={handleActiveTabIndex}
-                        tabList={tabList}
-                        setDetailView={setDetailView}
-                        nextIndex={nextIndex}
+            <LandingPageHeader
+                isLoggedIn={localStorage.getItem("userDetails") ? true : false}
+                setCurTab={setCurTab} />
+
+            {curTab === 0 ? (
+                <HomeContainer>
+                    <div className="rel">
+                        <DummySwiper
+                            reswipeModeActive={false}
+                            key={uniqueId}
+                            db={activeBucket}
+                            activeTabIndex={activeTabIndex}
+                            onSwipe={handleSwipe}
+                            handleActiveTabIndex={handleActiveTabIndex}
+                            tabList={tabList}
+                            setDetailView={setDetailView}
+                            nextIndex={nextIndex}
+                        />
+                    </div>
+                </HomeContainer>
+            ) : curTab === 1 ? (
+                null
+            ) : (
+                <PersonalLinksWrapper>
+                    <PLSectionOne>
+                        <PLSectionOneContent>
+                            <HeaderSubtitle>
+                                Stand out from the crowd, share NFT Galleries, and get paid in
+                                crypto fast with SmartURLs.
+                            </HeaderSubtitle>
+                        </PLSectionOneContent>
+                    </PLSectionOne>
+                    <LinksCard
+                        handleLinkSelection={() => { }}
+                        selectedLinks={[]}
+                        displayName={displayName}
+                        handleGalleryName={() => { }}
+                        getPageDetails={() => { }}
                     />
-                </div>
-            </HomeContainer>
+                </PersonalLinksWrapper>
+            )}
+
+
         </LinksPage>
     );
 };
