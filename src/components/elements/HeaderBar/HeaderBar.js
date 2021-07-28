@@ -9,6 +9,7 @@ import DatePicker from 'react-datepicker'
 import CustomDateInput from './CustomDateInput';
 import Avatar from '../Avatar/Avatar';
 import { getInitials } from '../../../utils';
+import { MenuOpen } from '@material-ui/icons';
 // import "./DatePicker.css"
 
 
@@ -18,9 +19,13 @@ function HeaderBar(props) {
 
   function showUserAction() {
     if (props && props.userLoggedIn && userDetails) {
-      return <Link to={'/profile'}>
+      return <Link to={'/profile'} style={{zIndex: 999999999999}}>
               <div className="header-profile-img-holder">
-                <Avatar userImage={userDetails.avatar_url} initial={getInitials(userDetails.name)} view_only small style={{marginTop: 2}} />
+                <Avatar userImage={userDetails.avatar_url} 
+                initial={getInitials(userDetails.name)} 
+                view_only 
+                small 
+                style={{marginTop: 2}} />
                 {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
               </div>
             </Link> 
@@ -79,7 +84,8 @@ function HeaderBar(props) {
           <></>
         }
         {userDetails ? (
-          <div onClick={() => openMenu()} className="header-bar-menu-icon">
+          <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="header-bar-menu-icon"
+          style={{zIndex: 999999999999}}>
             <img height={10} width={20} style={{ margin: 'auto' }} src="./menu-bars-icon.png" />
           </div>
         ) : <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>}

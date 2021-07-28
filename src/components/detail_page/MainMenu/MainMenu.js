@@ -57,13 +57,13 @@ export default function MainMenu(props) {
           </LogoTitleSection>
         </div>
         <div className="right-header">
-          <img
+          {/* <img
             onClick={() => closeMenu()}
             alt={"close-button"}
             className="close-button"
             src="./close-icon.png"
-          />
-          <Link to={"/profile"}>
+          /> */}
+          {/* <Link to={"/profile"}>
             <div className="header-profile-img-holder" >
               <Avatar
                 userImage={props.userImage}
@@ -72,13 +72,8 @@ export default function MainMenu(props) {
                 small
                 style={{width: 40, height: 40}}
               />
-              {/* <img
-                className="header-right-image"
-                alt={"profile-img"}
-                src={props.userImage || "./add-user-icon.png"}
-              /> */}
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
 
