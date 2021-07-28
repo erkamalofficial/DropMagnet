@@ -20,6 +20,9 @@ import { getInitials } from "../../utils";
 
 const ButtonContainer = styled.div`
   margin-top: 16px;
+  position: fixed;
+  bottom: 32px;
+  z-index: 999;
 `;
 
 const TabContainer = styled.div`
@@ -545,8 +548,8 @@ export default function Profile(props) {
             {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
               <ButtonContainer>
                 <button
-                  className={"main-button-2 clickable"}
-                  style={{ width: "calc(100% - 50px )", margin: "0 auto" }}
+                  className={"main-button-2 floating clickable"}
+                  style={{ margin: "0 12px" }}
                   onClick={() => {
                     dispatch({
                       type: "START_RESWIPE",
