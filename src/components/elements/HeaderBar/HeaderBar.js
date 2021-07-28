@@ -59,7 +59,7 @@ function HeaderBar(props) {
           <div>#ThreeTheWeb</div>
         </LogoTitleSection>
         {props.datePickerVisible ?
-          <div className="react-datepicker-container" style={{ zIndex: '9999999999' }}>
+          <div className="react-datepicker-container" style={{ zIndex: '999' }}>
             <DatePicker
               selected={new Date(props.curIndex)}
               onChange={(date) => props.setSelectedDropdownDate(date)}
