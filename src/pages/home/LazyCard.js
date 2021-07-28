@@ -16,6 +16,7 @@ const SwipeCard = styled.div`
   flex-direction: column;
   will-change: transform;
   height: auto;
+  padding: 0 14px;
 `;
 const SwipeCardDeviceContainer = styled.div`
   position: var(--card-device-container-pos);
@@ -135,11 +136,11 @@ const LazyCard = () => {
             <div className="img"></div>
           </div>
         <FooterSection key={3}>
-          <div className="lazy-content">
+          <div className="lazy-content long">
             <div className="stripe long-stripe"></div>
           </div>
           <FooterButtons>
-            <div className="lazy-content">
+            <div className="lazy-content last">
               <div className="stripe small-stripe"></div>
               <div className="stripe small-stripe"></div>
               <div className="stripe small-stripe"></div>
