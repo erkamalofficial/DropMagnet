@@ -19,6 +19,7 @@ import DummySwiper from "./dummySwiper";
 import LandingPageHeader from "../../../components/elements/HeaderBar/LandingPageHeader";
 import PersonalLinksPreview from "../../wallet/personal-links-preview";
 import LinksCard from "../../NewLandingPage/links-card";
+import NftGallery from "../../../components/elements/HeaderBar/NftGallery";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -121,107 +122,12 @@ const DummyHome = (props) => {
 
     const displayName = galleryName === "" ? "You" : galleryName;
 
-    // useEffect(() => {
-    //   if (curIndex !== 0) {
-    //     setSelectedDropdownDate(new Date(curIndex))
-    //   }
-    // }, [curIndex])
-
-    // useEffect(() => {
-
-    //     let curTime = new Date(selectedDropdownDate).getTime()
-    //     let extras = {
-    //         token: idToken,
-    //         curTime: curTime,
-    //         userID: currentUser.uid,
-    //         random: true
-    //     }
-    //     if (activeTabIndex === 1) {
-    //         dispatch(fetchMusic({ activeTabIndex: 1, extras: { ...extras, token: idToken } }));
-    //     }
-    //     else if (activeTabIndex === 0) {
-    //         dispatch(fetchArt({ activeTabIndex: 0, extras: { ...extras, token: idToken } }));
-    //     }
-    //     else if (activeTabIndex === 2) {
-    //         dispatch(fetchColletibles({ activeTabIndex: 2, extras: { ...extras, token: idToken } }));
-    //     }
-    //     else {
-    //         dispatch(fetchFashion({ activeTabIndex: 3, extras: { ...extras, token: idToken } }));
-    //     }
-
-    // }, [selectedDropdownDate]);
-
-    // useEffect(() => {
-    //     currentUser && currentUser.getIdToken().then((idToken) => {
-    //         dispatch(fetchReswipeBuckets(idToken));
-
-    //     })
-    // }, [dispatch, currentUser]);
-
-    // useEffect(() => {
-    //     if (fetchMore) {
-    //         let extras = {
-    //             token: idToken,
-    //             curTime: nextIndex,
-    //             userID: currentUser.uid,
-    //             random: false
-    //         }
-
-    //         if (activeTabIndex === 0) {
-    //             dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
-    //         }
-    //         else if (activeTabIndex === 1) {
-    //             dispatch(fetchMusic({ activeTabIndex: 1, token: idToken, extras: extras }));
-    //         }
-    //         else if (activeTabIndex === 2) {
-    //             dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
-    //         }
-    //         else {
-    //             dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
-    //         }
-    //         setLoadMore(false)
-
-    //     }
-    // }, [fetchMore])
-
-    const getCurrentDate = (date) => {
-        let d = new Date(date)
-        const curDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
-        return curDate
-    }
     const currentTabId = tabList[activeTabIndex];
     const { activeBucket } = useSelector((state) => {
         return state.category[currentTabId];
     });
 
-    // const {reswipeModeActive} = useSelector((state)=>state.category.general)
-    // useEffect(() => {
-    //     if (reswipeModeActive) {
-    //         if (window.confirm("Your Bucket Limit has reached its End ? \n 1. Press ok to 'Upgrade Your Subscription' \n 2. Press Cancel to 'Go To Reswipe'?")) {
-    //             history.push('/upgradeSub');
-    //         } else {
-    //             history.push(`/reswipe?tabs=${currentTabId}`);
-    //         }
-    //     }
-    // }, [reswipeModeActive, currentTabId, history]);
     const uniqueId = Date.now();
-
-    function selectDate(date) {
-        console.log("opened item", date);
-    }
-
-    function setSelectedDate(date) {
-        console.log("selected date is", date);
-        setSelectedDropdownDate(date.date);
-    }
-
-    const openHome = () => { };
-
-    const openMenu = () => { };
-
-    const openDateMenu = () => {
-        setDateMenuOpen(true);
-    };
 
     const handleActiveTabIndex = (index) => {
 
@@ -304,7 +210,7 @@ const DummyHome = (props) => {
                     </div>
                 </HomeContainer>
             ) : curTab === 1 ? (
-                null
+                <NftGallery />
             ) : (
                 <PersonalLinksWrapper>
                     <PLSectionOne>
