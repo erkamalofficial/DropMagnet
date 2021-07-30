@@ -21,6 +21,8 @@ import { tabList } from "../../constants";
 import DummySwiper from "../home/DummyPage/dummySwiper";
 import LandingPageHeader from "../../components/elements/HeaderBar/LandingPageHeader";
 import NftGallery from "../../components/elements/HeaderBar/NftGallery";
+import PersonalLinksPreview from "./personal-links-preview";
+import useViewport from "./useViewport";
 
 
 const HomeContainer = styled.div`
@@ -102,12 +104,20 @@ const LinksHome = (props) => {
 
   const curIndex = useSelector((state) => state.category.curIndex);
 
-
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date(curIndex));
   const [detailView, setDetailView] = useState(false);
   const [galleryName, setGalleryName] = useState("");
 
   const [curTab, setCurTab] = useState(0)
+
+  const { viewportWidth } = useViewport();
+  const breakpoint = 620;
+  const isMobile = viewportWidth < breakpoint;
+  const [pageNos, setPageNos] = useState([0, 1]);
+
+  const getPageDetails = (pageNos) => {
+    setPageNos(pageNos);
+  };
 
   const activeTabIndex = useSelector((state) => {
     return state.category.general.activeTabIndex;
@@ -179,7 +189,14 @@ const LinksHome = (props) => {
     })
   };
 
-  console.log(curTab)
+  const handleGalleryName = (val) => {
+    const galleryNameLimit = isMobile ? 16 : 22;
+    const checkAndLimitGalleryName =
+      val.length > galleryNameLimit
+        ? `${val.substring(0, galleryNameLimit)}...`
+        : val;
+    setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
+  };
 
   return (
     <LinksPage>
@@ -223,6 +240,10 @@ const LinksHome = (props) => {
             handleGalleryName={() => { }}
             getPageDetails={() => { }}
           />
+          <PersonalLinksPreview
+          handleGalleryName={() => handleGalleryName}
+          isLoggedIn={Boolean(currentUser)}
+        />
         </PersonalLinksWrapper>
       )}
 

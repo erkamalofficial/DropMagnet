@@ -37,7 +37,7 @@ const LinksCard = ({
               displayName={displayName}
               handleLinkSelection={handleLinkSelection}
               selectedLinks={selectedLinks}
-              linksList={groupedLinks}
+              linksList={groupedLinks.slice(0,1)}
               availableLinks={availableLinks}
               getPageDetails={getPageDetails}
             />
@@ -46,7 +46,7 @@ const LinksCard = ({
               displayName={displayName}
               handleLinkSelection={handleLinkSelection}
               selectedLinks={selectedLinks}
-              linksList={groupedLinks}
+              linksList={groupedLinks.slice(0,1)}
               availableLinks={availableLinks}
               getPageDetails={getPageDetails}
             />
