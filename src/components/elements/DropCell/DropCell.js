@@ -4,10 +4,12 @@ import DropDetail from "../../detail_page/DropDetail/DropDetail";
 import { formatDate } from "../../../helpers/DateFormatter";
 import Avatar from "../Avatar/Avatar";
 import { getInitials } from "../../../utils";
+import { useHistory } from "react-router";
 
 export default function DropCell(props) {
 
   const { user } = props
+  const history = useHistory()
 
   let dropTitle = props.drop.title
 
@@ -28,19 +30,26 @@ export default function DropCell(props) {
     else{
       return ''
     }
+  }
 
+
+  const openUser = () => {
+    console.log(props)
+    const userId = props.drop.user_id
+    history.push(`/profile/${userId}`)
   }
 
   function renderDrop() {
     return <div key={props.drop.id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner" onClick={() => {
-        props.setDetailView(true);
+        // props.setDetailView(true);
         props.setCurDrop(props.drop)
       }
       }>
         <div className="drop-details">
-          <div className="drop-header">
-            <Avatar initial={getInitials(artist_name)} userImage={artist_image} view_only small />
+          <div className="drop-header" onClick={openUser}>
+            <Avatar initial={getInitials(artist_name)} 
+            userImage={artist_image} view_only small />
             {/* <img className="drop-artist-image" src={artist_image} /> */}
             {artist_name!=='' && 
             <div className="drop-header-title" >

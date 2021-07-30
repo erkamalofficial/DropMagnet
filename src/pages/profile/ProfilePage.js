@@ -37,7 +37,7 @@ const TabContainer = styled.div`
   }
 `;
 
-export default function Profile(props) {
+export default function ProfilePage(props) {
 
   const profilePic = useRef(null)
 

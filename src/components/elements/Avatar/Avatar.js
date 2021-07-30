@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import styled from "styled-components";
 import "./Avatar.css";
 const InitialCircle = styled.span`
@@ -26,9 +26,9 @@ export const InitialsOfUser = ({ initial }) => {
   );
 };
 
-function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange }) {
+function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange, picRef }) {
   const cont_style = style?style : {};
-  console.log(cont_style);
+
   return (
     <div className={"avatar-container " + (small ? "small-avatar" : "")}  style={cont_style}>
       {userImage && !view_only && (
@@ -54,10 +54,11 @@ function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange
       </label>
       {!view_only && (
         <input
-          type={"file"}
+          type="file"
           accept={"image/jpeg, image/png"}
           hidden
           value={null}
+          ref={picRef}
           id={"avatar-img-uploader"}
           onChange={onChange}
         />

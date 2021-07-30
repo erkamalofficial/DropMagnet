@@ -47,3 +47,32 @@
 .avatar-container:hover .delete-button{
     opacity: 1;
 }
+
+.acc-profile-pic{
+    position: relative;
+}
+
+.edit-btn{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1a1a1a;
+    border: #181818 4px solid;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: scale(0);
+    transition: 0.5s;
+}
+
+.acc-profile-pic:hover .edit-btn{
+    transform: scale(1);
+}
+
+.edit-btn .svg-icon{
+    font-size: 18px;
+}

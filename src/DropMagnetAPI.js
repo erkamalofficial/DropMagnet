@@ -40,19 +40,19 @@ async function customAPICall(endpoint, data, method, access_token) {
 async function customAPICallAddDrop(endpoint, data, method, access_token) {
 
   const uri = host + endpoint
-    // Firebase Auth Token
-    console.log('endpoint', uri)
+  // Firebase Auth Token
+  console.log('endpoint', uri)
   console.log('data is', JSON.stringify(data))
   console.log('access token', access_token)
 
   const formData = new FormData()
 
   for (const name in data) {
-    if(name === 'content'){
-      data[name].map((image)=>{
-        formData.append('content',image);
+    if (name === 'content') {
+      data[name].map((image) => {
+        formData.append('content', image);
       })
-    }else{
+    } else {
       formData.append(name, data[name]);
     }
   }
@@ -69,6 +69,36 @@ async function customAPICallAddDrop(endpoint, data, method, access_token) {
   })
   return res.json()
 }
+
+
+async function customAPICallUpdateAvatar(endpoint, data, method, access_token) {
+
+  const uri = host + endpoint
+  // Firebase Auth Token
+  console.log('endpoint', uri)
+  console.log('data is', JSON.stringify(data))
+  console.log('access token', access_token)
+
+  const formData = new FormData()
+
+  for (const name in data) {
+    formData.append(name, data[name]);
+  }
+
+  const res = await fetch(uri, {
+    method: method,
+    body: data === "" ? null : formData,
+    mode: 'cors', // no-cors, *cors, same-origin
+    headers: {
+      'Authorization': `Bearer ${access_token}`
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  })
+  return res.json()
+}
+
+
 
 // User profile
 
@@ -105,11 +135,21 @@ export function updateUserDetails(field, value, access_token) {
   return customAPICall(updateEndpoint, {}, "PUT", access_token)
 }
 
+export function updateUserAvatar(imageFile, imageType, access_token) {
+  const updateEndpoint = `profiles/avatar`
+  const payload = {
+    name: 'avatar',
+    data: imageFile,
+    content_type: imageType,
+  }
+  return customAPICallUpdateAvatar(updateEndpoint, payload, "PUT", access_token)
+}
+
 
 // Drop creation
 
 
-export function createDrop(title, desc, category, hashtag, drop_date,  marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
+export function createDrop(title, desc, category, hashtag, drop_date, marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
   const createDropEndpoint = 'drops'
   const content = files;
 

@@ -35,6 +35,7 @@ import styled from "styled-components";
 import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -201,6 +202,19 @@ function App() {
         <Route path="/magic" component={MagicLogin} />
         <Route path="/forgot-password" component={ForgotPassword} />
 
+
+        <Route
+          path="/profile/:id"
+          render={(props) => (
+            <ProfilePage
+              {...props}
+              userImage={userDetails.image}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+
         <Route
           path="/profile"
           render={(props) => (
@@ -212,6 +226,7 @@ function App() {
             />
           )}
         />
+        
         <Route
           path="/wallet_links"
           render={(props) => (
