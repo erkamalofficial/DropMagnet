@@ -95,7 +95,7 @@ export default function Login() {
     fortmatic: {
       package: Fortmatic,
       options: {
-        key: "pk_test_AFA830F46E222207"
+        key: "pk_live_201A6F01A7385804"
       }
     },
     "custom-coinbase": {
