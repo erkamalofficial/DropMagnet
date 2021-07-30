@@ -19,21 +19,21 @@ function HeaderBar(props) {
 
   function showUserAction() {
     if (props && props.userLoggedIn && userDetails) {
-      return <Link to={'/profile'} style={{zIndex: 999999999999}}>
-              <div className="header-profile-img-holder">
-                <Avatar userImage={userDetails.avatar_url} 
-                initial={getInitials(userDetails.name)} 
-                view_only 
-                small 
-                style={{marginTop: 2}} />
-                {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
-              </div>
-            </Link> 
+      return <Link to={'/profile'} style={{ zIndex: 999999999999 }}>
+        <div className="header-profile-img-holder">
+          <Avatar userImage={userDetails.avatar_url}
+            initial={getInitials(userDetails.name)}
+            view_only
+            small
+            style={{ marginTop: 2 }} />
+          {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
+        </div>
+      </Link>
     } else {
       return null
     }
-    
-    
+
+
   }
 
   function openMenu() {
@@ -85,8 +85,14 @@ function HeaderBar(props) {
         }
         {userDetails ? (
           <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="header-bar-menu-icon"
-          style={{zIndex: 999999999999}}>
-            <img height={10} width={20} style={{ margin: 'auto' }} src="./menu-bars-icon.png" />
+            style={{ zIndex: 999999999999 }}>
+            <div class={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>
+              <div class="leftright"></div>
+              <div class="rightleft"></div>
+            </div>
+            {/* <img height={10} width={20}
+              style={{ margin: 'auto' }}
+              src="./menu-bars-icon.png" alt="/" /> */}
           </div>
         ) : <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>}
 
