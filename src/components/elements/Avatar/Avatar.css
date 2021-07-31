@@ -35,17 +35,18 @@
     background-color: var(--coreBlack);
     right: 0;
     border-radius: 50%;
-    opacity: 0;
     transform: all .2s;
     padding: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
+    transform: scale(0);
+    transition: 0.5s;
 }
 
-.avatar-container:hover .delete-button{
-    opacity: 1;
+.acc-profile-pic:hover .delete-button{
+    transform: scale(1);
 }
 
 .acc-profile-pic{
@@ -74,5 +75,5 @@
 }
 
 .edit-btn .svg-icon{
-    font-size: 18px;
+    font-size: 20px;
 }

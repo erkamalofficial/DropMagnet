@@ -426,11 +426,19 @@ export default function Profile(props) {
                     }
                   }
                 }}
-                onRemove={() => setUserImage("")}
+                onRemove={() => {
+                  setUserImage("")
+                  currentUser.getIdToken(false).then(function (idToken) {
+                    DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
+                      alert("Successfully updated.")
+                    );
+                  });
+                }
+                }
               />
               <div className="edit-btn"
-              onClick={() => profilePic.current.click()}>
-                <EditIcon className="svg-icon"/>
+                onClick={() => profilePic.current.click()}>
+                <EditIcon className="svg-icon" />
               </div>
             </div>
             {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}

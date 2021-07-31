@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import "./Avatar.css";
 const InitialCircle = styled.span`
@@ -26,12 +26,12 @@ export const InitialsOfUser = ({ initial }) => {
   );
 };
 
-function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange, picRef }) {
-  const cont_style = style?style : {};
+function Avatar({ userImage, style, initial, view_only, small, onRemove, onChange, picRef }) {
+  const cont_style = style ? style : {};
 
   return (
-    <div className={"avatar-container " + (small ? "small-avatar" : "")}  style={cont_style}>
-      {userImage && !view_only && (
+    <div className={"avatar-container " + (small ? "small-avatar" : "")} style={cont_style}>
+      {!initial && (
         <span className={"delete-button"} onClick={onRemove}>
           <img
             style={{ width: "20px", height: "20px", cursor: "pointer" }}
@@ -41,7 +41,8 @@ function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange
         </span>
       )}
 
-      <label for={"avatar-img-uploader "} className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}> 
+
+      <label for={"avatar-img-uploader "} className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}>
         {userImage && initial ? (
           <img
             className={"avatar-img"}

@@ -139,7 +139,7 @@ export function updateUserAvatar(imageFile, imageType, access_token) {
   const updateEndpoint = `profiles/avatar`
   const payload = {
     name: 'avatar',
-    data: imageFile,
+    avatar: imageFile,
     content_type: imageType,
   }
   return customAPICallUpdateAvatar(updateEndpoint, payload, "PUT", access_token)
