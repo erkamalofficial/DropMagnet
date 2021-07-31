@@ -348,6 +348,7 @@ export default function Profile(props) {
     setOpenEditModal(false);
   };
   function renderDetail() {
+    
     return (
       <div>
         <ProfileDropDetail

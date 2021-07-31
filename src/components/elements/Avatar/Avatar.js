@@ -31,7 +31,7 @@ function Avatar({ userImage, style, initial, view_only, small, onRemove, onChang
 
   return (
     <div className={"avatar-container " + (small ? "small-avatar" : "")} style={cont_style}>
-      {!initial && (
+      {userImage && (
         <span className={"delete-button"} onClick={onRemove}>
           <img
             style={{ width: "20px", height: "20px", cursor: "pointer" }}

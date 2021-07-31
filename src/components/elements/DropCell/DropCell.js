@@ -33,21 +33,21 @@ export default function DropCell(props) {
   }
 
 
-  const openUser = () => {
-    console.log(props)
-    const userId = props.drop.user_id
-    history.push(`/profile/${userId}`)
-  }
+  // const openUser = () => {
+  //   console.log(props)
+  //   const userId = props.drop.user_id
+  //   history.push(`/profile/${userId}`)
+  // }
 
   function renderDrop() {
     return <div key={props.drop.id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner" onClick={() => {
-        // props.setDetailView(true);
+        props.setDetailView(true);
         props.setCurDrop(props.drop)
       }
       }>
         <div className="drop-details">
-          <div className="drop-header" onClick={openUser}>
+          <div className="drop-header" >
             <Avatar initial={getInitials(artist_name)} 
             userImage={artist_image} view_only small />
             {/* <img className="drop-artist-image" src={artist_image} /> */}
