@@ -4,12 +4,10 @@ import DropDetail from "../../detail_page/DropDetail/DropDetail";
 import { formatDate } from "../../../helpers/DateFormatter";
 import Avatar from "../Avatar/Avatar";
 import { getInitials } from "../../../utils";
-import { useHistory } from "react-router";
 
 export default function DropCell(props) {
 
   const { user } = props
-  const history = useHistory()
 
   let dropTitle = props.drop.title
 
@@ -32,18 +30,11 @@ export default function DropCell(props) {
     }
   }
 
-
-  // const openUser = () => {
-  //   console.log(props)
-  //   const userId = props.drop.user_id
-  //   history.push(`/profile/${userId}`)
-  // }
-
   function renderDrop() {
     return <div key={props.drop.id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner" onClick={() => {
-        props.setDetailView(true);
         props.setCurDrop(props.drop)
+        props.setDetailView(true);
       }
       }>
         <div className="drop-details">
@@ -53,9 +44,7 @@ export default function DropCell(props) {
             {/* <img className="drop-artist-image" src={artist_image} /> */}
             {artist_name!=='' && 
             <div className="drop-header-title" >
-              {/* <Marquee> */}
               {artist_name}
-              {/* </Marquee> */}
             </div>}
           </div>
           {dropTitle!=='' && <div className="drop-name">{dropTitle}</div>}
@@ -66,7 +55,7 @@ export default function DropCell(props) {
             {price !== '' && <p2 className="drop-price"><span>Ξ</span> {price}</p2>}
           </div>
         </div>
-        <img className="drop-image" src={props.drop.media[0].url} />
+        <img className="drop-image" src={props.drop.media[0].url} alt="/"/>
       </div>
     </div>
   }
