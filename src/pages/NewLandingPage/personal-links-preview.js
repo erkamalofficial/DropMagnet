@@ -77,11 +77,12 @@ const MainContainer = styled.div`
 
 
 
-const PersonalLinksPreview = ({ handleGalleryName, isLoggedIn }) => {
+const PersonalLinksPreview = ({ handleGalleryName,galleryName, isLoggedIn }) => {
   return (
     <MainContainer>
       <PLSectionThree>
       <PLSectionUserinput
+        value={galleryName}
         placeholder="Enter your brand or name here"
         onChange={(e) => handleGalleryName(e.target.value)}
       />

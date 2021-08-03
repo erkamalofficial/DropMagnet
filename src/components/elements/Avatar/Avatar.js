@@ -26,7 +26,7 @@ export const InitialsOfUser = ({ initial }) => {
   );
 };
 
-function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange }) {
+function Avatar({ userImage,style,file, initial, view_only, small, onRemove, onChange }) {
   const cont_style = style?style : {};
   console.log(cont_style);
   return (
@@ -41,7 +41,7 @@ function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange
         </span>
       )}
 
-      <label for={"avatar-img-uploader "} className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}> 
+      <label for={"avatar-img-uploader"} className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}> 
         {userImage && initial ? (
           <img
             className={"avatar-img"}
@@ -57,7 +57,6 @@ function Avatar({ userImage,style, initial, view_only, small, onRemove, onChange
           type={"file"}
           accept={"image/jpeg, image/png"}
           hidden
-          value={null}
           id={"avatar-img-uploader"}
           onChange={onChange}
         />

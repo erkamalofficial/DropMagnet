@@ -45,7 +45,7 @@ export default function DropDetail(props) {
   return (
     <div className="detail-view">
       <div className="detail-view-header">
-        <Avatar userImage={artist_image} initial={getInitials(props.drop?.artist?.name || 'Test Name')} view_only small style={{ margin: 10 }} />
+        <Avatar userImage={artist_image} initial={getInitials(props.drop?.artist?.name || 'Test User')} view_only small style={{ margin: 10 }} />
         {/* <img className="detail-view-header-image" src={artist_image} /> */}
         <h1 className="drop-detail-title">{artist_name}</h1>
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
