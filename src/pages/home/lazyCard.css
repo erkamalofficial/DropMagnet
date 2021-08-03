@@ -33,6 +33,15 @@
     justify-content: center;
     column-gap: 16px;
   }
+
+  .lazy-content.long{
+    padding: 3px;
+    margin: var(--card-title-text-margin) !important ;
+  }
+
+  .lazy-content.last{
+    margin-bottom: var(--card-title-section-text-margin)
+  }
   
   .stripe {
     border: 1px solid #353535;

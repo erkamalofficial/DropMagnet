@@ -22,6 +22,8 @@ import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
 import LazyCard from "./LazyCard";
 import LazyTab from "./LazyTab";
 import { tabList } from "../../constants";
+import PlusBtn from "../../components/blocks/plus-btn";
+import MinusBtn from "../../components/blocks/minus-btn";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -41,6 +43,11 @@ const CardContainer = styled.div`
   width: var(--card-container-width);
   height: var(--card-container-height);
   margin-bottom: var(--gap-bottom);
+`;
+
+const ActionSection = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const Home = (props) => {
@@ -78,7 +85,7 @@ const Home = (props) => {
     let extras = {
       token: idToken,
       curTime: curTime,
-      userID: currentUser.uid,
+      userID: "",
       random: true
     }
     if (activeTabIndex === 1) {
@@ -108,7 +115,7 @@ const Home = (props) => {
       let extras = {
         token: idToken,
         curTime: nextIndex,
-        userID: currentUser.uid,
+        userID: "",
         random: false
       }
 
@@ -176,7 +183,7 @@ const Home = (props) => {
     let extras = {
       token: idToken,
       curTime: curTime,
-      userID: currentUser.uid,
+      userID: "",
     }
 
     if (activeTab === "music") {
@@ -231,7 +238,7 @@ const Home = (props) => {
         openMenu={() => openMenu()}
         isLogoNotVisible
         openDateMenu={() => openDateMenu()}
-        curIndex = {curIndex}
+        curIndex={curIndex}
         selectedDropdownDate={selectedDropdownDate}
         setSelectedDropdownDate={setSelectedDropdownDate}
         datePickerVisible={detailView ? false : true}
@@ -242,25 +249,37 @@ const Home = (props) => {
         {isLoading ?
           (
             <>
-              <LazyTab />
+              <Tabs
+                activeTabIndex={activeTabIndex}
+                handleActiveTabIndex={handleActiveTabIndex}
+                tabList={tabList}
+              />
               <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
                 <LazyCard />
               </CardContainer>
+              <ActionSection key="footer" style={{ display: 'flex'}}>
+                <MinusBtn>
+                  <img src="./minus.svg" alt="minus" />
+                </MinusBtn>
+                <PlusBtn>
+                  <img src="./plus.svg" alt="plus" />
+                </PlusBtn>
+              </ActionSection>
             </>
           )
           : (
-              <Swiper
-                reswipeModeActive={false}
-                key={uniqueId}
-                db={activeBucket}
-                activeTabIndex={activeTabIndex}
-                onSwipe={handleSwipe}
-                handleActiveTabIndex={handleActiveTabIndex}
-                tabList={tabList}
-                setDetailView={setDetailView}
-                nextIndex={nextIndex}
-              />
-            )
+            <Swiper
+              reswipeModeActive={false}
+              key={uniqueId}
+              db={activeBucket}
+              activeTabIndex={activeTabIndex}
+              onSwipe={handleSwipe}
+              handleActiveTabIndex={handleActiveTabIndex}
+              tabList={tabList}
+              setDetailView={setDetailView}
+              nextIndex={nextIndex}
+            />
+          )
 
         }
 

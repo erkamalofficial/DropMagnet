@@ -1,14 +1,14 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useHistory } from "react-router";
-import TinderCard from "./swipe-main";
+import TinderCard from "../swipe-main";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import Card from "./card";
-import PlusBtn from "../../components/blocks/plus-btn";
-import MinusBtn from "../../components/blocks/minus-btn";
-import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
-import Tabs from "./tabs";
-import { useAuth } from "../../contexts/FirebaseAuthContext";
+import PlusBtn from "../../../components/blocks/plus-btn";
+import MinusBtn from "../../../components/blocks/minus-btn";
+import Tabs from "../tabs";
+import { data } from "../../../utils/DummyCardData"
+import DummyCard from "./dummyCard";
+import DummyDropDetail from "../../../components/detail_page/DropDetail/DummyDropDetail";
 
 const ActionSection = styled.div`
   display: flex;
@@ -22,12 +22,12 @@ const CardContainer = styled.div`
 
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
-function Swiper(props) {
+function DummySwiper(props) {
 
   const { db, reswipeModeActive, setDetailView, nextIndex } = props
 
-  const [allCards, setAllCards] = useState(db);
-  const [cards, setCards] = useState(db);
+  const [allCards, setAllCards] = useState([data]);
+  const [cards, setCards] = useState([data]);
   const [openView, setOpenView] = useState(false)
   const [curDrop, setCurDrop] = useState({})
   // const [lastDirection, setLastDirection] = useState();
@@ -35,20 +35,12 @@ function Swiper(props) {
   const [swiping, setSwiping] = useState(false)
 
   const history = useHistory()
-  console.log(history)
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     alreadyRemoved.length = 0;
   }, [reswipeModeActive]);
-
-  // useEffect(() => {
-  //   if (cards.length < 1 && !(reswipeModeActive) && nextIndex !== null) {
-  //     dispatch({ type: "FETCH_MORE_FEEDS", payload: true })
-  //   }
-
-  // }, [cards.length, reswipeModeActive])
 
   const childRefs = useMemo(
     () =>
@@ -60,7 +52,6 @@ function Swiper(props) {
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
   const swiped = (direction, drop_id, index) => {
-    // console.log("direction:KKK " + direction);
     if (reswipeModeActive) {
       props.onReswipe(direction, drop_id, index);
     } else {
@@ -102,9 +93,15 @@ function Swiper(props) {
     }
   };
 
+  function func() {
+    console.log("Removed")
+  }
+
 
   function openDrop(d) {
     // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))
+    let element = document.getElementsByClassName("swipe")[0]
+    window.addEventListener("mouseup", func, true)
     setCurDrop(d)
     setOpenView(true)
   }
@@ -112,11 +109,11 @@ function Swiper(props) {
   function renderDetail() {
     return (
       <div>
-        <DropDetail
+        <DummyDropDetail
           show={true}
           drop={curDrop}
           closeDetailView={() => setOpenView(false)}
-          handleClick={() => console.log("Click")} />
+          handleClick={() => { }} />
       </div>
     )
   }
@@ -124,14 +121,6 @@ function Swiper(props) {
 
   return (
     <>
-      {!openView && !reswipeModeActive && (
-        <Tabs
-          activeTabIndex={props.activeTabIndex}
-          handleActiveTabIndex={props.handleActiveTabIndex}
-          tabList={props.tabList}
-        />
-
-      )}
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>
@@ -157,7 +146,7 @@ function Swiper(props) {
               onCardLeftScreen={() => outOfFrame(id)}
               overlayLabels={true}
             >
-              <Card {...cardDetails} />
+              <DummyCard {...cardDetails} />
             </TinderCard>
           );
         }) : <h4 style={{ textAlign: 'center', width: '100%' }}>No Drops Available</h4>}
@@ -182,4 +171,4 @@ function Swiper(props) {
   )
 }
 
-export default Swiper;
+export default DummySwiper;

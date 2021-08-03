@@ -35,17 +35,33 @@ import styled from "styled-components";
 import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
+const DummyHomeComponent = React.lazy(() => import("./pages/home/DummyPage/dummyIndex"));
 
 const HomePage = (props) => (
   <Suspense fallback={<div>Loading...</div>}>
     <HomeComponent
       {...props}
       userDetails={props.userDetails}
-      userLoggedIn={true}
+      userLoggedIn={
+        localStorage.getItem('userDetails') !== null ? true
+          : false}
+    />
+  </Suspense>
+);
+
+const DummyHomePage = (props) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <DummyHomeComponent
+      {...props}
+      userDetails={props.userDetails}
+      userLoggedIn={
+        localStorage.getItem('userDetails') !== null ? true
+          : false}
     />
   </Suspense>
 );
@@ -90,18 +106,24 @@ function App() {
   return (
     <Router>
       <Switch>
-        <PrivateRoute
+        <Route
+          exact
+          path="/home/dummy"
+          userDetails={userDetails}
+          isLogged
+          component={DummyHomePage}
+        />
+        <Route
           exact
           path="/home"
           userDetails={userDetails}
           isLogged
           component={HomePage}
         />
+
         <Route
           exact
           path="/drop/:id"
-          // userDetails={userDetails}
-          // isLogged
           component={DropPage}
         />
         <Route
@@ -111,7 +133,7 @@ function App() {
 
         <Route
           path="/create"
-          render={(props) => <ProfileForm /> }
+          render={(props) => <ProfileForm />}
         />
 
         <Route
@@ -180,6 +202,19 @@ function App() {
         <Route path="/magic" component={MagicLogin} />
         <Route path="/forgot-password" component={ForgotPassword} />
 
+
+        <Route
+          path="/profile/:id"
+          render={(props) => (
+            <ProfilePage
+              {...props}
+              userImage={userDetails.image}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
+
         <Route
           path="/profile"
           render={(props) => (
@@ -191,6 +226,7 @@ function App() {
             />
           )}
         />
+        
         <Route
           path="/wallet_links"
           render={(props) => (

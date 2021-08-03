@@ -85,7 +85,7 @@ const {files, setFiles} = props
     isDragReject
   } = useDropzone({
     onDrop,
-    accept: 'image/jpeg, image/png',
+    accept: 'image/jpeg, image/png, video/*',
     maxFiles: 16
   });
 

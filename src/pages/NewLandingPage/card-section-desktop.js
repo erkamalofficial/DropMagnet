@@ -77,7 +77,7 @@ const GridContainer = styled.div`
   grid-template-columns: 60px 1fr 60px;
   align-items: center;
   justify-items: center;
-  width: 1148px;
+  width: 570px;
   margin: auto;
   margin-bottom: 32px;
 `;
@@ -175,7 +175,7 @@ const CaurouselComponent = ({
     slideToNextItem,
     getCurrentActiveItem,
   } = useSpringCarousel({
-    itemsPerSlide: 2,
+    itemsPerSlide: 1,
     initialStartingPosition: "center",
     items: map(linksList, (linkItem, linkKey) =>
       CardSectionItem(
@@ -210,13 +210,15 @@ const CaurouselComponent = ({
 
   return (
     <GridContainer>
-      <NavIcon type="prev" onClick={handlePrev}>
+      <div className="blank-div" style={{width: "44px", height: "44px"}}></div>
+      {/* <NavIcon type="prev" onClick={handlePrev}>
         &#8249;
-      </NavIcon>
+      </NavIcon> */}
       {carouselFragment}
-      <NavIcon type="next" onClick={handleNext}>
+      {/* <NavIcon type="next" onClick={handleNext}>
         &#8250;
-      </NavIcon>
+      </NavIcon> */}
+      <div className="blank-div" style={{width: "44px", height: "44px"}}></div>
     </GridContainer>
   );
 };

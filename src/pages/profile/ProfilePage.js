@@ -37,7 +37,7 @@ const TabContainer = styled.div`
   }
 `;
 
-export default function Profile(props) {
+export default function ProfilePage(props) {
 
   const profilePic = useRef(null)
 
@@ -348,7 +348,6 @@ export default function Profile(props) {
     setOpenEditModal(false);
   };
   function renderDetail() {
-    
     return (
       <div>
         <ProfileDropDetail
@@ -427,19 +426,11 @@ export default function Profile(props) {
                     }
                   }
                 }}
-                onRemove={() => {
-                  setUserImage("")
-                  currentUser.getIdToken(false).then(function (idToken) {
-                    DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
-                      alert("Successfully updated.")
-                    );
-                  });
-                }
-                }
+                onRemove={() => setUserImage("")}
               />
               <div className="edit-btn"
-                onClick={() => profilePic.current.click()}>
-                <EditIcon className="svg-icon" />
+              onClick={() => profilePic.current.click()}>
+                <EditIcon className="svg-icon"/>
               </div>
             </div>
             {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}

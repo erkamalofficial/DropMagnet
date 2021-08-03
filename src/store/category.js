@@ -37,7 +37,7 @@ const getProcessedCollection = (state, action, type) => {
     && action.payload.count !== 0 && !action.payload.random
 
   console.log(action.payload.curIndex <= new Date().setUTCHours(0, 0, 0, 0),!action.payload.random, action.payload.count !== 0)
-  const bucket = !goBack ? action.payload.data.reverse() : action.payload.data
+  const bucket = !goBack ? action.payload.data : action.payload.data.reverse()
 
   let pastIndex = null
 

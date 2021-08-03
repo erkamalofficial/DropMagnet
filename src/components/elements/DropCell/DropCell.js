@@ -28,25 +28,23 @@ export default function DropCell(props) {
     else{
       return ''
     }
-
   }
 
   function renderDrop() {
     return <div key={props.drop.id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner" onClick={() => {
-        props.setDetailView(true);
         props.setCurDrop(props.drop)
+        props.setDetailView(true);
       }
       }>
         <div className="drop-details">
-          <div className="drop-header">
-            <Avatar initial={getInitials(artist_name)} userImage={artist_image} view_only small />
+          <div className="drop-header" >
+            <Avatar initial={getInitials(artist_name)} 
+            userImage={artist_image} view_only small />
             {/* <img className="drop-artist-image" src={artist_image} /> */}
             {artist_name!=='' && 
             <div className="drop-header-title" >
-              {/* <Marquee> */}
               {artist_name}
-              {/* </Marquee> */}
             </div>}
           </div>
           {dropTitle!=='' && <div className="drop-name">{dropTitle}</div>}
@@ -57,7 +55,7 @@ export default function DropCell(props) {
             {price !== '' && <p2 className="drop-price"><span>Ξ</span> {price}</p2>}
           </div>
         </div>
-        <img className="drop-image" src={props.drop.media[0].url} />
+        <img className="drop-image" src={props.drop.media[0].url} alt="/"/>
       </div>
     </div>
   }

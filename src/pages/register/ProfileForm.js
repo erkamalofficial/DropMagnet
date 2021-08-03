@@ -8,7 +8,7 @@ import * as DropMagnetAPI from '../../DropMagnetAPI'
 
 var VERIFY_EMAIL_PATH;
 if (process.env === "development") {
-    VERIFY_EMAIL_PATH = "http://localhost:3000";
+    VERIFY_EMAIL_PATH = "https://fb-web-763f4.web.app";
 } else {
     VERIFY_EMAIL_PATH = "https://fb-web-763f4.web.app";
 }
@@ -16,42 +16,34 @@ if (process.env === "development") {
 
 const ProfileForm = () => {
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const { signup } = useAuth();
+    const nameRef = useRef();
+    const { signInWithCustomToken } = useAuth();
 
     const [error, setError] = useState("");
     const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(false)
     const history = useHistory();
 
     const registerUser = async (e) => {
+        setLoading(true)
         const address = localStorage.getItem('publicAddress')
         e.preventDefault()
         try {
             setError("");
-            const res = await signup(
-                emailRef.current.value,
-                passwordRef.current.value
-            );
+            let name = nameRef.current.value
+            let username = name.split(" ")[0].toLowerCase()
 
-            let username = res.user.email.split('@')[0]
-            let name = res.user.displayName === null ? username : res.user.displayName
-            let email = res.user.email
-
-            DropMagnetAPI.createWalletUser(name, username, email, address, res.user.za).then(async function (response) {
+            DropMagnetAPI.createWalletUser(username, name, address).then(async function (response) {
                 if (response.status === "error") {
                     console.log('error', response)
                 }
                 else {
-                    try {
-                        await res.user.sendEmailVerification({
-                            handleCodeInApp: true,
-                            url: `${VERIFY_EMAIL_PATH}/buy-links`,
-                        });
-                        setMessage("Check your email inbox for further instructions");
-                    } catch {
-                        setError("Failed to send email");
-                    }
+                    await signInWithCustomToken(response.token)
+                    .then(cred => {
+                        setLoading(false)
+                        history.push("/home")
+                        localStorage.setItem('userDetails', JSON.stringify(cred));
+                    })
                 }
 
             })
@@ -77,26 +69,18 @@ const ProfileForm = () => {
                         <h2 className="text-center mb-4">Enter Details</h2>
                         {error && <FormAlert variant="danger">{error}</FormAlert>}
                         {message && <FormSuccess variant="success">{message}</FormSuccess>}
-                        {message === '' && (
+                        {message === '' && !loading ? (
                             <>
                                 <GridItem id="name">
                                     <FormLabel>Name</FormLabel>
-                                    <FormInput type="text" required />
-                                </GridItem>
-                                <GridItem id="email">
-                                    <FormLabel>Email</FormLabel>
-                                    <FormInput type="email" ref={emailRef} required />
-                                </GridItem>
-                                <GridItem id="password">
-                                    <FormLabel>Password</FormLabel>
-                                    <FormInput type="password" ref={passwordRef} required />
+                                    <FormInput type="text" ref={nameRef} required />
                                 </GridItem>
                             </>
-                        )}
+                        ) : <Spinner />}
 
                     </form>
 
-                    {message === "" &&
+                    {message === "" && !loading &&
                         <FormBtn className="w-100"
                             onClick={registerUser}
                             style={{ marginTop: "20px" }}>

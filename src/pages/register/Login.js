@@ -24,8 +24,7 @@ import * as DropMagnetAPI from "../../DropMagnetAPI"
 export default function Login() {
 
   let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
-  const {id} = useParams()
-  console.log(id)
+  const { id } = useParams()
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -55,10 +54,10 @@ export default function Login() {
         } else {
           localStorage.setItem('userDetails', JSON.stringify(response));
           if (res.user.emailVerified) {
-            if(id){
+            if (id) {
               history.push(`/drop/${id}`);
             }
-            else{
+            else {
               history.push("/home");
             }
           } else {
@@ -96,7 +95,7 @@ export default function Login() {
     fortmatic: {
       package: Fortmatic,
       options: {
-        key: "pk_test_AFA830F46E222207"
+        key: "pk_live_201A6F01A7385804"
       }
     },
     "custom-coinbase": {
@@ -123,19 +122,20 @@ export default function Login() {
     const res = await signInWithCustomToken(token)
       .then(cred => cred)
 
-    console.log(res)
-
     getUserProfile(res.user.uid, res.user.za).then(function (response) {
       console.log('user profile response', response)
       if (response.status === "error") {
         setLoading(false);
       } else {
+        setLoading(false)
         localStorage.setItem('userDetails', JSON.stringify(response));
-        if(id){
+        if (id) {
           history.push(`/drop/${id}`);
+          setLoading(false)
         }
-        else{
+        else {
           history.push("/home");
+          setLoading(false)
         }
       }
     })
@@ -144,17 +144,32 @@ export default function Login() {
   const signMessage = async (web3, accounts, nonce) => {
     let message = `You are signing in to DropMagnet: ${nonce.data}`
     await web3.eth.personal.sign(message, accounts[0], async function (error, result) {
-      const signingAddress = await web3.eth.accounts.recover(message,
-        result);
-      if (accounts[0] === signingAddress) {
-        localStorage.setItem('publicAddress', accounts[0])
-
-        if (nonce.status === 0) { history.push("/create") }
-        else { userLogin(nonce.token) }
+      if (error) {
+        console.log(error)
+        alert("Error occurred!")
+        setLoading(false)
       }
       else {
-        alert("Signature not verified.")
+        const signingAddress = await web3.eth.accounts.recover(message,
+          result);
+        if (accounts[0] === signingAddress) {
+          setLoading(true)
+          localStorage.setItem('publicAddress', accounts[0])
+
+          if (nonce.status === 0) {
+            setLoading(false)
+            history.push("/create")
+          }
+          else {
+            userLogin(nonce.token)
+          }
+        }
+        else {
+          setLoading(false)
+          alert("Signature not verified.")
+        }
       }
+
     })
 
   }
@@ -164,9 +179,9 @@ export default function Login() {
     const provider = await web3Modal.connect();
     console.log(provider)
     const wb = new Web3(provider);
+    setLoading(true)
     let accounts = await wb.eth.getAccounts()
       .then(acc => acc)
-
     let nonce = await DropMagnetAPI.getNonce(accounts[0])
 
     signMessage(wb, accounts, nonce);
@@ -187,34 +202,39 @@ export default function Login() {
           <form className="formGrid" onSubmit={handleSubmit}>
             <h2 className="text-center mb-4">Log In</h2>
             {error && <FormAlert variant="danger">{error}</FormAlert>}
-            <GridItem id="email">
-              <FormLabel>Email</FormLabel>
-              <FormInput type="email" ref={emailRef} required />
-            </GridItem>
-            <GridItem id="password">
-              <FormLabel>Password</FormLabel>
-              <FormInput type="password" ref={passwordRef} required />
-            </GridItem>
-            {!loading && (
-              <FormBtn disabled={loading} className="w-100" type="submit">
-                Log In
-              </FormBtn>
-            )}
-            {loading && <Spinner />}
-            <GridItem>
-              <Link to="/forgot-password">Forgot Password?</Link>
-            </GridItem>
+            {!loading ? (
+              <>
+                <GridItem id="email">
+                  <FormLabel>Email</FormLabel>
+                  <FormInput type="email" ref={emailRef} required />
+                </GridItem>
+                <GridItem id="password">
+                  <FormLabel>Password</FormLabel>
+                  <FormInput type="password" ref={passwordRef} required />
+                </GridItem>
+                {!loading && (
+                  <FormBtn disabled={loading} className="w-100" type="submit">
+                    Log In
+                  </FormBtn>
+                )}
 
-            <GridItem>
-              Need an account? <Link to="/signup">Sign Up</Link>
-            </GridItem>
+                <GridItem>
+                  <Link to="/forgot-password">Forgot Password?</Link>
+                </GridItem>
+
+                <GridItem>
+                  Need an account? <Link to="/signup">Sign Up</Link>
+                </GridItem></>
+            ) : <Spinner />}
           </form>
 
-          <FormBtn className="w-100" type="submit"
-            onClick={connectWallet}
-            style={{ marginTop: "20px" }}>
-            Sign In Using Wallet
-          </FormBtn>
+          {!loading && (
+            <FormBtn className="w-100" type="submit"
+              onClick={connectWallet}
+              style={{ marginTop: "20px" }}>
+              Sign In Using Wallet
+            </FormBtn>
+          )}
 
         </FormWrapper>
       </div>

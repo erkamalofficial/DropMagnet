@@ -222,7 +222,7 @@ const CaurouselComponent = ({
   const { carouselFragment, slideToItem, getCurrentActiveItem } =
     useSpringCarousel({
       // itemsPerSlide: 2,
-      itemsPerSlide: 3,
+      itemsPerSlide: 1,
       // withLoop: true,
       initialStartingPosition: "end",
       disableGestures: false,
@@ -246,13 +246,15 @@ const CaurouselComponent = ({
     // console.log(step);
     const { index } = getCurrentActiveItem();
     const nextStep = step + index;
-    // console.log(linksList.length, index,nextStep);
+    console.log(linksList.length, index,nextStep);
     if (nextStep >= linksList.length + ERROR_ENTRIES) {
-      slideToItem(linksList.length + ERROR_ENTRIES - 1);
+      // slideToItem(linksList.length + ERROR_ENTRIES - 1);
+      slideToItem(0);
     } else if (nextStep < 0) {
       slideToItem(0);
     } else {
-      slideToItem(nextStep);
+      // slideToItem(nextStep);
+      slideToItem(0);
     }
   };
   return (

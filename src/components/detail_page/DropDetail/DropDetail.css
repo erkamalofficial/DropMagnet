@@ -96,6 +96,12 @@
   position: relative;
 }
 
+.drop-detail-video-single{
+  margin: 12px auto;
+  width: 195px;
+  height: 195px;
+}
+
 .drop-detail-image img {
   object-fit: cover;
   object-position: 50% 0%;
