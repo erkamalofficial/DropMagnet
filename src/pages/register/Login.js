@@ -122,8 +122,6 @@ export default function Login() {
     const res = await signInWithCustomToken(token)
       .then(cred => cred)
 
-    console.log(res)
-
     getUserProfile(res.user.uid, res.user.za).then(function (response) {
       console.log('user profile response', response)
       if (response.status === "error") {
@@ -133,9 +131,11 @@ export default function Login() {
         localStorage.setItem('userDetails', JSON.stringify(response));
         if (id) {
           history.push(`/drop/${id}`);
+          setLoading(false)
         }
         else {
           history.push("/home");
+          setLoading(false)
         }
       }
     })
@@ -146,6 +146,8 @@ export default function Login() {
     await web3.eth.personal.sign(message, accounts[0], async function (error, result) {
       if (error) {
         console.log(error)
+        alert("Error occurred!")
+        setLoading(false)
       }
       else {
         const signingAddress = await web3.eth.accounts.recover(message,
@@ -177,9 +179,9 @@ export default function Login() {
     const provider = await web3Modal.connect();
     console.log(provider)
     const wb = new Web3(provider);
+    setLoading(true)
     let accounts = await wb.eth.getAccounts()
       .then(acc => acc)
-
     let nonce = await DropMagnetAPI.getNonce(accounts[0])
 
     signMessage(wb, accounts, nonce);
