@@ -32,7 +32,9 @@ async function customAPICall(endpoint, data, method, access_token) {
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   })
-
+  if(res.status === 204){
+    return null
+  }
   return res.json()
 }
 

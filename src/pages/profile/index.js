@@ -65,7 +65,7 @@ export default function Profile(props) {
   const [descriptionForm, setDescriptionForm] = useState("");
   const [twitterHandleForm, setTwitterHandleForm] = useState("");
   const [instaHandleForm, setInstaHandleForm] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({ profile: false, drops: false });
 
   const [curDrop, setCurDrop] = useState({});
   const [detailView, setDetailView] = useState(false);
@@ -144,8 +144,9 @@ export default function Profile(props) {
     },
   ];
 
+
   useEffect(() => {
-    setCategoryList(collectibleArts);
+    setLoading({ profile: true, drops: true })
     const user_id = currentUser.uid;
     currentUser
       .getIdToken(false)
@@ -159,8 +160,9 @@ export default function Profile(props) {
         ) {
           console.log("user profile response", response);
           if (response.status === "error") {
-            setLoading(false);
+            setLoading({ ...loading, profile: false })
           } else {
+            setLoading({ ...loading, profile: false })
             setFirstName(response.name);
             setHandle(response.username);
             setBio(response.bio);
@@ -170,23 +172,53 @@ export default function Profile(props) {
             setUser(response);
           }
         });
+      })
+  }, [])
+
+  useEffect(() => {
+    setCategoryList(collectibleArts);
+    const user_id = currentUser.uid;
+    currentUser
+      .getIdToken(false)
+      .then(function (idToken) {
+        // Send token to your backend via HTTPS
+        // ...
+        console.log("id token is", idToken);
+        console.log(currentUser);
 
         DropMagnetAPI.getSaveDrops(idToken).then((res) => {
-          console.log(res);
-          setSavedPosts(res);
+          console.log("Get saved drops start")
+          if (res === null) {
+            console.log("Get drops null")
+            setSavedPosts([]);
+          }
+          else {
+            setSavedPosts(res);
+          }
+          console.log("Get drops")
+          setLoading({ ...loading, drops: false })
         });
 
         DropMagnetAPI.getUserPosts(user_id, idToken)
           .then((res) => {
-            setScheduledPosts(res);
-            setLoading(false);
+            console.log("Get drops start")
+            if (res === null) {
+              console.log("Get drops null")
+              setScheduledPosts([]);
+            }
+            else {
+              setScheduledPosts(res);
+            }
+
+            console.log("Get drops")
+            setLoading({ ...loading, drops: false })
           })
           .catch((err) => {
-            setLoading(false);
+            setLoading({ ...loading, drops: false })
           });
       })
       .catch(function (error) {
-        // Handle error
+        setLoading({ profile: false, drops: false })
       });
   }, []);
 
@@ -348,7 +380,7 @@ export default function Profile(props) {
     setOpenEditModal(false);
   };
   function renderDetail() {
-    
+
     return (
       <div>
         <ProfileDropDetail
@@ -363,7 +395,9 @@ export default function Profile(props) {
     );
   }
 
-  if (loading) {
+  console.log(loading)
+
+  if (loading.profile && loading.drops) {
     return (
       <div>
         <HeaderBar
@@ -377,7 +411,162 @@ export default function Profile(props) {
         </div>
       </div>
     );
-  } else {
+  }
+
+  else if (!loading.profile && loading.drops) {
+    return (
+      <>
+        <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
+          {renderInput()}
+          <div
+            className={"main-button-container"}
+            style={{ textAlign: "center" }}
+          >
+            <button className="main-button" onClick={saveForm}>
+              {"Save"}
+            </button>
+          </div>
+        </Modal>
+        <div className="profile-container">
+          <div className="fixed-container">
+            <HeaderBar
+              openHome={() => openHome()}
+              userLoggedIn={props.userLoggedIn}
+              userImage={userImage}
+              userDetails={props.userDetails}
+            />
+          </div>
+          <div
+            className="profile-detail-container"
+            style={{ display: `${detailView ? "none" : "flex"}` }}
+          >
+
+            <div className="acc-profile-pic">
+              <Avatar
+                userImage={userImage}
+                initial={getInitials(firstName)}
+                picRef={profilePic}
+                onChange={(e) => {
+                  if (e.target.files) {
+                    if (e.target.files[0]) {
+                      const file = e.target.files[0]
+                      currentUser.getIdToken(false).then(function (idToken) {
+                        DropMagnetAPI.updateUserAvatar(file, file.type, idToken).then((res) =>
+                          alert("Successfully updated.")
+                        );
+                      });
+                      const fileReader = new FileReader();
+                      fileReader.onload = () => {
+                        setUserImage(fileReader.result);
+                      };
+                      fileReader.readAsDataURL(e.target.files[0]);
+                    }
+                  }
+                }}
+                onRemove={() => {
+                  setUserImage("")
+                  currentUser.getIdToken(false).then(function (idToken) {
+                    DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
+                      alert("Successfully updated.")
+                    );
+                  });
+                }
+                }
+              />
+              <div className="edit-btn"
+                onClick={() => profilePic.current.click()}>
+                <EditIcon className="svg-icon" />
+              </div>
+            </div>
+            {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
+            <div
+              className="profile-large-title clickable"
+              onClick={() => handleProfileEdit("name")}
+            >{`${firstName}`}</div>
+            <div
+              className="profile-handle-title clickable"
+              onClick={() => handleProfileEdit("username")}
+            >
+              {"@" + handle}
+            </div>
+            <div style={{ display: "flex", paddingBottom: "16px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  paddingRight: "24px",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleProfileEdit("twitter")}
+              >
+                <img
+                  width={37}
+                  height={24}
+                  src="./twitter-icon.png"
+                  style={{ paddingRight: "8px" }}
+                  alt="/"
+                />
+                <div className="profile-medium-title">
+                  {twitterHandle !== "" && twitterHandle.length > 8 ? (
+                    <div className="socialHandle">
+                      @
+                      <p className="truncate">
+                        {twitterHandle.substring(0, twitterHandle.length - 4)}
+                      </p>
+                      <p className="last">
+                        {twitterHandle.substring(twitterHandle.length - 4)}
+                      </p>
+                    </div>
+                  ) : twitterHandle.length <= 8 ? (
+                    <p>@{twitterHandle}</p>
+                  ) : (
+                    <p>Add Twitter</p>
+                  )}
+                </div>
+              </div>
+              <div
+                style={{ display: "flex", cursor: "pointer" }}
+                onClick={() => handleProfileEdit("insta")}
+              >
+                <img width={24} height={24} src="./insta-icon.png" />
+                <div
+                  className="profile-medium-title"
+                  style={{ marginLeft: "10px" }}
+                >
+                  {instaHandle !== "" && instaHandle.length > 8 ? (
+                    <div className="socialHandle">
+                      @
+                      <p className="truncate">
+                        {instaHandle.substring(0, instaHandle.length - 4)}
+                      </p>
+                      <p className="last">
+                        {instaHandle.substring(instaHandle.length - 4)}
+                      </p>
+                    </div>
+                  ) : instaHandle.length <= 8 ? (
+                    <p>@{instaHandle}</p>
+                  ) : (
+                    <p>Add Instagram</p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div
+              className="profile-bio-edit-button clickable"
+              onClick={() => handleProfileEdit("bio")}
+            >
+              {bio ? bio : "Tap to Add Bio"}
+            </div>
+          </div>
+
+          <div style={{ marginTop: "60px" }}>
+            <Spinner />
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  else {
     return (
       <>
         <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
