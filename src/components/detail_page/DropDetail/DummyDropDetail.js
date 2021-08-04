@@ -25,6 +25,9 @@ overflow: hidden
 
 export default function DummyDropDetail(props) {
 
+    const [imgModal, setImgModal] = useState(false)
+    const [srcUrl, setSrcUrl] = useState('')
+
     function closeDetail() {
         if (typeof props.goBack !== "undefined") {
             props.goBack()
@@ -60,6 +63,11 @@ export default function DummyDropDetail(props) {
         });
     }
 
+    const handleOpenImg = (url) => {
+        setImgModal(true)
+        setSrcUrl(url)
+    }
+
     return (
         <div className="detail-view">
             <div className="detail-view-header">
@@ -75,8 +83,9 @@ export default function DummyDropDetail(props) {
                     {
                         props.drop.media.map((img, index) => {
                             return (
-                                <img style={{ height: '100%', width: '100%', borderRadius: '6px' }}
-                                    src={img.url} alt={'Cover' + index + 'Photo'} />
+                                <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
+                                    src={img.url} alt={'Cover' + index + 'Photo'}
+                                    onClick={() => handleOpenImg(img.url)} />
                             )
                         })
                     }

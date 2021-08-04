@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./DropDetail.css"
 import { formatDate } from '../../../helpers/DateFormatter'
 import Avatar from '../../elements/Avatar/Avatar'
 import { getInitials } from '../../../utils'
 import { FormBtn } from '../../../pages/register/FormComponents'
+import ImgModal from '../../ImgModal/ImgModal'
 
 export default function ProfileDropDetail(props) {
+
+  const [imgModal, setImgModal] = useState(false)
+  const [srcUrl, setSrcUrl] = useState('')
 
   function closeDetail() {
     props.closeDetailView()
@@ -35,11 +39,20 @@ export default function ProfileDropDetail(props) {
     });
   }
 
+  const handleOpenImg = (url) => {
+    setImgModal(true)
+    setSrcUrl(url)
+  }
 
   const style = props.style || {};
 
   return (
     <div className="detail-view" style={style}>
+      {imgModal &&
+        <ImgModal
+          setImgModal={setImgModal}
+          source={srcUrl} />
+      }
       <div className="detail-view-header">
         <Avatar userImage={artist_image} style={{ margin: 10 }} initial={getInitials(artist_name)} view_only small />
 
@@ -55,8 +68,9 @@ export default function ProfileDropDetail(props) {
           {
             props.drop.media.map((img, index) => {
               return (
-                <img style={{ height: '100%', width: '100%', borderRadius: '6px' }}
-                  src={img.url} alt={'Cover' + index + 'Photo'} />
+                <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
+                  src={img.url} alt={'Cover' + index + 'Photo'}
+                  onClick={() => handleOpenImg(img.url)} />
               )
             })
           }
@@ -64,8 +78,9 @@ export default function ProfileDropDetail(props) {
         </div>
         :
         <div className={'drop-detail-image-single'}>
-          <img style={{ height: '100%', width: '100%', borderRadius: '6px' }}
-            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'} />
+          <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
+            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'} 
+            onClick={() => handleOpenImg(props.drop.media[0].url)}/>
         </div>
       }
 

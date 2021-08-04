@@ -4,8 +4,12 @@ import { epochToDayMonthHour, formatDate } from '../../../helpers/DateFormatter'
 import Avatar from '../../elements/Avatar/Avatar'
 import { getInitials } from '../../../utils'
 import { FormBtn } from '../../../pages/register/FormComponents'
+import ImgModal from '../../ImgModal/ImgModal'
 
 export default function DropDetail(props) {
+
+  const [imgModal, setImgModal] = useState(false)
+  const [srcUrl, setSrcUrl] = useState('')
 
   function closeDetail() {
     if (typeof props.goBack !== "undefined") {
@@ -14,7 +18,6 @@ export default function DropDetail(props) {
     else {
       props.closeDetailView()
     }
-
   }
 
   let artist_image = props.drop.artist && props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
@@ -42,8 +45,20 @@ export default function DropDetail(props) {
     });
   }
 
+  const handleOpenImg = (url) => {
+    setImgModal(true)
+    setSrcUrl(url)
+  }
+
   return (
     <div className="detail-view">
+
+      {imgModal &&
+        <ImgModal
+          setImgModal={setImgModal}
+          source={srcUrl} />
+      }
+
       <div className="detail-view-header">
         <Avatar userImage={artist_image} initial={getInitials(props.drop?.artist?.name || 'Test User')} view_only small style={{ margin: 10 }} />
         {/* <img className="detail-view-header-image" src={artist_image} /> */}
@@ -57,8 +72,9 @@ export default function DropDetail(props) {
           {
             props.drop.media.map((img, index) => {
               return (
-                <img style={{ height: '100%', width: '100%', borderRadius: '6px' }}
-                  src={img.url} alt={'Cover' + index + 'Photo'} />
+                <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
+                  src={img.url} alt={'Cover' + index + 'Photo'}
+                  onClick={() => handleOpenImg(img.url)} />
               )
             })
           }
@@ -66,8 +82,9 @@ export default function DropDetail(props) {
         </div>
         :
         <div className={'drop-detail-image-single'}>
-          <img style={{ height: '100%', width: '100%', borderRadius: '6px' }}
-            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'} />
+          <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
+            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'} 
+            onClick={() => handleOpenImg(props.drop.media[0].url)}/>
         </div>
       }
       <h1 className="drop-detail-title">{props.drop.title}</h1>
