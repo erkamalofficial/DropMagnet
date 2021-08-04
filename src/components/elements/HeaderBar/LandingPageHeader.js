@@ -17,8 +17,6 @@ const LinksHeaderWrapper = styled.div`
   align-items: center;
   position: relative;
   justify-content: space-between;
-  margin: 16px;
-  margin-top: 20px;
   flex-wrap: wrap;
   @media (max-width: 576px){
     margin-bottom: 0;
