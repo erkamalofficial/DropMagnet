@@ -41,6 +41,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
 const DummyHomeComponent = React.lazy(() => import("./pages/home/DummyPage/dummyIndex"));
+const CreateDropComponent = React.lazy(() => import("./pages/create_drop"));
 
 const HomePage = (props) => (
   <Suspense fallback={<div>Loading...</div>}>
@@ -59,6 +60,18 @@ const DummyHomePage = (props) => (
     <DummyHomeComponent
       {...props}
       userDetails={props.userDetails}
+      userLoggedIn={
+        localStorage.getItem('userDetails') !== null ? true
+          : false}
+    />
+  </Suspense>
+);
+
+const CreateDropPage = (props) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <CreateDropComponent
+      {...props}
+      userDetails={JSON.parse(localStorage.getItem('userDetails'))}
       userLoggedIn={
         localStorage.getItem('userDetails') !== null ? true
           : false}
@@ -182,11 +195,9 @@ function App() {
             />
           )}
         />
-        <Route
+        <PrivateRoute
           path="/create_drop"
-          render={(props) => (
-            <DropCreation {...props} userHandle={userDetails.handle} />
-          )}
+          component={CreateDropPage}
         />
 
         <Route

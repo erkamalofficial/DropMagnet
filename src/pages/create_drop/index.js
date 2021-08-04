@@ -119,7 +119,7 @@ export default function DropCreation(props) {
 
   function getTitle() {
     if (dropCreationStep === 0) {
-      return "Hey @" + props.userHandle + ", Let’s Schedule Your Drop"
+      return "Hey @" + props.userDetails.username + ", Let’s Schedule Your Drop"
     } else if (dropCreationStep === 1) {
       return "Select Your Drop Launch Date"
     } else if (dropCreationStep === 2) {
