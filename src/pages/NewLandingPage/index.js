@@ -243,6 +243,7 @@ const LinksHome = (props) => {
           <PersonalLinksPreview
           handleGalleryName={() => handleGalleryName}
           isLoggedIn={Boolean(currentUser)}
+          galleryName={galleryName}
         />
         </PersonalLinksWrapper>
       )}

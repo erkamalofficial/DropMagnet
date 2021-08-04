@@ -41,8 +41,7 @@ function Avatar({ userImage, style, initial, view_only, small, onRemove, onChang
         </span>
       )}
 
-
-      <label for={"avatar-img-uploader "} className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}>
+      <label for={"avatar-img-uploader"} className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}> 
         {userImage && initial ? (
           <img
             className={"avatar-img"}
