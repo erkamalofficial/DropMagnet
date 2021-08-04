@@ -62,12 +62,12 @@ const NftGallery = () => {
                         connected to a single NFT Gallery.
                     </Paragraph>
                     <Paragraph>
-                        SmartURLs make your galleries instantly personal,
+                        MetaURLs make your galleries instantly personal,
                         sharable, tradeable, memorable and promoteable.
                     </Paragraph>
                     <Paragraph>
                         Connected wallets can make use of the pay button
-                        and turn your SmartURL into the most powerful
+                        and turn your MetaURL into the most powerful
                         crypto wallet address available online.
                     </Paragraph>
                     <Paragraph>

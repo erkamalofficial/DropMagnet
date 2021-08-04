@@ -229,7 +229,7 @@ const LinksHome = (props) => {
             <PLSectionOneContent>
               <HeaderSubtitle>
                 Stand out from the crowd, share NFT Galleries, and get paid in
-                crypto fast with SmartURLs.
+                crypto fast with MetaURLs.
               </HeaderSubtitle>
             </PLSectionOneContent>
           </PLSectionOne>

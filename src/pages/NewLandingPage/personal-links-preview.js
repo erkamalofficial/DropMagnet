@@ -90,7 +90,7 @@ const PersonalLinksPreview = ({ handleGalleryName,galleryName, isLoggedIn }) => 
     </PLSectionThree>
     <ButtonContainer>
       <Button className={'blank-gradient-button'} style={{padding: "12px 45px"}}>
-        <span className={'blank-gradient-text'}>Register SmartURL</span>
+        <span className={'blank-gradient-text'}>Register MetaURL</span>
       </Button>
     </ButtonContainer>
     </MainContainer>

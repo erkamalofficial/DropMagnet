@@ -10,7 +10,7 @@ import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
 
 
-const TAB_LIST = ["Drop Swipe", "NFT Galleries", "SmartURLs"];
+const TAB_LIST = ["Drop Swipe", "NFT Galleries", "MetaURLs"];
 
 const LinksHeaderWrapper = styled.div`
   display: flex;
