@@ -42,6 +42,7 @@ const MiddleSection = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
+  margin-top: 36px;
   transform: translate(calc(-50% + 20px ),-50%);
   @media(max-width: 576px){
     position: static;
