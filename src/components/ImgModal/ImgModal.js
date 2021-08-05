@@ -30,7 +30,8 @@ const ImgModal = ({ sourceIdx, setImgModal, medias }) => {
                         medias.map((img, index) => {
                             return (
                                 <div className="full-img-cont">
-                                    <img src={img.url} alt="/" />
+                                    <img src={img.url} alt="/"
+                                    onClick={() => setImgModal(false)} />
                                 </div>
                             )
                         })
