@@ -19,7 +19,7 @@ const Paragraph = styled.div`
 `;
 
 const PLSectionOne = styled.div`
-  /* margin-top: 72px; */
+  margin-top: 50px;
   margin-bottom: 32px;
   @media (max-width: 600px) {
     margin-bottom: 17px;

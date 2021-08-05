@@ -29,6 +29,7 @@ const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
   div.rel {
     position: relative;
     user-select: none;
@@ -62,7 +63,7 @@ const PersonalLinksWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   margin: 16px;
-  margin-top: 8px;
+  margin-top: 50px;
 `;
 
 const PLSectionOne = styled.div`
