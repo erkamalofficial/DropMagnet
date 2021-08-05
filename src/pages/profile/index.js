@@ -51,7 +51,7 @@ export default function Profile(props) {
   const [instaHandle, setInstaHandle] = useState("");
   const [bio, setBio] = useState("Bio");
   const [categoryList, setCategoryList] = useState([]);
-  const [selectedProfileList, setSelectedProfileList] = useState("scheduled");
+  const [selectedProfileList, setSelectedProfileList] = useState();
   const [scheduledPosts, setScheduledPosts] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
   const [user, setUser] = useState(null);
@@ -143,6 +143,16 @@ export default function Profile(props) {
       drop_pieces: 9,
     },
   ];
+
+
+  useEffect(() => {
+    if(scheduledPosts.length > 0){
+      setSelectedProfileList("scheduled")
+    }
+    else {
+      setSelectedProfileList("saved")
+    }
+  }, [])
 
 
   useEffect(() => {
