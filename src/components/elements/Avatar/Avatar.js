@@ -52,17 +52,6 @@ function Avatar({ userImage, style, initial, view_only, small, onRemove, onChang
           <InitialsOfUser initial={initial} />
         )}
       </label>
-      {!view_only && (
-        <input
-          type="file"
-          accept={"image/jpeg, image/png"}
-          hidden
-          value={null}
-          ref={picRef}
-          id={"avatar-img-uploader"}
-          onChange={onChange}
-        />
-      )}
     </div>
   );
 }
