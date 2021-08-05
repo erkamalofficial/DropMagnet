@@ -749,7 +749,7 @@ export default function Profile(props) {
                 Saved Drops ({savedPosts.length})
               </div>
             </div>
-            {selectedProfileList === "saved" && savedPosts.length !== 0 && (
+            { scheduledPosts.length !==0 && savedPosts.length !== 0 && (
               <TabContainer>
                 <Tabs
                   activeTabIndex={activeTabIndex}
