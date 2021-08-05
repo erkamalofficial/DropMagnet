@@ -152,7 +152,7 @@ export default function Profile(props) {
     else {
       setSelectedProfileList("saved")
     }
-  }, [])
+  }, [scheduledPosts.length])
 
 
   useEffect(() => {

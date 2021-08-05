@@ -5,11 +5,41 @@ import Avatar from '../../elements/Avatar/Avatar'
 import { getInitials } from '../../../utils'
 import { FormBtn } from '../../../pages/register/FormComponents'
 import ImgModal from '../../ImgModal/ImgModal'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 export default function DropDetail(props) {
 
+  const settings = {
+    infinite: false,
+    speed: 500,
+    slidesToShow: 2.4,
+    slidesToScroll: 1,
+    autoplay: false,
+    responsive: [
+      {
+        breakpoint: 1400,
+        settings: {
+          infinite: false,
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 680,
+        settings: {
+          infinite: false,
+          slidesToShow: 1.5,
+          slidesToScroll: 1,
+        }
+      },
+
+    ]
+  }
+
   const [imgModal, setImgModal] = useState(false)
-  const [srcUrl, setSrcUrl] = useState('')
+  const [srcIndex, setSrcIndex] = useState(0)
 
   function closeDetail() {
     if (typeof props.goBack !== "undefined") {
@@ -45,9 +75,9 @@ export default function DropDetail(props) {
     });
   }
 
-  const handleOpenImg = (url) => {
+  const handleOpenImg = (idx) => {
     setImgModal(true)
-    setSrcUrl(url)
+    setSrcIndex(idx)
   }
 
   return (
@@ -55,8 +85,9 @@ export default function DropDetail(props) {
 
       {imgModal &&
         <ImgModal
+          medias={props.drop.media}
           setImgModal={setImgModal}
-          source={srcUrl} />
+          source={srcIndex} />
       }
 
       <div className="detail-view-header">
@@ -66,25 +97,30 @@ export default function DropDetail(props) {
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>
       {props.drop.media.length > 1 ?
-        <div className="drop-detail-image" style={{ gridTemplateColumns: `repeat(${props.drop.media.length}, 195px)` }} onClick={() => props.handleClick()}>
+        <div 
+        className="drop-detail-image" 
+        onClick={() => props.handleClick()}>
           {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
           {props.drop.type === "music" ? renderPlayButton() : <></>}
-          {
-            props.drop.media.map((img, index) => {
-              return (
-                <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
-                  src={img.url} alt={'Cover' + index + 'Photo'}
-                  onClick={() => handleOpenImg(img.url)} />
-              )
-            })
-          }
-
+          <Slider {...settings}>
+            {
+              props.drop.media.map((img, index) => {
+                return (
+                  <div className="img-cnt">
+                    <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
+                      src={img.url} alt={'Cover' + index + 'Photo'}
+                      onClick={() => handleOpenImg(index)} />
+                  </div>
+                )
+              })
+            }
+          </Slider>
         </div>
         :
         <div className={'drop-detail-image-single'}>
           <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
-            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'} 
-            onClick={() => handleOpenImg(props.drop.media[0].url)}/>
+            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'}
+            onClick={() => handleOpenImg(0)} />
         </div>
       }
       <h1 className="drop-detail-title">{props.drop.title}</h1>
