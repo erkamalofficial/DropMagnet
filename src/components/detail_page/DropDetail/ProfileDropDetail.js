@@ -90,10 +90,10 @@ export default function ProfileDropDetail(props) {
 
         {/* <img className="detail-view-header-image" src={artist_image}/> */}
         <h1 className="drop-detail-title">{artist_name}</h1>
-        <img className="close-detail-button close-button view-close-btn" 
-        style={{ width: '39px', height: '39px', cursor: 'pointer' }} 
-        onClick={() => closeDetail()} src="./close-icon.png"
-        alt="/" />
+        <img className="close-detail-button close-button view-close-btn"
+          style={{ width: '39px', height: '39px', cursor: 'pointer' }}
+          onClick={() => closeDetail()} src="./close-icon.png"
+          alt="/" />
       </div>
 
       {props.drop.media.length > 1 ?
@@ -107,9 +107,10 @@ export default function ProfileDropDetail(props) {
               props.drop.media.map((img, index) => {
                 return (
                   <div className="img-cnt">
-                    <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
-                      src={img.url} alt={'Cover' + index + 'Photo'}
-                      onClick={() => handleOpenImg(index)} />
+                    <div className="bg-img"
+                      style={{ backgroundImage: `url(${img.url})` }}
+                      onClick={() => handleOpenImg(index)}>
+                    </div>
                   </div>
                 )
               })

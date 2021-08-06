@@ -105,9 +105,22 @@
 }
 
 .drop-detail-image .img-cnt{
+  width: 195px;
   height: 195px;
   overflow: hidden;
   padding: 0 5px;
+  margin: auto;
+}
+
+.drop-detail-image .img-cnt .bg-img{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .slick-slide{

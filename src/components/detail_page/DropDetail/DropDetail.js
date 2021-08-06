@@ -97,9 +97,9 @@ export default function DropDetail(props) {
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>
       {props.drop.media.length > 1 ?
-        <div 
-        className="drop-detail-image" 
-        onClick={() => props.handleClick()}>
+        <div
+          className="drop-detail-image"
+          onClick={() => props.handleClick()}>
           {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
           {props.drop.type === "music" ? renderPlayButton() : <></>}
           <Slider {...settings}>
@@ -107,9 +107,10 @@ export default function DropDetail(props) {
               props.drop.media.map((img, index) => {
                 return (
                   <div className="img-cnt">
-                    <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
-                      src={img.url} alt={'Cover' + index + 'Photo'}
-                      onClick={() => handleOpenImg(index)} />
+                    <div className="bg-img"
+                      style={{ backgroundImage: `url(${img.url})` }}
+                      onClick={() => handleOpenImg(index)}>
+                    </div>
                   </div>
                 )
               })
