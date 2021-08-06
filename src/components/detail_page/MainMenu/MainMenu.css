@@ -7,8 +7,8 @@
   height: 100vh;
   background: var(--coreBlack);
   opacity: 0;
-  transition: all 0.5s ease 0s;
-  transform: translate3d(0px, 100%, 0px); 
+  transition: 0.5s;
+  /* transform: translate3d(0px, 100%, 0px);  */
 }
 
 .main-menu-open {
@@ -20,8 +20,8 @@
   height: 100vh;
   background: var(--coreBlack);
   opacity: 1;
-  transition: all 0.5s ease 0s;
-  transform:  translate3d(0px, 0px, 0px); 
+  transition: 0.5s;
+  /* transform:  translate3d(0px, 0px, 0px);  */
 }
 
 .main-menu-header {
