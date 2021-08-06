@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import "./Avatar.css";
+import CropModal from "./CropModal";
 const InitialCircle = styled.span`
   width: 100%;
   height: 100%;
@@ -26,11 +27,33 @@ export const InitialsOfUser = ({ initial }) => {
   );
 };
 
-function Avatar({ userImage, style, initial, view_only, small, onRemove, onChange, picRef }) {
+function Avatar({ userImage, style, setCropModal, cropModal, setUploading, uploading, initial, view_only, small, onRemove, onChange, picRef }) {
+  const [img, setImg] = useState(null)
   const cont_style = style ? style : {};
+
+  const handleChange = (e) => {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setImg(fileReader.result);
+      setCropModal(true)
+    };
+    fileReader.readAsDataURL(e.target.files[0]);
+  }
+
 
   return (
     <div className={"avatar-container " + (small ? "small-avatar" : "")} style={cont_style}>
+
+      {cropModal &&
+        <CropModal
+          img={img}
+          setImg={setImg}
+          setCropModal={setCropModal}
+          onChange={onChange}
+          setUploading={setUploading}
+          uploading={uploading}
+        />}
+
       {userImage && (
         <span className={"delete-button"} onClick={onRemove}>
           <img
@@ -41,7 +64,8 @@ function Avatar({ userImage, style, initial, view_only, small, onRemove, onChang
         </span>
       )}
 
-      <label for={"avatar-img-uploader"} className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}> 
+      <label
+        className={"avatar-img-uploader " + (small ? "small-avatar-label" : "")}>
         {userImage && initial ? (
           <img
             className={"avatar-img"}
@@ -52,6 +76,17 @@ function Avatar({ userImage, style, initial, view_only, small, onRemove, onChang
           <InitialsOfUser initial={initial} />
         )}
       </label>
+
+      {!view_only && (
+        <input
+          type="file"
+          accept={"image/jpeg, image/png, image/jpg"}
+          onChange={(e) => handleChange(e)}
+          hidden
+          value={null}
+          ref={picRef}
+        />
+      )}
     </div>
   );
 }

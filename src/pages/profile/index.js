@@ -69,6 +69,8 @@ export default function Profile(props) {
 
   const [curDrop, setCurDrop] = useState({});
   const [detailView, setDetailView] = useState(false);
+  const [cropModal, setCropModal] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
   const { currentUser } = useAuth();
 
@@ -146,7 +148,7 @@ export default function Profile(props) {
 
 
   useEffect(() => {
-    if(scheduledPosts.length > 0){
+    if (scheduledPosts.length > 0) {
       setSelectedProfileList("scheduled")
     }
     else {
@@ -456,28 +458,28 @@ export default function Profile(props) {
                 userImage={userImage}
                 initial={getInitials(firstName)}
                 picRef={profilePic}
-                onChange={(e) => {
-                  if (e.target.files) {
-                    if (e.target.files[0]) {
-                      const file = e.target.files[0]
-                      currentUser.getIdToken(false).then(function (idToken) {
-                        DropMagnetAPI.updateUserAvatar(file, file.type, idToken).then((res) =>
-                          alert("Successfully updated.")
-                        );
-                      });
-                      const fileReader = new FileReader();
-                      fileReader.onload = () => {
-                        setUserImage(fileReader.result);
-                      };
-                      fileReader.readAsDataURL(e.target.files[0]);
-                    }
-                  }
+                cropModal={cropModal}
+                setCropModal={setCropModal}
+                setUploading={setUploading}
+                uploading={uploading}
+                onChange={(file) => {
+                  currentUser.getIdToken(false).then(function (idToken) {
+                    DropMagnetAPI.updateUserAvatar(file, file.type, idToken)
+                      .then(function (res) {
+                        window.location.reload()
+                      })
+                  })
+                  const fileReader = new FileReader();
+                  fileReader.onload = () => {
+                    setUserImage(fileReader.result);
+                  };
+                  fileReader.readAsDataURL(file);
                 }}
                 onRemove={() => {
                   setUserImage("")
                   currentUser.getIdToken(false).then(function (idToken) {
                     DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
-                      alert("Successfully updated.")
+                      window.location.reload()
                     );
                   });
                 }
@@ -609,28 +611,28 @@ export default function Profile(props) {
                 userImage={userImage}
                 initial={getInitials(firstName)}
                 picRef={profilePic}
-                onChange={(e) => {
-                  if (e.target.files) {
-                    if (e.target.files[0]) {
-                      const file = e.target.files[0]
-                      currentUser.getIdToken(false).then(function (idToken) {
-                        DropMagnetAPI.updateUserAvatar(file, file.type, idToken).then((res) =>
-                          alert("Successfully updated.")
-                        );
-                      });
-                      const fileReader = new FileReader();
-                      fileReader.onload = () => {
-                        setUserImage(fileReader.result);
-                      };
-                      fileReader.readAsDataURL(e.target.files[0]);
-                    }
-                  }
+                cropModal={cropModal}
+                setCropModal={setCropModal}
+                setUploading={setUploading}
+                uploading={uploading}
+                onChange={(file) => {
+                  currentUser.getIdToken(false).then(function (idToken) {
+                    DropMagnetAPI.updateUserAvatar(file, file.type, idToken)
+                      .then(function (res) {
+                        window.location.reload()
+                      })
+                  })
+                  const fileReader = new FileReader();
+                  fileReader.onload = () => {
+                    setUserImage(fileReader.result);
+                  };
+                  fileReader.readAsDataURL(file);
                 }}
                 onRemove={() => {
-                  setUserImage("")
+                  
                   currentUser.getIdToken(false).then(function (idToken) {
                     DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
-                      alert("Successfully updated.")
+                      window.location.reload()
                     );
                   });
                 }
@@ -759,7 +761,7 @@ export default function Profile(props) {
                 Saved Drops ({savedPosts.length})
               </div>
             </div>
-            { scheduledPosts.length !==0 && savedPosts.length !== 0 && (
+            {scheduledPosts.length !== 0 && savedPosts.length !== 0 && (
               <TabContainer>
                 <Tabs
                   activeTabIndex={activeTabIndex}
