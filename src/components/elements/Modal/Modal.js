@@ -65,7 +65,7 @@ function Modal(props){
                         {title && <ModalTitle> {title}</ModalTitle>}
                     </ModalHeaderLeft>
                     <ModalHeaderRight>
-                      <img alt={'close-button'} style={{top: 15, right:20,display:props.isOpen ? "block": "none" ,transition: "all .4s", position: 'fixed',cursor:'pointer' }} className={'close-button'} onClick={onClose} src="./close-icon.png" />
+                      {/* <img alt={'close-button'} style={{top: 15, right:20,display:props.isOpen ? "block": "none" ,transition: "all .4s", position: 'fixed',cursor:'pointer' }} className={'close-button'} onClick={onClose} src="./close-icon.png" /> */}
                     </ModalHeaderRight>
                 </ModalHeader>
                 <ModalContent>
