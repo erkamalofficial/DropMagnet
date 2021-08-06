@@ -198,7 +198,7 @@ function Reswipe(props) {
       type: "SET_RESWIPE_BUCKET",
       payload: { newBucket, tab: curTab },
     });
-    history.push("/home");
+    history.push("/profile/saved");
   };
 
   return (

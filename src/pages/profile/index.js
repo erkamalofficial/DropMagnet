@@ -146,9 +146,9 @@ export default function Profile(props) {
     },
   ];
 
-
   useEffect(() => {
-    if (scheduledPosts.length > 0) {
+    const isSaved = history.location.pathname.split('/')[2] === 'saved'
+    if (scheduledPosts.length > 0 && !isSaved) {
       setSelectedProfileList("scheduled")
     }
     else {
@@ -761,7 +761,7 @@ export default function Profile(props) {
                 Saved Drops ({savedPosts.length})
               </div>
             </div>
-            {scheduledPosts.length !== 0 && savedPosts.length !== 0 && (
+            {/* {scheduledPosts.length !== 0 && savedPosts.length !== 0 && ( */}
               <TabContainer>
                 <Tabs
                   activeTabIndex={activeTabIndex}
@@ -771,7 +771,7 @@ export default function Profile(props) {
                   tabList={tabList}
                 />
               </TabContainer>
-            )}
+            {/* )} */}
             {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
               <ButtonContainer>
                 <button

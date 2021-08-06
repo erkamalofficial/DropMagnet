@@ -213,6 +213,17 @@ function App() {
         <Route path="/magic" component={MagicLogin} />
         <Route path="/forgot-password" component={ForgotPassword} />
 
+        <Route
+          path="/profile/saved"
+          render={(props) => (
+            <Profile
+              {...props}
+              userImage={userDetails.image}
+              userDetails={userDetails}
+              userLoggedIn={true}
+            />
+          )}
+        />
 
         <Route
           path="/profile/:id"
