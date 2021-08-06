@@ -19,7 +19,7 @@ function HeaderBar(props) {
 
   function showUserAction() {
     if (props && props.userLoggedIn && userDetails) {
-      return <Link to={'/profile'} style={{ zIndex: 999999999999 }}>
+      return <Link to={'/profile'} style={{ zIndex: 999999999999, textDecoration: 'none' }}>
         <div className="header-profile-img-holder">
           <Avatar userImage={userDetails.avatar_url}
             initial={getInitials(userDetails.name)}
