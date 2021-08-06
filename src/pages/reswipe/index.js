@@ -238,7 +238,8 @@ function Reswipe(props) {
               />
             )}
             {isReswipeStarted && (
-              <div classNAme="rel">
+              <div classNAme="rel"
+              style={{marginTop: 'var(--main-header-margin-top)'}}>
                 <ProgressBar
                   key="progressBar"
                   size={roundLength}

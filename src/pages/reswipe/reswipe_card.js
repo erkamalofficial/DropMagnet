@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 const Card = styled.div`
 width: var(--card-container-width);
+margin-top: var(--main-header-margin-top);
 padding: 4px 20px;
 border-radius: 10px;
 transform-origin: center;
