@@ -37,7 +37,7 @@
 }
 
 .media-slider-container .full-img-cont{
-    width: 100%;
+    width: calc(100vw - 80px);
     height: calc(100vh - 10px);
     display: flex !important;
     align-items: center;
@@ -45,6 +45,7 @@
 }
 
 .full-img-cont img{
+    max-width: 100%;
     max-height: 100%;
 }
 
