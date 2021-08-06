@@ -18,6 +18,7 @@ export default function ProfileDropDetail(props) {
     slidesToShow: 2.4,
     slidesToScroll: 1,
     autoplay: false,
+    draggable: false,
     responsive: [
       {
         breakpoint: 1400,
@@ -119,9 +120,13 @@ export default function ProfileDropDetail(props) {
         </div>
         :
         <div className={'drop-detail-image-single'}>
-          <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
+          <div className="bg-img"
+            style={{ backgroundImage: `url(${props.drop.media[0].url})` }}
+            onClick={() => handleOpenImg(0)}>
+          </div>
+          {/* <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
             src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'}
-            onClick={() => handleOpenImg(0)} />
+            onClick={() => handleOpenImg(0)} /> */}
         </div>
       }
 

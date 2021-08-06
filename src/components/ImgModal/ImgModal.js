@@ -14,6 +14,7 @@ const ImgModal = ({ sourceIdx, setImgModal, medias }) => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: false,
+        draggable: false,
         dontAnimate: true
     }
 
