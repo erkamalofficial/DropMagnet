@@ -58,7 +58,11 @@ function Modal(props){
     const {isOpen, onClose, title,children} = props;
 
     return(
-        <ModalContainer style={{top: !isOpen ? '100%': '0'}}>
+        <ModalContainer style={{
+            opacity: !isOpen ? '0': '1', 
+            visibility: !isOpen ? 'hidden' : 'visible',
+            top: '0'
+        }}>
             <ModalBody>
                 <ModalHeader>
                     <ModalHeaderLeft>

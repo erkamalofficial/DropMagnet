@@ -628,11 +628,11 @@ export default function ProfilePage(props) {
             )}
           </div>
 
-          <div style={{ display: `${!detailView ? "none" : "block"}` }}>
+          {/* <div style={{ display: `${!detailView ? "none" : "block"}` }}>
             <div className="home-container profile-view-container">
               {detailView && renderDetail()}
             </div>
-          </div>
+          </div> */}
         </div>
       </>
     );

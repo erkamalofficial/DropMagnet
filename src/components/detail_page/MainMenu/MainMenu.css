@@ -8,6 +8,7 @@
   background: var(--coreBlack);
   opacity: 0;
   transition: 0.5s;
+  visibility: hidden;
   /* transform: translate3d(0px, 100%, 0px);  */
 }
 
@@ -21,6 +22,7 @@
   background: var(--coreBlack);
   opacity: 1;
   transition: 0.5s;
+  visibility: visible;
   /* transform:  translate3d(0px, 0px, 0px);  */
 }
 
