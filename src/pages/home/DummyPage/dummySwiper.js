@@ -124,33 +124,35 @@ function DummySwiper(props) {
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>
-      <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
-        {cards.length > 0 ? cards.map((cardDetails, index) => {
-          const { id } = cardDetails;
+      {!openView && (
+        <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
+          {cards.length > 0 ? cards.map((cardDetails, index) => {
+            const { id } = cardDetails;
 
-          return (
-            <TinderCard
-              ref={childRefs[index]}
-              className={`swipe ${id}`}
-              data-id={id}
-              key={id}
-              onSwipe={(dir) => {
-                const u = JSON.parse(localStorage.getItem('userDetails'));
-                if (u) {
-                  setSwiping(true)
-                  return swiped(dir, id, index)
-                }
-                else { history.push("/login") }
-              }}
-              onClickSwiperMain={() => openDrop(cardDetails)}
-              onCardLeftScreen={() => outOfFrame(id)}
-              overlayLabels={true}
-            >
-              <DummyCard {...cardDetails} />
-            </TinderCard>
-          );
-        }) : <h4 style={{ textAlign: 'center', width: '100%' }}>No Drops Available</h4>}
-      </CardContainer>
+            return (
+              <TinderCard
+                ref={childRefs[index]}
+                className={`swipe ${id}`}
+                data-id={id}
+                key={id}
+                onSwipe={(dir) => {
+                  const u = JSON.parse(localStorage.getItem('userDetails'));
+                  if (u) {
+                    setSwiping(true)
+                    return swiped(dir, id, index)
+                  }
+                  else { history.push("/login") }
+                }}
+                onClickSwiperMain={() => openDrop(cardDetails)}
+                onCardLeftScreen={() => outOfFrame(id)}
+                overlayLabels={true}
+              >
+                <DummyCard {...cardDetails} />
+              </TinderCard>
+            );
+          }) : <h4 style={{ textAlign: 'center', width: '100%' }}>No Drops Available</h4>}
+        </CardContainer>
+      )}
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         <MinusBtn onClick={() => {
           const u = JSON.parse(localStorage.getItem('userDetails'));

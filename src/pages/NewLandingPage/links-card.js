@@ -30,7 +30,7 @@ const LinksCard = ({
 
   return (
     <>
-      {(isLoading || !isLoading) && isMobile ? (
+      {isLoading && isMobile ? (
         <CardsMobileLoader
           displayName={displayName}
           handleLinkSelection={handleLinkSelection}
@@ -39,7 +39,7 @@ const LinksCard = ({
           availableLinks={availableLinks}
           getPageDetails={getPageDetails}
         />
-      ) : (isLoading || !isLoading) ? (
+      ) : isLoading ? (
         <CardsDesktopLoader
           displayName={displayName}
           handleLinkSelection={handleLinkSelection}
@@ -50,7 +50,7 @@ const LinksCard = ({
         />
       ) : null}
 
-      {/* {!isLoading && groupedLinks.length > 0 && (
+      {!isLoading && groupedLinks.length > 0 && (
         <>
           {isMobile ? (
             <CardSectionMobile
@@ -72,7 +72,7 @@ const LinksCard = ({
             />
           )}
         </>
-      )} */}
+      )}
     </>
   );
 };

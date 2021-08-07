@@ -154,17 +154,8 @@ const DummyCard = (props) => {
   const { artist_image, artist } = props
 
   const videoRef = useRef(null)
-
   let artistImg = artist.avatar_url !== '' ? artist.avatar_url : UserIcon
   
-
-  // useEffect(() => {
-  //   if (videoEl && true) {
-  //     videoEl.pause()
-  //   }
-
-  // }, [videoEl])
-
   return (
     <SwipeCard data-key="card-bdr"
     >
