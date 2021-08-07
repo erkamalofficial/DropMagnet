@@ -20,7 +20,7 @@ export const data = {
         "id": "3H9hG6VA2AND6UosP23nzLyK5mZ2",
         "username": "edwin",
         "name": "Edwin Jose",
-        "avatar_url": "https://storage.googleapis.com/drop_avatars/628efbe8b57.jpg"
+        "avatar_url": ""
     },
     "tags": []
 }

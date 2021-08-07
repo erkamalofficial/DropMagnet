@@ -151,50 +151,57 @@ const HeaderBarMenuIcon = styled.div`
 
 const DummyCard = (props) => {
 
-    const { artist_image, artist } = props
+  const { artist_image, artist } = props
 
-    const videoRef = useRef(null)
+  const videoRef = useRef(null)
 
-    let artistImg = artist.avatar_url !== '' ? artist.avatar_url : UserIcon
+  let artistImg = artist.avatar_url !== '' ? artist.avatar_url : UserIcon
+  
 
-    console.log(props.media[0].url)
+  // useEffect(() => {
+  //   if (videoEl && true) {
+  //     videoEl.pause()
+  //   }
 
-    return (
-        <SwipeCard data-key="card-bdr"
-        >
-            <SwipeCardDeviceContainer data-key="card-rel-container">
-                <HeaderSection key={1}>
-                    <Avatar userImage={artist_image} initial={getInitials(artist.username, '')} view_only small />
-                    {/* <UserAvatar src={artistImg} /> */}
-                    <div className="card-title">
-                        {artist.username}
-                        {/* - {props.id} */}
-                    </div>
-                    <div className="empty">......</div>
-                </HeaderSection>
-                <VideoHolder className={'video-playback'} ref={videoRef}>
-                    
-                    <video width="100%" height="100%" controls>
-                        <source src={video} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                </VideoHolder>
+  // }, [videoEl])
 
-                <FooterSection key={3}>
-                    <FooterTitle>{props.title} </FooterTitle>
-                    <FooterButtons>
-                        <div className="rare">{props.marketplace.toUpperCase()}</div>
-                        <div className="art">{props.category.toUpperCase()}</div>
-                        <div className="price"><span>Ξ</span>
-                            {props.price !== '0' && props.price !== undefined ? props.price
-                                : props.auction_price !== '0' && props.auction_price !== undefined ? props.auction_price
-                                    : 0}
-                        </div>
-                    </FooterButtons>
-                </FooterSection>
-            </SwipeCardDeviceContainer>
-        </SwipeCard>
-    );
+  return (
+    <SwipeCard data-key="card-bdr"
+    >
+      <SwipeCardDeviceContainer data-key="card-rel-container">
+        <HeaderSection key={1}>
+          <Avatar userImage={artist_image} initial={getInitials(artist.username, '')} view_only small />
+          {/* <UserAvatar src={artistImg} /> */}
+          <div className="card-title">
+            {artist.username}
+            {/* - {props.id} */}
+          </div>
+          <div className="empty">......</div>
+        </HeaderSection>
+        <VideoHolder className={'video-playback'} ref={videoRef}>
+
+          <video width="100%" height="100%" controls id="#video"
+          onClick={(e) => e.preventDefault()}>
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </VideoHolder>
+
+        <FooterSection key={3}>
+          <FooterTitle>{props.title} </FooterTitle>
+          <FooterButtons>
+            <div className="rare">{props.marketplace.toUpperCase()}</div>
+            <div className="art">{props.category.toUpperCase()}</div>
+            <div className="price"><span>Ξ</span>
+              {props.price !== '0' && props.price !== undefined ? props.price
+                : props.auction_price !== '0' && props.auction_price !== undefined ? props.auction_price
+                  : 0}
+            </div>
+          </FooterButtons>
+        </FooterSection>
+      </SwipeCardDeviceContainer>
+    </SwipeCard>
+  );
 };
 
 export default DummyCard;
