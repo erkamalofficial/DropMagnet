@@ -6,6 +6,7 @@ import CardSectionDesktop from "./card-section-desktop";
 import CardSectionMobile from "./card-section-mobile";
 import Spinner from "../../components/blocks/spinner";
 import useViewport from "./useViewport";
+import { CardsDesktopLoader, CardsMobileLoader } from "./LazyLoaders";
 
 const LinksCard = ({
   handleLinkSelection,
@@ -29,15 +30,34 @@ const LinksCard = ({
 
   return (
     <>
-      {isLoading && <Spinner />}
-      {!isLoading && groupedLinks.length > 0 && (
+      {(isLoading || !isLoading) && isMobile ? (
+        <CardsMobileLoader
+          displayName={displayName}
+          handleLinkSelection={handleLinkSelection}
+          selectedLinks={selectedLinks}
+          linksList={groupedLinks.slice(0, 1)}
+          availableLinks={availableLinks}
+          getPageDetails={getPageDetails}
+        />
+      ) : (isLoading || !isLoading) ? (
+        <CardsDesktopLoader
+          displayName={displayName}
+          handleLinkSelection={handleLinkSelection}
+          selectedLinks={selectedLinks}
+          linksList={groupedLinks.slice(0, 1)}
+          availableLinks={availableLinks}
+          getPageDetails={getPageDetails}
+        />
+      ) : null}
+
+      {/* {!isLoading && groupedLinks.length > 0 && (
         <>
           {isMobile ? (
             <CardSectionMobile
               displayName={displayName}
               handleLinkSelection={handleLinkSelection}
               selectedLinks={selectedLinks}
-              linksList={groupedLinks.slice(0,1)}
+              linksList={groupedLinks.slice(0, 1)}
               availableLinks={availableLinks}
               getPageDetails={getPageDetails}
             />
@@ -46,13 +66,13 @@ const LinksCard = ({
               displayName={displayName}
               handleLinkSelection={handleLinkSelection}
               selectedLinks={selectedLinks}
-              linksList={groupedLinks.slice(0,1)}
+              linksList={groupedLinks.slice(0, 1)}
               availableLinks={availableLinks}
               getPageDetails={getPageDetails}
             />
           )}
         </>
-      )}
+      )} */}
     </>
   );
 };

@@ -8,11 +8,11 @@ import { useAuth } from "../../contexts/FirebaseAuthContext";
 
 import { useSelector } from "react-redux";
 import {
-    fetchMusic,
-    fetchArt,
-    fetchColletibles,
-    fetchFashion,
-    fetchReswipeBuckets,
+  fetchMusic,
+  fetchArt,
+  fetchColletibles,
+  fetchFashion,
+  fetchReswipeBuckets,
 } from "../home/actions";
 import "../home/index.css";
 import { useHistory } from "react-router";
@@ -242,10 +242,10 @@ const LinksHome = (props) => {
             getPageDetails={() => { }}
           />
           <PersonalLinksPreview
-          handleGalleryName={() => handleGalleryName}
-          isLoggedIn={Boolean(currentUser)}
-          galleryName={galleryName}
-        />
+            handleGalleryName={() => handleGalleryName}
+            isLoggedIn={Boolean(currentUser)}
+            galleryName={galleryName}
+          />
         </PersonalLinksWrapper>
       )}
 
