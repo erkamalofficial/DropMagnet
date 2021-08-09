@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import "./LandingPage.css"
 
 import LinksCard from "./links-card";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
