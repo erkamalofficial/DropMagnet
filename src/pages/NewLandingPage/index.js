@@ -46,7 +46,7 @@ const LinksPage = styled.div`
   flex-direction: column;
   margin: 16px;
   @media (max-width: 576px){
-    margin: 0;
+    margin: 16px;
   }
 `;
 
