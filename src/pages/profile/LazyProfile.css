@@ -1,0 +1,115 @@
+.drop-list {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.basic {
+  border: 1px solid #353535;
+  background-color: #353535;
+}
+
+.round-profile-basic{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.small-round-profile-basic{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.title-basic{
+    height: 31px !important;
+    width: 61.39px !important;
+    border-radius: 2px !important;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.username-basic{
+    height: 20px !important;
+    width: 99px !important;
+    border-radius: 2px !important;
+    margin-bottom: 16px;
+}
+
+.handle-basic{
+    height: 20px !important;
+    width: 87px !important;
+    border-radius: 2px !important;
+}
+
+.bio-basic{
+    height: 20px !important;
+    width: 87px !important;
+    border-radius: 2px !important;
+}
+
+.tag-basic{
+  width: 74px;
+  height: 22px;
+  border-radius: 2px !important;
+  margin-right: 10px;
+}
+
+.date-basic{
+  width: 74px;
+  height: 16px;
+  border-radius: 2px !important;
+  margin-bottom: 12px;
+}
+
+.drop-title-basic{
+  width: 74px;
+  height: 23px;
+  border-radius: 2px !important;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+.drop-artist-basic{
+  width: 80px;
+  height: 32px;
+  border-radius: 2px !important;
+  margin-left: 12px
+}
+
+.drop-image-basic{
+  width: 125px;
+  height: 125px;
+  border-radius: 4px !important;
+  margin-left: 12px
+}
+  
+.img, .basic {
+  animation: hintloading 2s ease-in-out 0s infinite reverse;
+  -webkit-animation: hintloading 2s ease-in-out 0s infinite reverse;
+}
+    
+@keyframes hintloading
+{
+  0% {
+    opacity: 0.5;
+  }
+  50%  {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@-webkit-keyframes hintloading
+{
+  0% {
+    opacity: 0.5;
+  }
+  50%  {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

@@ -18,6 +18,7 @@ import Tabs from "../home/tabs";
 import { getCategoryFromTab, tabList } from "../../constants";
 import { getInitials } from "../../utils";
 import EditIcon from '@material-ui/icons/Edit';
+import LazyProfile from "./LazyProfile";
 
 const ButtonContainer = styled.div`
   margin-top: 16px;
@@ -407,8 +408,6 @@ export default function Profile(props) {
     );
   }
 
-  console.log(loading)
-
   if (loading.profile && loading.drops) {
     return (
       <div>
@@ -418,165 +417,165 @@ export default function Profile(props) {
           userImage={userImage}
           userDetails={props.userDetails}
         />
-        <div style={{ marginTop: "60px" }}>
-          <Spinner />
+        <div>
+          <LazyProfile />
         </div>
       </div>
     );
   }
 
-  else if (!loading.profile && loading.drops) {
-    return (
-      <>
-        <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
-          {renderInput()}
-          <div
-            className={"main-button-container"}
-            style={{ textAlign: "center" }}
-          >
-            <button className="main-button" onClick={saveForm}>
-              {"Save"}
-            </button>
-          </div>
-        </Modal>
-        <div className="profile-container">
-          <div className="fixed-container">
-            <HeaderBar
-              openHome={() => openHome()}
-              userLoggedIn={props.userLoggedIn}
-              userImage={userImage}
-              userDetails={props.userDetails}
-            />
-          </div>
-          <div
-            className="profile-detail-container"
-            style={{ display: `${detailView ? "none" : "flex"}` }}
-          >
+  // else if (!loading.profile && loading.drops) {
+  //   return (
+  //     <>
+  //       <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
+  //         {renderInput()}
+  //         <div
+  //           className={"main-button-container"}
+  //           style={{ textAlign: "center" }}
+  //         >
+  //           <button className="main-button" onClick={saveForm}>
+  //             {"Save"}
+  //           </button>
+  //         </div>
+  //       </Modal>
+  //       <div className="profile-container">
+  //         <div className="fixed-container">
+  //           <HeaderBar
+  //             openHome={() => openHome()}
+  //             userLoggedIn={props.userLoggedIn}
+  //             userImage={userImage}
+  //             userDetails={props.userDetails}
+  //           />
+  //         </div>
+  //         <div
+  //           className="profile-detail-container"
+  //           style={{ display: `${detailView ? "none" : "flex"}` }}
+  //         >
 
-            <div className="acc-profile-pic">
-              <Avatar
-                userImage={userImage}
-                initial={getInitials(firstName)}
-                picRef={profilePic}
-                cropModal={cropModal}
-                setCropModal={setCropModal}
-                setUploading={setUploading}
-                uploading={uploading}
-                onChange={(file) => {
-                  currentUser.getIdToken(false).then(function (idToken) {
-                    DropMagnetAPI.updateUserAvatar(file, file.type, idToken)
-                      .then(function (res) {
-                        window.location.reload()
-                      })
-                  })
-                  const fileReader = new FileReader();
-                  fileReader.onload = () => {
-                    setUserImage(fileReader.result);
-                  };
-                  fileReader.readAsDataURL(file);
-                }}
-                onRemove={() => {
-                  setUserImage("")
-                  currentUser.getIdToken(false).then(function (idToken) {
-                    DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
-                      window.location.reload()
-                    );
-                  });
-                }
-                }
-              />
-              <div className="edit-btn"
-                onClick={() => profilePic.current.click()}>
-                <EditIcon className="svg-icon" />
-              </div>
-            </div>
-            {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
-            <div
-              className="profile-large-title clickable"
-              onClick={() => handleProfileEdit("name")}
-            >{`${firstName}`}</div>
-            <div
-              className="profile-handle-title clickable"
-              onClick={() => handleProfileEdit("username")}
-            >
-              {"@" + handle}
-            </div>
-            <div style={{ display: "flex", paddingBottom: "16px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  paddingRight: "24px",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleProfileEdit("twitter")}
-              >
-                <img
-                  width={37}
-                  height={24}
-                  src="./twitter-icon.png"
-                  style={{ paddingRight: "8px" }}
-                  alt="/"
-                />
-                <div className="profile-medium-title">
-                  {twitterHandle !== "" && twitterHandle.length > 8 ? (
-                    <div className="socialHandle">
-                      @
-                      <p className="truncate">
-                        {twitterHandle.substring(0, twitterHandle.length - 4)}
-                      </p>
-                      <p className="last">
-                        {twitterHandle.substring(twitterHandle.length - 4)}
-                      </p>
-                    </div>
-                  ) : twitterHandle.length <= 8 ? (
-                    <p>@{twitterHandle}</p>
-                  ) : (
-                    <p>Add Twitter</p>
-                  )}
-                </div>
-              </div>
-              <div
-                style={{ display: "flex", cursor: "pointer" }}
-                onClick={() => handleProfileEdit("insta")}
-              >
-                <img width={24} height={24} src="./insta-icon.png" />
-                <div
-                  className="profile-medium-title"
-                  style={{ marginLeft: "10px" }}
-                >
-                  {instaHandle !== "" && instaHandle.length > 8 ? (
-                    <div className="socialHandle">
-                      @
-                      <p className="truncate">
-                        {instaHandle.substring(0, instaHandle.length - 4)}
-                      </p>
-                      <p className="last">
-                        {instaHandle.substring(instaHandle.length - 4)}
-                      </p>
-                    </div>
-                  ) : instaHandle.length <= 8 ? (
-                    <p>@{instaHandle}</p>
-                  ) : (
-                    <p>Add Instagram</p>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div
-              className="profile-bio-edit-button clickable"
-              onClick={() => handleProfileEdit("bio")}
-            >
-              {bio ? bio : "Tap to Add Bio"}
-            </div>
-          </div>
+  //           <div className="acc-profile-pic">
+  //             <Avatar
+  //               userImage={userImage}
+  //               initial={getInitials(firstName)}
+  //               picRef={profilePic}
+  //               cropModal={cropModal}
+  //               setCropModal={setCropModal}
+  //               setUploading={setUploading}
+  //               uploading={uploading}
+  //               onChange={(file) => {
+  //                 currentUser.getIdToken(false).then(function (idToken) {
+  //                   DropMagnetAPI.updateUserAvatar(file, file.type, idToken)
+  //                     .then(function (res) {
+  //                       window.location.reload()
+  //                     })
+  //                 })
+  //                 const fileReader = new FileReader();
+  //                 fileReader.onload = () => {
+  //                   setUserImage(fileReader.result);
+  //                 };
+  //                 fileReader.readAsDataURL(file);
+  //               }}
+  //               onRemove={() => {
+  //                 setUserImage("")
+  //                 currentUser.getIdToken(false).then(function (idToken) {
+  //                   DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
+  //                     window.location.reload()
+  //                   );
+  //                 });
+  //               }
+  //               }
+  //             />
+  //             <div className="edit-btn"
+  //               onClick={() => profilePic.current.click()}>
+  //               <EditIcon className="svg-icon" />
+  //             </div>
+  //           </div>
+  //           {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
+  //           <div
+  //             className="profile-large-title clickable"
+  //             onClick={() => handleProfileEdit("name")}
+  //           >{`${firstName}`}</div>
+  //           <div
+  //             className="profile-handle-title clickable"
+  //             onClick={() => handleProfileEdit("username")}
+  //           >
+  //             {"@" + handle}
+  //           </div>
+  //           <div style={{ display: "flex", paddingBottom: "16px" }}>
+  //             <div
+  //               style={{
+  //                 display: "flex",
+  //                 paddingRight: "24px",
+  //                 cursor: "pointer",
+  //               }}
+  //               onClick={() => handleProfileEdit("twitter")}
+  //             >
+  //               <img
+  //                 width={37}
+  //                 height={24}
+  //                 src="./twitter-icon.png"
+  //                 style={{ paddingRight: "8px" }}
+  //                 alt="/"
+  //               />
+  //               <div className="profile-medium-title">
+  //                 {twitterHandle !== "" && twitterHandle.length > 8 ? (
+  //                   <div className="socialHandle">
+  //                     @
+  //                     <p className="truncate">
+  //                       {twitterHandle.substring(0, twitterHandle.length - 4)}
+  //                     </p>
+  //                     <p className="last">
+  //                       {twitterHandle.substring(twitterHandle.length - 4)}
+  //                     </p>
+  //                   </div>
+  //                 ) : twitterHandle.length <= 8 ? (
+  //                   <p>@{twitterHandle}</p>
+  //                 ) : (
+  //                   <p>Add Twitter</p>
+  //                 )}
+  //               </div>
+  //             </div>
+  //             <div
+  //               style={{ display: "flex", cursor: "pointer" }}
+  //               onClick={() => handleProfileEdit("insta")}
+  //             >
+  //               <img width={24} height={24} src="./insta-icon.png" />
+  //               <div
+  //                 className="profile-medium-title"
+  //                 style={{ marginLeft: "10px" }}
+  //               >
+  //                 {instaHandle !== "" && instaHandle.length > 8 ? (
+  //                   <div className="socialHandle">
+  //                     @
+  //                     <p className="truncate">
+  //                       {instaHandle.substring(0, instaHandle.length - 4)}
+  //                     </p>
+  //                     <p className="last">
+  //                       {instaHandle.substring(instaHandle.length - 4)}
+  //                     </p>
+  //                   </div>
+  //                 ) : instaHandle.length <= 8 ? (
+  //                   <p>@{instaHandle}</p>
+  //                 ) : (
+  //                   <p>Add Instagram</p>
+  //                 )}
+  //               </div>
+  //             </div>
+  //           </div>
+  //           <div
+  //             className="profile-bio-edit-button clickable"
+  //             onClick={() => handleProfileEdit("bio")}
+  //           >
+  //             {bio ? bio : "Tap to Add Bio"}
+  //           </div>
+  //         </div>
 
-          <div style={{ marginTop: "60px" }}>
-            <Spinner />
-          </div>
-        </div>
-      </>
-    );
-  }
+  //         <div style={{ marginTop: "60px" }}>
+  //           <Spinner />
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // }
 
   else {
     return (
@@ -848,3 +847,4 @@ export default function Profile(props) {
     );
   }
 }
+

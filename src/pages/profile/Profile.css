@@ -5,11 +5,19 @@
   overflow-x: hidden;
 }
 
+.profile-container.loader{
+  padding-bottom: 26px;
+}
+
 .profile-detail-container {
   display: flex;
   flex-direction: column;
   align-items: center; 
   padding: 83px 12px 0 12px;
+}
+
+.profile-detail-container.loader {
+  padding-top: 15px !important;
 }
 
 .profile-button-option-holder {
