@@ -8,7 +8,6 @@ import DummyPic from "../../../asstes/dummyMobile.png"
 const Paragraph = styled.div`
   max-width: 600px;
   font-size: 15px;
-  margin-left: 30px;
   @media (max-width: 576px) {
     width: 325px;
     margin-left: 0px;
@@ -19,7 +18,6 @@ const Paragraph = styled.div`
 `;
 
 const PLSectionOne = styled.div`
-  margin-top: 50px;
   margin-bottom: 32px;
   @media (max-width: 600px) {
     margin-bottom: 17px;

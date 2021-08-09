@@ -121,11 +121,18 @@ function DummySwiper(props) {
 
   return (
     <>
-      <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
+      <div className="view-container home-container" id="detCnt" 
+      style={{ 
+        display: `${!openView ? 'none' : 'block'}`,
+      }} >
         {openView && renderDetail()}
       </div>
       {!openView && (
-        <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
+        <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} 
+        style={{ 
+          display: `${openView ? 'none' : 'flex'}`,
+          marginTop: 'var(--main-header-margin-top)' 
+        }}>
           {cards.length > 0 ? cards.map((cardDetails, index) => {
             const { id } = cardDetails;
 

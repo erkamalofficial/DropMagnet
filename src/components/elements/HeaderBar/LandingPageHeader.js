@@ -128,14 +128,14 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
           <div>#ThreeTheWeb</div>
         </LogoTitleSection>
       </LogoSection>
-      <MiddleSection>
+      {/* <MiddleSection>
         <Tabs tabs={TAB_LIST} activeTabIndex={activeTabIndex} onChangeTab={(index) => {
           setActiveTabIndex(index)
           if(typeof setCurTab !== undefined){
             setCurTab(index)
           }
         }} />
-      </MiddleSection>
+      </MiddleSection> */}
       <RightSection>
         {!isLoggedIn ? (
           <>

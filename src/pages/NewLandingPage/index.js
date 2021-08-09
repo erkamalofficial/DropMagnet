@@ -23,13 +23,14 @@ import LandingPageHeader from "../../components/elements/HeaderBar/LandingPageHe
 import NftGallery from "../../components/elements/HeaderBar/NftGallery";
 import PersonalLinksPreview from "./personal-links-preview";
 import useViewport from "./useViewport";
+import Tabs from "../../components/elements/Tabs/index.js";
 
 
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: -14px;
   div.rel {
     position: relative;
     user-select: none;
@@ -38,6 +39,9 @@ const HomeContainer = styled.div`
     @media (max-width: 500px) {
       padding-top: 10px
     }
+  }
+  @media(max-width: 576px){
+    margin-top: 2px;
   }
 `;
 
@@ -56,14 +60,24 @@ const CardContainer = styled.div`
   margin-bottom: var(--gap-bottom);
 `;
 
+const GalleryContainer = styled.div`
+  margin-top: -14px;
+  @media(max-width: 576px){
+    margin-top: 2px;
+  }
+`;
+
 const PersonalLinksWrapper = styled.div`
-  width: calc(100% - 32px);
+  // width: calc(100% - 32px);
   overflow: hidden;
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 16px;
-  margin-top: 50px;
+  margin: auto;
+  margin-top: -14px;
+  @media(max-width: 576px){
+    margin-top: 2px;
+  }
 `;
 
 const PLSectionOne = styled.div`
@@ -96,6 +110,8 @@ const HeaderSubtitle = styled.div`
   margin-bottom: 16px;
   font-weight: 700;
 `;
+
+const TAB_LIST = ["Drop Swipe", "NFT Galleries", "MetaURLs"];
 
 const LinksHome = (props) => {
   const dispatch = useDispatch();
@@ -208,7 +224,13 @@ const LinksHome = (props) => {
 
       {curTab === 0 ? (
         <HomeContainer>
-          <div className="rel">
+          <div className="rel" style={{paddingTop: '0'}}>
+            <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
+              setCurTab(index)
+              if (typeof setCurTab !== undefined) {
+                setCurTab(index)
+              }
+            }} />
             <DummySwiper
               reswipeModeActive={false}
               key={uniqueId}
@@ -223,11 +245,26 @@ const LinksHome = (props) => {
           </div>
         </HomeContainer>
       ) : curTab === 1 ? (
-        <NftGallery />
+        <GalleryContainer>
+          <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
+            setCurTab(index)
+            if (typeof setCurTab !== undefined) {
+              setCurTab(index)
+            }
+          }} />
+          <NftGallery />
+        </GalleryContainer>
+
       ) : (
         <PersonalLinksWrapper>
           <PLSectionOne>
             <PLSectionOneContent>
+              <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
+                setCurTab(index)
+                if (typeof setCurTab !== undefined) {
+                  setCurTab(index)
+                }
+              }} />
               <HeaderSubtitle>
                 Stand out from the crowd, share NFT Galleries, and get paid in
                 crypto fast with MetaURLs.

@@ -80,6 +80,7 @@ const GridContainer = styled.div`
   width: 570px;
   margin: auto;
   margin-bottom: 32px;
+  margin-left: 8px;
 `;
 
 const ScrollContainer = styled.div`

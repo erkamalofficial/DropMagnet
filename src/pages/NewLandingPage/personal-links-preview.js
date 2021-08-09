@@ -10,11 +10,13 @@ const PLSectionThree = styled.div`
   border-radius: 8px;
   padding: 14px 24px;
   background-color: #2c2c2c;
+  margin-left: 8px;
   @media(max-width:576px){
     padding: 16px 32px;
     padding-bottom: 28px;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+    margin-left: 0;
   }
 `;
 
@@ -60,9 +62,10 @@ const Button = styled.button`
 const ButtonContainer = styled.div`
   margin-top: 16px;
   padding: 10px;
+  margin-left: 8px;
   @media (max-width:576px){
     transform: translate(-10px,-40px);
-
+    margin-left: 0;
   }
 `;
 
