@@ -12,6 +12,10 @@
   /* transform: translate3d(0px, 100%, 0px);  */
 }
 
+.menu-list-item{
+  margin-bottom: 16px;
+}
+
 .main-menu-open {
   position: fixed;
   top: 0;

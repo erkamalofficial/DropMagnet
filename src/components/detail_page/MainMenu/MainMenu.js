@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./MainMenu.css";
 import { Link } from "react-router-dom";
-import {LogoTitle, LogoTitleSection} from "../../elements/HeaderBar/LogoTitles";
+import { LogoTitle, LogoTitleSection } from "../../elements/HeaderBar/LogoTitles";
 import Avatar from "../../elements/Avatar/Avatar";
 import { getInitials } from "../../../utils";
+import FadeIn from 'react-fade-in';
 
 export default function MainMenu(props) {
   const [open, setOpen] = useState(false);
@@ -86,7 +87,11 @@ export default function MainMenu(props) {
         ) : (
           <></>
         )}
-        {menuList.map(renderMenuItem)}
+        {open && (
+          <FadeIn delay={100} childClassName="menu-list-item">
+            {menuList.map(renderMenuItem)}
+          </FadeIn>
+        )}
       </div>
     </div>
   );
