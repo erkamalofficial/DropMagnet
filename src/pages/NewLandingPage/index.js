@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
+import "./LandingPage.css"
 
 import LinksCard from "./links-card";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
@@ -24,6 +25,7 @@ import NftGallery from "../../components/elements/HeaderBar/NftGallery";
 import PersonalLinksPreview from "./personal-links-preview";
 import useViewport from "./useViewport";
 import Tabs from "../../components/elements/Tabs/index.js";
+import FadeIn from 'react-fade-in';
 
 
 const HomeContainer = styled.div`
@@ -61,7 +63,6 @@ const CardContainer = styled.div`
 `;
 
 const GalleryContainer = styled.div`
-  margin-top: -14px;
   @media(max-width: 576px){
     margin-top: 2px;
   }
@@ -74,7 +75,6 @@ const PersonalLinksWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   margin: auto;
-  margin-top: -14px;
   @media(max-width: 576px){
     margin-top: 2px;
   }
@@ -115,13 +115,9 @@ const TAB_LIST = ["Drop Swipe", "NFT Galleries", "MetaURLs"];
 
 const LinksHome = (props) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const { currentUser, idToken } = useAuth();
 
-  const curIndex = useSelector((state) => state.category.curIndex);
-
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date(curIndex));
   const [detailView, setDetailView] = useState(false);
   const [galleryName, setGalleryName] = useState("");
 
@@ -130,17 +126,11 @@ const LinksHome = (props) => {
   const { viewportWidth } = useViewport();
   const breakpoint = 620;
   const isMobile = viewportWidth < breakpoint;
-  const [pageNos, setPageNos] = useState([0, 1]);
-
-  const getPageDetails = (pageNos) => {
-    setPageNos(pageNos);
-  };
 
   const activeTabIndex = useSelector((state) => {
     return state.category.general.activeTabIndex;
   });
   const nextIndex = useSelector((state) => state.category.nextIndex);
-  const fetchMore = useSelector((state) => state.category.fetchMore);
 
   const displayName = galleryName === "" ? "You" : galleryName;
 
@@ -150,31 +140,6 @@ const LinksHome = (props) => {
   });
 
   const uniqueId = Date.now();
-
-  const handleActiveTabIndex = (index) => {
-
-    const activeTab = tabList[index];
-
-    let curTime = new Date(selectedDropdownDate).getTime()
-    let extras = {
-      token: idToken,
-      curTime: curTime,
-      userID: currentUser.uid,
-    }
-
-    if (activeTab === "music") {
-      dispatch(fetchMusic({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-    }
-    if (activeTab === "arts") {
-      dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-    }
-    if (activeTab === "collectables") {
-      dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-    }
-    if (activeTab === "fashion") {
-      dispatch(fetchFashion({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-    }
-  };
 
   const handleSwipe = (dir, drop_id) => {
     currentUser.getIdToken().then((idToken) => {
@@ -218,74 +183,72 @@ const LinksHome = (props) => {
   return (
     <LinksPage>
 
-      <LandingPageHeader
-        isLoggedIn={localStorage.getItem("userDetails") ? true : false}
-        setCurTab={setCurTab} />
-
+      <FadeIn delay={200}>
+        <LandingPageHeader
+          isLoggedIn={localStorage.getItem("userDetails") ? true : false}
+          setCurTab={setCurTab} />
+      </FadeIn>
+      <FadeIn delay={200}>
+        <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
+          setCurTab(index)
+          if (typeof setCurTab !== undefined) {
+            setCurTab(index)
+          }
+        }} />
+      </FadeIn>
       {curTab === 0 ? (
         <HomeContainer>
-          <div className="rel" style={{paddingTop: '0'}}>
-            <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
-              setCurTab(index)
-              if (typeof setCurTab !== undefined) {
-                setCurTab(index)
-              }
-            }} />
-            <DummySwiper
-              reswipeModeActive={false}
-              key={uniqueId}
-              db={activeBucket}
-              activeTabIndex={activeTabIndex}
-              onSwipe={handleSwipe}
-              handleActiveTabIndex={handleActiveTabIndex}
-              tabList={tabList}
-              setDetailView={setDetailView}
-              nextIndex={nextIndex}
-            />
+          <div className="rel" style={{ paddingTop: '0' }}>
+            <FadeIn delay={600}>
+              <DummySwiper
+                reswipeModeActive={false}
+                key={uniqueId}
+                db={activeBucket}
+                activeTabIndex={activeTabIndex}
+                onSwipe={handleSwipe}
+                handleActiveTabIndex={() => { }}
+                tabList={tabList}
+                setDetailView={setDetailView}
+                nextIndex={nextIndex}
+              />
+            </FadeIn>
           </div>
         </HomeContainer>
       ) : curTab === 1 ? (
         <GalleryContainer>
-          <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
-            setCurTab(index)
-            if (typeof setCurTab !== undefined) {
-              setCurTab(index)
-            }
-          }} />
-          <NftGallery />
+          <FadeIn delay={600}>
+            <NftGallery />
+          </FadeIn>
         </GalleryContainer>
 
       ) : (
         <PersonalLinksWrapper>
           <PLSectionOne>
             <PLSectionOneContent>
-              <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
-                setCurTab(index)
-                if (typeof setCurTab !== undefined) {
-                  setCurTab(index)
-                }
-              }} />
-              <HeaderSubtitle>
-                Stand out from the crowd, share NFT Galleries, and get paid in
-                crypto fast with MetaURLs.
-              </HeaderSubtitle>
+              <FadeIn delay={600}>
+                <HeaderSubtitle>
+                  Stand out from the crowd, share NFT Galleries, and get paid in
+                  crypto fast with MetaURLs.
+                </HeaderSubtitle>
+              </FadeIn>
             </PLSectionOneContent>
           </PLSectionOne>
-          <LinksCard
-            handleLinkSelection={() => { }}
-            selectedLinks={[]}
-            displayName={displayName}
-            handleGalleryName={() => { }}
-            getPageDetails={() => { }}
-          />
-          <PersonalLinksPreview
-            handleGalleryName={() => handleGalleryName}
-            isLoggedIn={Boolean(currentUser)}
-            galleryName={galleryName}
-          />
+          <FadeIn delay={600}>
+            <LinksCard
+              handleLinkSelection={() => { }}
+              selectedLinks={[]}
+              displayName={displayName}
+              handleGalleryName={() => { }}
+              getPageDetails={() => { }}
+            />
+            <PersonalLinksPreview
+              handleGalleryName={() => handleGalleryName}
+              isLoggedIn={Boolean(currentUser)}
+              galleryName={galleryName}
+            />
+          </FadeIn>
         </PersonalLinksWrapper>
       )}
-
 
     </LinksPage>
   );
