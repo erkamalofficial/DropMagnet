@@ -68,6 +68,7 @@ export default function Profile(props) {
   const [twitterHandleForm, setTwitterHandleForm] = useState("");
   const [instaHandleForm, setInstaHandleForm] = useState("");
   const [loading, setLoading] = useState({ profile: false, drops: false });
+  const [fetchingPosts, setFetchingPosts] = useState(true)
 
   const [curDrop, setCurDrop] = useState({});
   const [detailView, setDetailView] = useState(false);
@@ -156,10 +157,10 @@ export default function Profile(props) {
     else if(isSaved){
       setSelectedProfileList("saved")
     }
-    else {
-      // 
+    else if(!fetchingPosts){
+      setSelectedProfileList("saved")
     }
-  }, [scheduledPosts.length])
+  }, [scheduledPosts.length, fetchingPosts])
 
 
   useEffect(() => {
@@ -218,16 +219,14 @@ export default function Profile(props) {
 
         DropMagnetAPI.getUserPosts(user_id, idToken)
           .then((res) => {
-            console.log("Get drops start")
             if (res === null) {
-              console.log("Get drops null")
               setScheduledPosts([]);
             }
             else {
               setScheduledPosts(res);
+              
             }
-
-            console.log("Get drops")
+            setFetchingPosts(false)
             setLoading({ ...loading, drops: false })
           })
           .catch((err) => {

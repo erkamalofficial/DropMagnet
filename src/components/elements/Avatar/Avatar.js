@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import "./Avatar.css";
 import CropModal from "./CropModal";
+import { useAuth } from "../../../contexts/FirebaseAuthContext";
+
+
 const InitialCircle = styled.span`
   width: 100%;
   height: 100%;
@@ -27,9 +31,35 @@ export const InitialsOfUser = ({ initial }) => {
   );
 };
 
-function Avatar({ userImage, style, setCropModal, cropModal, setUploading, uploading, initial, view_only, small, onRemove, onChange, picRef }) {
+function Avatar({
+  userImage,
+  style,
+  setCropModal,
+  cropModal,
+  setUploading,
+  uploading,
+  initial,
+  view_only,
+  small,
+  onRemove,
+  onChange,
+  picRef,
+  userId
+}) {
+
+
   const [img, setImg] = useState(null)
   const cont_style = style ? style : {};
+
+  const history = useHistory()
+  const { currentUser } = useAuth();
+
+  const openUser = (e) => {
+    const user_id = currentUser.uid;
+    if (user_id !== userId) {
+      history.push(`/profile/${userId}`)
+    }
+  }
 
   const handleChange = (e) => {
     const fileReader = new FileReader();
@@ -54,7 +84,7 @@ function Avatar({ userImage, style, setCropModal, cropModal, setUploading, uploa
           uploading={uploading}
         />}
 
-      {userImage && (
+      {userImage && !view_only && (
         <span className={"delete-button"} onClick={onRemove}>
           <img
             style={{ width: "20px", height: "20px", cursor: "pointer" }}
@@ -71,6 +101,7 @@ function Avatar({ userImage, style, setCropModal, cropModal, setUploading, uploa
             className={"avatar-img"}
             alt={"profile-edit"}
             src={userImage ? userImage : "./add-user-icon.png"}
+            onClick={openUser}
           />
         ) : (
           <InitialsOfUser initial={initial} />

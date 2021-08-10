@@ -5,6 +5,8 @@ import "./card.css"
 import UserIcon from "../../asstes/add-user-icon.png"
 import Avatar from "../../components/elements/Avatar/Avatar.js";
 import { getInitials } from "../../utils/index.js";
+import { useHistory } from 'react-router'
+import { useAuth } from "../../contexts/FirebaseAuthContext";
 
 const SwipeCard = styled.div`
   cursor: pointer;
@@ -136,27 +138,46 @@ const HeaderBarMenuIcon = styled.div`
 
 const Card = (props) => {
 
-  const { artist_image, artist } = props
+  const { artist } = props
+  const history = useHistory()
+  const { currentUser } = useAuth();
 
   let artistImg = artist.avatar_url !== '' ? artist.avatar_url : UserIcon
-  
+
+  const openUser = (e) => {
+    const user_id = currentUser.uid;
+    if (user_id !== props.user_id) {
+      history.push(`/profile/${props.user_id}`)
+    }
+    else {
+      history.push(`/profile`)
+    }
+  }
+
   return (
     <SwipeCard data-key="card-bdr"
-      >
+    >
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
-          <Avatar userImage={artist_image} initial={getInitials(artist.name)} view_only small />
+          <Avatar
+            userImage={artistImg}
+            initial={getInitials(artist.name)}
+            view_only small
+            userId={props.user_id} />
           {/* <UserAvatar src={artistImg} /> */}
-          <div className="card-title">
+          <div className="card-title"
+          style={{cursor: 'pointer'}}
+          onClick={openUser}
+          >
             {artist.username}
-          {/* - {props.id} */}
+            {/* - {props.id} */}
           </div>
           <div className="empty">......</div>
         </HeaderSection>
         <SwipeImage
           data-key="art"
           key={2}
-          // style={{ backgroundImage: `url(${props.media[0].url})` }}
+        // style={{ backgroundImage: `url(${props.media[0].url})` }}
         >
           <img src={props.media[0].url} alt={'CoverImage'} />
         </SwipeImage>
@@ -166,10 +187,10 @@ const Card = (props) => {
           <FooterButtons>
             <div className="rare">{props.marketplace.toUpperCase()}</div>
             <div className="art">{props.category.toUpperCase()}</div>
-            <div className="price"><span>Ξ</span> 
-            {props.price !== '0' && props.price!==undefined ? props.price 
-            : props.auction_price !== '0' && props.auction_price!==undefined ? props.auction_price 
-            : 0}
+            <div className="price"><span>Ξ</span>
+              {props.price !== '0' && props.price !== undefined ? props.price
+                : props.auction_price !== '0' && props.auction_price !== undefined ? props.auction_price
+                  : 0}
             </div>
           </FooterButtons>
         </FooterSection>

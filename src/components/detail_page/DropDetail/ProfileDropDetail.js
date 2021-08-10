@@ -8,9 +8,14 @@ import ImgModal from '../../ImgModal/ImgModal'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useHistory } from 'react-router'
+import { useAuth } from "../../../contexts/FirebaseAuthContext";
 
 
 export default function ProfileDropDetail(props) {
+
+  const history = useHistory()
+  const { currentUser } = useAuth();
 
   const settings = {
     infinite: false,
@@ -76,6 +81,16 @@ export default function ProfileDropDetail(props) {
     setSrcIndex(idx)
   }
 
+  const openUser = (e) => {
+    const user_id = currentUser.uid;
+    if (user_id !== props.drop.user_id) {
+      history.push(`/profile/${props.drop.user_id}`)
+    }
+    else{
+      window.location.reload()
+    }
+  }
+
   const style = props.style || {};
 
   return (
@@ -87,10 +102,18 @@ export default function ProfileDropDetail(props) {
           sourceIdx={srcIndex} />
       }
       <div className="detail-view-header">
-        <Avatar userImage={artist_image} style={{ margin: 10 }} initial={getInitials(artist_name)} view_only small />
+        <Avatar userImage={artist_image} 
+        style={{ margin: 10 }} 
+        initial={getInitials(artist_name)} 
+        view_only small 
+        userId={props.drop.user_id}/>
 
         {/* <img className="detail-view-header-image" src={artist_image}/> */}
-        <h1 className="drop-detail-title">{artist_name}</h1>
+        <h1 className="drop-detail-title"
+        style={{cursor: 'pointer'}}
+        onClick={openUser}
+        >{artist_name}
+        </h1>
         <img className="close-detail-button close-button view-close-btn"
           style={{ width: '39px', height: '39px', cursor: 'pointer' }}
           onClick={() => closeDetail()} src="./close-icon.png"

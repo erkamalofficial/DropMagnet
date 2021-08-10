@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import * as DropMagnetAPI from "../../DropMagnetAPI";
 import DropList from "../../components/elements/DropList/DropList";
 import "./Profile.css";
@@ -7,24 +7,16 @@ import TextField from "../../components/elements/TextField/TextField";
 
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
-import Modal from "../../components/elements/Modal/Modal";
 import TextView from "../../components/elements/TextView/TextView";
 import Avatar from "../../components/elements/Avatar/Avatar";
 import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDropDetail";
-import Spinner from "../../components/blocks/spinner";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Tabs from "../home/tabs";
 import { getCategoryFromTab, tabList } from "../../constants";
 import { getInitials } from "../../utils";
-import EditIcon from '@material-ui/icons/Edit';
-
-const ButtonContainer = styled.div`
-  margin-top: 16px;
-  position: fixed;
-  bottom: 32px;
-  z-index: 999;
-`;
+import FadeIn from "react-fade-in";
+import LazyProfile from "./LazyProfile";
 
 const TabContainer = styled.div`
   margin-top: 12px;
@@ -40,6 +32,7 @@ const TabContainer = styled.div`
 export default function ProfilePage(props) {
 
   const profilePic = useRef(null)
+  const { id } = useParams()
 
   const [handle, setHandle] = useState("");
 
@@ -57,14 +50,7 @@ export default function ProfilePage(props) {
   const [user, setUser] = useState(null);
 
   const dispatch = useDispatch();
-  /* For profile edit */
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const [usernameForm, setUsernameForm] = useState("");
-  const [firstNameForm, setFirstNameForm] = useState("");
-  const [currentEditField, setCurrentEditField] = useState("");
-  const [descriptionForm, setDescriptionForm] = useState("");
-  const [twitterHandleForm, setTwitterHandleForm] = useState("");
-  const [instaHandleForm, setInstaHandleForm] = useState("");
+
   const [loading, setLoading] = useState(true);
 
   const [curDrop, setCurDrop] = useState({});
@@ -146,7 +132,7 @@ export default function ProfilePage(props) {
 
   useEffect(() => {
     setCategoryList(collectibleArts);
-    const user_id = currentUser.uid;
+    const user_id = id;
     currentUser
       .getIdToken(false)
       .then(function (idToken) {
@@ -171,10 +157,10 @@ export default function ProfilePage(props) {
           }
         });
 
-        DropMagnetAPI.getSaveDrops(idToken).then((res) => {
-          console.log(res);
-          setSavedPosts(res);
-        });
+        // DropMagnetAPI.getSaveDrops(idToken).then((res) => {
+        //   console.log(res);
+        //   setSavedPosts(res);
+        // });
 
         DropMagnetAPI.getUserPosts(user_id, idToken)
           .then((res) => {
@@ -189,8 +175,6 @@ export default function ProfilePage(props) {
         // Handle error
       });
   }, []);
-
-  function fetchUser() { }
 
   function openDrop() { }
 
@@ -211,142 +195,6 @@ export default function ProfilePage(props) {
     );
   }
 
-  const handleProfileEdit = (field = "") => {
-    setCurrentEditField(field);
-    setOpenEditModal(true);
-    setUsernameForm(handle);
-    setInstaHandleForm(instaHandle);
-    setTwitterHandleForm(twitterHandle);
-    setDescriptionForm(bio);
-    // setLastNameForm(lastName);
-    setFirstNameForm(firstName);
-  };
-
-  const renderInput = () => {
-    switch (currentEditField) {
-      case "username":
-        return (
-          <TextField
-            setInputValue={setUsernameForm}
-            title={"Username"}
-            titleTopMargin={"24px"}
-            value={usernameForm}
-            placeholder={"Enter a username"}
-          />
-        );
-      case "insta":
-        return (
-          <TextField
-            setInputValue={setInstaHandleForm}
-            title={"Instagram Handle"}
-            titleTopMargin={"24px"}
-            value={instaHandleForm}
-            placeholder={"Enter your Instagram Handle"}
-          />
-        );
-
-      case "twitter":
-        return (
-          <TextField
-            setInputValue={setTwitterHandleForm}
-            title={"Twitter Handle"}
-            titleTopMargin={"24px"}
-            value={twitterHandleForm}
-            placeholder={"Enter your Twitter Handle"}
-          />
-        );
-
-      case "bio":
-        return (
-          <TextView
-            height={"100px"}
-            titleTopMargin={"24px"}
-            setInputValue={setDescriptionForm}
-            value={descriptionForm}
-            title={"Your Bio"}
-            placeholder={"Tell us about your self (max 300 words)"}
-          />
-        );
-
-      case "name":
-        return (
-          <>
-            <TextField
-              setInputValue={setFirstNameForm}
-              title={"Full Name"}
-              titleTopMargin={"24px"}
-              value={firstNameForm}
-              placeholder={"Enter your Full Name"}
-            />
-            {/* <TextField
-              setInputValue={setLastNameForm}
-              title={"Last Name"}
-              titleTopMargin={"24px"}
-              value={lastNameForm}
-              placeholder={"Enter your Last Name"}
-            /> */}
-          </>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const updateDetails = (field, value) => {
-    currentUser.getIdToken(false).then(function (idToken) {
-      DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) =>
-        alert("Successfully updated.")
-      );
-    });
-  };
-  const saveForm = () => {
-    switch (currentEditField) {
-      case "username": {
-        /*API Call*/
-        setHandle(usernameForm);
-        updateDetails("username", usernameForm);
-        setUsernameForm("");
-        break;
-      }
-      case "insta": {
-        /*API Call to save*/
-        setInstaHandle(instaHandleForm);
-        updateDetails("insta_url", instaHandleForm);
-        setInstaHandleForm("");
-        break;
-      }
-
-      case "twitter": {
-        // API Call TO Save
-        setTwitterHandle(twitterHandleForm);
-        updateDetails("twitter_url", twitterHandleForm);
-        setTwitterHandleForm("");
-        break;
-      }
-
-      case "bio": {
-        // API Call To Save
-        setBio(descriptionForm);
-        updateDetails("bio", descriptionForm);
-        setDescriptionForm("");
-        break;
-      }
-
-      case "name": {
-        // API Call To Save
-        setFirstName(firstNameForm);
-        updateDetails("name", firstNameForm);
-        setFirstNameForm("");
-
-        break;
-      }
-
-      default:
-        return null;
-    }
-    setOpenEditModal(false);
-  };
   function renderDetail() {
     return (
       <div>
@@ -365,31 +213,25 @@ export default function ProfilePage(props) {
   if (loading) {
     return (
       <div>
-        <HeaderBar
-          openHome={() => openHome()}
-          userLoggedIn={props.userLoggedIn}
-          userImage={userImage}
-          userDetails={props.userDetails}
-        />
-        <div style={{ marginTop: "60px" }}>
-          <Spinner />
+        <FadeIn delay={200}>
+          <HeaderBar
+            openHome={() => openHome()}
+            userLoggedIn={props.userLoggedIn}
+            userImage={userImage}
+            userDetails={props.userDetails}
+          />
+        </FadeIn>
+        <div>
+          <LazyProfile />
         </div>
       </div>
     );
-  } else {
+  } 
+  
+  else {
     return (
       <>
-        <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
-          {renderInput()}
-          <div
-            className={"main-button-container"}
-            style={{ textAlign: "center" }}
-          >
-            <button className="main-button" onClick={saveForm}>
-              {"Save"}
-            </button>
-          </div>
-        </Modal>
+
         <div className="profile-container">
           <div className="fixed-container">
             <HeaderBar
@@ -408,39 +250,18 @@ export default function ProfilePage(props) {
               <Avatar
                 userImage={userImage}
                 initial={getInitials(firstName)}
+                view_only
                 picRef={profilePic}
-                onChange={(e) => {
-                  if (e.target.files) {
-                    if (e.target.files[0]) {
-                      const file = e.target.files[0]
-                      currentUser.getIdToken(false).then(function (idToken) {
-                        DropMagnetAPI.updateUserAvatar(file, file.type, idToken).then((res) =>
-                          alert("Successfully updated.")
-                        );
-                      });
-                      const fileReader = new FileReader();
-                      fileReader.onload = () => {
-                        setUserImage(fileReader.result);
-                      };
-                      fileReader.readAsDataURL(e.target.files[0]);
-                    }
-                  }
-                }}
-                onRemove={() => setUserImage("")}
+                onChange={(e) => { }}
+                onRemove={() => { }}
               />
-              <div className="edit-btn"
-              onClick={() => profilePic.current.click()}>
-                <EditIcon className="svg-icon"/>
-              </div>
             </div>
-            {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
+
             <div
               className="profile-large-title clickable"
-              onClick={() => handleProfileEdit("name")}
             >{`${firstName}`}</div>
             <div
               className="profile-handle-title clickable"
-              onClick={() => handleProfileEdit("username")}
             >
               {"@" + handle}
             </div>
@@ -451,13 +272,13 @@ export default function ProfilePage(props) {
                   paddingRight: "24px",
                   cursor: "pointer",
                 }}
-                onClick={() => handleProfileEdit("twitter")}
               >
                 <img
                   width={37}
                   height={24}
                   src="./twitter-icon.png"
                   style={{ paddingRight: "8px" }}
+                  alt="/"
                 />
                 <div className="profile-medium-title">
                   {twitterHandle !== "" && twitterHandle.length > 8 ? (
@@ -473,15 +294,14 @@ export default function ProfilePage(props) {
                   ) : twitterHandle.length <= 8 ? (
                     <p>@{twitterHandle}</p>
                   ) : (
-                    <p>Add Twitter</p>
+                    <p>-----</p>
                   )}
                 </div>
               </div>
               <div
                 style={{ display: "flex", cursor: "pointer" }}
-                onClick={() => handleProfileEdit("insta")}
               >
-                <img width={24} height={24} src="./insta-icon.png" />
+                <img width={24} height={24} src="./insta-icon.png" alt="/" />
                 <div
                   className="profile-medium-title"
                   style={{ marginLeft: "10px" }}
@@ -499,16 +319,15 @@ export default function ProfilePage(props) {
                   ) : instaHandle.length <= 8 ? (
                     <p>@{instaHandle}</p>
                   ) : (
-                    <p>Add Instagram</p>
+                    <p>-----</p>
                   )}
                 </div>
               </div>
             </div>
             <div
               className="profile-bio-edit-button clickable"
-              onClick={() => handleProfileEdit("bio")}
             >
-              {bio ? bio : "Tap to Add Bio"}
+              {bio ? bio : "-----"}
             </div>
           </div>
 
@@ -532,24 +351,11 @@ export default function ProfilePage(props) {
                     setCategoryList(collectibleArts);
                   }}
                 >
-                  My Drops ({scheduledPosts.length})
+                  {firstName.split(' ')[0]}'s Drops ({scheduledPosts.length})
                 </div>
               ) : (
                 <></>
               )}
-              <div
-                className={
-                  selectedProfileList === "saved"
-                    ? "profile-button-option-selected"
-                    : "profile-button-option"
-                }
-                onClick={() => {
-                  setSelectedProfileList("saved");
-                  setCategoryList(fashionArts);
-                }}
-              >
-                Saved Drops ({savedPosts.length})
-              </div>
             </div>
             {selectedProfileList === "saved" && savedPosts.length !== 0 && (
               <TabContainer>
@@ -562,77 +368,14 @@ export default function ProfilePage(props) {
                 />
               </TabContainer>
             )}
-            {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
-              <ButtonContainer>
-                <button
-                  className={"main-button-2 floating clickable"}
-                  style={{ margin: "0 12px" }}
-                  onClick={() => {
-                    dispatch({
-                      type: "START_RESWIPE",
-                      payload: { newBucket: savedPosts },
-                    });
-                    history.push(`/reswipe?tabs=${tabList[activeTabIndex]}`);
-                  }}
-                >
-                  <h1 style={{ textAlign: "center", width: "100%" }}>
-                    Start Reswipe
-                  </h1>
-                </button>
-              </ButtonContainer>
-            )}
-            {scheduledPosts.length > 0 &&
-              selectedProfileList === "scheduled" ? (
-              renderDrops(scheduledPosts)
-            ) : currSavedPosts.length > 0 && selectedProfileList === "saved" ? (
-              renderDrops(
-                currSavedPosts,
-                true
-              )
-            ) : currSavedPosts.length === 0 ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: "20px",
-                }}
-                className="profile-bio-description"
-              >
-                <p className="redirect-link">
-                  You don't have any drops saved yet. Go to the{" "}
-                  <span onClick={() => props.history.push("/home")}>
-                    swiper page
-                  </span>{" "}
-                  to explore or change category.
-                </p>
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: "20px",
-                }}
-                className="profile-bio-description"
-              >
-                <p className="redirect-link">
-                  You don't have any drops.{" "}
-                  <span onClick={() => props.history.push("/create_drop")}>
-                    Create drop
-                  </span>{" "}
-                  first.
-                </p>
-              </div>
-            )}
+            {renderDrops(scheduledPosts)}
           </div>
 
-          {/* <div style={{ display: `${!detailView ? "none" : "block"}` }}>
+          <div style={{ display: `${!detailView ? "none" : "block"}` }}>
             <div className="home-container profile-view-container">
               {detailView && renderDetail()}
             </div>
-          </div> */}
+          </div>
         </div>
       </>
     );
