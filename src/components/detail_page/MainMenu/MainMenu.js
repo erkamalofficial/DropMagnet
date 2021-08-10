@@ -5,11 +5,28 @@ import { LogoTitle, LogoTitleSection } from "../../elements/HeaderBar/LogoTitles
 import Avatar from "../../elements/Avatar/Avatar";
 import { getInitials } from "../../../utils";
 import FadeIn from 'react-fade-in';
+import { useAuth } from "../../../contexts/FirebaseAuthContext";
+
 
 export default function MainMenu(props) {
+
+  const { currentUser } = useAuth()
   const [open, setOpen] = useState(false);
+  const [verified, setVerified] = useState(false)
+
+  const checkIfVerified = async () => {
+    const r = await currentUser.getIdTokenResult()
+    const is_verified = r.claims["verified"]
+    setVerified(is_verified)
+  }
+
+  useEffect(() => {
+    checkIfVerified()
+  }, [])
+
   var menuList = [
-    { title: "Create a Drop", link: "create_drop" },
+    { title: verified ? "Create a Drop" : "Apply for Drop Swipe", 
+    link: verified ? "create_drop" : "home" },
     { title: "Get drop token", link: "/getToken" },
     { title: "About", link: "/about" },
     { title: "What's a drop?", link: "/aboutDrop" },
