@@ -24,6 +24,7 @@ import LazyTab from "./LazyTab";
 import { tabList } from "../../constants";
 import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
+import FadeIn from 'react-fade-in';
 
 const HomeContainer = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ const HomeContainer = styled.div`
     position: relative;
     user-select: none;
     padding-top: var(--main-header-margin-top);
+    margin-top: 68px;
     @media (max-width: 500px) {
       padding-top: 10px
     }
@@ -233,52 +235,64 @@ const Home = (props) => {
   return (
     <HomeContainer>
 
-      <HeaderBar
-        openHome={() => openHome()}
-        openMenu={() => openMenu()}
-        isLogoNotVisible
-        openDateMenu={() => openDateMenu()}
-        curIndex={curIndex}
-        selectedDropdownDate={selectedDropdownDate}
-        setSelectedDropdownDate={setSelectedDropdownDate}
-        datePickerVisible={detailView ? false : true}
-        userLoggedIn={props.userLoggedIn}
-        userImageVisible={true}
-      />
+      <div className="fixed-container">
+        <FadeIn delay={200}>
+          <HeaderBar
+            openHome={() => openHome()}
+            openMenu={() => openMenu()}
+            isLogoNotVisible
+            openDateMenu={() => openDateMenu()}
+            curIndex={curIndex}
+            selectedDropdownDate={selectedDropdownDate}
+            setSelectedDropdownDate={setSelectedDropdownDate}
+            datePickerVisible={detailView ? false : true}
+            userLoggedIn={props.userLoggedIn}
+            userImageVisible={true}
+          />
+        </FadeIn>
+      </div>
       <div className="rel">
         {isLoading ?
           (
             <>
-              <Tabs
-                activeTabIndex={activeTabIndex}
-                handleActiveTabIndex={handleActiveTabIndex}
-                tabList={tabList}
-              />
-              <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
-                <LazyCard />
-              </CardContainer>
-              <ActionSection key="footer" style={{ display: 'flex'}}>
-                <MinusBtn>
-                  <img src="./minus.svg" alt="minus" />
-                </MinusBtn>
-                <PlusBtn>
-                  <img src="./plus.svg" alt="plus" />
-                </PlusBtn>
-              </ActionSection>
+              <FadeIn delay={600}>
+                <Tabs
+                  activeTabIndex={activeTabIndex}
+                  handleActiveTabIndex={handleActiveTabIndex}
+                  tabList={tabList}
+                />
+              </FadeIn>
+              <FadeIn delay={1000}>
+                <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
+                  <LazyCard />
+                </CardContainer>
+              </FadeIn>
+              <FadeIn delay={1000}>
+                <ActionSection key="footer" style={{ display: 'flex' }}>
+                  <MinusBtn>
+                    <img src="./minus.svg" alt="minus" />
+                  </MinusBtn>
+                  <PlusBtn>
+                    <img src="./plus.svg" alt="plus" />
+                  </PlusBtn>
+                </ActionSection>
+              </FadeIn>
             </>
           )
           : (
-            <Swiper
-              reswipeModeActive={false}
-              key={uniqueId}
-              db={activeBucket}
-              activeTabIndex={activeTabIndex}
-              onSwipe={handleSwipe}
-              handleActiveTabIndex={handleActiveTabIndex}
-              tabList={tabList}
-              setDetailView={setDetailView}
-              nextIndex={nextIndex}
-            />
+            <FadeIn delay={600}>
+              <Swiper
+                reswipeModeActive={false}
+                key={uniqueId}
+                db={activeBucket}
+                activeTabIndex={activeTabIndex}
+                onSwipe={handleSwipe}
+                handleActiveTabIndex={handleActiveTabIndex}
+                tabList={tabList}
+                setDetailView={setDetailView}
+                nextIndex={nextIndex}
+              />
+            </FadeIn>
           )
 
         }
