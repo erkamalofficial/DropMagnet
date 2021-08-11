@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useHistory } from 'react-router'
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
-
+import DropLink from './DropLink'
 
 export default function ProfileDropDetail(props) {
 
@@ -86,7 +86,7 @@ export default function ProfileDropDetail(props) {
     if (user_id !== props.drop.user_id) {
       history.push(`/profile/${props.drop.user_id}`)
     }
-    else{
+    else {
       window.location.reload()
     }
   }
@@ -102,16 +102,16 @@ export default function ProfileDropDetail(props) {
           sourceIdx={srcIndex} />
       }
       <div className="detail-view-header">
-        <Avatar userImage={artist_image} 
-        style={{ margin: 10 }} 
-        initial={getInitials(artist_name)} 
-        view_only small 
-        userId={props.drop.user_id}/>
+        <Avatar userImage={artist_image}
+          style={{ margin: 10 }}
+          initial={getInitials(artist_name)}
+          view_only small
+          userId={props.drop.user_id} />
 
         {/* <img className="detail-view-header-image" src={artist_image}/> */}
         <h1 className="drop-detail-title"
-        style={{cursor: 'pointer'}}
-        onClick={openUser}
+          style={{ cursor: 'pointer' }}
+          onClick={openUser}
         >{artist_name}
         </h1>
         <img className="close-detail-button close-button view-close-btn"
@@ -180,6 +180,11 @@ export default function ProfileDropDetail(props) {
           {props.drop.desc}
         </p1>
       </div>
+
+      {currentUser.uid === props.drop.user_id && (
+        <DropLink
+          drop={props.drop} />
+      )}
     </div>
   );
 }
