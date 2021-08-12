@@ -112,7 +112,7 @@ function DummySwiper(props) {
     let element = document.getElementsByClassName("swipe")[0]
     setCurDrop(d)
     setOpenView(true)
-    setDetailView(true)
+    // setDetailView(true)
   }
 
   function renderDetail() {
@@ -123,7 +123,7 @@ function DummySwiper(props) {
           drop={curDrop}
           closeDetailView={() => {
             setOpenView(false)
-            setDetailView(false)
+            // setDetailView(false)
           }}
           handleClick={() => { }} />
       </div>

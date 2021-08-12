@@ -50,9 +50,9 @@ const HomeContainer = styled.div`
 const LinksPage = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 16px;
+  // margin: 16px;
   @media (max-width: 576px){
-    margin: 16px;
+    // margin: 16px;
   }
 `;
 
@@ -188,8 +188,8 @@ const LinksHome = (props) => {
           isLoggedIn={localStorage.getItem("userDetails") ? true : false}
           setCurTab={setCurTab} />
       </FadeIn>
-      {!detailView && (<FadeIn delay={200}>
-
+      
+      <FadeIn delay={200}>
         <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
           setCurTab(index)
           if (typeof setCurTab !== undefined) {
@@ -197,7 +197,7 @@ const LinksHome = (props) => {
           }
         }} />
 
-      </FadeIn>)}
+      </FadeIn>
       {curTab === 0 ? (
         <HomeContainer>
           <div className="rel" style={{ paddingTop: '0' }}>

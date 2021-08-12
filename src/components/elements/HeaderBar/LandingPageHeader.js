@@ -18,6 +18,9 @@ const LinksHeaderWrapper = styled.div`
   position: relative;
   justify-content: space-between;
   flex-wrap: wrap;
+  padding: 16px;
+  backdrop-filter: blur(50px);
+  background-color: #3a3a3a3b;
   @media (max-width: 576px){
     margin-bottom: 0;
   }
