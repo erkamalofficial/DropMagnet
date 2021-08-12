@@ -630,7 +630,12 @@ export default function Profile(props) {
               <ButtonContainer>
                 <button
                   className={"main-button-2 floating clickable"}
-                  style={{ margin: "0 12px" }}
+                  style={{ 
+                    margin: "0 12px",
+                    backdropFilter: "blur(50px)",
+                    backgroundColor: "#3a3a3a3b",
+                    backgroundImage: "none"
+                  }}
                   onClick={() => {
                     dispatch({
                       type: "START_RESWIPE",
