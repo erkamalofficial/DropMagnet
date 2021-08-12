@@ -7,7 +7,10 @@
   left: 50%;
   transform: translate(-50%, 0%);
   z-index: 9998;
+  backdrop-filter: blur(50px);
+  background-color: #3a3a3a3b;
 }
+
 
 .header-container {
   padding: 16px 0px;

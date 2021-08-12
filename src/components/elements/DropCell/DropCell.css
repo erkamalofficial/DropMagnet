@@ -89,14 +89,14 @@
 
 
 @media (max-width: 600px){
-  .drop-category-title{
+  .landing-cell .drop-category-title{
     flex-basis: 25%;
     width: fit-content;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .drop-marketplace-title{
+  .landing-cell .drop-marketplace-title{
     flex-basis: 25%;
     width: fit-content;
     max-width: 100%;
