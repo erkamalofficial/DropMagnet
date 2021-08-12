@@ -87,6 +87,24 @@
   text-transform: uppercase;
 }
 
+
+@media (max-width: 600px){
+  .drop-category-title{
+    flex-basis: 25%;
+    width: fit-content;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .drop-marketplace-title{
+    flex-basis: 25%;
+    width: fit-content;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .drop-price{
   height: 22px;
   border-radius: 3px;
