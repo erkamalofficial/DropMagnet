@@ -101,11 +101,8 @@ const DummyHome = (props) => {
 
     const curIndex = useSelector((state) => state.category.curIndex);
 
-
     const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date(curIndex));
     const [detailView, setDetailView] = useState(false);
-    const [dateMenuOpen, setDateMenuOpen] = useState(false);
-    const [loadMore, setLoadMore] = useState(false)
     const [galleryName, setGalleryName] = useState("");
 
     const [curTab, setCurTab] = useState(0)
@@ -118,7 +115,6 @@ const DummyHome = (props) => {
         (state) => state.category.general.reswipeModeActive
     );
     const nextIndex = useSelector((state) => state.category.nextIndex);
-    const fetchMore = useSelector((state) => state.category.fetchMore);
 
     const displayName = galleryName === "" ? "You" : galleryName;
 

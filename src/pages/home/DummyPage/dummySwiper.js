@@ -9,6 +9,9 @@ import Tabs from "../tabs";
 import { data } from "../../../utils/DummyCardData"
 import DummyCard from "./dummyCard";
 import DummyDropDetail from "../../../components/detail_page/DropDetail/DummyDropDetail";
+import { getVideoDrop } from "../../../DropMagnetAPI";
+import FadeIn from 'react-fade-in';
+import LazyCard from "../LazyCard";
 
 const ActionSection = styled.div`
   display: flex;
@@ -26,17 +29,26 @@ function DummySwiper(props) {
 
   const { db, reswipeModeActive, setDetailView, nextIndex } = props
 
-  const [allCards, setAllCards] = useState([data]);
-  const [cards, setCards] = useState([data]);
+  const [allCards, setAllCards] = useState([]);
+  const [cards, setCards] = useState([]);
   const [openView, setOpenView] = useState(false)
   const [curDrop, setCurDrop] = useState({})
-  // const [lastDirection, setLastDirection] = useState();
+  const [loading, setLoading] = useState(true)
   const [newLoading, setNewLoading] = useState(true);
   const [swiping, setSwiping] = useState(false)
 
   const history = useHistory()
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getVideoDrop()
+      .then(res => {
+        setLoading(false)
+        setAllCards([res])
+        setCards([res])
+      })
+  }, [])
 
   useEffect(() => {
     alreadyRemoved.length = 0;
@@ -49,6 +61,7 @@ function DummySwiper(props) {
         .map((i) => React.createRef()),
     [allCards.length]
   );
+
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
   const swiped = (direction, drop_id, index) => {
@@ -93,17 +106,13 @@ function DummySwiper(props) {
     }
   };
 
-  function func() {
-    console.log("Removed")
-  }
-
 
   function openDrop(d) {
     // setDropToOpen(categoryList.findIndex(obj => obj.drop_id === drop.drop_id))
     let element = document.getElementsByClassName("swipe")[0]
-    window.addEventListener("mouseup", func, true)
     setCurDrop(d)
     setOpenView(true)
+    setDetailView(true)
   }
 
   function renderDetail() {
@@ -112,7 +121,10 @@ function DummySwiper(props) {
         <DummyDropDetail
           show={true}
           drop={curDrop}
-          closeDetailView={() => setOpenView(false)}
+          closeDetailView={() => {
+            setOpenView(false)
+            setDetailView(false)
+          }}
           handleClick={() => { }} />
       </div>
     )
@@ -121,18 +133,34 @@ function DummySwiper(props) {
 
   return (
     <>
-      <div className="view-container home-container" id="detCnt" 
-      style={{ 
-        display: `${!openView ? 'none' : 'block'}`,
-      }} >
+      <div className="view-container home-container" id="detCnt"
+        style={{
+          display: `${!openView ? 'none' : 'block'}`,
+        }} >
         {openView && renderDetail()}
       </div>
-      {!openView && (
-        <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} 
-        style={{ 
-          display: `${openView ? 'none' : 'flex'}`,
-          marginTop: 'var(--main-header-margin-top)' 
-        }}>
+      {loading &&
+        (
+          <>
+            <FadeIn delay={600}>
+            </FadeIn>
+            <FadeIn delay={1000}>
+              <CardContainer key="cardContainer"
+                className={'fix-minor-bug-swipe'}
+                style={{
+                  marginTop: 'var(--main-header-margin-top)'
+                }}>
+                <LazyCard />
+              </CardContainer>
+            </FadeIn>
+          </>
+        )}
+      {!loading && !openView && (
+        <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}
+          style={{
+            display: `${openView ? 'none' : 'flex'}`,
+            marginTop: 'var(--main-header-margin-top)'
+          }}>
           {cards.length > 0 ? cards.map((cardDetails, index) => {
             const { id } = cardDetails;
 

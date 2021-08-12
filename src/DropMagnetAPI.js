@@ -193,6 +193,11 @@ export function getDrop(id, token) {
   return customAPICall(dropEndpoint, "", "GET", '')
 }
 
+export function getVideoDrop() {
+  const dropEndpoint = `videoDrop`
+  return customAPICall(dropEndpoint, "", "GET", '')
+}
+
 
 export function saveDrop(token = '', dropid = '') {
   const saveDropEndPoint = `drops/${dropid}/save`;

@@ -188,19 +188,21 @@ const LinksHome = (props) => {
           isLoggedIn={localStorage.getItem("userDetails") ? true : false}
           setCurTab={setCurTab} />
       </FadeIn>
-      <FadeIn delay={200}>
+      {!detailView && (<FadeIn delay={200}>
+
         <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
           setCurTab(index)
           if (typeof setCurTab !== undefined) {
             setCurTab(index)
           }
         }} />
-      </FadeIn>
+
+      </FadeIn>)}
       {curTab === 0 ? (
         <HomeContainer>
           <div className="rel" style={{ paddingTop: '0' }}>
             <FadeIn delay={600}
-            childClassName="child-content">
+              childClassName="child-content">
               <DummySwiper
                 reswipeModeActive={false}
                 key={uniqueId}
@@ -218,7 +220,7 @@ const LinksHome = (props) => {
       ) : curTab === 1 ? (
         <GalleryContainer>
           <FadeIn delay={600}
-          childClassName="child-content">
+            childClassName="child-content">
             <NftGallery />
           </FadeIn>
         </GalleryContainer>
@@ -228,7 +230,7 @@ const LinksHome = (props) => {
           <PLSectionOne>
             <PLSectionOneContent>
               <FadeIn delay={600}
-              childClassName="child-content">
+                childClassName="child-content">
                 <HeaderSubtitle>
                   Stand out from the crowd, share NFT Galleries, and get paid in
                   crypto fast with MetaURLs.
@@ -237,7 +239,7 @@ const LinksHome = (props) => {
             </PLSectionOneContent>
           </PLSectionOne>
           <FadeIn delay={600}
-          childClassName="child-content">
+            childClassName="child-content">
             <LinksCard
               handleLinkSelection={() => { }}
               selectedLinks={[]}
