@@ -82,6 +82,7 @@ export default function Profile(props) {
   const currentTabName = getCategoryFromTab(tabList[activeTabIndex]);
 
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
+  const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
 
   let collectibleArts = [
     {
@@ -247,6 +248,7 @@ export default function Profile(props) {
   }
 
   function renderDrops(drops, isSaved = false) {
+    console.log(drops)
     return (
       <DropList
         drops={drops}
@@ -651,9 +653,9 @@ export default function Profile(props) {
               </ButtonContainer>
             )}
             
-            {scheduledPosts.length > 0 &&
+            {currUserPosts.length > 0 &&
               selectedProfileList === "scheduled" ? (
-              renderDrops(scheduledPosts)
+              renderDrops(currUserPosts)
             ) : currSavedPosts.length > 0 && selectedProfileList === "saved" ? (
               renderDrops(
                 currSavedPosts,
