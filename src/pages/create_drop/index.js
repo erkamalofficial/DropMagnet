@@ -18,6 +18,7 @@ import { useAuth } from "../../contexts/FirebaseAuthContext"
 import '../../components/detail_page/DateMenu/DateMenu.css'
 import DatePicker from 'react-datepicker'
 import "./CreateDrop.css"
+import validUrl from 'valid-url'
 
 export default function DropCreation(props) {
 
@@ -30,6 +31,7 @@ export default function DropCreation(props) {
   const [marketplaceId, setMarketplaceId] = useState('')
   const [dropPieces, setDropPieces] = useState(null)
   const [listingType, setListingType] = useState('auction')
+  const [link, setLink] = useState('')
   const [price, setPrice] = useState(null)
   const [auction_price, setAuction_price] = useState(null)
   const [selectedMonth, setSelectedMonth] = useState('April')
@@ -90,19 +92,17 @@ export default function DropCreation(props) {
   function createDrop() {
     currentUser.getIdToken(false).then(function (idToken) {
       let drop_date = new Date(launchDate).getTime()
-      DropMagnetAPI.createDrop(title,
+      DropMagnetAPI.createDrop(
+        title,
         description,
         category.toLowerCase(),
-        hashtag,
         drop_date,
         marketplace,
-        marketplaceId,
-        dropPieces,
-        idToken,
-        listingType,
+        link,
         Number(price),
         Number(auction_price),
-        files)
+        files,
+        idToken)
         .then(function (response) {
           if (response.status === "error") {
             // setLoginError(response.message);
@@ -131,13 +131,17 @@ export default function DropCreation(props) {
     }
   }
 
-  console.log(launchDate)
 
   function setStepAction(action = 'decrease') {
     if (action === 'increase') {
       if (dropCreationStep === 0) {
-        if (title !== '' && category !== '' && description !== '' && hashtag !== '') {
+        if (title !== '' && category !== '' 
+        && description !== '' && hashtag !== '' 
+        && validUrl.isUri(link)) {
           setDropCreationStep(dropCreationStep + 1)
+        }
+        else if(!validUrl.isUri(link)){
+          alert("Link is not valid.")
         }
         else { alert("Fill all the fields.") }
       }
@@ -186,6 +190,7 @@ export default function DropCreation(props) {
   function renderFirstStep() {
     return <div>
       <TextField setInputValue={setTitle} title={"Drop Title"} placeholder={"Enter a title for your masterpiece"} />
+      <TextField setInputValue={setLink} title={"Drop Link"} placeholder={"Enter a link for your drop"} />
       <TextView height={'62px'} titleTopMargin={'12px'} setInputValue={setDescription} title={"The Story of the Drop"} placeholder={"Tell the story behind the drop (max 300 words)"} />
       <Dropdown setSelected={setCategory} title={"Category"} items={["Art", "Music", "Collectible", "Fashion"]} />
       <TextView height={'62px'} titleTopMargin={'12px'} setInputValue={setHashtag} title={"# Hashtag"} placeholder={"Enter one i.e #Electronic if it’s music or #Abstract if it’s art."} />

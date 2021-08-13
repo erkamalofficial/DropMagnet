@@ -1,3 +1,4 @@
+import { ContactlessOutlined } from "@material-ui/icons";
 import firebase from "firebase/app"
 import "firebase/auth"
 import { useAuth } from "../src/contexts/FirebaseAuthContext"
@@ -165,7 +166,7 @@ export function updateUserAvatar(imageFile, imageType, access_token) {
 // Drop creation
 
 
-export function createDrop(title, desc, category, hashtag, drop_date, marketplace, marketplaceProfileLink, piecesInDrop, access_token, listingType, price, auction_price, files) {
+export function createDrop(title, desc, category, drop_date, marketplace, link, price, auction_price, files, access_token) {
   const createDropEndpoint = 'drops'
   const content = files;
 
@@ -173,12 +174,9 @@ export function createDrop(title, desc, category, hashtag, drop_date, marketplac
     title,
     desc,
     category,
-    // hashtag,
     drop_date,
     marketplace,
-    // marketplaceProfileLink,
-    // piecesInDrop,
-    // listingType,
+    link,
     price,
     auction_price,
     content
