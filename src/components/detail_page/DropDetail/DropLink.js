@@ -4,17 +4,21 @@ import SaveIcon from '@material-ui/icons/Save';
 import "./DropDetail.css"
 import validUrl from 'valid-url'
 import { CircularProgress } from '@material-ui/core';
-import FadeIn from 'react-fade-in';
+import * as DropMagnetAPI from '../../../DropMagnetAPI'
+import { useAuth } from "../../../contexts/FirebaseAuthContext";
 
-const DropLink = () => {
+const DropLink = (props) => {
 
-    const [link, setLink] = useState('')
+    const { drop } = props
+    const { currentUser } = useAuth();
+
+    const [link, setLink] = useState(drop.link)
     const [changed, setChanged] = useState(false)
     const [uploading, setUploading] = useState(false)
     const [saved, setSaved] = useState(false)
 
     useEffect(() => {
-        if (link !== "") {
+        if (link !== drop.link) {
             setChanged(true)
         }
         else {
@@ -26,25 +30,37 @@ const DropLink = () => {
         if (saved) {
             setTimeout(() => {
                 setSaved(false)
+                if(window.confirm("Reload site to see changes?")){
+                    window.location.reload()
+                }
             }, 1200)
         }
     }, [saved])
 
     useEffect(() => {
-        if(uploading && link!==' '){
+        if (uploading && link !== drop.link) {
             saveLink()
         }
     }, [uploading, link])
 
     const saveLink = () => {
-        if (validUrl.isUri(link)) {
-            setSaved(true)
-            setUploading(false)
-        }
-        else {
-            alert("Not an URL.")
-            setUploading(false)
-        }
+        currentUser.getIdToken(false).then(function (idToken) {
+            if (validUrl.isUri(link)) {
+                DropMagnetAPI.saveDropLink(link, drop.id, idToken)
+                    .then(res => {
+                        setSaved(true)
+                        setUploading(false)
+                    })
+                    .catch(err => {
+                        setUploading(false)
+                        setLink(drop.link)
+                    })
+            }
+            else {
+                alert("Not an URL.")
+                setUploading(false)
+            }
+        })
     }
 
     return (
@@ -63,7 +79,8 @@ const DropLink = () => {
                 <>
                     {!uploading ? (
                         <div className="link-icon" onClick={() => {
-                            setUploading(true)}}>
+                            setUploading(true)
+                        }}>
                             <SaveIcon className="save-svg" />
                         </div>
                     ) : (

@@ -15,12 +15,6 @@ if (process.env.NODE_ENV === "development") {
 async function customAPICall(endpoint, data, method, access_token) {
 
   const uri = host + endpoint
-
-  // Firebase Auth Token
-  // console.log('endpoint', uri)
-  // console.log('data is', JSON.stringify(data))
-  // console.log('access token', access_token)
-
   const res = await fetch(uri, {
     method: method,
     body: data === "" ? null : JSON.stringify(data),
@@ -32,11 +26,32 @@ async function customAPICall(endpoint, data, method, access_token) {
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   })
+
+  console.log(res)
   if(res.status === 204){
     return null
   }
   return res.json()
 }
+
+
+async function saveLinkAPICall(endpoint, data, method, access_token) {
+
+  const uri = host + endpoint
+  const res = await fetch(uri, {
+    method: method,
+    body: data === "" ? null : JSON.stringify(data),
+    mode: 'cors', // no-cors, *cors, same-origin
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': access_token !== '' ? `Bearer ${access_token}` : ''
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  })
+  return res
+}
+
 
 
 async function customAPICallAddDrop(endpoint, data, method, access_token) {
@@ -71,7 +86,6 @@ async function customAPICallAddDrop(endpoint, data, method, access_token) {
   })
   return res.json()
 }
-
 
 async function customAPICallUpdateAvatar(endpoint, data, method, access_token) {
 
@@ -170,6 +184,11 @@ export function createDrop(title, desc, category, hashtag, drop_date, marketplac
     content
   }
   return customAPICallAddDrop(createDropEndpoint, payload, "POST", access_token)
+}
+
+export function saveDropLink(link, dropId, token){
+  const saveDropLinkEndpoint = `drops/${dropId}/link?l=${link}`
+  return saveLinkAPICall(saveDropLinkEndpoint, {}, "PUT", token)
 }
 
 export function createDropImage(image) {
