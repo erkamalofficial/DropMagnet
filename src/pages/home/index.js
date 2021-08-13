@@ -82,6 +82,12 @@ const Home = (props) => {
   // }, [curIndex])
 
   useEffect(() => {
+    setTimeout(() => {
+      props.setReload(false)
+    }, 500);
+  }, [])
+
+  useEffect(() => {
 
     let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
@@ -235,8 +241,29 @@ const Home = (props) => {
   return (
     <HomeContainer>
 
-      <div className="fixed-container">
-        <FadeIn delay={200}>
+      {props.reload ? (
+        <div className="fixed-prnt-container">
+          <FadeIn delay={200}>
+            <div className="fixed-container">
+
+              <HeaderBar
+                openHome={() => openHome()}
+                openMenu={() => openMenu()}
+                isLogoNotVisible
+                openDateMenu={() => openDateMenu()}
+                curIndex={curIndex}
+                selectedDropdownDate={selectedDropdownDate}
+                setSelectedDropdownDate={setSelectedDropdownDate}
+                datePickerVisible={detailView ? false : true}
+                userLoggedIn={props.userLoggedIn}
+                userImageVisible={true}
+              />
+
+            </div>
+          </FadeIn>
+        </div>
+      ) : (
+        <div className="fixed-container">
           <HeaderBar
             openHome={() => openHome()}
             openMenu={() => openMenu()}
@@ -249,8 +276,8 @@ const Home = (props) => {
             userLoggedIn={props.userLoggedIn}
             userImageVisible={true}
           />
-        </FadeIn>
-      </div>
+        </div>
+      )}
       <div className="rel">
         {isLoading ?
           (

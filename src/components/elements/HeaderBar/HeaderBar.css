@@ -1,11 +1,17 @@
-.fixed-container {
+.fixed-prnt-container{
   position: fixed;
-  display: flex;
-  flex-direction: column;
   background-color: rgb(0,0,0, 0);
   width: 100%;
   left: 50%;
   transform: translate(-50%, 0%);
+  z-index: 9998;
+}
+
+.fixed-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   z-index: 9998;
   backdrop-filter: blur(50px);
   background-color: #3a3a3a3b;

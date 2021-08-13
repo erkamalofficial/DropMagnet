@@ -180,15 +180,27 @@ const LinksHome = (props) => {
     setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      props.setReload(false)
+    }, 500);
+  }, [])
+
   return (
     <LinksPage>
 
-      <FadeIn delay={200}>
+      {props.reload ? (
+        <FadeIn delay={200}>
+          <LandingPageHeader
+            isLoggedIn={localStorage.getItem("userDetails") ? true : false}
+            setCurTab={setCurTab} />
+        </FadeIn>
+      ) : (
         <LandingPageHeader
           isLoggedIn={localStorage.getItem("userDetails") ? true : false}
           setCurTab={setCurTab} />
-      </FadeIn>
-      
+      )}
+
       <FadeIn delay={200}>
         <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
           setCurTab(index)
@@ -196,8 +208,8 @@ const LinksHome = (props) => {
             setCurTab(index)
           }
         }} />
-
       </FadeIn>
+
       {curTab === 0 ? (
         <HomeContainer>
           <div className="rel" style={{ paddingTop: '0' }}>

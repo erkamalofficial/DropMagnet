@@ -21,6 +21,7 @@ const LinksHeaderWrapper = styled.div`
   padding: 16px;
   backdrop-filter: blur(50px);
   background-color: #3a3a3a3b;
+  height: 68px;
   @media (max-width: 576px){
     margin-bottom: 0;
   }
@@ -147,7 +148,9 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
             </button>
           </>
         ) : (
-          <button className={"blank-button green-gradient"} onClick={() => history.push('/home')}>
+          <button className={"blank-button green-gradient"}
+          style={{marginTop: '-8px'}}
+           onClick={() => history.push('/home')}>
             <span className={'text'}>Home</span>
           </button>
         )}

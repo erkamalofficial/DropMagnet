@@ -151,14 +151,20 @@ export default function Profile(props) {
   ];
 
   useEffect(() => {
+    setTimeout(() => {
+      props.setReload(false)
+    }, 500);
+  }, [])
+
+  useEffect(() => {
     const isSaved = history.location.pathname.split('/')[2] === 'saved'
     if (scheduledPosts.length > 0 && !isSaved) {
       setSelectedProfileList("scheduled")
     }
-    else if(isSaved){
+    else if (isSaved) {
       setSelectedProfileList("saved")
     }
-    else if(!fetchingPosts){
+    else if (!fetchingPosts) {
       setSelectedProfileList("saved")
     }
   }, [scheduledPosts.length, fetchingPosts])
@@ -225,7 +231,7 @@ export default function Profile(props) {
             }
             else {
               setScheduledPosts(res);
-              
+
             }
             setFetchingPosts(false)
             setLoading({ ...loading, drops: false })
@@ -416,14 +422,27 @@ export default function Profile(props) {
   if (loading.profile && loading.drops) {
     return (
       <div>
-        <FadeIn delay={200}>
-          <HeaderBar
-            openHome={() => openHome()}
-            userLoggedIn={props.userLoggedIn}
-            userImage={userImage}
-            userDetails={props.userDetails}
-          />
-        </FadeIn>
+        {props.reload ? (
+          <FadeIn delay={200}>
+            <div className="fixed-container">
+              <HeaderBar
+                openHome={() => openHome()}
+                userLoggedIn={props.userLoggedIn}
+                userImage={userImage}
+                userDetails={props.userDetails}
+              />
+            </div>
+          </FadeIn>
+        ) : (
+          <div className="fixed-container">
+            <HeaderBar
+              openHome={() => openHome()}
+              userLoggedIn={props.userLoggedIn}
+              userImage={userImage}
+              userDetails={props.userDetails}
+            />
+          </div>
+        )}
         <div>
           <LazyProfile />
         </div>
@@ -632,7 +651,7 @@ export default function Profile(props) {
               <ButtonContainer>
                 <button
                   className={"main-button-2 floating clickable"}
-                  style={{ 
+                  style={{
                     margin: "0 12px",
                     backdropFilter: "blur(50px)",
                     backgroundColor: "#3a3a3a3b",
@@ -652,7 +671,7 @@ export default function Profile(props) {
                 </button>
               </ButtonContainer>
             )}
-            
+
             {currUserPosts.length > 0 &&
               selectedProfileList === "scheduled" ? (
               renderDrops(currUserPosts)

@@ -94,6 +94,37 @@ function App() {
   // Its at this point we can either show the NFT in a Gallery or store it in the Firebase DB.
   // THIS WORK STILL NEEDS TO BE IMPLEMENTED.
   // window.addEventListener("load",  Nft);
+
+  const [reload, setReload] = useState(true)
+
+  const addFlag = () => {
+    if (!sessionStorage.reloading) {
+      sessionStorage.setItem("reloading", "true");
+    }
+  }
+  const removeFlag = () => {
+    sessionStorage.removeItem("reloading");
+  }
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", addFlag);
+    window.addEventListener("onload", addFlag);
+    return () => {
+      window.removeEventListener("beforeunload", addFlag);
+      window.removeEventListener("onload", addFlag);
+    };
+  }, []);
+
+  useEffect(() => {
+    let reloading = JSON.parse(sessionStorage.getItem('reloading'))
+    if (reloading) {
+      setReload(true)
+      removeFlag()
+    }
+
+  }, []);
+
+
   const [userDetails, setUserDetails] = useState({});
 
   const { logout, currentUser, idToken } = useAuth();
@@ -131,7 +162,11 @@ function App() {
           path="/home"
           userDetails={userDetails}
           isLogged
-          component={HomePage}
+          render={(props) => (
+            <HomePage
+              reload={reload}
+              setReload={setReload} />
+          )}
         />
 
         <Route
@@ -172,7 +207,11 @@ function App() {
         <Route
           exact
           path="/"
-          component={LandingPage}
+          render={(props) => (
+            <LandingPage
+              reload={reload}
+              setReload={setReload} />
+          )}
         />
 
         <Route
@@ -218,6 +257,8 @@ function App() {
           render={(props) => (
             <Profile
               {...props}
+              reload={reload}
+              setReload={setReload}
               userImage={userDetails.image}
               userDetails={userDetails}
               userLoggedIn={true}
@@ -230,6 +271,8 @@ function App() {
           render={(props) => (
             <ProfilePage
               {...props}
+              reload={reload}
+              setReload={setReload}
               userImage={userDetails.image}
               userDetails={userDetails}
               userLoggedIn={true}
@@ -242,13 +285,15 @@ function App() {
           render={(props) => (
             <Profile
               {...props}
+              reload={reload}
+              setReload={setReload}
               userImage={userDetails.image}
               userDetails={userDetails}
               userLoggedIn={true}
             />
           )}
         />
-        
+
         <Route
           path="/wallet_links"
           render={(props) => (
