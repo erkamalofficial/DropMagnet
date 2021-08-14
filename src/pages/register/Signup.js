@@ -46,7 +46,9 @@ export default function Signup(props) {
       let name = res.user.displayName === null ? username : res.user.displayName
       let email = res.user.email
 
-      DropMagnetAPI.createNewUserProfile(name, username, email, res.user.za).then(async function (response) {
+      DropMagnetAPI.createNewUserProfile(name, username, email, res.user.za)
+      .then(async function (response) {
+        console.log('error', response)
         if (response.status === "error") {
           console.log('error', response)
         }
@@ -64,8 +66,8 @@ export default function Signup(props) {
         }
 
       })
-    } catch {
-      setError("Failed to create an account");
+    } catch(err) {
+      setError(err.message);
     }
 
     setLoading(false);
