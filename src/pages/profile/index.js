@@ -608,39 +608,6 @@ export default function Profile(props) {
                 display: `${detailView ? "none" : "block"}`,
               }}
             >
-              {/* <div className="profile-button-option-holder">
-              {scheduledPosts.length > 0 ? (
-                <div
-                  className={
-                    selectedProfileList === "scheduled"
-                      ? "profile-button-option-selected"
-                      : "profile-button-option"
-                  }
-                  onClick={() => {
-                    setSelectedProfileList("scheduled");
-                    setCategoryList(collectibleArts);
-                  }}
-                >
-                  My Drops ({scheduledPosts.length})
-                </div>
-              ) : (
-                <></>
-              )}
-              <div
-                className={
-                  selectedProfileList === "saved"
-                    ? "profile-button-option-selected"
-                    : "profile-button-option"
-                }
-                onClick={() => {
-                  setSelectedProfileList("saved");
-                  setCategoryList(fashionArts);
-                }}
-              >
-                Saved Drops ({savedPosts.length})
-              </div>
-            </div> */}
-              {/* {scheduledPosts.length !== 0 && savedPosts.length !== 0 && ( */}
               <TabContainer>
                 <Tabs
                   activeTabIndex={activeTabIndex}

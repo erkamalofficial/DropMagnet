@@ -16,6 +16,21 @@ const TabContainer = styled.div`
   }
 `;
 
+const FooterContainer = styled.div`
+  margin-top: 16px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  backdrop-filter: blur(50px);
+  background-color: #1a1a1a66;
+  background-image: none
+  @media(max-width: 576px){
+    width: calc(100vw-24px);
+  }
+`;
+
 export default function LazyProfile(props) {
 
     return (
@@ -57,12 +72,15 @@ export default function LazyProfile(props) {
                         maxWidth: "600px",
                     }}
                 >
-                    <FadeIn delay={600}>
-                        <div className="profile-button-option-holder">
-                            <div className={"profile-button-option"}>My Drops</div>
-                            <div className={"profile-button-option"}>Saved</div>
-                        </div>
-                    </FadeIn>
+                    <FooterContainer>
+                        <FadeIn delay={1100} childClassName="child-component">
+                            <div className="profile-button-option-holder">
+                                <div className={"profile-button-option"}>My Drops</div>
+                                <div className={"profile-button-option"}>Saved</div>
+                            </div>
+                        </FadeIn>
+                    </FooterContainer>
+
                     <FadeIn delay={800}>
                         <TabContainer>
                             <Tabs activeTabIndex={0}

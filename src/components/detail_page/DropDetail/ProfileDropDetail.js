@@ -8,7 +8,7 @@ import ImgModal from '../../ImgModal/ImgModal'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
 import DropLink from './DropLink'
 

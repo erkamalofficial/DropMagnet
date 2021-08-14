@@ -5,7 +5,7 @@ import "./card.css"
 import UserIcon from "../../asstes/add-user-icon.png"
 import Avatar from "../../components/elements/Avatar/Avatar.js";
 import { getInitials } from "../../utils/index.js";
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 
 const SwipeCard = styled.div`

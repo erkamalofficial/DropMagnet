@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import Tabs from "../Tabs";
 import { LogoTitleSection, LogoTitle } from "./LogoTitles";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import "./Avatar.css";
 import CropModal from "./CropModal";

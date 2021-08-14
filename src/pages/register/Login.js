@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { Link, useHistory } from "react-router-dom";
-import { useParams } from "react-router";
+import { Link, useHistory, useParams } from "react-router-dom";
 import {
   FormWrapper,
   FormBtn,

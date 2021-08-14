@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import DropDetail from '../../components/detail_page/DropDetail/DropDetail';
 import DummyDropDetail from '../../components/detail_page/DropDetail/DummyDropDetail';

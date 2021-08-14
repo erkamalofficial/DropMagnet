@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useRef } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import IntroScreen from "./intro_screen";
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";

@@ -4,7 +4,7 @@ import DropDetail from "../../detail_page/DropDetail/DropDetail";
 import { formatDate } from "../../../helpers/DateFormatter";
 import Avatar from "../Avatar/Avatar";
 import { getInitials } from "../../../utils";
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
 
 export default function DropCell(props) {

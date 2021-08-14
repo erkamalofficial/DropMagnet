@@ -16,7 +16,7 @@ import {
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
 import "./index.css";
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
 import LazyCard from "./LazyCard";

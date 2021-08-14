@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router-dom';
 import TinderCard from "./swipe-main";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
