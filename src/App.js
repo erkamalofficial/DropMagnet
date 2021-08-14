@@ -44,7 +44,7 @@ const DummyHomeComponent = React.lazy(() => import("./pages/home/DummyPage/dummy
 const CreateDropComponent = React.lazy(() => import("./pages/create_drop"));
 
 const HomePage = (props) => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={null}>
     <HomeComponent
       {...props}
       userDetails={props.userDetails}
@@ -56,7 +56,7 @@ const HomePage = (props) => (
 );
 
 const DummyHomePage = (props) => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={null}>
     <DummyHomeComponent
       {...props}
       userDetails={props.userDetails}

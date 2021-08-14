@@ -8,6 +8,7 @@ import Web3Modal, { getProviderInfoByName } from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
+import FadeIn from 'react-fade-in'
 
 
 const TAB_LIST = ["Drop Swipe", "NFT Galleries", "MetaURLs"];
@@ -20,7 +21,7 @@ const LinksHeaderWrapper = styled.div`
   flex-wrap: wrap;
   padding: 16px;
   backdrop-filter: blur(50px);
-  background-color: #3a3a3a3b;
+  background-color: #1a1a1a66;
   height: 68px;
   @media (max-width: 576px){
     margin-bottom: 0;
@@ -127,11 +128,14 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
           src="./drop_logo.png"
           alt="drop magnet"
         />
-        <LogoTitleSection>
-          <LogoTitle>drop magnet</LogoTitle>
-          <div>#ThreeTheWeb</div>
-        </LogoTitleSection>
+        <FadeIn delay={50} childClassName="child-content">
+          <LogoTitleSection>
+            <LogoTitle>drop magnet</LogoTitle>
+            <div>#ThreeTheWeb</div>
+          </LogoTitleSection>
+        </FadeIn>
       </LogoSection>
+
       {/* <MiddleSection>
         <Tabs tabs={TAB_LIST} activeTabIndex={activeTabIndex} onChangeTab={(index) => {
           setActiveTabIndex(index)
@@ -143,16 +147,20 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
       <RightSection>
         {!isLoggedIn ? (
           <>
-            <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
-              <span className={'text'}>Login</span>
-            </button>
+            <FadeIn delay={50} childClassName="child-content">
+              <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
+                <span className={'text'}>Login</span>
+              </button>
+            </FadeIn>
           </>
         ) : (
-          <button className={"blank-button green-gradient"}
-          style={{marginTop: '-8px'}}
-           onClick={() => history.push('/home')}>
-            <span className={'text'}>Home</span>
-          </button>
+          <FadeIn delay={50} childClassName="child-content">
+            <button className={"blank-button green-gradient"}
+              style={{ marginTop: '-8px' }}
+              onClick={() => history.push('/home')}>
+              <span className={'text'}>Home</span>
+            </button>
+          </FadeIn>
         )}
       </RightSection>
     </LinksHeaderWrapper>

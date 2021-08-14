@@ -21,11 +21,19 @@ import EditIcon from '@material-ui/icons/Edit';
 import LazyProfile from "./LazyProfile";
 import FadeIn from 'react-fade-in';
 
-const ButtonContainer = styled.div`
+const FooterContainer = styled.div`
   margin-top: 16px;
   position: fixed;
-  bottom: 32px;
+  bottom: 0;
+  right: 0;
+  left: 0;
   z-index: 999;
+  backdrop-filter: blur(50px);
+  background-color: #1a1a1a66;
+  background-image: none
+  @media(max-width: 576px){
+    width: calc(100vw-24px);
+  }
 `;
 
 const TabContainer = styled.div`
@@ -419,192 +427,188 @@ export default function Profile(props) {
     );
   }
 
-  if (loading.profile && loading.drops) {
-    return (
-      <div>
-        {props.reload ? (
-          <FadeIn delay={200}>
-            <div className="fixed-container">
+  return (
+    <div>
+      {props.reload ? (
+        <FadeIn delay={200}>
+          <div className="fixed-container">
+            <HeaderBar
+              openHome={() => openHome()}
+              userLoggedIn={props.userLoggedIn}
+              userImage={userImage}
+              reload={props.reload}
+              userDetails={props.userDetails}
+            />
+          </div>
+        </FadeIn>
+      ) : (
+        <div className="fixed-container">
+          <HeaderBar
+            openHome={() => openHome()}
+            userLoggedIn={props.userLoggedIn}
+            userImage={userImage}
+            reload={props.reload}
+            userDetails={props.userDetails}
+          />
+        </div>
+      )}
+      {loading.profile && loading.drops ? (
+        <div>
+          <LazyProfile />
+        </div>
+      ) : (
+        <>
+          <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
+            {renderInput()}
+            <div
+              className={"main-button-container"}
+              style={{ textAlign: "center" }}
+            >
+              <button className="main-button" onClick={saveForm}>
+                {"Save"}
+              </button>
+            </div>
+          </Modal>
+          <div className="profile-container">
+            {/* <div className="fixed-container">
               <HeaderBar
                 openHome={() => openHome()}
                 userLoggedIn={props.userLoggedIn}
                 userImage={userImage}
                 userDetails={props.userDetails}
               />
-            </div>
-          </FadeIn>
-        ) : (
-          <div className="fixed-container">
-            <HeaderBar
-              openHome={() => openHome()}
-              userLoggedIn={props.userLoggedIn}
-              userImage={userImage}
-              userDetails={props.userDetails}
-            />
-          </div>
-        )}
-        <div>
-          <LazyProfile />
-        </div>
-      </div>
-    );
-  }
+            </div> */}
 
-  else {
-    return (
-      <>
-        <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
-          {renderInput()}
-          <div
-            className={"main-button-container"}
-            style={{ textAlign: "center" }}
-          >
-            <button className="main-button" onClick={saveForm}>
-              {"Save"}
-            </button>
-          </div>
-        </Modal>
-        <div className="profile-container">
-          <div className="fixed-container">
-            <HeaderBar
-              openHome={() => openHome()}
-              userLoggedIn={props.userLoggedIn}
-              userImage={userImage}
-              userDetails={props.userDetails}
-            />
+            <div
+              className="profile-detail-container"
+              style={{ display: `${detailView ? "none" : "flex"}` }}
+            >
 
-          </div>
+              <div className="acc-profile-pic">
+                <Avatar
+                  userImage={userImage}
+                  initial={getInitials(firstName)}
+                  picRef={profilePic}
+                  cropModal={cropModal}
+                  setCropModal={setCropModal}
+                  setUploading={setUploading}
+                  uploading={uploading}
+                  onChange={(file) => {
+                    currentUser.getIdToken(false).then(function (idToken) {
+                      DropMagnetAPI.updateUserAvatar(file, file.type, idToken)
+                        .then(function (res) {
+                          window.location.reload()
+                        })
+                    })
+                    const fileReader = new FileReader();
+                    fileReader.onload = () => {
+                      setUserImage(fileReader.result);
+                    };
+                    fileReader.readAsDataURL(file);
+                  }}
+                  onRemove={() => {
 
-          <div
-            className="profile-detail-container"
-            style={{ display: `${detailView ? "none" : "flex"}` }}
-          >
-
-            <div className="acc-profile-pic">
-              <Avatar
-                userImage={userImage}
-                initial={getInitials(firstName)}
-                picRef={profilePic}
-                cropModal={cropModal}
-                setCropModal={setCropModal}
-                setUploading={setUploading}
-                uploading={uploading}
-                onChange={(file) => {
-                  currentUser.getIdToken(false).then(function (idToken) {
-                    DropMagnetAPI.updateUserAvatar(file, file.type, idToken)
-                      .then(function (res) {
+                    currentUser.getIdToken(false).then(function (idToken) {
+                      DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
                         window.location.reload()
-                      })
-                  })
-                  const fileReader = new FileReader();
-                  fileReader.onload = () => {
-                    setUserImage(fileReader.result);
-                  };
-                  fileReader.readAsDataURL(file);
-                }}
-                onRemove={() => {
-
-                  currentUser.getIdToken(false).then(function (idToken) {
-                    DropMagnetAPI.updateUserAvatar(null, '', idToken).then((res) =>
-                      window.location.reload()
-                    );
-                  });
-                }
-                }
-              />
-              <div className="edit-btn"
-                onClick={() => profilePic.current.click()}>
-                <EditIcon className="svg-icon" />
-              </div>
-            </div>
-            {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
-            <div
-              className="profile-large-title clickable"
-              onClick={() => handleProfileEdit("name")}
-            >{`${firstName}`}</div>
-            <div
-              className="profile-handle-title clickable"
-              onClick={() => handleProfileEdit("username")}
-            >
-              {"@" + handle}
-            </div>
-            <div style={{ display: "flex", paddingBottom: "16px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  paddingRight: "24px",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleProfileEdit("twitter")}
-              >
-                <img
-                  width={37}
-                  height={24}
-                  src="./twitter-icon.png"
-                  style={{ paddingRight: "8px" }}
+                      );
+                    });
+                  }
+                  }
                 />
-                <div className="profile-medium-title">
-                  {twitterHandle !== "" && twitterHandle.length > 8 ? (
-                    <div className="socialHandle">
-                      @
-                      <p className="truncate">
-                        {twitterHandle.substring(0, twitterHandle.length - 4)}
-                      </p>
-                      <p className="last">
-                        {twitterHandle.substring(twitterHandle.length - 4)}
-                      </p>
-                    </div>
-                  ) : twitterHandle.length <= 8 ? (
-                    <p>@{twitterHandle}</p>
-                  ) : (
-                    <p>Add Twitter</p>
-                  )}
+                <div className="edit-btn"
+                  onClick={() => profilePic.current.click()}>
+                  <EditIcon className="svg-icon" />
+                </div>
+              </div>
+              {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
+              <div
+                className="profile-large-title clickable"
+                onClick={() => handleProfileEdit("name")}
+              >{`${firstName}`}</div>
+              <div
+                className="profile-handle-title clickable"
+                onClick={() => handleProfileEdit("username")}
+              >
+                {"@" + handle}
+              </div>
+              <div style={{ display: "flex", paddingBottom: "16px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    paddingRight: "24px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleProfileEdit("twitter")}
+                >
+                  <img
+                    width={37}
+                    height={24}
+                    src="./twitter-icon.png"
+                    style={{ paddingRight: "8px" }}
+                  />
+                  <div className="profile-medium-title">
+                    {twitterHandle !== "" && twitterHandle.length > 8 ? (
+                      <div className="socialHandle">
+                        @
+                        <p className="truncate">
+                          {twitterHandle.substring(0, twitterHandle.length - 4)}
+                        </p>
+                        <p className="last">
+                          {twitterHandle.substring(twitterHandle.length - 4)}
+                        </p>
+                      </div>
+                    ) : twitterHandle.length <= 8 ? (
+                      <p>@{twitterHandle}</p>
+                    ) : (
+                      <p>Add Twitter</p>
+                    )}
+                  </div>
+                </div>
+                <div
+                  style={{ display: "flex", cursor: "pointer" }}
+                  onClick={() => handleProfileEdit("insta")}
+                >
+                  <img width={24} height={24} src="./insta-icon.png" />
+                  <div
+                    className="profile-medium-title"
+                    style={{ marginLeft: "10px" }}
+                  >
+                    {instaHandle !== "" && instaHandle.length > 8 ? (
+                      <div className="socialHandle">
+                        @
+                        <p className="truncate">
+                          {instaHandle.substring(0, instaHandle.length - 4)}
+                        </p>
+                        <p className="last">
+                          {instaHandle.substring(instaHandle.length - 4)}
+                        </p>
+                      </div>
+                    ) : instaHandle.length <= 8 ? (
+                      <p>@{instaHandle}</p>
+                    ) : (
+                      <p>Add Instagram</p>
+                    )}
+                  </div>
                 </div>
               </div>
               <div
-                style={{ display: "flex", cursor: "pointer" }}
-                onClick={() => handleProfileEdit("insta")}
+                className="profile-bio-edit-button clickable"
+                onClick={() => handleProfileEdit("bio")}
               >
-                <img width={24} height={24} src="./insta-icon.png" />
-                <div
-                  className="profile-medium-title"
-                  style={{ marginLeft: "10px" }}
-                >
-                  {instaHandle !== "" && instaHandle.length > 8 ? (
-                    <div className="socialHandle">
-                      @
-                      <p className="truncate">
-                        {instaHandle.substring(0, instaHandle.length - 4)}
-                      </p>
-                      <p className="last">
-                        {instaHandle.substring(instaHandle.length - 4)}
-                      </p>
-                    </div>
-                  ) : instaHandle.length <= 8 ? (
-                    <p>@{instaHandle}</p>
-                  ) : (
-                    <p>Add Instagram</p>
-                  )}
-                </div>
+                {bio ? bio : "Tap to Add Bio"}
               </div>
             </div>
+
+
             <div
-              className="profile-bio-edit-button clickable"
-              onClick={() => handleProfileEdit("bio")}
+              style={{
+                margin: "0 auto",
+                maxWidth: "600px",
+                display: `${detailView ? "none" : "block"}`,
+              }}
             >
-              {bio ? bio : "Tap to Add Bio"}
-            </div>
-          </div>
-
-
-          <div
-            style={{
-              margin: "0 auto",
-              maxWidth: "600px",
-              display: `${detailView ? "none" : "block"}`,
-            }}
-          >
-            <div className="profile-button-option-holder">
+              {/* <div className="profile-button-option-holder">
               {scheduledPosts.length > 0 ? (
                 <div
                   className={
@@ -635,98 +639,131 @@ export default function Profile(props) {
               >
                 Saved Drops ({savedPosts.length})
               </div>
-            </div>
-            {/* {scheduledPosts.length !== 0 && savedPosts.length !== 0 && ( */}
-            <TabContainer>
-              <Tabs
-                activeTabIndex={activeTabIndex}
-                handleActiveTabIndex={(index) => {
-                  setActiveTabIndex(index);
-                }}
-                tabList={tabList}
-              />
-            </TabContainer>
-            {/* )} */}
-            {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
-              <ButtonContainer>
-                <button
-                  className={"main-button-2 floating clickable"}
+            </div> */}
+              {/* {scheduledPosts.length !== 0 && savedPosts.length !== 0 && ( */}
+              <TabContainer>
+                <Tabs
+                  activeTabIndex={activeTabIndex}
+                  handleActiveTabIndex={(index) => {
+                    setActiveTabIndex(index);
+                  }}
+                  tabList={tabList}
+                />
+              </TabContainer>
+              {/* )} */}
+              <FooterContainer>
+                {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
+                  <button
+                    className={"main-button-2 floating clickable"}
+                    style={{
+                      margin: "16px auto 16px auto",
+                    }}
+                    onClick={() => {
+                      dispatch({
+                        type: "START_RESWIPE",
+                        payload: { newBucket: savedPosts },
+                      });
+                      history.push(`/reswipe?tabs=${tabList[activeTabIndex]}`);
+                    }}
+                  >
+                    <h1 style={{ textAlign: "center", width: "100%" }}>
+                      Start Reswipe
+                    </h1>
+                  </button>
+                )}
+
+                <div className="profile-button-option-holder">
+                  {scheduledPosts.length > 0 ? (
+                    <div
+                      className={
+                        selectedProfileList === "scheduled"
+                          ? "profile-button-option-selected"
+                          : "profile-button-option"
+                      }
+                      onClick={() => {
+                        setSelectedProfileList("scheduled");
+                        setCategoryList(collectibleArts);
+                      }}
+                    >
+                      My Drops ({scheduledPosts.length})
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  <div
+                    className={
+                      selectedProfileList === "saved"
+                        ? "profile-button-option-selected"
+                        : "profile-button-option"
+                    }
+                    onClick={() => {
+                      setSelectedProfileList("saved");
+                      setCategoryList(fashionArts);
+                    }}
+                  >
+                    Saved Drops ({savedPosts.length})
+                  </div>
+                </div>
+
+              </FooterContainer>
+
+              {currUserPosts.length > 0 &&
+                selectedProfileList === "scheduled" ? (
+                renderDrops(currUserPosts)
+              ) : currSavedPosts.length > 0 && selectedProfileList === "saved" ? (
+                renderDrops(
+                  currSavedPosts,
+                  true
+                )
+              ) : currSavedPosts.length === 0 ? (
+                <div
                   style={{
-                    margin: "0 12px",
-                    backdropFilter: "blur(50px)",
-                    backgroundColor: "#3a3a3a3b",
-                    backgroundImage: "none"
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginTop: "20px",
                   }}
-                  onClick={() => {
-                    dispatch({
-                      type: "START_RESWIPE",
-                      payload: { newBucket: savedPosts },
-                    });
-                    history.push(`/reswipe?tabs=${tabList[activeTabIndex]}`);
-                  }}
+                  className="profile-bio-description"
                 >
-                  <h1 style={{ textAlign: "center", width: "100%" }}>
-                    Start Reswipe
-                  </h1>
-                </button>
-              </ButtonContainer>
-            )}
+                  <p className="redirect-link">
+                    You don't have any drops saved yet. Go to the{" "}
+                    <span onClick={() => props.history.push("/home")}>
+                      swiper page
+                    </span>{" "}
+                    to explore or change category.
+                  </p>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginTop: "20px",
+                  }}
+                  className="profile-bio-description"
+                >
+                  <p className="redirect-link">
+                    You don't have any drops.{" "}
+                    <span onClick={() => props.history.push("/create_drop")}>
+                      Create drop
+                    </span>{" "}
+                    first.
+                  </p>
+                </div>
+              )}
+            </div>
 
-            {currUserPosts.length > 0 &&
-              selectedProfileList === "scheduled" ? (
-              renderDrops(currUserPosts)
-            ) : currSavedPosts.length > 0 && selectedProfileList === "saved" ? (
-              renderDrops(
-                currSavedPosts,
-                true
-              )
-            ) : currSavedPosts.length === 0 ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: "20px",
-                }}
-                className="profile-bio-description"
-              >
-                <p className="redirect-link">
-                  You don't have any drops saved yet. Go to the{" "}
-                  <span onClick={() => props.history.push("/home")}>
-                    swiper page
-                  </span>{" "}
-                  to explore or change category.
-                </p>
+            <div style={{ display: `${!detailView ? "none" : "block"}` }}>
+              <div className="home-container profile-view-container">
+                {detailView && renderDetail()}
               </div>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: "20px",
-                }}
-                className="profile-bio-description"
-              >
-                <p className="redirect-link">
-                  You don't have any drops.{" "}
-                  <span onClick={() => props.history.push("/create_drop")}>
-                    Create drop
-                  </span>{" "}
-                  first.
-                </p>
-              </div>
-            )}
-          </div>
-
-          <div style={{ display: `${!detailView ? "none" : "block"}` }}>
-            <div className="home-container profile-view-container">
-              {detailView && renderDetail()}
             </div>
           </div>
-        </div>
-      </>
-    );
-  }
+        </>
+      )}
+
+    </div>
+  );
 }
 
