@@ -3,7 +3,7 @@ import { useSpringCarousel } from "react-spring-carousel-js";
 import styled from "styled-components";
 import LinksBtn from "./links-btn";
 import { map, uniqueId } from "lodash";
-import { CSSTransition,SwitchTransition } from "react-transition-group";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 const CardSection = styled.div`
   display: flex;
@@ -29,7 +29,6 @@ const CardSection = styled.div`
   }
   padding-bottom: 6px;
 `;
-
 const PLLinksBtn = styled(LinksBtn)`
   /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); */
   border-radius: 23px;
@@ -54,15 +53,6 @@ const PLLinksBtn = styled(LinksBtn)`
   @media (max-width: 576px) {
     padding-bottom: 4px;
   }
-`;
-
-const NavIcon = styled.div`
-  width: 44px;
-  height: 44px;
-  text-align: center;
-  font-size: 32px;
-  cursor: pointer;
-  user-select: none;
 `;
 const GridContainer = styled.div`
   display: grid;
@@ -111,6 +101,21 @@ const TabItem = styled.div`
     margin-right: 8px;
   }
 `;
+
+/* Remove this section when carousel is implemented */
+const TitleButtonContainer = styled.div`
+  padding: 24px;
+`;
+const TitleButton = styled.button`
+  cursor: default;
+  padding: 8px 16px;
+`;
+const Text = styled.span`
+  margin-top: 8px;
+  margin-left: 8px;
+`;
+/* Remove this section when carousel is implemented */
+
 const ScrollContainer = styled.div`
   height: 210px;
   @media (max-width: 340px) {
@@ -283,52 +288,67 @@ const CaurouselComponent = ({
           }
         }}
       >
-        {carouselFragment}
+
+        {/* Uncomment this section when carousel is implemented */}
+        {/* {carouselFragment} */}
+        {/* Uncomment this section when carousel is implemented */}
+
+        {/* Remove this section when carousel is implemented */}
+        <TitleButtonContainer>
+          <TitleButton className={"blank-gradient-button"}>
+            <span className={"blank-gradient-text"}>
+              {linksList[0][0].icon}
+              <Text>{linksList[0][0].title}</Text>
+            </span>
+          </TitleButton>
+        </TitleButtonContainer>
+        {/* Remove this section when carousel is implemented */}
+
         {/* {thumbsFragment} */}
       </GridContainer>
       <ScrollContainer>
 
         {/* <TransitionGroup> */}
         <SwitchTransition mode={'out-in'}>
-        <CSSTransition 
-          key={selectedTab}
-          
-          addEndListener={(node, done) => {
+          <CSSTransition
+            key={selectedTab}
+
+            addEndListener={(node, done) => {
               node.addEventListener("transitionend", done, false);
-          }}
-          classNames="animate">
-          {/* {(state) => { */}
+            }}
+            classNames="animate">
+            {/* {(state) => { */}
             {/* return ( */}
-              <ScrollContainerContent style={{
-                width: "100%",
-                transition: "all .2s ease-in",
-              }}>
-                {map(currentSelectedItem, (linkItem, index) => {
-                  return (
-                    <PLLinksBtn
-                      key={linkItem.item.id}
-                      linkName={linkItem.item.id}
-                      galleryName={displayName}
-                      selectLink={() =>
-                        handleLinkSelection(
-                          linkItem.item.id,
-                          linkItem.item.active
-                        )
-                      }
-                      className={
-                        (linkItem.item.active === "S" && "button-disabled") ||
-                        (selectedLinks.includes(linkItem.item.id) &&
-                          "button-active")
-                      }
-                      
-                    />
-                  );
-                })}
-              </ScrollContainerContent>
+            <ScrollContainerContent style={{
+              width: "100%",
+              transition: "all .2s ease-in",
+            }}>
+              {map(currentSelectedItem, (linkItem, index) => {
+                return (
+                  <PLLinksBtn
+                    key={linkItem.item.id}
+                    linkName={linkItem.item.id}
+                    galleryName={displayName}
+                    selectLink={() =>
+                      handleLinkSelection(
+                        linkItem.item.id,
+                        linkItem.item.active
+                      )
+                    }
+                    className={
+                      (linkItem.item.active === "S" && "button-disabled") ||
+                      (selectedLinks.includes(linkItem.item.id) &&
+                        "button-active")
+                    }
+
+                  />
+                );
+              })}
+            </ScrollContainerContent>
             {/* ); */}
-          {/* }} */}
-        </CSSTransition>
-        
+            {/* }} */}
+          </CSSTransition>
+
         </SwitchTransition>
       </ScrollContainer>
     </CardSection>
