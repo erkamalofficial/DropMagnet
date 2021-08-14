@@ -21,6 +21,10 @@ const CardContainer = styled.div`
   width: var(--card-container-width);
   height: var(--card-container-height);
   margin-bottom: var(--gap-bottom);
+  margin-top: var(--main-header-margin-top);
+  @media(max-width: 576px){
+    margin-top: 0
+  }
 `;
 
 const alreadyRemoved = [];
@@ -146,21 +150,14 @@ function DummySwiper(props) {
             </FadeIn>
             <FadeIn delay={1000}>
               <CardContainer key="cardContainer"
-                className={'fix-minor-bug-swipe'}
-                style={{
-                  marginTop: 'var(--main-header-margin-top)'
-                }}>
+                className={'fix-minor-bug-swipe'}>
                 <LazyCard />
               </CardContainer>
             </FadeIn>
           </>
         )}
       {!loading && !openView && (
-        <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}
-          style={{
-            display: `${openView ? 'none' : 'flex'}`,
-            marginTop: 'var(--main-header-margin-top)'
-          }}>
+        <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
           {cards.length > 0 ? cards.map((cardDetails, index) => {
             const { id } = cardDetails;
 
