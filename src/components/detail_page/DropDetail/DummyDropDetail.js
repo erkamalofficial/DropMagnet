@@ -47,7 +47,7 @@ export default function DummyDropDetail(props) {
     }
 
     return (
-        <div className="detail-view">
+        <div className="detail-view dummy">
             <div className="detail-view-header">
                 <Avatar userImage={''} initial={getInitials("Admin", "")} view_only small style={{ margin: 10 }} />
                 <h1 className="drop-detail-title">Admin</h1>
