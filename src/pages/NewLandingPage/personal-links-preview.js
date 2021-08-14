@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const PLSectionThree = styled.div`
   display: flex;
@@ -80,14 +81,32 @@ const MainContainer = styled.div`
 
 
 
-const PersonalLinksPreview = ({ handleGalleryName,galleryName, isLoggedIn }) => {
+const PersonalLinksPreview = ({ setGalleryName, isMobile, galleryName, isLoggedIn }) => {
+
+  const [inputVal, setInputVal] = useState(galleryName)
+
+
+  useEffect(() => {
+    setInputVal(galleryName)
+  }, [galleryName])
+
+  const handleGalleryName = (val) => {
+    const galleryNameLimit = isMobile ? 16 : 22;
+    const checkAndLimitGalleryName =
+      val.length > galleryNameLimit
+        ? `${val.substring(0, galleryNameLimit)}...`
+        : val;
+    setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
+  };
+
   return (
     <MainContainer>
       <PLSectionThree>
       <PLSectionUserinput
-        value={galleryName}
+        value={inputVal}
         placeholder="Enter your brand or name here"
-        onChange={(e) => handleGalleryName(e.target.value)}
+        onChange={(e) => setInputVal(e.target.value)}
+        onBlur={(e) => handleGalleryName(e.target.value)}
       />
       <PLSectionEmojiLine>Emoji’s & specials are allowed! 💜</PLSectionEmojiLine>
     </PLSectionThree>

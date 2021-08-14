@@ -104,7 +104,8 @@ const HeaderSubtitle = styled.div`
   font-size: 24px;
   margin-left: 30px;
   @media (max-width: 576px) {
-    margin-left: 0px;
+    margin-left: 12px;
+    margin-right: 12px;
     font-size: 15px;
   }
   margin-bottom: 16px;
@@ -171,14 +172,14 @@ const LinksHome = (props) => {
     })
   };
 
-  const handleGalleryName = (val) => {
-    const galleryNameLimit = isMobile ? 16 : 22;
-    const checkAndLimitGalleryName =
-      val.length > galleryNameLimit
-        ? `${val.substring(0, galleryNameLimit)}...`
-        : val;
-    setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
-  };
+  // const handleGalleryName = (val) => {
+  //   const galleryNameLimit = isMobile ? 16 : 22;
+  //   const checkAndLimitGalleryName =
+  //     val.length > galleryNameLimit
+  //       ? `${val.substring(0, galleryNameLimit)}...`
+  //       : val;
+  //   setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
+  // };
 
   useEffect(() => {
     setTimeout(() => {
@@ -260,9 +261,10 @@ const LinksHome = (props) => {
               getPageDetails={() => { }}
             />
             <PersonalLinksPreview
-              handleGalleryName={() => handleGalleryName}
+              setGalleryName={setGalleryName}
               isLoggedIn={Boolean(currentUser)}
               galleryName={galleryName}
+              isMobile={isMobile}
             />
           </FadeIn>
         </PersonalLinksWrapper>

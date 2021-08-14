@@ -164,152 +164,161 @@ const ScrollContainerContentMobile = styled.div`
 const ERROR_ENTRIES = 9;
 
 const CardSectionItem = (
-    linkKey,
-    displayName,
+  linkKey,
+  displayName,
 ) => {
-    return {
-        id: linkKey,
-        renderItem: (
-            <CardContainer>
-                <CardSection>
-                    <TitleButtonContainer>
-                        <TitleButton className={"stripe title-stripe"} />
-                    </TitleButtonContainer>
+  return {
+    id: linkKey,
+    renderItem: (
+      <CardContainer>
+        <CardSection>
+          <TitleButtonContainer>
+            <TitleButton className={"stripe title-stripe"} />
+          </TitleButtonContainer>
 
-                    <ScrollContainer>
-                        <ScrollContainerContent>
-                            {map([1, 2, 3, 4], (linkItem, index) => (
-                                <PLLinksBtn
-                                    key={index}
-                                    linkId={0}
-                                    selectLink={() => { }}
-                                    className={'stripe links-stripe'}
-                                    linkName={'gdfgdf'}
-                                    galleryName={displayName}
-                                />
-                            ))}
-                        </ScrollContainerContent>
-                    </ScrollContainer>
-                </CardSection>
-            </CardContainer>
-        ),
-    };
+          <ScrollContainer>
+            <ScrollContainerContent>
+              {map([1, 2, 3, 4], (linkItem, index) => (
+                <PLLinksBtn
+                  key={index}
+                  linkId={0}
+                  selectLink={() => { }}
+                  className={'stripe links-stripe'}
+                  linkName={'gdfgdf'}
+                  galleryName={displayName}
+                />
+              ))}
+            </ScrollContainerContent>
+          </ScrollContainer>
+        </CardSection>
+      </CardContainer>
+    ),
+  };
 };
 
 export const CardsDesktopLoader = ({
-    displayName,
-    availableLinks,
-    handleLinkSelection,
-    selectedLinks,
+  displayName,
+  availableLinks,
+  handleLinkSelection,
+  selectedLinks,
 }) => {
-    const {
-        carouselFragment,
-    } = useSpringCarousel({
-        itemsPerSlide: 1,
-        initialStartingPosition: "center",
-        items: map([1], (linkItem, linkKey) =>
-            CardSectionItem(
-                linkItem,
-                linkKey,
-                displayName,
-                handleLinkSelection,
-                selectedLinks,
-                availableLinks
-            )
-        ),
-    });
-    return (
-        <GridContainer>
-            <div className="blank-div" style={{ width: "44px", height: "44px" }}></div>
-            {carouselFragment}
-            <div className="blank-div" style={{ width: "44px", height: "44px" }}></div>
-        </GridContainer>
-    );
+  const {
+    carouselFragment,
+  } = useSpringCarousel({
+    itemsPerSlide: 1,
+    initialStartingPosition: "center",
+    items: map([1], (linkItem, linkKey) =>
+      CardSectionItem(
+        linkItem,
+        linkKey,
+        displayName,
+        handleLinkSelection,
+        selectedLinks,
+        availableLinks
+      )
+    ),
+  });
+  return (
+    <GridContainer>
+      <div className="blank-div" style={{ width: "44px", height: "44px" }}></div>
+      {carouselFragment}
+      <div className="blank-div" style={{ width: "44px", height: "44px" }}></div>
+    </GridContainer>
+  );
 };
 
 const CardSectionItemMobile = (linkKey) => {
-    return {
-        id: linkKey,
-        renderItem: (
-            <TabItem
-                onClick={() => { }}
-                className={'stripe title-stripe-mobile'}
-            />
-        ),
-    };
+  return {
+    id: linkKey,
+    renderItem: (
+      <TabItem
+        onClick={() => { }}
+        className={'stripe title-stripe-mobile'}
+      />
+    ),
+  };
 };
 
 const getExtraItems = () => {
-    const data = [];
-    for (let i = 0; i < ERROR_ENTRIES; i++) {
-        data.push({
-            id: 100 + Math.floor(Math.random() * 10),
-            renderItem: <div style={{ flex: "1 0 20px" }}></div>,
-        });
-    }
-    return data;
+  const data = [];
+  for (let i = 0; i < ERROR_ENTRIES; i++) {
+    data.push({
+      id: 100 + Math.floor(Math.random() * 10),
+      renderItem: <div style={{ flex: "1 0 20px" }}></div>,
+    });
+  }
+  return data;
 };
 
 export const CardsMobileLoader = () => {
-    const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
 
-    const { carouselFragment } =
-        useSpringCarousel({
-            itemsPerSlide: 1,
-            initialStartingPosition: "end",
-            disableGestures: false,
-            items: [
-                ...[1].map((linkItem, index) =>
-                    CardSectionItemMobile(
-                        linkItem,
-                        index,
-                        () => { },
-                        selectedTab === index
-                    )
-                ),
-                ...getExtraItems(),
-            ],
-        });
+  const { carouselFragment } =
+    useSpringCarousel({
+      itemsPerSlide: 1,
+      initialStartingPosition: "end",
+      disableGestures: false,
+      items: [
+        ...[1].map((linkItem, index) =>
+          CardSectionItemMobile(
+            linkItem,
+            index,
+            () => { },
+            selectedTab === index
+          )
+        ),
+        ...getExtraItems(),
+      ],
+    });
 
-    return (
-        <CardSectionMobile style={{ width: "100%" }}>
-            <GridContainerMobile
-                style={{
-                    width: "calc(100% - 60px)",
-                    overflow: "hidden",
-                    margin: "0 auto",
-                    marginBottom: "12px",
-                }}
-            >
-                {carouselFragment}
-            </GridContainerMobile>
-            <ScrollContainerMobile>
+  return (
+    <CardSectionMobile style={{ width: "100%" }}>
+      {/* <GridContainerMobile
+        style={{
+          width: "calc(100% - 60px)",
+          overflow: "hidden",
+          margin: "0 auto",
+          marginBottom: "12px",
+        }}
+      >
+        {carouselFragment}
+        <TabItem
+          onClick={() => { }}
+          className={'stripe title-stripe-mobile'}
+        />
+      </GridContainerMobile> */}
+      <TabItem
+          onClick={() => { }}
+          className={'stripe title-stripe-mobile'}
+          style={{margin: '16px 0'}}
+        />
+      <ScrollContainerMobile>
 
-                <SwitchTransition mode={'out-in'}>
-                    <CSSTransition
-                        key={selectedTab}
-                        classNames="animate">
-                        <ScrollContainerContentMobile style={{
-                            width: "100%",
-                            transition: "all .2s ease-in",
-                        }}>
-                            {map([1, 2, 3, 4], (linkItem, index) => {
-                                return (
-                                    <PLLinksBtnMobile
-                                        key={index}
-                                        linkId={0}
-                                        selectLink={() => { }}
-                                        className={'stripe links-stripe-mobile'}
-                                        linkName={''}
-                                        galleryName={''}
-                                    />
-                                );
-                            })}
-                        </ScrollContainerContentMobile>
-                    </CSSTransition>
-                </SwitchTransition>
-            </ScrollContainerMobile>
-        </CardSectionMobile>
-    );
+        <SwitchTransition mode={'out-in'}>
+          <CSSTransition
+            key={selectedTab}
+            classNames="animate">
+            <ScrollContainerContentMobile style={{
+              width: "100%",
+              transition: "all .2s ease-in",
+            }}>
+              {map([1, 2, 3, 4], (linkItem, index) => {
+                return (
+                  <PLLinksBtnMobile
+                    key={index}
+                    linkId={0}
+                    selectLink={() => { }}
+                    className={'stripe links-stripe-mobile'}
+                    linkName={''}
+                    galleryName={''}
+                  />
+                );
+              })}
+            </ScrollContainerContentMobile>
+          </CSSTransition>
+        </SwitchTransition>
+      </ScrollContainerMobile>
+    </CardSectionMobile>
+  );
 };
 
