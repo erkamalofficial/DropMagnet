@@ -92,7 +92,7 @@ export default function LazyProfile(props) {
                     <FadeIn delay={1000}>
                         <div className="drop-list">
                             {[1, 2, 3].map(d => (
-                                <div key={d} className="landing-cell">
+                                <div key={d} className="landing-cell lazy">
                                     <div className="drop-inner">
                                         <div className="drop-details">
                                             <div className="drop-header" >

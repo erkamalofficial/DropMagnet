@@ -47,7 +47,9 @@ export default function DropCell(props) {
     return <div key={props.drop.id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner" onClick={() => {
         props.setCurDrop(props.drop)
-        props.setDetailView(true);
+        if(!props.swiping){
+          props.setDetailView(true);
+        }
       }
       }>
         <div className="drop-details">

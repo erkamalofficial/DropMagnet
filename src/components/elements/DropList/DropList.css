@@ -1,5 +1,48 @@
 .drop-list {
+  margin-top: 12px;
   margin-bottom: 128px;
   flex: 1 1 auto;
   overflow: auto;
+}
+
+.swipeable-list{
+  max-width: 576px;
+  margin: auto;
+}
+
+.swipeable-list-item{
+  margin: 10px 0;
+}
+
+.card{
+  background-color: #1a1a1a;
+  width: 100%;
+}
+
+.delete-sec{
+  background-color: red;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.edit-sec{
+  background-color: #5f6fff;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+@media(max-width: 576px){
+  .swipeable-list{
+    width: calc(100vw - 24px) !important;
+  }
 }

@@ -1,7 +1,7 @@
 .landing-cell {
   max-height: 148px;
   padding: 12px;
-  margin: 16px 12px; 
+  /* margin: 6px 0;  */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   background-color: #262626;
