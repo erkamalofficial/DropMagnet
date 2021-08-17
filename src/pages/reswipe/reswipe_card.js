@@ -14,6 +14,9 @@ box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
 display: flex;
 flex-direction: column;
 background-size: 0 0;
+@media(max-width: 576px){
+    margin-top: 12px;
+}
 `
 
 export default function ReswipeCard(props){

@@ -5,9 +5,9 @@ import {ReactComponent as MaximizeIcon} from '../../asstes/capture.svg';
 
 const Final4Grid = styled.div`
   display: grid;
-  grid-template-rows: repeat(2, 180px);
+  grid-template-rows: repeat(2, 150px);
   grid-template-columns: repeat(2, 150px);
-  grid-gap: 15px;
+  grid-gap: 18px;
   margin: auto;
 `;
 
@@ -91,7 +91,7 @@ export default function FinalFour({ bucket, deleted, onChange,onExpand }) {
     <ReswipeCard>
       <h1
         className={"h1-large"}
-        style={{ fontSize: "32px", textAlign: "center" }}
+        style={{ fontSize: "22px", textAlign: "center", whiteSpace: 'nowrap' }}
       >
         You’re so good at this!
       </h1>
@@ -122,7 +122,7 @@ export default function FinalFour({ bucket, deleted, onChange,onExpand }) {
       </Final4Grid>
       <h1
         className={"h1-large"}
-        style={{ fontSize: "32px", textAlign: "center" }}
+        style={{ fontSize: "22px", textAlign: "center", whiteSpace: 'nowrap' }}
       >
         Keep all or remove with a tap!
       </h1>
