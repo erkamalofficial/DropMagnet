@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import DropCell from '../DropCell/DropCell'
 import "./DropList.css"
-import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
-import '@sandstreamdev/react-swipeable-list/dist/styles.css';
+// import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
+// import '@sandstreamdev/react-swipeable-list/dist/styles.css';
+import {
+  LeadingActions,
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+  Type as ListType
+} from 'react-swipeable-list';
+import 'react-swipeable-list/dist/styles.css';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 export default function DropList(props) {
   const [listItems, setListItems] = useState([]);
@@ -46,21 +58,48 @@ export default function DropList(props) {
       setCurDrop={props.setCurDrop} />
   }
 
+  // const leadingActions = () => (
+  //   <LeadingActions>
+  //     <SwipeAction onClick={() => console.info('leading action triggered')}>
+  //       Action name
+  //     </SwipeAction>
+  //   </LeadingActions>
+  // );
+
+  const trailingActions = () => (
+    <TrailingActions>
+      <SwipeAction
+        onClick={() => alert('Edit action will be triggered.')}
+      >
+        <div className="icon">
+          <EditIcon className="svg-icon edit" />
+        </div>
+      </SwipeAction>
+      <SwipeAction
+        onClick={() => alert('Delete action will be triggered.')}
+      >
+        <div className="icon">
+          <DeleteIcon className="svg-icon delete" />
+        </div>
+      </SwipeAction>
+    </TrailingActions>
+  );
+
   return (
     <div className="drop-list">
-      <SwipeableList threshold={0.25}>
+      <SwipeableList
+        type={ListType.IOS}
+        scrollStartThreshold={0}>
         {
           listItems.map(drop => (
             <SwipeableListItem
-              swipeLeft={{
-                content: <div className="delete-sec">Delete</div>,
-                action: () => alert('delete action will be triggered')
+              swipeStartThreshold={0}
+              // leadingActions={leadingActions()}
+              trailingActions={trailingActions()}
+              onSwipeProgress={progress => {
+                console.log(progress)
+                setSwiping(true)
               }}
-              swipeRight={{
-                content: <div className="edit-sec">Edit</div>,
-                action: () => alert('edit action will be triggered')
-              }}
-              onSwipeProgress={progress => setSwiping(true)}
               onSwipeEnd={p => {
                 setTimeout(() => {
                   setSwiping(false)
@@ -68,7 +107,6 @@ export default function DropList(props) {
               }}
               onSwipeStart={p => setSwiping(true)}
             >
-
               <div className="card">
                 {renderDropCell(drop)}
               </div>
