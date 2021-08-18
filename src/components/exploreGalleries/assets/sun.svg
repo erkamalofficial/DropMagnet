@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="35" viewBox="2 1 31 31">
+    <defs>
+        <filter id="skcxa" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1042Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxb">
+            <path fill="#fff"
+                  d="M18 9c-4.136 0-7.5 3.365-7.5 7.5S13.864 24 18 24c4.135 0 7.5-3.364 7.5-7.5S22.135 9 18 9z"/>
+        </mask>
+        <filter id="skcxc" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1054Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxd">
+            <path fill="#fff"
+                  d="M17.997 7.101a1.417 1.417 0 0 1-1.417-1.416V3.417a1.417 1.417 0 1 1 2.834 0v2.268c0 .782-.635 1.416-1.417 1.416z"/>
+        </mask>
+        <filter id="skcxe" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1064Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxf">
+            <path fill="#fff"
+                  d="M17.997 25.9c-.783 0-1.417.634-1.417 1.417v2.267a1.417 1.417 0 1 0 2.834 0v-2.267c0-.783-.635-1.417-1.417-1.417z"/>
+        </mask>
+        <filter id="skcxg" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1074Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxh">
+            <path fill="#fff"
+                  d="M24.645 9.852a1.418 1.418 0 0 1 0-2.004l1.603-1.603a1.418 1.418 0 0 1 2.004 2.004L26.65 9.852a1.417 1.417 0 0 1-2.004 0z"/>
+        </mask>
+        <filter id="skcxi" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1084Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxj">
+            <path fill="#fff"
+                  d="M11.353 23.146a1.416 1.416 0 0 0-2.005 0l-1.603 1.602a1.418 1.418 0 0 0 2.004 2.005l1.604-1.604a1.415 1.415 0 0 0 0-2.003z"/>
+        </mask>
+        <filter id="skcxk" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1094Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxl">
+            <path fill="#fff"
+                  d="M27.4 16.497c0-.783.634-1.417 1.417-1.417h2.268a1.417 1.417 0 1 1 0 2.834h-2.268a1.417 1.417 0 0 1-1.417-1.417z"/>
+        </mask>
+        <filter id="skcxm" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1104Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxn">
+            <path fill="#fff"
+                  d="M8.601 16.497c0-.783-.634-1.417-1.417-1.417H4.917a1.417 1.417 0 1 0 0 2.834h2.268c.782 0 1.416-.634 1.416-1.417z"/>
+        </mask>
+        <filter id="skcxo" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1114Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxp">
+            <path fill="#fff"
+                  d="M24.645 23.145a1.418 1.418 0 0 1 2.004 0l1.604 1.603a1.416 1.416 0 1 1-2.004 2.004l-1.604-1.604a1.416 1.416 0 0 1 0-2.003z"/>
+        </mask>
+        <filter id="skcxq" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1124Out" stdDeviation="1.5 1.5"/>
+        </filter>
+        <mask id="skcxr">
+            <path fill="#fff"
+                  d="M11.353 9.852a1.417 1.417 0 0 0 0-2.004L9.749 6.245A1.417 1.417 0 0 0 7.745 8.25L9.35 9.852c.553.554 1.45.554 2.004 0z"/>
+        </mask>
+    </defs>
+    <g>
+        <g>
+            <g>
+                <path fill="#fff"
+                      d="M18 9c-4.136 0-7.5 3.365-7.5 7.5S13.864 24 18 24c4.135 0 7.5-3.364 7.5-7.5S22.135 9 18 9z"/>
+                <path fill-opacity=".5"
+                      d="M7.5 28V5h21v23zM18 10c-4.136 0-7.5 3.365-7.5 7.5S13.864 25 18 25c4.135 0 7.5-3.364 7.5-7.5S22.135 10 18 10z"
+                      filter="url(#skcxa)" mask="url(&quot;#skcxb&quot;)"/>
+            </g>
+            <g>
+                <g>
+                    <path fill="#fff"
+                          d="M17.997 7.101a1.417 1.417 0 0 1-1.417-1.416V3.417a1.417 1.417 0 1 1 2.834 0v2.268c0 .782-.635 1.416-1.417 1.416z"/>
+                    <path fill-opacity=".5"
+                          d="M13.58 11.1V-2h8.84v13.1zm5.834-4.415V4.417a1.417 1.417 0 1 0-2.834 0v2.268a1.417 1.417 0 0 0 2.834 0z"
+                          filter="url(#skcxc)" mask="url(&quot;#skcxd&quot;)"/>
+                </g>
+                <g>
+                    <path fill="#fff"
+                          d="M17.997 25.9c-.783 0-1.417.634-1.417 1.417v2.267a1.417 1.417 0 1 0 2.834 0v-2.267c0-.783-.635-1.417-1.417-1.417z"/>
+                    <path fill-opacity=".5"
+                          d="M13.58 35V21.9h8.84V35zm4.417-8.1c-.783 0-1.417.634-1.417 1.417v2.267a1.417 1.417 0 1 0 2.834 0v-2.267c0-.783-.635-1.417-1.417-1.417z"
+                          filter="url(#skcxe)" mask="url(&quot;#skcxf&quot;)"/>
+                </g>
+                <g>
+                    <path fill="#fff"
+                          d="M24.645 9.852a1.418 1.418 0 0 1 0-2.004l1.603-1.603a1.418 1.418 0 0 1 2.004 2.004L26.65 9.852a1.417 1.417 0 0 1-2.004 0z"/>
+                    <path fill-opacity=".5"
+                          d="M21.23 14.27V1.83h10.44v12.44zm5.419-3.418l1.603-1.603a1.417 1.417 0 1 0-2.004-2.004l-1.603 1.603a1.418 1.418 0 0 0 2.004 2.004z"
+                          filter="url(#skcxg)" mask="url(&quot;#skcxh&quot;)"/>
+                </g>
+                <g>
+                    <path fill="#fff"
+                          d="M11.353 23.146a1.416 1.416 0 0 0-2.005 0l-1.603 1.602a1.418 1.418 0 0 0 2.004 2.005l1.604-1.604a1.415 1.415 0 0 0 0-2.003z"/>
+                    <path fill-opacity=".5"
+                          d="M4.33 31.17V18.73h10.44v12.44zm7.023-7.024a1.416 1.416 0 0 0-2.005 0l-1.603 1.602a1.418 1.418 0 0 0 2.004 2.005l1.604-1.604a1.415 1.415 0 0 0 0-2.003z"
+                          filter="url(#skcxi)" mask="url(&quot;#skcxj&quot;)"/>
+                </g>
+                <g>
+                    <path fill="#fff"
+                          d="M27.4 16.497c0-.783.634-1.417 1.417-1.417h2.268a1.417 1.417 0 1 1 0 2.834h-2.268a1.417 1.417 0 0 1-1.417-1.417z"/>
+                    <path fill-opacity=".5"
+                          d="M24.4 21.92V11.08h11.1v10.84zm4.417-3.006h2.268a1.417 1.417 0 1 0 0-2.834h-2.268a1.417 1.417 0 1 0 0 2.834z"
+                          filter="url(#skcxk)" mask="url(&quot;#skcxl&quot;)"/>
+                </g>
+                <g>
+                    <path fill="#fff"
+                          d="M8.601 16.497c0-.783-.634-1.417-1.417-1.417H4.917a1.417 1.417 0 1 0 0 2.834h2.268c.782 0 1.416-.634 1.416-1.417z"/>
+                    <path fill-opacity=".5"
+                          d="M.5 21.92V11.08h11.1v10.84zm8.101-4.423c0-.783-.634-1.417-1.417-1.417H4.917a1.417 1.417 0 1 0 0 2.834h2.268c.782 0 1.416-.634 1.416-1.417z"
+                          filter="url(#skcxm)" mask="url(&quot;#skcxn&quot;)"/>
+                </g>
+                <g>
+                    <path fill="#fff"
+                          d="M24.645 23.145a1.418 1.418 0 0 1 2.004 0l1.604 1.603a1.416 1.416 0 1 1-2.004 2.004l-1.604-1.604a1.416 1.416 0 0 1 0-2.003z"/>
+                    <path fill-opacity=".5"
+                          d="M21.23 31.17V18.73h10.44v12.44zm3.415-5.022l1.604 1.604a1.418 1.418 0 0 0 2.004-2.004l-1.604-1.603a1.418 1.418 0 0 0-2.004 2.003z"
+                          filter="url(#skcxo)" mask="url(&quot;#skcxp&quot;)"/>
+                </g>
+                <g>
+                    <path fill="#fff"
+                          d="M11.353 9.852a1.417 1.417 0 0 0 0-2.004L9.749 6.245A1.417 1.417 0 0 0 7.745 8.25L9.35 9.852c.553.554 1.45.554 2.004 0z"/>
+                    <path fill-opacity=".5"
+                          d="M4.33 14.27V1.83h10.44v12.44zm7.023-3.418a1.417 1.417 0 0 0 0-2.004L9.749 7.245A1.417 1.417 0 0 0 7.745 9.25l1.604 1.603c.553.554 1.45.554 2.004 0z"
+                          filter="url(#skcxq)" mask="url(&quot;#skcxr&quot;)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

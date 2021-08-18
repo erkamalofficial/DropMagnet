@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="41px" viewBox="0 0 50 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>basic-tick</title>
+    <defs>
+        <filter x="-37.5%" y="-52.7%" width="175.0%" height="205.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="11pro-max-copy-13" transform="translate(-20.000000, -15.00000)" fill="#15FF6F" fill-rule="nonzero">
+            <g id="basic-tick" filter="url(#filter-1)" transform="translate(37.000000, 16.000000)">
+                <path d="M31.5441266,1.93960362 L30.0623386,0.457815612 C29.4518496,-0.152605204 28.455329,-0.152605204 27.8395884,0.457815612 L12.3017527,16.0009711 L4.16235383,7.86157219 C3.55193302,7.25108316 2.5553443,7.25108316 1.93967182,7.86157219 L0.457815612,9.34336019 C-0.152605204,9.95384921 -0.152605204,10.9503697 0.457815612,11.5660422 L11.1851942,22.2933526 C11.4930645,22.6012229 11.8895311,22.7577498 12.2913176,22.7577498 C12.6931041,22.7577498 13.0948224,22.6012229 13.3975093,22.2933526 L31.5284398,4.16235383 C32.1545474,3.54149789 32.1545474,2.55016084 31.5441266,1.93960362 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

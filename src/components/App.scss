@@ -1,0 +1,381 @@
+@import "../fonts/fonts";
+*{
+  box-sizing: border-box;
+  font-family: "Azo Sans", sans-serif;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+body{
+  margin: 0;
+  padding: 0;
+  background: #1a1a1a;
+}
+.navbar{
+  width: 100%;
+  padding: 16px 18px 23px 16px;
+  //border-bottom: 1px solid black;
+  //clip-path: polygon(0 0, 100% 0, 100% 75px, 60% 75px, 50% 91px, 40% 75px, 0 75px);
+  //background-color: grey;
+  position: relative;
+  @media (max-width: 500px) {
+    //padding: 9px;
+    min-height: 70px;
+  }
+}
+.explore-galleries-content{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  .homepage{
+    height: calc(100% - 85px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.ReactModal__Overlay{
+  z-index: 100 !important;
+  background-color: transparent !important;
+}
+
+.greeting-Alexander {
+  color: #eaeaea;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.max-w-324 {
+  max-width: 324px;
+}
+.max-w-564 {
+  max-width: 564px;
+}
+.flex-content {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid black;
+  //margin-bottom: 8px;
+  border-bottom: 8px solid #191919;
+}
+
+.grid-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px 13px;
+  margin-bottom: 16px;
+  .grid-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    background-color: #404040;
+    &:nth-child(4) {
+      grid-area: 2 / 1 / 2 /4;
+    }
+  }
+  @media (max-width: 375px) {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+}
+.feed {
+  color: #eaeaea;
+  text-align: center;
+  font-style: italic;
+  padding: 12px 0 16px;
+}
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+  bottom: -46px!important;
+  @media (max-width: 720px) {
+    bottom: -41px!important;
+  }
+
+  @media (max-height: 633px) {
+    bottom: -31px!important;
+  }
+
+  @media screen and (min-width: 1024px) and (max-width: 1200px) and (min-height: 1024px) {
+    bottom: 0 !important;
+  }
+
+  @media screen and (min-width: 720px) and (max-width: 810px) {
+    bottom: -44px !important;
+  }
+
+  @media screen and (min-width: 810px) and (max-width: 1200px) {
+    bottom: 0 !important;
+  }
+
+  @media screen and (min-width: 1200px) and (max-height: 974px) {
+    bottom: 0 !important;
+  }
+
+}
+
+[data-rmiz-wrap="visible"], [data-rmiz-wrap="hidden"] {
+  max-width: 425px;
+  width: 100%;
+}
+
+.fade-in {
+  animation: fadeIn ease 5s;
+  -webkit-animation: fadeIn ease 5s;
+  -moz-animation: fadeIn ease 5s;
+  -o-animation: fadeIn ease 5s;
+  -ms-animation: fadeIn ease 5s;
+}
+
+
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+.cover-z {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  background-color: #292929;
+
+  &__light {
+    background-color: #eeeeee;
+  }
+}
+//.bd {
+//  //background-image: linear-gradient(to right, red, transparent);
+//    mix-blend-mode: screen;
+//}
+
+
+.bg {
+  //height: 80vh;
+  background-image: url("movieFarm/assets/frame-000000.jpg");
+  animation: anim 2s infinite;
+  background-repeat: no-repeat;
+  //background-size: cover;
+  .bg-wrapper {
+    //height: 100%;
+    //font-size: 400px;
+    background-color: #fff;
+    mix-blend-mode: screen;
+    //line-height: 400px;
+    animation: text 8s infinite;
+    span {
+      font-size: 20px;
+      mix-blend-mode: screen;
+      background-color: #fff;
+    }
+  }
+}
+
+@keyframes text {
+  from {
+    font-size: 200px;
+  }
+  to {
+    font-size: 400px;
+  }
+}
+@keyframes anim {
+  0% {
+    background-image: url("movieFarm/assets/frame-000001.jpg");
+  }
+  2% {
+    background-image: url("movieFarm/assets/frame-000002.jpg");
+  }
+  4% {
+    background-image: url("movieFarm/assets/frame-000003.jpg");
+  }
+  6% {
+    background-image: url("movieFarm/assets/frame-000004.jpg");
+  }
+  8% {
+    background-image: url("movieFarm/assets/frame-000005.jpg");
+  }
+  10% {
+    background-image: url("movieFarm/assets/frame-000006.jpg");
+  }
+  12% {
+    background-image: url("movieFarm/assets/frame-000007.jpg");
+  }
+  14% {
+    background-image: url("movieFarm/assets/frame-000008.jpg");
+  }
+  16% {
+    background-image: url("movieFarm/assets/frame-000009.jpg");
+  }
+  18% {
+    background-image: url("movieFarm/assets/frame-000010.jpg");
+  }
+  20% {
+    background-image: url("movieFarm/assets/frame-000011.jpg");
+  }
+  22% {
+    background-image: url("movieFarm/assets/frame-000012.jpg");
+  }
+  24% {
+    background-image: url("movieFarm/assets/frame-000013.jpg");
+  }
+  26% {
+    background-image: url("movieFarm/assets/frame-000014.jpg");
+  }
+  28% {
+    background-image: url("movieFarm/assets/frame-000015.jpg");
+  }
+  30% {
+    background-image: url("movieFarm/assets/frame-000016.jpg");
+  }
+  32% {
+    background-image: url("movieFarm/assets/frame-000017.jpg");
+  }
+  34% {
+    background-image: url("movieFarm/assets/frame-000018.jpg");
+  }
+  36% {
+    background-image: url("movieFarm/assets/frame-000019.jpg");
+  }
+  38% {
+    background-image: url("movieFarm/assets/frame-000020.jpg");
+  }
+  40% {
+    background-image: url("movieFarm/assets/frame-000021.jpg");
+  }
+  42% {
+    background-image: url("movieFarm/assets/frame-000022.jpg");
+  }
+  44% {
+    background-image: url("movieFarm/assets/frame-000023.jpg");
+  }
+  46% {
+    background-image: url("movieFarm/assets/frame-000024.jpg");
+  }
+  48% {
+    background-image: url("movieFarm/assets/frame-000025.jpg");
+  }
+  50% {
+    background-image: url("movieFarm/assets/frame-000026.jpg");
+  }
+  52% {
+    background-image: url("movieFarm/assets/frame-000027.jpg");
+  }
+  54% {
+    background-image: url("movieFarm/assets/frame-000028.jpg");
+  }
+  56% {
+    background-image: url("movieFarm/assets/frame-000029.jpg");
+  }
+  58% {
+    background-image: url("movieFarm/assets/frame-000030.jpg");
+  }
+  60% {
+    background-image: url("movieFarm/assets/frame-000031.jpg");
+  }
+  62% {
+    background-image: url("movieFarm/assets/frame-000032.jpg");
+  }
+  64% {
+    background-image: url("movieFarm/assets/frame-000033.jpg");
+  }
+  66% {
+    background-image: url("movieFarm/assets/frame-000034.jpg");
+  }
+  68% {
+    background-image: url("movieFarm/assets/frame-000035.jpg");
+  }
+  70% {
+    background-image: url("movieFarm/assets/frame-000036.jpg");
+  }
+  72% {
+    background-image: url("movieFarm/assets/frame-000037.jpg");
+  }
+  74% {
+    background-image: url("movieFarm/assets/frame-000038.jpg");
+  }
+  76% {
+    background-image: url("movieFarm/assets/frame-000039.jpg");
+  }
+  78% {
+    background-image: url("movieFarm/assets/frame-000040.jpg");
+  }
+  80% {
+    background-image: url("movieFarm/assets/frame-000041.jpg");
+  }
+  82% {
+    background-image: url("movieFarm/assets/frame-000042.jpg");
+  }
+  84% {
+    background-image: url("movieFarm/assets/frame-000043.jpg");
+  }
+  86% {
+    background-image: url("movieFarm/assets/frame-000044.jpg");
+  }
+  88% {
+    background-image: url("movieFarm/assets/frame-000045.jpg");
+  }
+  90% {
+    background-image: url("movieFarm/assets/frame-000046.jpg");
+  }
+  92% {
+    background-image: url("movieFarm/assets/frame-000047.jpg");
+  }
+  94% {
+    background-image: url("movieFarm/assets/frame-000048.jpg");
+  }
+  96% {
+    background-image: url("movieFarm/assets/frame-000049.jpg");
+  }
+  98% {
+    background-image: url("movieFarm/assets/frame-000050.jpg");
+  }
+  100% {
+    background-image: url("movieFarm/assets/frame-000051.jpg");
+  }
+}
