@@ -186,12 +186,9 @@ export default function Profile(props) {
       .then(function (idToken) {
         // Send token to your backend via HTTPS
         // ...
-        console.log("id token is", idToken);
-        console.log(currentUser);
         DropMagnetAPI.getUserProfile(user_id, idToken).then(function (
           response
         ) {
-          console.log("user profile response", response);
           if (response.status === "error") {
             setLoading({ ...loading, profile: false })
           } else {
@@ -216,19 +213,14 @@ export default function Profile(props) {
       .then(function (idToken) {
         // Send token to your backend via HTTPS
         // ...
-        console.log("id token is", idToken);
-        console.log(currentUser);
 
         DropMagnetAPI.getSaveDrops(idToken).then((res) => {
-          console.log("Get saved drops start")
           if (res === null) {
-            console.log("Get drops null")
             setSavedPosts([]);
           }
           else {
             setSavedPosts(res);
           }
-          console.log("Get drops")
           setLoading({ ...loading, drops: false })
         });
 
@@ -262,7 +254,6 @@ export default function Profile(props) {
   }
 
   function renderDrops(drops, isSaved = false) {
-    console.log(drops)
     return (
       <DropList
         drops={drops}
@@ -426,6 +417,17 @@ export default function Profile(props) {
       </div>
     );
   }
+
+
+  useEffect(() => {
+    // First rendering
+    if (props.reload) {
+      sessionStorage.setItem('headerLoad', 'true')
+    }
+    else if (!props.reload && sessionStorage.headerLoad) {
+      sessionStorage.removeItem('headerLoad')
+    }
+  }, [])
 
   return (
     <div>
@@ -694,7 +696,10 @@ export default function Profile(props) {
                 >
                   <p className="redirect-link">
                     You don't have any drops saved yet. Go to the{" "}
-                    <span onClick={() => props.history.push("/home")}>
+                    <span onClick={() => {
+                      sessionStorage.removeItem('headerLoad')
+                      props.history.push("/home")
+                    }}>
                       swiper page
                     </span>{" "}
                     to explore or change category.

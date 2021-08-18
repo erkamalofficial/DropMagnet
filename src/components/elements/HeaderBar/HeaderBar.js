@@ -14,13 +14,21 @@ import { MenuOpen } from '@material-ui/icons';
 import FadeIn from 'react-fade-in'
 
 function HeaderBar(props) {
+
+  const headerLoad = sessionStorage.getItem('headerLoad')
+
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
   const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+  const h = useHistory()
+
+  console.log(h.location.pathname ,headerLoad)
 
   function showUserAction() {
     if (props && props.userLoggedIn && userDetails) {
       return <Link to={'/profile'} style={{ zIndex: 999999999999, textDecoration: 'none' }}>
-        <FadeIn delay={50} childClassName="child-content">
+
+        {headerLoad && headerLoad === 'true' ? (
           <div className="header-profile-img-holder">
             <Avatar userImage={userDetails.avatar_url}
               initial={getInitials(userDetails.name)}
@@ -29,7 +37,19 @@ function HeaderBar(props) {
               style={{ marginTop: 2 }} />
             {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
           </div>
-        </FadeIn>
+        ) : (
+          <FadeIn delay={50} childClassName="child-content">
+            <div className="header-profile-img-holder">
+              <Avatar userImage={userDetails.avatar_url}
+                initial={getInitials(userDetails.name)}
+                view_only
+                small
+                style={{ marginTop: 2 }} />
+              {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
+            </div>
+          </FadeIn>
+        )}
+
       </Link>
     } else {
       return null
@@ -43,10 +63,7 @@ function HeaderBar(props) {
   }
 
   function openItem(e) {
-    console.log(e);
   }
-
-  console.log(userDetails)
 
 
   return (
@@ -59,28 +76,47 @@ function HeaderBar(props) {
             props.history.push('/');
           } else {
             props.history.push('/home');
+            sessionStorage.removeItem('headerLoad')
           }
         }} className="header-left-image clickable" src="./drop_logo.png" />
 
-        <FadeIn delay={50} childClassName="child-content">
+        {headerLoad && headerLoad === 'true' ? (
           <LogoTitleSection style={{ display: props.isLogoNotVisible ? 'none' : 'block' }}>
             <LogoTitle>drop magnet</LogoTitle>
             <div>#ThreeTheWeb</div>
           </LogoTitleSection>
-        </FadeIn>
-
-        {props.datePickerVisible ?
+        ) : (
           <FadeIn delay={50} childClassName="child-content">
-            <div className="react-datepicker-container" style={{ zIndex: '999' }}>
-              <DatePicker
-                selected={new Date(props.curIndex)}
-                onChange={(date) => props.setSelectedDropdownDate(date)}
-                customInput={<CustomDateInput />}
-              />
-            </div>
+            <LogoTitleSection style={{ display: props.isLogoNotVisible ? 'none' : 'block' }}>
+              <LogoTitle>drop magnet</LogoTitle>
+              <div>#ThreeTheWeb</div>
+            </LogoTitleSection>
           </FadeIn>
-          :
-          <></>
+        )}
+
+        {props.datePickerVisible ? (
+          <>
+            {headerLoad && headerLoad === 'true' ? (
+              <div className="react-datepicker-container" style={{ zIndex: '999' }}>
+                <DatePicker
+                  selected={new Date(props.curIndex)}
+                  onChange={(date) => props.setSelectedDropdownDate(date)}
+                  customInput={<CustomDateInput />}
+                />
+              </div>
+            ) : (
+              <FadeIn delay={50} childClassName="child-content">
+                <div className="react-datepicker-container" style={{ zIndex: '999' }}>
+                  <DatePicker
+                    selected={new Date(props.curIndex)}
+                    onChange={(date) => props.setSelectedDropdownDate(date)}
+                    customInput={<CustomDateInput />}
+                  />
+                </div>
+              </FadeIn>
+            )}
+          </>
+        ) : <></>
         }
 
 

@@ -37,8 +37,6 @@ export default function DropList(props) {
 
   // Render functions
 
-  console.log(swiping)
-
   function renderDropCell(drop) {
     return <DropCell style={{
       position: "absolute"

@@ -41,6 +41,7 @@ const ProfileForm = () => {
                     await signInWithCustomToken(response.token)
                     .then(cred => {
                         setLoading(false)
+                        sessionStorage.removeItem('headerLoad')
                         history.push("/home")
                         localStorage.setItem('userDetails', JSON.stringify(cred));
                     })

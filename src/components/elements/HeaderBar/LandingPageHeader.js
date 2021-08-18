@@ -61,6 +61,9 @@ const RightSection = styled.div`
   display: flex;
 `;
 const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
+
+  const headerLoad = sessionStorage.getItem('headerLoad')
+
   const history = useHistory();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
@@ -128,12 +131,20 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
           src="./drop_logo.png"
           alt="drop magnet"
         />
-        <FadeIn delay={50} childClassName="child-content">
+        {headerLoad && headerLoad === 'true' ? (
           <LogoTitleSection>
             <LogoTitle>drop magnet</LogoTitle>
             <div>#ThreeTheWeb</div>
           </LogoTitleSection>
-        </FadeIn>
+        ) : (
+          <FadeIn delay={50} childClassName="child-content">
+            <LogoTitleSection>
+              <LogoTitle>drop magnet</LogoTitle>
+              <div>#ThreeTheWeb</div>
+            </LogoTitleSection>
+          </FadeIn>
+        )}
+
       </LogoSection>
 
       {/* <MiddleSection>
@@ -147,20 +158,43 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
       <RightSection>
         {!isLoggedIn ? (
           <>
-            <FadeIn delay={50} childClassName="child-content">
+            {headerLoad && headerLoad === 'true' ? (
               <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
                 <span className={'text'}>Login</span>
               </button>
-            </FadeIn>
+            ) : (
+              <FadeIn delay={50} childClassName="child-content">
+                <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
+                  <span className={'text'}>Login</span>
+                </button>
+              </FadeIn>
+            )}
+
           </>
         ) : (
-          <FadeIn delay={50} childClassName="child-content">
-            <button className={"blank-button green-gradient"}
-              style={{ marginTop: '-8px' }}
-              onClick={() => history.push('/home')}>
-              <span className={'text'}>Home</span>
-            </button>
-          </FadeIn>
+          <>
+            {headerLoad && headerLoad === 'true' ? (
+              <button className={"blank-button green-gradient"}
+                style={{ marginTop: '-8px' }}
+                onClick={() => {
+                  sessionStorage.removeItem('headerLoad')
+                  history.push('/home')
+                }}>
+                <span className={'text'}>Home</span>
+              </button>
+            ) : (
+              <FadeIn delay={50} childClassName="child-content">
+                <button className={"blank-button green-gradient"}
+                  style={{ marginTop: '-8px' }}
+                  onClick={() => {
+                    sessionStorage.removeItem('headerLoad')
+                    history.push('/home')
+                  }}>
+                  <span className={'text'}>Home</span>
+                </button>
+              </FadeIn>
+            )}
+          </>
         )}
       </RightSection>
     </LinksHeaderWrapper>

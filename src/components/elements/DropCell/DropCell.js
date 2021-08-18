@@ -37,7 +37,6 @@ export default function DropCell(props) {
 
   const openUser = (e) => {
     const user_id = currentUser.uid;
-    console.log(user_id)
     if(user_id !== user?.id){
       history.push(`/profile/${user?.id}`)
     }

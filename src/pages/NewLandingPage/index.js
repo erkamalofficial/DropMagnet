@@ -187,6 +187,16 @@ const LinksHome = (props) => {
     }, 500);
   }, [])
 
+  useEffect(() => {
+    // First rendering
+    if (props.reload) {
+      sessionStorage.setItem('headerLoad', 'true')
+    }
+    else if (!props.reload && sessionStorage.headerLoad) {
+      sessionStorage.removeItem('headerLoad')
+    }
+  }, [])
+
   return (
     <LinksPage>
 

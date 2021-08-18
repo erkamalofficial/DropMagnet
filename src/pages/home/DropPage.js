@@ -35,7 +35,6 @@ const DropPage = () => {
 
     if (id && id !== 'dummydrop123') {
       DropMagnetAPI.getDrop(id, '').then(function (response) {
-        console.log(response)
         setDrop(response)
       })
     }
@@ -43,19 +42,24 @@ const DropPage = () => {
       setDrop(data)
     }
   }, [id]);
-  console.log(id, data)
   function renderDetail() {
     return (
       <div>
         {id !== 'dummydrop123' ? (
           <DropDetail
-            goBack={() => history.push("/home")}
+            goBack={() => {
+              sessionStorage.removeItem('headerLoad')
+              history.push("/home")
+            }}
             drop={drop}
             closeDetailView={() => { }}
             handleClick={() => console.log("Click")} />
         ) : (
           <DummyDropDetail
-            goBack={() => history.push("/home")}
+            goBack={() => {
+              sessionStorage.removeItem('headerLoad')
+              history.push("/home")
+            }}
             drop={drop}
             closeDetailView={() => { }}
             handleClick={() => console.log("Click")} />

@@ -1,6 +1,6 @@
 import "./App.css";
 // import Home from "./pages/home/index";
-import { Switch, BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route, Redirect, useHistory } from "react-router-dom";
 import PrivateRoute from "./components/wrappers/PrivateRoute";
 import React, { Suspense } from "react";
 import TermsAndConditions from "./pages/terms";
@@ -96,6 +96,8 @@ function App() {
   // window.addEventListener("load",  Nft);
 
   const [reload, setReload] = useState(true)
+
+  const headerLoad = sessionStorage.headerLoad
 
   const addFlag = () => {
     if (!sessionStorage.reloading) {

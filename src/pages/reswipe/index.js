@@ -73,6 +73,7 @@ function Reswipe(props) {
 
   const { reswipeModeActive } = useSelector((state) => state.category.general);
   if (!reswipeModeActive) {
+    sessionStorage.removeItem('headerLoad')
     history.push("/home");
   }
 

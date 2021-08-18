@@ -82,6 +82,16 @@ const Home = (props) => {
   // }, [curIndex])
 
   useEffect(() => {
+    // First rendering
+    if (props.reload) {
+      sessionStorage.setItem('headerLoad', 'true')
+    }
+    else if (!props.reload && sessionStorage.headerLoad) {
+      sessionStorage.removeItem('headerLoad')
+    }
+  }, [])
+
+  useEffect(() => {
     setTimeout(() => {
       props.setReload(false)
     }, 500);
@@ -167,11 +177,9 @@ const Home = (props) => {
   const uniqueId = Date.now();
 
   function selectDate(date) {
-    console.log("opened item", date);
   }
 
   function setSelectedDate(date) {
-    console.log("selected date is", date);
     setSelectedDropdownDate(date.date);
   }
 
@@ -213,18 +221,14 @@ const Home = (props) => {
       if (dir === "right") {
         // setInternalLoader(true);
         saveDrop(idToken, drop_id)
-          .then(() => {
-            console.log("Success");
-          })
+          .then(() => { })
           .catch(() => { })
           .finally(() => {
             // setInternalLoader(false);
           });
       } else if (dir === "left") {
         unsaveDrop(idToken, drop_id)
-          .then(() => {
-            console.log('Unsave Success');
-          })
+          .then(() => { })
           .catch(() => {
 
           })
@@ -237,6 +241,17 @@ const Home = (props) => {
       console.log('Error While Getting token');
     })
   };
+
+  // useEffect(() => {
+  //   // First rendering
+  //   console.log("First rendering", props.reload)
+  //   if (props.reload) {
+  //     sessionStorage.setItem('headerLoad', 'true')
+  //   }
+  //   else if (!props.reload && sessionStorage.headerLoad) {
+  //     sessionStorage.removeItem('headerLoad')
+  //   }
+  // }, [])
 
   return (
     <HomeContainer>
@@ -257,6 +272,7 @@ const Home = (props) => {
                 datePickerVisible={detailView ? false : true}
                 userLoggedIn={props.userLoggedIn}
                 userImageVisible={true}
+                reload={props.reload}
               />
 
             </div>
@@ -275,6 +291,7 @@ const Home = (props) => {
             datePickerVisible={detailView ? false : true}
             userLoggedIn={props.userLoggedIn}
             userImageVisible={true}
+            reload={props.reload}
           />
         </div>
       )}

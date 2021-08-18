@@ -57,6 +57,7 @@ export default function Login() {
               history.push(`/drop/${id}`);
             }
             else {
+              sessionStorage.removeItem('headerLoad')
               history.push("/home");
             }
           } else {
@@ -133,6 +134,7 @@ export default function Login() {
           setLoading(false)
         }
         else {
+          sessionStorage.removeItem('headerLoad')
           history.push("/home");
           setLoading(false)
         }

@@ -28,7 +28,6 @@ async function customAPICall(endpoint, data, method, access_token) {
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   })
 
-  console.log(res)
   if(res.status === 204){
     return null
   }
@@ -59,9 +58,6 @@ async function customAPICallAddDrop(endpoint, data, method, access_token) {
 
   const uri = host + endpoint
   // Firebase Auth Token
-  console.log('endpoint', uri)
-  console.log('data is', JSON.stringify(data))
-  console.log('access token', access_token)
 
   const formData = new FormData()
 
@@ -92,9 +88,6 @@ async function customAPICallUpdateAvatar(endpoint, data, method, access_token) {
 
   const uri = host + endpoint
   // Firebase Auth Token
-  console.log('endpoint', uri)
-  console.log('data is', JSON.stringify(data))
-  console.log('access token', access_token)
 
   const formData = new FormData()
 

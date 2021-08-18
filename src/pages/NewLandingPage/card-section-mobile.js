@@ -251,7 +251,6 @@ const CaurouselComponent = ({
     // console.log(step);
     const { index } = getCurrentActiveItem();
     const nextStep = step + index;
-    console.log(linksList.length, index,nextStep);
     if (nextStep >= linksList.length + ERROR_ENTRIES) {
       // slideToItem(linksList.length + ERROR_ENTRIES - 1);
       slideToItem(0);

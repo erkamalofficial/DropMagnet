@@ -23,7 +23,6 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
       d.setDate(d.getDate() - 1)
       extras = { ...extras, random: false }
     }
-    console.log(`${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`)
 
     try {
       dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
