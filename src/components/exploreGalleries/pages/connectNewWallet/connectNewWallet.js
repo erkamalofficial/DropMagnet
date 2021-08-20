@@ -66,7 +66,7 @@ const ConnectNewWallet = () => {
     return (
         <Container className="mt-5">
             <ConnectedWalletsContainer>
-                <Route path="/explore-galleries/create-new-wallet/step1">
+                <Route path="/home/create-new-wallet/step1">
                     <StepTitle>
                         Select SmartURL for wallet
                     </StepTitle>
@@ -75,7 +75,7 @@ const ConnectNewWallet = () => {
                     </WalletsContainer>
                     <CreateNewWallet text="Continue" pathTo="step2"/>
                 </Route>
-                <Route path="/explore-galleries/create-new-wallet/step2">
+                <Route path="/home/create-new-wallet/step2">
                     <StepTitle>
                         Wallet Connect
                     </StepTitle>
@@ -84,7 +84,7 @@ const ConnectNewWallet = () => {
                     </WalletsContainer>
                     <CreateNewWallet text="Continue" pathTo="step3"/>
                 </Route>
-                <Route path="/explore-galleries/create-new-wallet/step3">
+                <Route path="/home/create-new-wallet/step3">
                     <StepTitle>
                         Visability for 0x71…471j/
                         <span>ArtGallery.link/CryptoArtMan</span>
@@ -98,7 +98,7 @@ const ConnectNewWallet = () => {
                     </WalletsContainer>
                     <CreateNewWallet text="Continue" pathTo="step4"/>
                 </Route>
-                <Route path="/explore-galleries/create-new-wallet/step4">
+                <Route path="/home/create-new-wallet/step4">
                     <StepTitle>
                         Connection Complete!
                     </StepTitle>
@@ -117,7 +117,7 @@ const ConnectNewWallet = () => {
                             </p>
                         </div>
                     </WalletsContainer>
-                    <CreateNewWallet text="Share NavLink!" pathTo="/explore-galleries/finish"/>
+                    <CreateNewWallet text="Share NavLink!" pathTo="/home/finish"/>
                 </Route>
             </ConnectedWalletsContainer>
         </Container>

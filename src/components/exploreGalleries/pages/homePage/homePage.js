@@ -68,7 +68,7 @@ const HomePage = () => {
                     <Link to="/my-gallery">
                         <Card title="Rooms" img={partEmoji}/>
                     </Link>
-                    <Link to="/explore-galleries/connected-wallets">
+                    <Link to="/home/connected-wallets">
                         <Card title="My Wallets" img={diamond}/>
                     </Link>
                     <Card title="Explore Galleries" img={frame}/>

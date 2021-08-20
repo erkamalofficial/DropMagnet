@@ -148,7 +148,7 @@ const ConnectedWallets = () => {
                 </WalletsContainer>
                 <CreateNewWallet
                     text="Connect New Wallet"
-                    pathTo="/explore-galleries/create-new-wallet/step1"/>
+                    pathTo="/home/create-new-wallet/step1"/>
             </ConnectedWalletsContainer>
         </Container>
     )

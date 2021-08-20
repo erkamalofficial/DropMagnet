@@ -11,16 +11,16 @@ const ExploreGalleries = () => {
     return (
         <div className="explore-galleries-content">
             <Navbar/>
-            <Route exact path="/explore-galleries">
+            <Route exact path="/home">
                 <div className="homepage">
                     <HomePage/>
                     <Footer/>
                 </div>
             </Route>
-            <Route path="/explore-galleries/connected-wallets">
+            <Route path="/home/connected-wallets">
                 <ConnectedWallets/>
             </Route>
-            <Route path="/explore-galleries/create-new-wallet">
+            <Route path="/home/create-new-wallet">
                 <ConnectNewWallet/>
             </Route>
         </div>

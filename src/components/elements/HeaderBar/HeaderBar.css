@@ -189,6 +189,11 @@
   border-radius: 50px;
 }
 
+.text.landing-page{
+  display: block;
+  padding-top: 4px;
+}
+
 
 .menu-icon{
   position: relative;

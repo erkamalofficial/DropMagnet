@@ -171,7 +171,7 @@ function App() {
         />
         <Route
           exact
-          path="/home"
+          path="/swiper"
           userDetails={userDetails}
           isLogged
           render={(props) => (
@@ -369,7 +369,7 @@ function App() {
         />
         <PrivateRoute path="/buy-links" exact component={BuyLinks} />
 
-        <Route path="/explore-galleries" component={ExploreGalleries} />
+        <Route path="/home" component={ExploreGalleries} />
         <Route path="/drop-magnet" component={DropMagnet} />
         <Route path="/my-gallery" component={MyGallery} />
         <Route path="/politician" component={Politician} />

@@ -27,7 +27,7 @@ export default function Login() {
 
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login, signInWithCustomToken } = useAuth();
+  const { login, signInWithCustomToken, currentUser } = useAuth();
   const [error, setError] = useState("");
 
   const [address, setAddress] = useState(pubAdd || '')
@@ -37,6 +37,7 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log("Entered submit here.....")
 
     try {
       setError("");
@@ -45,7 +46,11 @@ export default function Login() {
         emailRef.current.value,
         passwordRef.current.value
       );
-      getUserProfile(res.user.uid, res.user.za).then(function (response) {
+      
+      console.log(res.user.uid, res)
+
+      
+      getUserProfile(res.user.uid, res.user.Aa).then(function (response) {
         console.log('user profile response', response)
         if (response.status === "error") {
           // setLoginError(response.message);
