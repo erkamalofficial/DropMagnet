@@ -1,0 +1,14 @@
+.settings-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.blank-gradient-button{
+    width: 100%;
+}
+
+.blank-gradient-text{
+    margin-top: 4px;
+}

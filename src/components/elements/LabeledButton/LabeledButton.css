@@ -1,0 +1,19 @@
+.labeled-btn{
+    background-color: #161616;
+    cursor: pointer;
+    border-radius: 40px;
+    border: 1px solid black;
+    padding: 10px 6px;
+    color: #fff;
+}
+
+.labeled-btn p{
+    margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+    .labeled-btn p{
+        margin: 0 auto;
+        max-width: 50%;
+    }
+}
