@@ -1,12 +1,12 @@
 import React from "react";
 import chat from "../../assets/chat.svg";
 import notification from "../../assets/notification.svg";
-import {Container} from "../../styled-components/Container";
-import {InsetBox} from "../../styled-components/InsetBox";
-import {InsetBoxIcon} from "../../styled-components/InsetBoxIcon";
-import {Row} from "../../styled-components/Row";
+import { Container } from "../../styled-components/Container";
+import { InsetBox } from "../../styled-components/InsetBox";
+import { InsetBoxIcon } from "../../styled-components/InsetBoxIcon";
+import { Row } from "../../styled-components/Row";
 // import SwitchToggle from "../../styled-components/SwitchToggle";
-import {CardsWrapper} from "../../styled-components/CardsWrapper";
+import { CardsWrapper } from "../../styled-components/CardsWrapper";
 import Card from "../../styled-components/Card";
 import glass from "../../assets/glass.svg";
 import diamond from "../../assets/diamond.svg";
@@ -15,7 +15,7 @@ import frame from "../../assets/frame.svg";
 // import WalletCollection from "../../styled-components/WalletCollection";
 // import {Link} from "../../styled-components/NavLink";
 import styled from "styled-components";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Link = styled(NavLink)`
     width: 100%;
@@ -50,13 +50,13 @@ const HomePage = () => {
             <InsetBox>
                 <Row className="items-center justify-between mx-auto max-w-324">
                     <InsetBoxIcon>
-                        <img src={chat} alt="icon"/>
+                        <img src={chat} alt="icon" />
                         <p className="left-top-tooltip">9+</p>
                     </InsetBoxIcon>
                     {/*<SwitchToggle/>*/}
                     <div className="greeting-Alexander">Greetings, Alexander</div>
                     <InsetBoxIcon>
-                        <img src={notification} alt="icon"/>
+                        <img src={notification} alt="icon" />
                         <p className="right-top-tooltip">9+</p>
                     </InsetBoxIcon>
                 </Row>
@@ -66,18 +66,21 @@ const HomePage = () => {
 
 
                     <Link to="/my-gallery">
-                        <Card title="Rooms" img={partEmoji}/>
+                        <Card title="Rooms" img={partEmoji} />
                     </Link>
                     <Link to="/home/connected-wallets">
-                        <Card title="My Wallets" img={diamond}/>
+                        <Card title="My Wallets" img={diamond} />
                     </Link>
-                    <Card title="Explore Galleries" img={frame}/>
+                    <Card title="Explore Galleries" img={frame} />
 
-                    <Card title="Drop Swipe" img={diamond}/>
-                    <Card title="My SmartURLs" img={frame}/>
+                    <Link to="/swiper">
+                        <Card title="Drop Swipe" img={diamond} />
+                    </Link>
+
+                    <Card title="My SmartURLs" img={frame} />
 
                     <Link to="/drop-magnet/artgallery.link/verticaly">
-                        <Card title="Schedule Drop" img={glass}/>
+                        <Card title="Schedule Drop" img={glass} />
                     </Link>
                 </CardsWrapper>
             </div>
