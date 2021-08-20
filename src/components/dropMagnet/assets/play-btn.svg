@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="62" height="63" viewBox="10 10 40 40">
+    <defs>
+        <linearGradient id="tbf0a" x1="32.5" x2="32.5" y1="12" y2="49" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#d9d9d9" stop-opacity=".27"/>
+            <stop offset="1" stop-color="#4d4d4d" stop-opacity=".26"/>
+        </linearGradient>
+        <filter id="tbf0b" width="200%" height="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1021Out" stdDeviation="2 2"/>
+        </filter>
+        <mask id="tbf0c">
+            <path fill="#fff"
+                  d="M14 16.824a3 3 0 0 1 4.326-2.691l27.292 13.453a3 3 0 0 1 .03 5.367L18.357 46.79A3 3 0 0 1 14 44.115z"/>
+        </mask>
+        <clipPath id="tbf0d">
+            <path fill="#fff"
+                  d="M13.5 48.093V12.907h35v35.186zm.5-3.978a3 3 0 0 0 4.357 2.676l27.291-13.838a3 3 0 0 0-.03-5.367L18.326 14.133A3 3 0 0 0 14 16.823z"/>
+        </clipPath>
+    </defs>
+    <g>
+        <g>
+            <path fill="url(#tbf0a)"
+                  d="M14 16.824a3 3 0 0 1 4.326-2.691l27.292 13.453a3 3 0 0 1 .03 5.367L18.357 46.79A3 3 0 0 1 14 44.115z"/>
+            <path fill-opacity=".5"
+                  d="M10 53V8h42v45zm4-7.885a3 3 0 0 0 4.357 2.676l27.291-13.838a3 3 0 0 0-.03-5.367L18.326 15.133A3 3 0 0 0 14 17.823z"
+                  filter="url(#tbf0b)" mask="url(&quot;#tbf0c&quot;)"/>
+            <path fill="none" stroke="#130065" stroke-miterlimit="20"
+                  d="M14 16.824a3 3 0 0 1 4.326-2.691l27.292 13.453a3 3 0 0 1 .03 5.367L18.357 46.79A3 3 0 0 1 14 44.115z"
+                  clip-path="url(&quot;#tbf0d&quot;)"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,63 @@
+.gallery-Modal{
+  border-radius: 6px;
+  background-color: #f4f4f4;
+  //max-width: 414px;
+  width:100%;
+  margin: 0 auto !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  box-sizing: border-box;
+  //padding: 32px;
+  outline:none !important;
+  overflow: hidden;
+  @media(max-width: 520px){
+    position: relative;
+    max-width: 100%;
+    top: 0;
+    left: 0;
+    transform: unset !important;
+    //margin: 20px auto 20px !important;
+    //padding: 16px;
+    margin-top: 69px !important;
+  }
+  @media(max-width: 370px){
+    padding: 8px;
+  }
+  .gallery-modal-content{
+    transition: all 200ms ease;
+    opacity: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
+.ReactModal__Overlay {
+  opacity: 0;
+  transform: scale(0) translateY(200px) ;
+  transition: all 200ms ease;
+  .gallery-modal-content{
+    transition-delay: 389ms;
+    opacity: 0;
+    background-color: #2C2C2C;
+  }
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transform: scale(1) translateX(0px);
+  overflow: auto;
+  .gallery-modal-content{
+    transition-duration: 1.09s;
+    opacity: 1;
+  }
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transform: scale(0) translateY(200px);
+  .gallery-modal-content{
+    transition-delay: 389ms;
+    opacity: 0;
+  }
+}

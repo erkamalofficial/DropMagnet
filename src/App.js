@@ -36,8 +36,16 @@ import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
 import ProfilePage from "./pages/profile/ProfilePage";
+
+import ExploreGalleries from "./components/exploreGalleries";
+import DropMagnet from "./components/dropMagnet";
+import MyGallery from "./components/myGallery";
+import MovieFarm from "./components/movieFarm";
+import Politician from "./components/dropMagnet/components/politician/politician"
+
 import SettingsPage from "./pages/settings";
 import SubscriptionPage from "./pages/subscription";
+
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -353,12 +361,19 @@ function App() {
             })
           return null
         }} />
+
         <PrivateRoute
           exact
           path="/links-payment"
           component={PersonalLinksPayment}
         />
         <PrivateRoute path="/buy-links" exact component={BuyLinks} />
+
+        <Route path="/explore-galleries" component={ExploreGalleries} />
+        <Route path="/drop-magnet" component={DropMagnet} />
+        <Route path="/my-gallery" component={MyGallery} />
+        <Route path="/politician" component={Politician} />
+        <Route path="/movie-farm" render={() => <MovieFarm/>}/>
       </Switch>
     </Router>
   );

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="55" height="61" viewBox="0 0 55 61">
+    <g transform="translate(-10,-9), scale(1.35)">
+        <defs>
+            <linearGradient id="lp7la" x1="19" x2="19" y1="13" y2="46" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#d9d9d9" stop-opacity=".27"/>
+                <stop offset="1" stop-color="#4d4d4d" stop-opacity=".26"/>
+            </linearGradient>
+            <filter id="lp7lb" width="200%" height="200%" x="-50%" y="-50%">
+                <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1030Out" stdDeviation="2 2"/>
+            </filter>
+            <mask id="lp7lc">
+                <path fill="#fff" d="M14 15a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v29a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/>
+            </mask>
+            <clipPath id="lp7ld">
+                <path fill="#fff"
+                      d="M13.5 46.5v-34h11v34zM14 44a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V15a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2z"/>
+            </clipPath>
+            <linearGradient id="lp7le" x1="36" x2="36" y1="13" y2="46" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#d9d9d9" stop-opacity=".27"/>
+                <stop offset="1" stop-color="#4d4d4d" stop-opacity=".26"/>
+            </linearGradient>
+            <filter id="lp7lf" width="200%" height="200%" x="-50%" y="-50%">
+                <feGaussianBlur in="SourceGraphic" result="FeGaussianBlur1046Out" stdDeviation="2 2"/>
+            </filter>
+            <mask id="lp7lg">
+                <path fill="#fff" d="M31 15a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v29a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/>
+            </mask>
+            <clipPath id="lp7lh">
+                <path fill="#fff"
+                      d="M30.5 46.5v-34h11v34zM31 44a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V15a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2z"/>
+            </clipPath>
+        </defs>
+        <g>
+            <g>
+                <path fill="url(#lp7la)" d="M14 15a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v29a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/>
+                <path fill-opacity=".5"
+                      d="M10 51V8h18v43zm4-6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V16a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2z"
+                      filter="url(#lp7lb)" mask="url(&quot;#lp7lc&quot;)"/>
+                <path fill="none" stroke="#130065" stroke-miterlimit="20"
+                      d="M14 15a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v29a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"
+                      clip-path="url(&quot;#lp7ld&quot;)"/>
+            </g>
+            <g>
+                <path fill="url(#lp7le)" d="M31 15a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v29a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/>
+                <path fill-opacity=".5"
+                      d="M27 51V8h18v43zm4-6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V16a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2z"
+                      filter="url(#lp7lf)" mask="url(&quot;#lp7lg&quot;)"/>
+                <path fill="none" stroke="#130065" stroke-miterlimit="20"
+                      d="M31 15a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v29a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"
+                      clip-path="url(&quot;#lp7lh&quot;)"/>
+            </g>
+        </g>
+    </g>
+</svg>
