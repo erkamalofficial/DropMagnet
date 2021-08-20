@@ -27,6 +27,8 @@ export default function MainMenu(props) {
   var menuList = [
     { title: verified ? "Create a Drop" : "Apply for Drop Swipe", 
     link: verified ? "create_drop" : "home" },
+    { title: "Settings", link: "/settings" },
+    { title: "Subscription", link: "/subscription" },
     { title: "Get drop token", link: "/getToken" },
     { title: "About", link: "/about" },
     { title: "What's a drop?", link: "/aboutDrop" },

@@ -36,11 +36,16 @@ import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
 import ProfilePage from "./pages/profile/ProfilePage";
+
 import ExploreGalleries from "./components/exploreGalleries";
 import DropMagnet from "./components/dropMagnet";
 import MyGallery from "./components/myGallery";
 import MovieFarm from "./components/movieFarm";
 import Politician from "./components/dropMagnet/components/politician/politician"
+
+import SettingsPage from "./pages/settings";
+import SubscriptionPage from "./pages/subscription";
+
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -244,6 +249,16 @@ function App() {
         <PrivateRoute
           path="/create_drop"
           component={CreateDropPage}
+        />
+
+        <PrivateRoute
+          path="/settings"
+          component={SettingsPage}
+        />
+
+        <PrivateRoute
+          path="/subscription"
+          component={SubscriptionPage}
         />
 
         <Route
