@@ -36,6 +36,8 @@ import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
 import ProfilePage from "./pages/profile/ProfilePage";
+import SettingsPage from "./pages/settings";
+import SubscriptionPage from "./pages/subscription";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -239,6 +241,16 @@ function App() {
         <PrivateRoute
           path="/create_drop"
           component={CreateDropPage}
+        />
+
+        <PrivateRoute
+          path="/settings"
+          component={SettingsPage}
+        />
+
+        <PrivateRoute
+          path="/subscription"
+          component={SubscriptionPage}
         />
 
         <Route
