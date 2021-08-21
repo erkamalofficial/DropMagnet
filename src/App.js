@@ -261,6 +261,9 @@ function App() {
 
         <PrivateRoute
           path="/subscription"
+          userImage={userDetails.image}
+          userDetails={userDetails}
+          userLoggedIn={true}
           component={SubscriptionPage}
         />
 
