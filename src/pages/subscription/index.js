@@ -8,8 +8,11 @@ import { FormBtn } from '../register/FormComponents'
 import "./subscription.css"
 import styled from "styled-components";
 import Plan from './Plan'
+import Subscriptions from "./subscriptions.json"
 
 const SubscriptionPage = (props) => {
+
+    console.log(Subscriptions)
 
     const history = useHistory()
 
@@ -38,8 +41,8 @@ const SubscriptionPage = (props) => {
                 padding: '56px 16px 128px 16px'
             }}>
                 <div className="plans-container">
-                    {[1, 2, 3, 4].map(p => (
-                        <Plan />
+                    {Subscriptions.map(p => (
+                        <Plan plan={p}/>
                     ))}
                 </div>
             </div>

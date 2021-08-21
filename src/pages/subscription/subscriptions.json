@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Beginner",
+        "price": "Free",
+        "shortDesc": "Your max bucket size is 20 drops",
+        "longDesc": "You can add 20 drops to your bucket and enter reswipe anytime."
+    },
+    {
+        "name": "Pro",
+        "price": "$19.99 per month",
+        "shortDesc": "Your max bucket size is 100 drops",
+        "longDesc": "You can add 100 drops to your bucket and enter reswipe anytime."
+    },
+    {
+        "name": "Experienced",
+        "price": "$9.99 per month",
+        "shortDesc": "Your max bucket size is 50 drops",
+        "longDesc": "You can add 50 drops to your bucket and enter reswipe anytime."
+    },
+    {
+        "name": "Legendary",
+        "price": "$59.99 per month",
+        "shortDesc": "Infinte Bucket Size",
+        "longDesc": "You can add infinte drops to your bucket and enter reswipe anytime."
+    }
+]
