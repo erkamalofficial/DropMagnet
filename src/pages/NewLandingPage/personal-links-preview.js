@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 const PLSectionThree = styled.div`
   display: flex;
@@ -81,32 +81,16 @@ const MainContainer = styled.div`
 
 
 
-const PersonalLinksPreview = ({ setGalleryName, isMobile, galleryName, isLoggedIn }) => {
-
-  const [inputVal, setInputVal] = useState(galleryName)
+const PersonalLinksPreview = memo(({ handleGalleryName, isMobile, isLoggedIn }) => {
 
 
-  useEffect(() => {
-    setInputVal(galleryName)
-  }, [galleryName])
-
-  const handleGalleryName = (val) => {
-    const galleryNameLimit = isMobile ? 16 : 22;
-    const checkAndLimitGalleryName =
-      val.length > galleryNameLimit
-        ? `${val.substring(0, galleryNameLimit)}...`
-        : val;
-    setGalleryName(checkAndLimitGalleryName.replace(/\s/g, ""));
-  };
 
   return (
     <MainContainer>
       <PLSectionThree>
       <PLSectionUserinput
-        value={inputVal}
         placeholder="Enter your brand or name here"
-        onChange={(e) => setInputVal(e.target.value)}
-        onBlur={(e) => handleGalleryName(e.target.value)}
+        onChange={(e) => handleGalleryName(e.target.value)}
       />
       <PLSectionEmojiLine>Emoji’s & specials are allowed! 💜</PLSectionEmojiLine>
     </PLSectionThree>
@@ -118,6 +102,6 @@ const PersonalLinksPreview = ({ setGalleryName, isMobile, galleryName, isLoggedI
     </MainContainer>
     
   );
-};
+});
 
 export default PersonalLinksPreview;

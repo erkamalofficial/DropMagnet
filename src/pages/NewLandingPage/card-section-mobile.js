@@ -28,6 +28,7 @@ const CardSection = styled.div`
     padding: 8px 0;
   }
   padding-bottom: 6px;
+  margin-top: 30px
 `;
 const PLLinksBtn = styled(LinksBtn)`
   /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); */

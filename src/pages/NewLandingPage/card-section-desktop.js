@@ -6,7 +6,6 @@ import LinksBtn from "./links-btn";
 import { map } from "lodash";
 const CardContainer = styled.div`
   width: 100%;
-  margin: 16px;
 `;
 const CardSection = styled.div`
   display: flex;
@@ -21,7 +20,6 @@ const CardSection = styled.div`
   /* background-image: linear-gradient(180deg, #2e2e2e 0%, #1e1e1e 100%); */
 
   /* opacity: 0.8; */
-  margin-top: 36px;
 `;
 const Circle = styled.div`
   width: 72px;
