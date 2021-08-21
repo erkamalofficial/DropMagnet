@@ -12,3 +12,16 @@
 .blank-gradient-text{
     margin-top: 4px;
 }
+
+
+.settings-fields .text-field-title{
+    font-size: 18px;
+}
+
+.settings-fields .text-field-form{
+    font-size: 18px;
+    box-shadow: none;
+    border-style: none !important;
+    background-color: #131313;
+    padding: 12px;
+}

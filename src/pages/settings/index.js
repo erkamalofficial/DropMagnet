@@ -30,7 +30,7 @@ const SettingsPage = (props) => {
     }
 
     function renderForm() {
-        return <div>
+        return <div className="settings-fields">
             <TextField setInputValue={() => { }} title={"Email Address"} placeholder={"Enter email"} />
             <TextField setInputValue={() => { }} title={"First Name"} placeholder={"Enter first name"} />
             <TextField setInputValue={() => { }} title={"Last Name"} placeholder={"Enter last name"} />
@@ -39,7 +39,7 @@ const SettingsPage = (props) => {
             <LabeledButton onClickBtn={() => { }} title={"Drop Swipe Subscription"} buttonLabel={"Active: Pro Collector\n\n(Tap to Edit Subscription)"} />
             <LabeledButton onClickBtn={() => { }} title={"KYC for Utility Token AirDrop"} buttonLabel={"Coming Soon"} />
             <ButtonContainer>
-                <Button className={'blank-gradient-button'} 
+                <Button className={'blank-gradient-button custom'} 
                 style={{ padding: "12px 45px" }}
                 onClick={saveSettings}>
                     <span className={'blank-gradient-text'}>Save Settings</span>

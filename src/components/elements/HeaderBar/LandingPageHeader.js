@@ -165,7 +165,7 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
             ) : (
               <FadeIn delay={50} childClassName="child-content">
                 <button className={"blank-button green-gradient"} onClick={() => history.push('/login')}>
-                  <span className={'text landing-page'}>Login</span>
+                  <span className={'text'}>Login</span>
                 </button>
               </FadeIn>
             )}
@@ -190,7 +190,7 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
                     sessionStorage.removeItem('headerLoad')
                     history.push('/home')
                   }}>
-                  <span className={'text landing-page'}>Home</span>
+                  <span className={'text'}>Home</span>
                 </button>
               </FadeIn>
             )}

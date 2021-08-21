@@ -1,19 +1,31 @@
+.btn-holder{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
 .labeled-btn{
-    background-color: #161616;
+    background-image: linear-gradient(#181818, #131313);
     cursor: pointer;
-    border-radius: 40px;
+    border-radius: 30px;
     border: 1px solid black;
-    padding: 10px 6px;
+    box-shadow: 0 1px 1px #00000043;
+    padding: 12px 6px;
     color: #fff;
 }
 
 .labeled-btn p{
     margin: 0 auto;
+    font-size: 18px;
 }
 
 @media (max-width: 576px) {
     .labeled-btn p{
         margin: 0 auto;
-        max-width: 50%;
+        max-width: 70%;
+    }
+
+    .labeled-btn{
+        border-radius: 18px;
     }
 }
