@@ -5,6 +5,7 @@ import link from "../../assets/link.svg";
 import wallet from "../../assets/wallet.svg";
 import check from "../../assets/check.svg";
 import MoreBtn from "../../styled-components/moreBtn";
+import "./card.css"
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -419,7 +420,7 @@ const Card = (props) => {
                         </EditName>
                     </Form>
                     <Remove>remove</Remove>
-                    <Add>Add another wallet</Add>
+                    <Add onClick={() => props.setOpen(true)}>Add another wallet</Add>
                 </EditModal>
             )
         } else {
