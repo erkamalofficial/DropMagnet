@@ -12,4 +12,5 @@ export const Link = styled(NavLink)`
   font-size: 16px;
   text-decoration: none;
   padding: 8px 12px;
+  margin: 0 14px;
 `

@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import logo from "../assets/drop_logo.svg";
+import logo from "../assets/logo.svg";
 
 export const Logo = styled.div`
-  width: 47px;
+  width: 33.92px;
   height: 36px;
   background: url(${logo}) center center;
   margin-right: 24px;

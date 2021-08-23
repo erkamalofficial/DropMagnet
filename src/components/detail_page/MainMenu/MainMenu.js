@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./MainMenu.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { LogoTitle, LogoTitleSection } from "../../elements/HeaderBar/LogoTitles";
 import Avatar from "../../elements/Avatar/Avatar";
 import { getInitials } from "../../../utils";
 import FadeIn from 'react-fade-in';
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
-
+import { Row } from "../../exploreGalleries/styled-components/Row";
+import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
 
 export default function MainMenu(props) {
 
@@ -20,13 +21,18 @@ export default function MainMenu(props) {
     setVerified(is_verified)
   }
 
+  const h = useHistory()
+  let pageName = h.location.pathname.split('/')[1].toLowerCase()
+
   useEffect(() => {
     checkIfVerified()
   }, [])
 
   var menuList = [
-    { title: verified ? "Create a Drop" : "Apply for Drop Swipe", 
-    link: verified ? "create_drop" : "home" },
+    {
+      title: verified ? "Create a Drop" : "Apply for Drop Swipe",
+      link: verified ? "create_drop" : "home"
+    },
     { title: "Settings", link: "/settings" },
     { title: "Subscription", link: "/subscription" },
     { title: "Get drop token", link: "/getToken" },
@@ -63,18 +69,21 @@ export default function MainMenu(props) {
     <div className={menuClass}>
       <div className="main-header">
         <div className="left-header">
-          <Link to={"/home"}>
+          <Link to={"/home"}
+          style={{height: '36px', display: 'block'}}>
             <img
               alt={"logo"}
-              style={{ width: 36, height: "auto" }}
+              style={{ width: 'auto', height: "36px" }}
               className="header-left-image clickable"
-              src="./drop_logo.png"
+              src="./logo.svg"
             />
           </Link>
-          <LogoTitleSection>
-            <LogoTitle>drop magnet</LogoTitle>
-            <div>#ThreeTheWeb</div>
-          </LogoTitleSection>
+          <Row className="items-center">
+            <HeaderLink to="/"
+              style={{ textTransform: 'capitalize' }}>
+              {pageName}
+            </HeaderLink>
+          </Row>
         </div>
         <div className="right-header">
           {/* <img

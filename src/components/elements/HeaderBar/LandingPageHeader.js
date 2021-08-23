@@ -9,7 +9,8 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
 import FadeIn from 'react-fade-in'
-
+import { Row } from "../../exploreGalleries/styled-components/Row";
+import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
 
 const TAB_LIST = ["Drop Swipe", "NFT Galleries", "MetaURLs"];
 
@@ -128,20 +129,23 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
           onClick={() => {
             window.location.href = "/home";
           }}
-          src="./drop_logo.png"
+          style={{height: '36px'}}
+          src="./logo.svg"
           alt="drop magnet"
         />
         {headerLoad && headerLoad === 'true' ? (
-          <LogoTitleSection>
-            <LogoTitle>drop magnet</LogoTitle>
-            <div>#ThreeTheWeb</div>
-          </LogoTitleSection>
+          <Row className="items-center">
+            <HeaderLink to="/">
+              Landing Page
+            </HeaderLink>
+          </Row>
         ) : (
           <FadeIn delay={50} childClassName="child-content">
-            <LogoTitleSection>
-              <LogoTitle>drop magnet</LogoTitle>
-              <div>#ThreeTheWeb</div>
-            </LogoTitleSection>
+            <Row className="items-center">
+              <HeaderLink to="/">
+                Landing Page
+              </HeaderLink>
+            </Row>
           </FadeIn>
         )}
 

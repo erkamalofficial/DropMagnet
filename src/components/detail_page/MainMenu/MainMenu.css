@@ -66,13 +66,12 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 12px 20px;
+  padding: 16px;
   align-items: center;
 }
 
 .left-header{
   display: flex;
-  margin-top: 4px;
 }
 
 .right-header{

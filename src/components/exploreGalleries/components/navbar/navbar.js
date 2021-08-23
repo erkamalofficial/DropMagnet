@@ -1,16 +1,36 @@
 import React, { useState } from "react"
 import { Logo } from "../../styled-components/Logo";
-import { Link } from "../../styled-components/Link";
+import { Link as HeaderLink } from "../../styled-components/Link";
 import { Row } from "../../styled-components/Row";
 import { DropDownBtn } from "../../styled-components/DropDownBtn";
 // import {UserLogo} from "../../styled-components/UserLogo";
 import "./navbar.css"
 import MainMenu from "../../../detail_page/MainMenu/MainMenu";
+import Avatar from "../../../elements/Avatar/Avatar";
+import { getInitials } from "../../../../utils";
+import FadeIn from "react-fade-in";
+import { Link, useHistory } from "react-router-dom";
 
 const Navbar = () => {
 
     const [mainMenuOpen, setMainMenuOpen] = useState(false)
     const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const history = useHistory()
+
+    function showUserAction() {
+        if (userDetails) {
+            return <Link to={'/profile'} style={{ zIndex: 999999999999, textDecoration: 'none' }}>
+                <div className="header-profile-img-holder">
+                    <Avatar userImage={userDetails.avatar_url}
+                        initial={getInitials(userDetails.name)}
+                        view_only
+                        small />
+                </div>
+            </Link>
+        } else {
+            return null
+        }
+    }
 
     return (
         <>
@@ -24,14 +44,30 @@ const Navbar = () => {
 
                 <Row className="justify-between">
                     <Row className="items-center">
-                        <Link to="/">
+                        <img className="header-left-image clickable"
+                            alt="/"
+                            src="./logo.svg"
+                            style={{ height: '36px', width: 'auto' }}
+                            onClick={() => {
+                                if (history.location.pathname === '/home') {
+                                    history.push('/');
+                                } else {
+                                    history.push('/home');
+                                    sessionStorage.removeItem('headerLoad')
+                                }
+                            }}
+                        />
+                        <HeaderLink to="/">
                             Home
-                        </Link>
+                        </HeaderLink>
                     </Row>
-                    <Row>
+
+                    {/* <Row>
                         <Logo />
-                    </Row>
+                    </Row> */}
+
                     <Row className="items-center">
+                        {showUserAction()}
                         {/* <DropDownBtn /> */}
                         <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="nav-bar-menu-icon"
                             style={{ zIndex: 999999999999 }}>
@@ -39,11 +75,11 @@ const Navbar = () => {
                                 <div class="leftright"></div>
                                 <div class="rightleft"></div>
                             </div>
+
                             {/* <img height={10} width={20}
-              style={{ margin: 'auto' }}
-              src="./menu-bars-icon.png" alt="/" /> */}
+                                style={{ margin: 'auto' }}
+                                src="./menu-bars-icon.png" alt="/" /> */}
                         </div>
-                        {/*<UserLogo/>*/}
                     </Row>
                 </Row>
             </nav>

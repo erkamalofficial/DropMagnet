@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { LogoTitleSection, LogoTitle } from "./LogoTitles";
-
-import { Link, Redirect, useHistory, withRouter } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useHistory, withRouter } from 'react-router-dom'
 import "./HeaderBar.css"
-import { epochToDayMonth } from '../../../helpers/DateFormatter';
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
 import DatePicker from 'react-datepicker'
 import CustomDateInput from './CustomDateInput';
 import Avatar from '../Avatar/Avatar';
 import { getInitials } from '../../../utils';
-import { MenuOpen } from '@material-ui/icons';
-// import "./DatePicker.css"
+import { Row } from "../../exploreGalleries/styled-components/Row";
+import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
 import FadeIn from 'react-fade-in'
 
 function HeaderBar(props) {
@@ -21,8 +18,7 @@ function HeaderBar(props) {
   const userDetails = JSON.parse(localStorage.getItem('userDetails'));
 
   const h = useHistory()
-
-  console.log(h.location.pathname ,headerLoad)
+  let pageName = h.location.pathname.split('/')[1].toLowerCase()
 
   function showUserAction() {
     if (props && props.userLoggedIn && userDetails) {
@@ -33,8 +29,7 @@ function HeaderBar(props) {
             <Avatar userImage={userDetails.avatar_url}
               initial={getInitials(userDetails.name)}
               view_only
-              small
-              style={{ marginTop: 2 }} />
+              small />
             {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
           </div>
         ) : (
@@ -71,26 +66,30 @@ function HeaderBar(props) {
       {userDetails && <MainMenu userDetails={userDetails} userImage={userDetails.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />}
 
       <div className="header-left-holder">
-        <img alt={'logo'} style={{ width: 36, height: 'auto' }} onClick={() => {
+        <img alt={'logo'} style={{ width: 'auto', height: 'auto' }} onClick={() => {
           if (props.location.pathname === '/home') {
             props.history.push('/');
           } else {
             props.history.push('/home');
             sessionStorage.removeItem('headerLoad')
           }
-        }} className="header-left-image clickable" src="./drop_logo.png" />
+        }} className="header-left-image clickable" src="./logo.svg" />
 
         {headerLoad && headerLoad === 'true' ? (
-          <LogoTitleSection style={{ display: props.isLogoNotVisible ? 'none' : 'block' }}>
-            <LogoTitle>drop magnet</LogoTitle>
-            <div>#ThreeTheWeb</div>
-          </LogoTitleSection>
+          <Row className="items-center">
+            <HeaderLink to="/"
+              style={{ textTransform: 'capitalize' }}>
+              {pageName}
+            </HeaderLink>
+          </Row>
         ) : (
           <FadeIn delay={50} childClassName="child-content">
-            <LogoTitleSection style={{ display: props.isLogoNotVisible ? 'none' : 'block' }}>
-              <LogoTitle>drop magnet</LogoTitle>
-              <div>#ThreeTheWeb</div>
-            </LogoTitleSection>
+            <Row className="items-center">
+              <HeaderLink to="/"
+                style={{ textTransform: 'capitalize' }}>
+                {pageName}
+              </HeaderLink>
+            </Row>
           </FadeIn>
         )}
 
@@ -139,7 +138,6 @@ function HeaderBar(props) {
               src="./menu-bars-icon.png" alt="/" /> */}
           </div>
         ) : <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>}
-
       </div>
     </div>
 

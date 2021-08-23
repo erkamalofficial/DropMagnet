@@ -1,9 +1,14 @@
-import React from "react";
-import {Row} from "../../../exploreGalleries/styled-components/Row";
+import React, { useState } from "react";
+import { Row } from "../../../exploreGalleries/styled-components/Row";
 import logo from "../../../dropMagnet/assets/drop_logo.svg";
-import {Link} from "../../styled-components/Link";
+import { Link as HeaderLink } from "../../styled-components/Link";
 import styled from "styled-components";
 import userImg from "../../../exploreGalleries/assets/user.svg";
+import { useHistory } from "react-router-dom";
+import { getInitials } from "../../../../utils";
+import Avatar from "../../../elements/Avatar/Avatar";
+import { Link } from "react-router-dom";
+import MainMenu from "../../../detail_page/MainMenu/MainMenu";
 const DropDownBtn = styled.button`
   width: 36px;
   height: 36px;
@@ -55,27 +60,75 @@ const UserLogo = styled.div`
   margin-left: 16px;
 `;
 const Navbar = styled.nav`
-    padding: 16px 16px 23px 6px;
+    padding: 16px;
 `;
 
 
 const Header = () => {
-    return (
-        <Navbar>
-            <Row className="justify-between">
-                <Row className="items-center">
-                    <img src={logo} alt="logo"/>
-                    <Link to="my-gallery">
-                        My Galleries
-                    </Link>
-                </Row>
-                <Row className="items-center">
-                    <DropDownBtn/>
-                    <UserLogo/>
-                </Row>
-            </Row>
-        </Navbar>
-    )
+
+  const [mainMenuOpen, setMainMenuOpen] = useState(false)
+
+  const history = useHistory()
+  const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+  function showUserAction() {
+    if (userDetails) {
+      return <Link to={'/profile'} style={{ zIndex: 999999999999, textDecoration: 'none' }}>
+        <div className="header-profile-img-holder">
+          <Avatar userImage={userDetails.avatar_url}
+            initial={getInitials(userDetails.name)}
+            view_only
+            small />
+        </div>
+      </Link>
+    } else {
+      return null
+    }
+  }
+
+  return (
+    <>
+      {userDetails && <MainMenu
+        userDetails={userDetails}
+        userImage={userDetails.avatar_url}
+        open={mainMenuOpen}
+        setOpen={setMainMenuOpen}
+      />}
+      <Navbar>
+        <Row className="justify-between">
+          <Row className="items-center">
+            <img className="header-left-image clickable"
+              alt="/"
+              src="./logo.svg"
+              style={{ height: '36px', width: 'auto' }}
+              onClick={() => {
+                if (history.location.pathname === '/home') {
+                  history.push('/');
+                } else {
+                  history.push('/home');
+                  sessionStorage.removeItem('headerLoad')
+                }
+              }}
+            />
+            <HeaderLink to="/">
+              Home
+            </HeaderLink>
+          </Row>
+          <Row className="items-center">
+            {showUserAction()}
+            <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="nav-bar-menu-icon"
+              style={{ zIndex: 999999999999 }}>
+              <div class={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>
+                <div class="leftright"></div>
+                <div class="rightleft"></div>
+              </div>
+
+            </div>
+          </Row>
+        </Row>
+      </Navbar>
+    </>
+  )
 }
 
 export default Header
