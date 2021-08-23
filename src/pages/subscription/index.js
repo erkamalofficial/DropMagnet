@@ -30,6 +30,7 @@ const SubscriptionPage = (props) => {
                         userImage={props.userImage}
                         reload={props.reload}
                         userDetails={props.userDetails}
+                        userImageVisible={true}
                     />
                 </div>
             </FadeIn>

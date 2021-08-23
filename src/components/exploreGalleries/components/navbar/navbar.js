@@ -15,17 +15,30 @@ const Navbar = () => {
 
     const [mainMenuOpen, setMainMenuOpen] = useState(false)
     const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const headerLoad = sessionStorage.getItem('headerLoad')
     const history = useHistory()
 
     function showUserAction() {
         if (userDetails) {
             return <Link to={'/profile'} style={{ zIndex: 999999999999, textDecoration: 'none' }}>
-                <div className="header-profile-img-holder">
-                    <Avatar userImage={userDetails.avatar_url}
-                        initial={getInitials(userDetails.name)}
-                        view_only
-                        small />
-                </div>
+                {headerLoad && headerLoad === 'true' ? (
+                    <div className="header-profile-img-holder">
+                        <Avatar userImage={userDetails.avatar_url}
+                            initial={getInitials(userDetails.name)}
+                            view_only
+                            small />
+                    </div>
+                ) : (
+                    <FadeIn delay={50} childClassName="child-content">
+                        <div className="header-profile-img-holder">
+                            <Avatar userImage={userDetails.avatar_url}
+                                initial={getInitials(userDetails.name)}
+                                view_only
+                                small
+                                style={{ marginTop: 2 }} />
+                        </div>
+                    </FadeIn>
+                )}
             </Link>
         } else {
             return null
@@ -57,9 +70,18 @@ const Navbar = () => {
                                 }
                             }}
                         />
-                        <HeaderLink to="/">
-                            Home
-                        </HeaderLink>
+
+                        {headerLoad && headerLoad === 'true' ? (
+                            <HeaderLink to="/">
+                                Home
+                            </HeaderLink>
+                        ) : (
+                            <FadeIn delay={50} childClassName="child-content">
+                                <HeaderLink to="/">
+                                    Home
+                                </HeaderLink>
+                            </FadeIn>
+                        )}
                     </Row>
 
                     {/* <Row>
