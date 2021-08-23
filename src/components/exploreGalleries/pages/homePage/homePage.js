@@ -77,7 +77,9 @@ const HomePage = () => {
                         <Card title="Drop Swipe" img={diamond} />
                     </Link>
 
-                    <Card title="My SmartURLs" img={frame} />
+                    <Link to="/my-gallery">
+                        <Card title="My SmartURLs" img={frame} />
+                    </Link>
 
                     <Link to="/drop-magnet/artgallery.link/verticaly">
                         <Card title="Schedule Drop" img={glass} />
