@@ -1,0 +1,38 @@
+.create-url{
+    max-width: 382px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    position: fixed;
+    bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #161616;
+    column-gap: 22px;
+    z-index: 99;
+    cursor: pointer;
+    border-radius: 31px;
+    padding: 6px 0;
+    font-size: 20px;
+}
+
+.create-url p{
+    margin: 0;
+}
+
+@media (max-width: 576px) {
+    .create-url{
+        margin: 0 16px;
+    }   
+}
+
+.chain-icon{
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #610BC8;
+    border-radius: 50%;
+}

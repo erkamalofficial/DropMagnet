@@ -351,7 +351,7 @@ const Card = (props) => {
                             <LiIcon>
                                 <img src={wallet} alt="wallet"/>
                             </LiIcon>
-                            <p>Wallet settings</p>
+                            <p>Connected Wallets</p>
                         </li>
                     </ul>
                 </MenuWrapper>
@@ -410,7 +410,7 @@ const Card = (props) => {
                         <LiIcon>
                             <img src={edit} alt="edit"/>
                         </LiIcon>
-                        <p>Wallet Settings</p>
+                        <p>Connected Wallets</p>
                     </Title>
                     <Form>
                         <EditName>
