@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 import edit from "../../assets/edit.svg";
 import link from "../../assets/link.svg";
@@ -6,6 +6,7 @@ import wallet from "../../assets/wallet.svg";
 import check from "../../assets/check.svg";
 import MoreBtn from "../../styled-components/moreBtn";
 import "./card.css"
+import web3 from 'web3'
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -305,16 +306,20 @@ const Add = styled.div`
 
 
 const Card = (props) => {
-    const {nft, artist, image} = props;
+    const { nft, artist, image } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [walletEdit, setWalletEdit] = useState(false);
     const [activeTab, setActiveTab] = useState("public");
     const [linkCopied, setLinkCopied] = useState(false);
+
+    const [tnc, setTnc] = useState(false)
+    const [confirmation, setConfirmation] = useState(false)
+
     const tabs = [
-        {id: "public"},
-        {id: "private"},
-        {id: "smart"}
+        { id: "public" },
+        { id: "private" },
+        { id: "smart" }
     ];
     const handleMenu = e => {
         e.preventDefault();
@@ -324,6 +329,72 @@ const Card = (props) => {
         setLinkCopied(false);
     };
     const handleChangeTab = useCallback((id) => setActiveTab(id), []);
+
+    const showTNC = () => {
+        return (
+            <div className="cnf-modal">
+                <div className="content">
+                    <div className="modal-title">
+                        Terms & Conditions
+                    </div>
+                    <p>In publishing and graphic design, Lorem ipsum is a placeholder
+                        text commonly used to demonstrate the visual form of a document or a
+                        typeface without relying on meaningful content.
+                        Lorem ipsum may be used as a placeholder before final copy is available.
+                    </p>
+                    <button>
+                        I understand & agree.
+                    </button>
+                    <p>or</p>
+                    <button onClick={() => setTnc(false)}>
+                    Keep pay button deactivated
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
+    const showConfirmationModal = () => {
+        return (
+            <div className="cnf-modal">
+                <div className="content">
+                    <div className="modal-title">
+                        You’ve Added A Wallet To This MetaURL!
+                    </div>
+                    <p>To activate wallet address auto-fill in MetaMask,
+                        when someone taps the pay button, you need, to
+                        first set up 2FA. NFTs display either way.
+                    </p>
+
+                    <img className="qr-code" 
+                    src="./sampleQR.jpg" alt="/" />
+
+                    <p>Scan code with your authenticator</p>
+                    <p>or</p>
+                    <button onClick={() => setConfirmation(false)}>
+                        Keep pay button deactivated
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
+
+    const handleConnect = async (e) => {
+        e.preventDefault()
+        await window.ethereum.request({
+            method: "wallet_requestPermissions",
+            params: [{ eth_accounts: {} }]
+        });
+        const address = await window.ethereum.request({
+            method: "eth_requestAccounts",
+            params: [{}]
+        })
+        console.log(address)
+        let ad = web3.utils.toChecksumAddress(address[0])
+        localStorage.setItem('cacheKey', ad)
+        setConfirmation(true)
+    }
 
     const showModals = () => {
         if (isOpen && !isEdit) {
@@ -335,13 +406,13 @@ const Card = (props) => {
                             setIsEdit(true)
                         }}>
                             <LiIcon>
-                                <img src={edit} alt="edit"/>
+                                <img src={edit} alt="edit" />
                             </LiIcon>
                             <p>Edit</p>
                         </li>
                         <li onClick={() => setLinkCopied(true)}>
                             <LiIcon>
-                                <img src={link} alt="link"/>
+                                <img src={link} alt="link" />
                             </LiIcon>
                             <p>{!linkCopied ? "Copy link" : "Link copied!"}</p>
                         </li>
@@ -350,7 +421,7 @@ const Card = (props) => {
                             setWalletEdit(true)
                         }}>
                             <LiIcon>
-                                <img src={wallet} alt="wallet"/>
+                                <img src={wallet} alt="wallet" />
                             </LiIcon>
                             <p>Connected Wallets</p>
                         </li>
@@ -364,18 +435,18 @@ const Card = (props) => {
                         setIsOpen(true);
                         setIsEdit(false)
                     }}>
-                        <img src={check} alt="check"/>
+                        <img src={check} alt="check" />
                     </Save>
                     <Title className="items-center justify-center">
                         <LiIcon>
-                            <img src={edit} alt="edit"/>
+                            <img src={edit} alt="edit" />
                         </LiIcon>
                         <p>Edit</p>
                     </Title>
                     <Form>
                         <EditName>
                             <label htmlFor="name">Name</label>
-                            <input id="name" type="text" value={"Alexander Newton"} readOnly={true}/>
+                            <input id="name" type="text" value={"Alexander Newton"} readOnly={true} />
                         </EditName>
                     </Form>
                     <Privacy>
@@ -386,14 +457,14 @@ const Card = (props) => {
                                     return (
                                         <React.Fragment key={i}>
                                             <label key={i} htmlFor={tab.id}
-                                                   onClick={() => handleChangeTab(tab.id)}>{tab.id}</label>
+                                                onClick={() => handleChangeTab(tab.id)}>{tab.id}</label>
                                             <input type="radio" id={tab.id} name="tabs"
-                                                   defaultChecked={tab.id === activeTab}/>
+                                                defaultChecked={tab.id === activeTab} />
                                         </React.Fragment>
                                     )
                                 })
                             }
-                            <span className="glider"/>
+                            <span className="glider" />
                         </div>
                     </Privacy>
                 </EditModal>
@@ -405,22 +476,22 @@ const Card = (props) => {
                         setIsOpen(true);
                         setIsEdit(false)
                     }}>
-                        <img src={check} alt="check"/>
+                        <img src={check} alt="check" />
                     </Save>
                     <Title className="items-center justify-center">
                         <LiIcon>
-                            <img src={edit} alt="edit"/>
+                            <img src={edit} alt="edit" />
                         </LiIcon>
                         <p>Connected Wallets</p>
                     </Title>
                     <Form>
                         <EditName>
                             <label htmlFor="name">Connected Wallet</label>
-                            <input id="name" type="text" value={"oxda48198jkj38hy91hkjhuih"} readOnly={true}/>
+                            <input id="name" type="text" value={"oxda48198jkj38hy91hkjhuih"} readOnly={true} />
                         </EditName>
                     </Form>
                     <Remove>remove</Remove>
-                    <Add onClick={() => props.setOpen(true)}>Add another wallet</Add>
+                    <Add onClick={handleConnect}>Add another wallet</Add>
                 </EditModal>
             )
         } else {
@@ -432,9 +503,10 @@ const Card = (props) => {
 
     return (
         <CardWrapper>
+            {confirmation && showConfirmationModal()}
             <CardSize>
-                <img src={image} alt="back"/>
-                <MoreBtn handleClick={handleMenu} isOpen={isOpen}/>
+                <img src={image} alt="back" />
+                <MoreBtn handleClick={handleMenu} isOpen={isOpen} />
                 <NFT>{nft} NFTs</NFT>
                 <Artist>{artist}</Artist>
                 {memoizedShowModals}
