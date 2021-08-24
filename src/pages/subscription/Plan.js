@@ -1,12 +1,18 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout';
+import axios from "axios";
 
 const Plan = (props) => {
 
     const { plan } = props
 
-    const onToken = (token, address) => {
+    const onToken = async(token, address) => {
         console.log(token, address)
+        // const res = await axios.post('http://localhost:8080/payments', {
+        //     token,
+        //     amount: priceVal*100
+        // })
+        // console.log(res)
     }
 
     const priceVal = Number(plan.price.split(' ')[0].substr(1))
