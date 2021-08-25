@@ -315,8 +315,6 @@ const Card = (props) => {
     const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
     const curMetaURLCard = cntWallets?.filter(cw => cw.id === id)[0]
 
-    console.log(cntWallets)
-
     const [isOpen, setIsOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [walletEdit, setWalletEdit] = useState(false);
@@ -423,8 +421,15 @@ const Card = (props) => {
         if (wallets.length >= 1) {
             wallets.forEach(w => {
                 if (w.id === id) {
-                    w.addresses.push(ad);
-                    flag = 1;
+                    if (!w.addresses.includes(ad)) {
+                        w.addresses.push(ad);
+                        flag = 1;
+                        setConfirmation(true)
+                    }
+                    else{
+                        alert("This wallet already exists.")
+                        flag=1;
+                    }
                 }
             });
             if (flag === 0) {
@@ -462,7 +467,6 @@ const Card = (props) => {
         })
         let ad = web3.utils.toChecksumAddress(address[0])
         insertAddress(ad);
-        setConfirmation(true)
     }
 
     const showModals = () => {
