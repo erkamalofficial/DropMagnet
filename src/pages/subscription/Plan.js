@@ -8,15 +8,14 @@ const Plan = (props) => {
 
     const onToken = async(token, address) => {
         console.log(token, address)
-        // const res = await axios.post('http://localhost:8080/payments', {
-        //     token,
-        //     amount: priceVal*100
-        // })
-        // console.log(res)
+        const res = await axios.post('https://drop-backend-rnd454q4pa-ew.a.run.app/payments', {
+            token,
+            amount: priceVal*100
+        })
+        console.log(res)
     }
 
     const priceVal = Number(plan.price.split(' ')[0].substr(1))
-    console.log(priceVal)
 
     return (
         <div className="plan-card">
@@ -29,7 +28,7 @@ const Plan = (props) => {
                 {priceVal ? (
                     <StripeCheckout
                         token={onToken}
-                        stripeKey="pk_test_51Hr13fE7BvSkBO4prE35EeVzyGVKfQCPfpfcOZZkSLfa4jfONQeEOrd9A4wFIERlRXuVpBu3NYVm1YwCrFfY0gs400dAaCrTp0"
+                        stripeKey={process.env.REACT_STRIPE_KEY}
                         billingAddress
                         shippingAddress
                         amount={priceVal ? priceVal * 100 : 0}
