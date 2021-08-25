@@ -165,12 +165,16 @@ const Form = styled.div`
     align-items: center;
     justify-content: center;
 `;
-const EditName = styled.div`
+
+const Address = styled.div`
     display:flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 16px
+`
+
+const EditName = styled.div`
+    display:flex;
     label{
         color: #ffffff;
         font-size: 16px;
@@ -182,6 +186,7 @@ const EditName = styled.div`
         margin-bottom: 9px; 
     }
     input{
+        width: 90%;
         border-radius: 11px;
         background-color: rgba(0, 0, 0, 0.31);
         color: #ffffff;
@@ -288,7 +293,6 @@ const Remove = styled.div`
     line-height: normal;
     text-align: center;
     cursor: pointer;
-    margin: -7px auto 40px;
     width:fit-content;
 `;
 const Add = styled.div`
@@ -306,7 +310,13 @@ const Add = styled.div`
 
 
 const Card = (props) => {
-    const { nft, artist, image } = props;
+
+    const { nft, artist, image, id } = props;
+    const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
+    const curMetaURLCard = cntWallets?.filter(cw => cw.id === id)[0]
+
+    console.log(cntWallets)
+
     const [isOpen, setIsOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [walletEdit, setWalletEdit] = useState(false);
@@ -315,6 +325,8 @@ const Card = (props) => {
 
     const [tnc, setTnc] = useState(false)
     const [confirmation, setConfirmation] = useState(false)
+    const [rmvCnf, setRmvCnf] = useState(false)
+    const [address, setAddress] = useState(null)
 
     const tabs = [
         { id: "public" },
@@ -347,7 +359,7 @@ const Card = (props) => {
                     </button>
                     <p>or</p>
                     <button onClick={() => setTnc(false)}>
-                    Keep pay button deactivated
+                        Keep pay button deactivated
                     </button>
                 </div>
             </div>
@@ -366,8 +378,8 @@ const Card = (props) => {
                         first set up 2FA. NFTs display either way.
                     </p>
 
-                    <img className="qr-code" 
-                    src="./sampleQR.jpg" alt="/" />
+                    <img className="qr-code"
+                        src="./sampleQR.jpg" alt="/" />
 
                     <p>Scan code with your authenticator</p>
                     <p>or</p>
@@ -377,6 +389,64 @@ const Card = (props) => {
                 </div>
             </div>
         )
+    }
+
+    const showRemoveModal = (ad) => {
+        return (
+            <div className="cnf-modal">
+                <div className="content">
+                    <div className="modal-title">
+                        Are you sure to remove the wallet?
+                    </div>
+                    <p>
+                        Please confirm to remove the wallet with address
+                        : {ad}
+                    </p>
+
+                    <div className="btn-cnt">
+                        <button onClick={() => removeAddress(ad)}>
+                            Yes
+                        </button>
+                        <p>or</p>
+                        <button onClick={() => setRmvCnf(false)}>
+                            No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const insertAddress = (ad) => {
+        let wallets = cntWallets
+        let flag = 0;
+        if (wallets.length >= 1) {
+            wallets.forEach(w => {
+                if (w.id === id) {
+                    w.addresses.push(ad);
+                    flag = 1;
+                }
+            });
+            if (flag === 0) {
+                wallets.push({ id: id, addresses: [ad] })
+            }
+        }
+        else {
+            wallets.push({ id: id, addresses: [ad] })
+        }
+        localStorage.setItem('cntWallets', JSON.stringify(wallets))
+    }
+
+    const removeAddress = (ad) => {
+        let wallets = cntWallets
+        wallets.forEach(w => {
+            if (w.id === id) {
+                let newAds = w.addresses.filter(w => w !== ad);
+                w.addresses = newAds
+            }
+        });
+        localStorage.setItem('cntWallets', JSON.stringify(wallets))
+        setRmvCnf(false)
     }
 
 
@@ -390,9 +460,8 @@ const Card = (props) => {
             method: "eth_requestAccounts",
             params: [{}]
         })
-        console.log(address)
         let ad = web3.utils.toChecksumAddress(address[0])
-        localStorage.setItem('cacheKey', ad)
+        insertAddress(ad);
         setConfirmation(true)
     }
 
@@ -485,12 +554,21 @@ const Card = (props) => {
                         <p>Connected Wallets</p>
                     </Title>
                     <Form>
-                        <EditName>
-                            <label htmlFor="name">Connected Wallet</label>
-                            <input id="name" type="text" value={"oxda48198jkj38hy91hkjhuih"} readOnly={true} />
-                        </EditName>
+                        {curMetaURLCard?.addresses.map(wa => (
+                            <Address>
+                                <EditName>
+                                    <input id="name" type="text" value={wa} readOnly={true} />
+                                </EditName>
+                                <Remove onClick={() => {
+                                    setAddress(wa)
+                                    setRmvCnf(true)
+                                }}>
+                                    remove
+                                </Remove>
+                            </Address>
+                        ))}
                     </Form>
-                    <Remove>remove</Remove>
+
                     <Add onClick={handleConnect}>Add another wallet</Add>
                 </EditModal>
             )
@@ -504,6 +582,7 @@ const Card = (props) => {
     return (
         <CardWrapper>
             {confirmation && showConfirmationModal()}
+            {rmvCnf && showRemoveModal(address)}
             <CardSize>
                 <img src={image} alt="back" />
                 <MoreBtn handleClick={handleMenu} isOpen={isOpen} />

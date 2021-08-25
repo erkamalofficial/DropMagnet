@@ -44,3 +44,10 @@
     margin: 16px auto;
     width: 203px;
 }
+
+.btn-cnt{
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    justify-content: center;
+}
