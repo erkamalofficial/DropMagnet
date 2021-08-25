@@ -21,7 +21,13 @@ const Navbar = () => {
     function showUserAction() {
         if (userDetails) {
             return <Link to={'/profile'} style={{ zIndex: 999999999999, textDecoration: 'none' }}>
-                {headerLoad && headerLoad === 'true' ? (
+                <div className="header-profile-img-holder">
+                    <Avatar userImage={userDetails.avatar_url}
+                        initial={getInitials(userDetails.name)}
+                        view_only
+                        small />
+                </div>
+                {/* {headerLoad && headerLoad === 'true' ? (
                     <div className="header-profile-img-holder">
                         <Avatar userImage={userDetails.avatar_url}
                             initial={getInitials(userDetails.name)}
@@ -38,7 +44,7 @@ const Navbar = () => {
                                 style={{ marginTop: 2 }} />
                         </div>
                     </FadeIn>
-                )}
+                )} */}
             </Link>
         } else {
             return null
@@ -76,11 +82,11 @@ const Navbar = () => {
                                 Home
                             </HeaderLink>
                         ) : (
-                            <FadeIn delay={50} childClassName="child-content">
+                            // <FadeIn delay={50} childClassName="child-content">
                                 <HeaderLink to="/">
                                     Home
                                 </HeaderLink>
-                            </FadeIn>
+                            // </FadeIn>
                         )}
                     </Row>
 

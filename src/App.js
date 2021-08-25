@@ -257,14 +257,18 @@ function App() {
           userImage={userDetails.image}
           userDetails={userDetails}
           userLoggedIn={true}
+          reload={reload}
+          setReload={setReload}
         />
 
         <PrivateRoute
           path="/subscription"
+          component={SubscriptionPage}
           userImage={userDetails.image}
           userDetails={userDetails}
           userLoggedIn={true}
-          component={SubscriptionPage}
+          reload={reload}
+          setReload={setReload}
         />
 
         <Route
@@ -375,7 +379,14 @@ function App() {
         />
         <PrivateRoute path="/buy-links" exact component={BuyLinks} />
 
-        <Route path="/home" component={ExploreGalleries} />
+        <Route path="/home"
+          render={(props) => (
+            <ExploreGalleries
+              {...props}
+              reload={reload}
+              setReload={setReload}
+            />
+          )} />
         <Route path="/drop-magnet" component={DropMagnet} />
         <Route path="/my-gallery" component={MyGallery} />
         <Route path="/politician" component={Politician} />

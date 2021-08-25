@@ -24,13 +24,20 @@ function HeaderBar(props) {
     if (props && props.userLoggedIn && userDetails) {
       return <Link to={'/profile'} style={{ zIndex: 999999999999, textDecoration: 'none' }}>
 
-        {headerLoad && headerLoad === 'true' ? (
+        <div className="header-profile-img-holder">
+          <Avatar userImage={userDetails.avatar_url}
+            initial={getInitials(userDetails.name)}
+            view_only
+            small />
+          {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
+        </div>
+
+        {/* {headerLoad && headerLoad === 'true' ? (
           <div className="header-profile-img-holder">
             <Avatar userImage={userDetails.avatar_url}
               initial={getInitials(userDetails.name)}
               view_only
               small />
-            {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
           </div>
         ) : (
           <FadeIn delay={50} childClassName="child-content">
@@ -40,10 +47,9 @@ function HeaderBar(props) {
                 view_only
                 small
                 style={{ marginTop: 2 }} />
-              {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
             </div>
           </FadeIn>
-        )}
+        )} */}
 
       </Link>
     } else {
@@ -77,23 +83,40 @@ function HeaderBar(props) {
 
         {headerLoad && headerLoad === 'true' ? (
           <Row className="items-center">
-            <HeaderLink to="/"
+            <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
               style={{ textTransform: 'capitalize' }}>
-              {pageName}
+              <>
+                {pageName !== 'swiper' ? `${pageName}` : (
+                  <div className="react-datepicker-container" style={{ zIndex: '999' }}>
+                    <DatePicker
+                      selected={new Date(props.curIndex)}
+                      onChange={(date) => props.setSelectedDropdownDate(date)}
+                      customInput={<CustomDateInput />}
+                    />
+                  </div>
+                )}
+              </>
             </HeaderLink>
           </Row>
         ) : (
-          <FadeIn delay={50} childClassName="child-content">
+          
             <Row className="items-center">
-              <HeaderLink to="/"
+              <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
                 style={{ textTransform: 'capitalize' }}>
-                {pageName}
+                {pageName !== 'swiper' ? `${pageName}` : (
+                  <div className="react-datepicker-container" style={{ zIndex: '999' }}>
+                    <DatePicker
+                      selected={new Date(props.curIndex)}
+                      onChange={(date) => props.setSelectedDropdownDate(date)}
+                      customInput={<CustomDateInput />}
+                    />
+                  </div>
+                )}
               </HeaderLink>
             </Row>
-          </FadeIn>
         )}
 
-        {props.datePickerVisible ? (
+        {/* {props.datePickerVisible ? (
           <>
             {headerLoad && headerLoad === 'true' ? (
               <div className="react-datepicker-container" style={{ zIndex: '999' }}>
@@ -116,7 +139,7 @@ function HeaderBar(props) {
             )}
           </>
         ) : <></>
-        }
+        } */}
 
 
       </div>

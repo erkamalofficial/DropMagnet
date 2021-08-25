@@ -90,18 +90,14 @@
 }
 
 .react-datepicker-container{
-  height: 36px;
-  margin-left: 10px;
-  background-color: #171718;
+  /* background-color: #171718; */
   border-color: #171718;
-  border-radius: 90px;
-  padding: 0 14px;
   width: fit-content;
   display: flex;
   align-items: center;
 }
 
-.react-datepicker-container .date-ip{
+.date-ip{
   display: flex;
   align-items: center;
   width: 100%;
@@ -111,10 +107,14 @@
 .date-ip p{
   font-size: 14px;
   margin: 0;
+  line-height: 14px;
+  margin-top: 3px;
 }
 
 .react-datepicker-container .svg-icon{
   color: white !important;
+  width: 18px;
+  height: 18px;
 }
 .react-datepicker {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

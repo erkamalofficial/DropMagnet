@@ -140,13 +140,13 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
             </HeaderLink>
           </Row>
         ) : (
-          <FadeIn delay={50} childClassName="child-content">
+          // <FadeIn delay={50} childClassName="child-content">
             <Row className="items-center">
               <HeaderLink to="/">
                 Landing Page
               </HeaderLink>
             </Row>
-          </FadeIn>
+          // </FadeIn>
         )}
 
       </LogoSection>
@@ -179,7 +179,6 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
           <>
             {headerLoad && headerLoad === 'true' ? (
               <button className={"blank-button green-gradient"}
-                style={{ marginTop: '-8px' }}
                 onClick={() => {
                   sessionStorage.removeItem('headerLoad')
                   history.push('/home')
@@ -189,7 +188,6 @@ const LandingPageHeader = ({ isLoggedIn, setCurTab }) => {
             ) : (
               <FadeIn delay={50} childClassName="child-content">
                 <button className={"blank-button green-gradient"}
-                  style={{ marginTop: '-8px' }}
                   onClick={() => {
                     sessionStorage.removeItem('headerLoad')
                     history.push('/home')

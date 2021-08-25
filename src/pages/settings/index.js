@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import FadeIn from 'react-fade-in'
 import { useHistory } from 'react-router-dom'
 import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
@@ -29,6 +29,22 @@ const SettingsPage = (props) => {
         history.push("/home");
     }
 
+    useEffect(() => {
+        // First rendering
+        if (props.reload) {
+            sessionStorage.setItem('headerLoad', 'true')
+        }
+        else if (!props.reload && sessionStorage.headerLoad) {
+            sessionStorage.removeItem('headerLoad')
+        }
+    }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            props.setReload(false)
+        }, 500);
+    }, [])
+
     function renderForm() {
         return <div className="settings-fields">
             <TextField setInputValue={() => { }} title={"Email Address"} placeholder={"Enter email"} />
@@ -39,9 +55,9 @@ const SettingsPage = (props) => {
             <LabeledButton onClickBtn={() => { }} title={"Drop Swipe Subscription"} buttonLabel={"Active: Pro Collector\n\n(Tap to Edit Subscription)"} />
             <LabeledButton onClickBtn={() => { }} title={"KYC for Utility Token AirDrop"} buttonLabel={"Coming Soon"} />
             <ButtonContainer>
-                <Button className={'blank-gradient-button custom'} 
-                style={{ padding: "12px 45px" }}
-                onClick={saveSettings}>
+                <Button className={'blank-gradient-button custom'}
+                    style={{ padding: "12px 45px" }}
+                    onClick={saveSettings}>
                     <span className={'blank-gradient-text'}>Save Settings</span>
                 </Button>
             </ButtonContainer>
@@ -50,7 +66,20 @@ const SettingsPage = (props) => {
 
     return (
         <div>
-            <FadeIn delay={200}>
+            {props.reload ? (
+                <FadeIn delay={200}>
+                    <div className="fixed-container">
+                        <HeaderBar
+                            openHome={() => openHome()}
+                            userLoggedIn={props.userLoggedIn}
+                            userImage={props.userImage}
+                            reload={props.reload}
+                            userDetails={props.userDetails}
+                            userImageVisible={true}
+                        />
+                    </div>
+                </FadeIn>
+            ) : (
                 <div className="fixed-container">
                     <HeaderBar
                         openHome={() => openHome()}
@@ -61,7 +90,8 @@ const SettingsPage = (props) => {
                         userImageVisible={true}
                     />
                 </div>
-            </FadeIn>
+            )}
+
             <div className="settings-form-container">
                 <div style={{
                     display: 'flex',

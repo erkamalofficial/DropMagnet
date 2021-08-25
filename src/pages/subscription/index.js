@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import FadeIn from 'react-fade-in'
 import { useHistory } from 'react-router-dom'
 import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
@@ -20,9 +20,38 @@ const SubscriptionPage = (props) => {
         history.push("/");
     }
 
+    useEffect(() => {
+        // First rendering
+        if (props.reload) {
+            sessionStorage.setItem('headerLoad', 'true')
+        }
+        else if (!props.reload && sessionStorage.headerLoad) {
+            sessionStorage.removeItem('headerLoad')
+        }
+    }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            props.setReload(false)
+        }, 500);
+    }, [])
+
     return (
         <div>
-            <FadeIn delay={200}>
+            {props.reload ? (
+                <FadeIn delay={200}>
+                    <div className="fixed-container">
+                        <HeaderBar
+                            openHome={() => openHome()}
+                            userLoggedIn={props.userLoggedIn}
+                            userImage={props.userImage}
+                            reload={props.reload}
+                            userDetails={props.userDetails}
+                            userImageVisible={true}
+                        />
+                    </div>
+                </FadeIn>
+            ) : (
                 <div className="fixed-container">
                     <HeaderBar
                         openHome={() => openHome()}
@@ -33,7 +62,8 @@ const SubscriptionPage = (props) => {
                         userImageVisible={true}
                     />
                 </div>
-            </FadeIn>
+            )}
+
 
             <div style={{
                 display: 'flex',
@@ -43,7 +73,7 @@ const SubscriptionPage = (props) => {
             }}>
                 <div className="plans-container">
                     {Subscriptions.map(p => (
-                        <Plan plan={p}/>
+                        <Plan plan={p} />
                     ))}
                 </div>
             </div>
