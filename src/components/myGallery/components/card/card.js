@@ -164,13 +164,16 @@ const Form = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-Y: scroll
 `;
 
 const Address = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px
+    width: 100%;
+    padding: 18px 0;
+    cursor: pointer
 `
 
 const EditName = styled.div`
@@ -187,6 +190,7 @@ const EditName = styled.div`
     }
     input{
         width: 90%;
+        height: fit-content;
         border-radius: 11px;
         background-color: rgba(0, 0, 0, 0.31);
         color: #ffffff;
@@ -322,9 +326,11 @@ const Card = (props) => {
     const [linkCopied, setLinkCopied] = useState(false);
 
     const [tnc, setTnc] = useState(false)
+    const [auth, setAuth] = useState(false)
     const [confirmation, setConfirmation] = useState(false)
     const [rmvCnf, setRmvCnf] = useState(false)
     const [address, setAddress] = useState(null)
+    const [selected, setSelected] = useState(null)
 
     const tabs = [
         { id: "public" },
@@ -389,6 +395,28 @@ const Card = (props) => {
         )
     }
 
+    const show2FAModal = () => {
+        return (
+            <div className="cnf-modal">
+                <div className="content">
+                    <div className="modal-title">
+                        You’ve Added A Wallet To This MetaURL!
+                    </div>
+                    <p>To activate wallet address auto-fill in MetaMask,
+                        when someone taps the pay button, you need, to
+                        first set up 2FA. NFTs display either way.
+                    </p>
+
+                    <input placeholder="Enter 2FA code here" />
+                    <p>or</p>
+                    <button onClick={() => setAuth(false)}>
+                        Keep pay button deactivated
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
     const showRemoveModal = (ad) => {
         return (
             <div className="cnf-modal">
@@ -426,9 +454,9 @@ const Card = (props) => {
                         flag = 1;
                         setConfirmation(true)
                     }
-                    else{
+                    else {
                         alert("This wallet already exists.")
-                        flag=1;
+                        flag = 1;
                     }
                 }
             });
@@ -559,9 +587,23 @@ const Card = (props) => {
                     </Title>
                     <Form>
                         {curMetaURLCard?.addresses.map(wa => (
-                            <Address>
-                                <EditName>
-                                    <input id="name" type="text" value={wa} readOnly={true} />
+                            <Address
+                                style={{
+                                    background: `${selected === wa ? '#09200087' : ''}`
+                                }}>
+                                <EditName
+                                    onClick={() => {
+                                        setAuth(true)
+                                        setSelected(wa)
+                                    }}>
+                                    <input id="name"
+                                        type="text"
+                                        value={wa}
+                                        readOnly={true}
+                                        style={{
+                                            border: `${selected === wa ? '1px solid #52FF02' : ''}`
+                                        }}
+                                    />
                                 </EditName>
                                 <Remove onClick={() => {
                                     setAddress(wa)
@@ -587,6 +629,7 @@ const Card = (props) => {
         <CardWrapper>
             {confirmation && showConfirmationModal()}
             {rmvCnf && showRemoveModal(address)}
+            {auth && show2FAModal()}
             <CardSize>
                 <img src={image} alt="back" />
                 <MoreBtn handleClick={handleMenu} isOpen={isOpen} />
