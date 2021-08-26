@@ -1,0 +1,72 @@
+.feed-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+    margin-bottom: 32px;
+}
+
+.feed-item{
+    width: 100%;
+    height: 564px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    position: relative;
+}
+
+.feed-details{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.meta-url, .nfts{
+    font-size: 18px;
+    padding: 8px 12px;
+    backdrop-filter: blur(47px);
+    border-radius: 5px;
+    background-color: #2828288A;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.nfts.mb-view{
+    display: none;
+}
+
+.meta-url{
+    max-width: 70%;
+}
+
+@media (max-width: 564px) {
+    .feed-container{
+        width: calc(100% - 16px);
+        margin: 0 auto 32px auto;
+    }
+
+    .feed-item{
+        height: calc(100vw - 16px);
+    }
+
+    .feed-details{
+        justify-content: center;
+    }
+
+    .feed-details .nfts{
+        display: none;
+    }
+
+    .nfts.mb-view{
+        display: block;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+}

@@ -16,6 +16,8 @@ import frame from "../../assets/frame.svg";
 // import {Link} from "../../styled-components/NavLink";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import "./feeds.css"
+import d from "../../assets/sampleFeed.jpg"
 
 const Link = styled(NavLink)`
     width: 100%;
@@ -44,6 +46,15 @@ const Border = styled.div`
 
 
 const HomePage = () => {
+
+    const feeds = [
+        'https://99designs-blog.imgix.net/blog/wp-content/uploads/2021/05/merlin_184196631_939fb22d-b909-4205-99d9-b464fb961d32-superJumbo.jpeg?auto=format&q=60&fit=max&w=930',
+        'https://miro.medium.com/max/1200/1*XVCw5JGYeHX_dj15uEv9Vw.jpeg',
+        'https://cdn.domestika.org/c_fit,dpr_auto,f_auto,t_base_params,w_820/v1619180336/content-items/007/751/585/foto1-original.jpeg?1619180336',
+        'https://static.stambol.com/wordpress/wp-content/uploads/2021/05/cryptoart-nft-redefining-real-683x1024.jpg',
+        'https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2021/03/12/e7e1447c-8288-11eb-87b1-2ad3cd5fba10_image_hires_080000.jpg'
+    ]
+
     return (
         <Container>
             <Border><div></div></Border>
@@ -89,11 +100,25 @@ const HomePage = () => {
 
             <div className="mx-auto max-w-564">
                 <div className="feed">Feed</div>
-                <div className="grid-content">
-                    <div className="grid-item"> </div>
-                    <div className="grid-item"> </div>
-                    <div className="grid-item"> </div>
-                    <div className="grid-item"> </div>
+                <div className="feed-container">
+                    {feeds.map(f => (
+                        <div className="feed-item"
+                            style={{
+                                backgroundImage: `url(${f})`
+                            }}>
+                            <div className="nfts mb-view">
+                                72 NFTS
+                            </div>
+                            <div className="feed-details">
+                                <div className="meta-url">
+                                    Collector.link/CryptoArtMan
+                                </div>
+                                <div className="nfts">
+                                    72 NFTS
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
