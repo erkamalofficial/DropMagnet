@@ -614,8 +614,9 @@ const Card = (props) => {
                         ))}
                     </Form>
 
-                    <Add onClick={handleConnect}>Add another wallet</Add>
-                    {/* <AddWallet /> */}
+                    {/* <Add onClick={handleConnect}>Add another wallet</Add> */}
+                    <AddWallet 
+                    insert={insertAddress}/>
                 </EditModal>
             )
         } else {
