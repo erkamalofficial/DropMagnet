@@ -7,6 +7,7 @@ import check from "../../assets/check.svg";
 import MoreBtn from "../../styled-components/moreBtn";
 import "./card.css"
 import web3 from 'web3'
+import AddWallet from "./addWallet";
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -166,7 +167,6 @@ const Form = styled.div`
     justify-content: center;
     overflow-Y: scroll
 `;
-
 const Address = styled.div`
     display:flex;
     align-items: center;
@@ -482,7 +482,6 @@ const Card = (props) => {
         setRmvCnf(false)
     }
 
-
     const handleConnect = async (e) => {
         e.preventDefault()
         await window.ethereum.request({
@@ -616,6 +615,7 @@ const Card = (props) => {
                     </Form>
 
                     <Add onClick={handleConnect}>Add another wallet</Add>
+                    {/* <AddWallet /> */}
                 </EditModal>
             )
         } else {

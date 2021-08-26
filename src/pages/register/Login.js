@@ -20,6 +20,7 @@ import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
 import * as DropMagnetAPI from "../../DropMagnetAPI"
 
+
 export default function Login() {
 
   let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
