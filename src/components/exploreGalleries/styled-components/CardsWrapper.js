@@ -7,7 +7,7 @@ export const CardsWrapper = styled.div`
     // flex: 0 0 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-left: 1px solid black;
+    // border: 1px solid black;
     width: 100%;
     max-width: 564px;
     margin-left: -8.5px;

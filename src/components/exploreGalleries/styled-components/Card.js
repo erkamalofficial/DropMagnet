@@ -6,10 +6,15 @@ import circle from "../assets/circle.svg";
 const CardWrapper = styled.div`
     cursor:pointer;
     border: solid black;
-    border-width: 0 1px 1px 0;
+    border-width: 1px;
+    border-radius: 5px;
+    background: #242424
     @media(max-width: 374px) {
         padding: 0 7px;
       }
+    :hover{
+      background: #1c1c1c
+    }
 `;
 const CardContent = styled.div`
     // margin-top: 23px;
