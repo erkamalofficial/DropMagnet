@@ -20,7 +20,7 @@ const MyGallery = () => {
         <div>
             <Header />
             <Search type="search" placeholder="Search" />
-            <div style={{ marginBottom: '80px' }}>
+            <div style={{ marginBottom: '96px' }}>
                 {[1, 2, 3, 4].map(c => (
                     <Card key={c}
                     id={c}
