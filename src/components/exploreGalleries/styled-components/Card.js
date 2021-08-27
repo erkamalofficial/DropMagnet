@@ -8,7 +8,10 @@ const CardWrapper = styled.div`
     border: solid black;
     border-width: 1px;
     border-radius: 5px;
-    background: #242424
+    background: #242424;
+    box-sizing: border-box;
+    margin-right: -1px;
+    margin-top: -1px;
     @media(max-width: 374px) {
         padding: 0 7px;
       }
@@ -83,9 +86,9 @@ const CardTitle = styled.p`
 
 
 
-const Card = ({title,subtitle, img}) => {
+const Card = ({title,subtitle, img, className}) => {
     return (
-        <CardWrapper>
+        <CardWrapper className={className}>
             <CardContent>
                 <CardIcon>
                     <img src={img} alt=""/>

@@ -1,7 +1,6 @@
 .feed-container{
     display: flex;
     flex-direction: column;
-    row-gap: 32px;
     margin-bottom: 32px;
 }
 
@@ -13,6 +12,7 @@
     background-repeat: no-repeat;
     border-radius: 8px;
     position: relative;
+    margin-bottom: 32px;
 }
 
 .feed-details{
