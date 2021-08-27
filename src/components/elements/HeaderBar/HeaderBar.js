@@ -55,7 +55,8 @@ function HeaderBar(props) {
       {userDetails && <MainMenu userDetails={userDetails} userImage={userDetails.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />}
 
       <div className="header-left-holder">
-        <img alt={'logo'} style={{ width: 'auto', height: 'auto' }} onClick={() => {
+        <img alt={'logo'}
+        onClick={() => {
           if (props.location.pathname === '/home') {
             props.history.push('/');
           } else {

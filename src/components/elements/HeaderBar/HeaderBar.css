@@ -32,8 +32,9 @@
 }
 
 .header-left-image {
-  height: 34px;
-  width: 30px;
+  height: 32px;
+  width: 31px;
+  margin-top: 2px;
 }
 
 .header-left-holder {

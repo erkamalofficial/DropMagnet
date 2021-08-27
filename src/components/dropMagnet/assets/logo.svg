@@ -1,38 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="49px" height="52px" viewBox="0 0 49 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="28px" height="34px" viewBox="0 0 28 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Group 3 Copy 2</title>
     <defs>
-        <filter x="-38.7%" y="-38.5%" width="177.4%" height="174.9%" filterUnits="objectBoundingBox" id="filter-1">
-            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
-                <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-        </filter>
-        <linearGradient x1="50%" y1="0%" x2="50%" y2="99.8420509%" id="linearGradient-2">
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="99.8420509%" id="linearGradient-1">
             <stop stop-color="#00A4FF" offset="0%"></stop>
             <stop stop-color="#FB03FF" offset="100%"></stop>
         </linearGradient>
-        <path d="M22.2327886,7.89010547 C19.4010011,4.07813477 16.5280582,0.934177734 16.4994039,0.902814453 C16.0832838,0.448685252 15.3778073,0.417872801 14.9236781,0.833992919 C14.8967222,0.858692735 14.8709971,0.884703124 14.8465844,0.911919314 C12.6992608,3.30791218 10.7875946,5.63399441 9.11158561,7.89016602 C5.2367963,13.1059766 3.27222222,17.0552676 3.27222222,19.6283281 C3.27222222,25.8986836 8.83480491,31 15.6722222,31 C22.5096395,31 28.0722222,25.8986836 28.0722222,19.6283281 C28.0722222,17.0552676 26.1075779,13.1059766 22.2327886,7.89010547 Z" id="path-3"></path>
-        <filter x="-17.1%" y="-12.0%" width="134.3%" height="125.7%" filterUnits="objectBoundingBox" id="filter-4">
+        <path d="M22.2327886,7.89010547 C19.4010011,4.07813477 16.5280582,0.934177734 16.4994039,0.902814453 C16.0832838,0.448685252 15.3778073,0.417872801 14.9236781,0.833992919 C14.8967222,0.858692735 14.8709971,0.884703124 14.8465844,0.911919314 C12.6992608,3.30791218 10.7875946,5.63399441 9.11158561,7.89016602 C5.2367963,13.1059766 3.27222222,17.0552676 3.27222222,19.6283281 C3.27222222,25.8986836 8.83480491,31 15.6722222,31 C22.5096395,31 28.0722222,25.8986836 28.0722222,19.6283281 C28.0722222,17.0552676 26.1075779,13.1059766 22.2327886,7.89010547 Z" id="path-2"></path>
+        <filter x="-17.1%" y="-12.0%" width="134.3%" height="125.7%" filterUnits="objectBoundingBox" id="filter-3">
             <feOffset dx="0" dy="6" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
             <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
             <feColorMatrix values="0 0 0 0 0.242479444   0 0 0 0 0   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
         </filter>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Step-1-Copy" transform="translate(-7.000000, -8.000000)">
-            <g id="Group-3-Copy-2" filter="url(#filter-1)" transform="translate(16.000000, 18.000000)">
-                <g id="Group">
-                    <rect id="Rectangle" x="0" y="2" width="31" height="31" rx="4"></rect>
-                    <g id="Path-Copy" fill-rule="nonzero">
-                        <use fill="#FFFFFF" xlink:href="#path-3"></use>
-                        <use fill="#25165D" xlink:href="#path-3"></use>
-                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
-                        <use stroke="url(#linearGradient-2)" stroke-width="2.5" xlink:href="#path-3"></use>
-                    </g>
+        <g id="Step-1-Copy-5" transform="translate(-18.000000, -17.000000)">
+            <g id="Group" transform="translate(16.000000, 18.000000)">
+                <rect id="Rectangle" x="0" y="2" width="31" height="31" rx="4"></rect>
+                <g id="Path-Copy" fill-rule="nonzero">
+                    <use fill="#FFFFFF" xlink:href="#path-2"></use>
+                    <use fill="#25165D" xlink:href="#path-2"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use stroke="url(#linearGradient-1)" stroke-width="2.5" xlink:href="#path-2"></use>
                 </g>
             </g>
         </g>
