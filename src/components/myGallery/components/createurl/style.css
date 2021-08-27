@@ -7,27 +7,42 @@
     bottom: 32px;
     display: flex;
     align-items: center;
-    justify-content: center;
     background-color: #161616;
-    column-gap: 22px;
     z-index: 99;
     cursor: pointer;
     border-radius: 31px;
     padding: 6px 0;
     font-size: 20px;
+    overflow: hidden;
+    height: 57px;
+}
+
+.create-url .contents{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
 }
 
 .create-url p{
     margin: 0;
+    width: 64%;
+    margin-left: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 414px) {
     .create-url{
         margin: 0 16px;
     }   
 }
 
 .chain-icon{
+    position: absolute;
+    left: 8px;
     width: 45px;
     height: 45px;
     display: flex;
