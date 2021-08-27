@@ -7,6 +7,7 @@ import Footer from "./components/footer/footer";
 import ConnectedWallets from "./pages/connectedWallets/connectedWallets";
 import ConnectNewWallet from "./pages/connectNewWallet/connectNewWallet";
 import FadeIn from "react-fade-in";
+import HeaderBar from '../../components/elements/HeaderBar/HeaderBar';
 
 const ExploreGalleries = (props) => {
 
@@ -22,19 +23,12 @@ const ExploreGalleries = (props) => {
 
     useEffect(() => {
         setTimeout(() => {
-          props.setReload(false)
+            props.setReload(false)
         }, 500);
-      }, [])
+    }, [])
 
     return (
         <div className="explore-galleries-content">
-            {props.reload ? (
-                <FadeIn delay={200} childClassName="fading-navbar">
-                    <Navbar />
-                </FadeIn>
-            ) : (
-                <Navbar />
-            )}
 
             <Route exact path="/home">
                 <div className="homepage">
@@ -48,7 +42,7 @@ const ExploreGalleries = (props) => {
             <Route path="/home/create-new-wallet">
                 <ConnectNewWallet />
             </Route>
-        </div>
+        </div >
     )
 }
 

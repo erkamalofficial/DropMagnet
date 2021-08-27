@@ -66,32 +66,6 @@ const SettingsPage = (props) => {
 
     return (
         <div>
-            {props.reload ? (
-                <FadeIn delay={200}>
-                    <div className="fixed-container">
-                        <HeaderBar
-                            openHome={() => openHome()}
-                            userLoggedIn={props.userLoggedIn}
-                            userImage={props.userImage}
-                            reload={props.reload}
-                            userDetails={props.userDetails}
-                            userImageVisible={true}
-                        />
-                    </div>
-                </FadeIn>
-            ) : (
-                <div className="fixed-container">
-                    <HeaderBar
-                        openHome={() => openHome()}
-                        userLoggedIn={props.userLoggedIn}
-                        userImage={props.userImage}
-                        reload={props.reload}
-                        userDetails={props.userDetails}
-                        userImageVisible={true}
-                    />
-                </div>
-            )}
-
             <div className="settings-form-container">
                 <div style={{
                     display: 'flex',

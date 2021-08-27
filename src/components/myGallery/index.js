@@ -9,6 +9,7 @@ import { FetchWrapper } from "use-nft";
 import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from 'axios';
+import HeaderBar from "../elements/HeaderBar/HeaderBar";
 
 
 const MyGallery = () => {
@@ -68,8 +69,7 @@ const MyGallery = () => {
     }, [])
 
     return (
-        <div style={{marginTop: '70px'}}>
-            <Header />
+        <div style={{ marginTop: '70px' }}>
             <Search type="search" placeholder="Search" />
             <div style={{ marginBottom: '96px' }}>
                 {[1, 2, 3, 4].map(c => (

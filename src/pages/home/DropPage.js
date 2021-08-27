@@ -72,12 +72,6 @@ const DropPage = () => {
 
   return (
     <HomeContainer>
-      <HeaderBar
-        openHome={() => { }}
-        openMenu={() => { }}
-        isLogoNotVisible
-        dropId={id}
-      />
       <div className="rel">
         <div className="view-container home-container" id="detCnt" >
           {drop && renderDetail()}

@@ -431,29 +431,7 @@ export default function Profile(props) {
 
   return (
     <div>
-      {props.reload ? (
-        <FadeIn delay={200}>
-          <div className="fixed-container">
-            <HeaderBar
-              openHome={() => openHome()}
-              userLoggedIn={props.userLoggedIn}
-              userImage={userImage}
-              reload={props.reload}
-              userDetails={props.userDetails}
-            />
-          </div>
-        </FadeIn>
-      ) : (
-        <div className="fixed-container">
-          <HeaderBar
-            openHome={() => openHome()}
-            userLoggedIn={props.userLoggedIn}
-            userImage={userImage}
-            reload={props.reload}
-            userDetails={props.userDetails}
-          />
-        </div>
-      )}
+      
       {loading.profile && loading.drops ? (
         <div>
           <LazyProfile />

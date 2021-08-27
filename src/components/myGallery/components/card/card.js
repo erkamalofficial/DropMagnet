@@ -50,7 +50,7 @@ const LiIcon = styled.div`
 const NFT = styled.div`
     padding:8px 16px;
     background-color: rgba(40, 40, 40, 0.54);
-    border-radius: 100px;
+    border-radius: 5px;
     font-size: 18px;
     font-weight: 700;
     font-style: normal;
@@ -101,7 +101,7 @@ const Artist = styled.p`
     bottom: 12px;
     margin: 0 auto;
     background-color: rgba(40, 40, 40, 0.54);
-    border-radius: 100px;
+    border-radius: 5px;
     padding: 8px 16px;
     color: #eaeaea;
     width:fit-content;

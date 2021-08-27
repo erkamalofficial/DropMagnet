@@ -57,6 +57,7 @@ export default function MainMenu(props) {
         style={{ marginBottom: "16px" }}
         key={index}
         to={item.link}
+        onClick={() => props.setOpen(false)}
       >
         {item.title}
       </Link>
@@ -67,44 +68,6 @@ export default function MainMenu(props) {
 
   return (
     <div className={menuClass}>
-      <div className="main-header">
-        <div className="left-header">
-          <Link to={"/home"}
-          style={{height: '36px', display: 'block'}}>
-            <img
-              alt={"logo"}
-              style={{ width: 'auto', height: "36px" }}
-              className="header-left-image clickable"
-              src="./logo.svg"
-            />
-          </Link>
-          <Row className="items-center">
-            <HeaderLink to="/"
-              style={{ textTransform: 'capitalize' }}>
-              {pageName}
-            </HeaderLink>
-          </Row>
-        </div>
-        <div className="right-header">
-          {/* <img
-            onClick={() => closeMenu()}
-            alt={"close-button"}
-            className="close-button"
-            src="./close-icon.png"
-          /> */}
-          {/* <Link to={"/profile"}>
-            <div className="header-profile-img-holder" >
-              <Avatar
-                userImage={props.userImage}
-                initial = {getInitials(props.userDetails.name)}
-                view_only
-                small
-                style={{width: 40, height: 40}}
-              />
-            </div>
-          </Link> */}
-        </div>
-      </div>
 
       <div className="main-menu-holder">
         {props.userDetails !== {} && props.userDetails !== undefined ? (

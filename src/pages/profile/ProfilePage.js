@@ -213,14 +213,6 @@ export default function ProfilePage(props) {
   if (loading) {
     return (
       <div>
-        <FadeIn delay={200}>
-          <HeaderBar
-            openHome={() => openHome()}
-            userLoggedIn={props.userLoggedIn}
-            userImage={userImage}
-            userDetails={props.userDetails}
-          />
-        </FadeIn>
         <div>
           <LazyProfile />
         </div>
@@ -233,14 +225,6 @@ export default function ProfilePage(props) {
       <>
 
         <div className="profile-container">
-          <div className="fixed-container">
-            <HeaderBar
-              openHome={() => openHome()}
-              userLoggedIn={props.userLoggedIn}
-              userImage={userImage}
-              userDetails={props.userDetails}
-            />
-          </div>
           <div
             className="profile-detail-container"
             style={{ display: `${detailView ? "none" : "flex"}` }}

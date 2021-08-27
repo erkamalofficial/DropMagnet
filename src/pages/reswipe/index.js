@@ -210,7 +210,7 @@ function Reswipe(props) {
         openItem={selectDate}
         setSelectedDate={setSelectedDate}
       />
-      <HeaderBar
+      {/* <HeaderBar
         // openHome={() => openHome()}
         // openMenu={() => openMenu()}
         isLogoNotVisible
@@ -220,7 +220,7 @@ function Reswipe(props) {
         datePickerVisible={detailView ? false : true}
         userLoggedIn={currentUser && currentUser.uid}
         userImageVisible={true}
-      />
+      /> */}
       {currentDetailIndex === null ? (
         !reswipeComplete ? (
           <>

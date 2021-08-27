@@ -1,6 +1,6 @@
 .main-menu-closed {
   position: fixed;
-  top: 0;
+  top: 70px;
   z-index: 9999;
   overflow: auto;
   width: 100vw;
@@ -18,7 +18,7 @@
 
 .main-menu-open {
   position: fixed;
-  top: 0;
+  top: 70px;
   z-index: 9999999;
   overflow: auto;
   width: 100vw;

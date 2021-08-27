@@ -5,7 +5,8 @@ import circle from "../assets/circle.svg";
 
 const CardWrapper = styled.div`
     cursor:pointer;
-    border: solid black;
+    border: solid #000000;
+    outline: 0;
     border-width: 1px;
     border-radius: 5px;
     background: #242424;

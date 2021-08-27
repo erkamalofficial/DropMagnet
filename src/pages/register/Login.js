@@ -25,6 +25,7 @@ export default function Login() {
 
   let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
   const { id } = useParams()
+  console.log(id)
 
   const emailRef = useRef();
   const passwordRef = useRef();

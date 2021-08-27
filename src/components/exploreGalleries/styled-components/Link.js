@@ -6,8 +6,9 @@ export const Link = styled(NavLink)`
   border-radius: 19px;
   background-image: linear-gradient(#181818, #131313D4);
   border: 0.75px solid black;
-  line-height: 20px;
-  vertical-align: bottom;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   // background-image: linear-gradient(180deg, rgba(24, 24, 24, 0.83) 0%, rgba(19, 19, 19, 0.83) 100%);
   color: #d8d8d8;
   font-size: 16px;

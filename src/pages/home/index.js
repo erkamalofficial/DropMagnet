@@ -1,6 +1,6 @@
 // import "../../server";
 import styled from "styled-components";
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useState, useCallback, useContext } from "react";
 import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 import Tabs from "./tabs";
@@ -25,6 +25,7 @@ import { tabList } from "../../constants";
 import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
 import FadeIn from 'react-fade-in';
+import { GlobalContext } from "../../utils/GlobalContext";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -56,12 +57,11 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const { setDate, date } = useContext(GlobalContext)
+
   const { currentUser, idToken } = useAuth();
 
-  const curIndex = useSelector((state) => state.category.curIndex);
-
-
-  const [selectedDropdownDate, setSelectedDropdownDate] = useState(new Date(curIndex));
+  const [selectedDropdownDate, setSelectedDropdownDate] = useState(date);
   const [detailView, setDetailView] = useState(false);
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
   const [loadMore, setLoadMore] = useState(false)
@@ -75,11 +75,11 @@ const Home = (props) => {
   const nextIndex = useSelector((state) => state.category.nextIndex);
   const fetchMore = useSelector((state) => state.category.fetchMore);
 
-  // useEffect(() => {
-  //   if (curIndex !== 0) {
-  //     setSelectedDropdownDate(new Date(curIndex))
-  //   }
-  // }, [curIndex])
+  console.log(date)
+
+  useEffect(() => {
+    setSelectedDropdownDate(date)
+  }, [date])
 
   useEffect(() => {
     // First rendering
@@ -176,21 +176,6 @@ const Home = (props) => {
   }, [reswipeModeActive, currentTabId, history]);
   const uniqueId = Date.now();
 
-  function selectDate(date) {
-  }
-
-  function setSelectedDate(date) {
-    setSelectedDropdownDate(date.date);
-  }
-
-  const openHome = () => { };
-
-  const openMenu = () => { };
-
-  const openDateMenu = () => {
-    setDateMenuOpen(true);
-  };
-
   const handleActiveTabIndex = (index) => {
 
     const activeTab = tabList[index];
@@ -256,45 +241,6 @@ const Home = (props) => {
   return (
     <HomeContainer>
 
-      {props.reload ? (
-        <div className="fixed-prnt-container">
-          <FadeIn delay={200}>
-            <div className="fixed-container">
-
-              <HeaderBar
-                openHome={() => openHome()}
-                openMenu={() => openMenu()}
-                isLogoNotVisible
-                openDateMenu={() => openDateMenu()}
-                curIndex={curIndex}
-                selectedDropdownDate={selectedDropdownDate}
-                setSelectedDropdownDate={setSelectedDropdownDate}
-                datePickerVisible={detailView ? false : true}
-                userLoggedIn={props.userLoggedIn}
-                userImageVisible={true}
-                reload={props.reload}
-              />
-
-            </div>
-          </FadeIn>
-        </div>
-      ) : (
-        <div className="fixed-container">
-          <HeaderBar
-            openHome={() => openHome()}
-            openMenu={() => openMenu()}
-            isLogoNotVisible
-            openDateMenu={() => openDateMenu()}
-            curIndex={curIndex}
-            selectedDropdownDate={selectedDropdownDate}
-            setSelectedDropdownDate={setSelectedDropdownDate}
-            datePickerVisible={detailView ? false : true}
-            userLoggedIn={props.userLoggedIn}
-            userImageVisible={true}
-            reload={props.reload}
-          />
-        </div>
-      )}
       <div className="rel">
         {isLoading ?
           (

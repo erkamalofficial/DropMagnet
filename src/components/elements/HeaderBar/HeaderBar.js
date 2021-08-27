@@ -9,6 +9,7 @@ import { getInitials } from '../../../utils';
 import { Row } from "../../exploreGalleries/styled-components/Row";
 import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
 import FadeIn from 'react-fade-in'
+import Logo from "../../dropMagnet/assets/logo.svg"
 
 function HeaderBar(props) {
 
@@ -19,6 +20,7 @@ function HeaderBar(props) {
 
   const h = useHistory()
   let pageName = h.location.pathname.split('/')[1].toLowerCase()
+  pageName = pageName === '' ? 'Landing Page' : pageName
 
   function showUserAction() {
     if (props && props.userLoggedIn && userDetails) {
@@ -31,25 +33,6 @@ function HeaderBar(props) {
             small />
           {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
         </div>
-
-        {/* {headerLoad && headerLoad === 'true' ? (
-          <div className="header-profile-img-holder">
-            <Avatar userImage={userDetails.avatar_url}
-              initial={getInitials(userDetails.name)}
-              view_only
-              small />
-          </div>
-        ) : (
-          <FadeIn delay={50} childClassName="child-content">
-            <div className="header-profile-img-holder">
-              <Avatar userImage={userDetails.avatar_url}
-                initial={getInitials(userDetails.name)}
-                view_only
-                small
-                style={{ marginTop: 2 }} />
-            </div>
-          </FadeIn>
-        )} */}
 
       </Link>
     } else {
@@ -79,14 +62,14 @@ function HeaderBar(props) {
             props.history.push('/home');
             sessionStorage.removeItem('headerLoad')
           }
-        }} className="header-left-image clickable" src="./logo.svg" />
+        }} className="header-left-image clickable" src={Logo} />
 
         {headerLoad && headerLoad === 'true' ? (
           <Row className="items-center">
             <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
               style={{ textTransform: 'capitalize' }}>
               <>
-                {pageName !== 'swiper' ? `${pageName}` : (
+                {pageName !== 'swiper' ? <p className={"page-name"}>{pageName}</p> : (
                   <div className="react-datepicker-container" style={{ zIndex: '999' }}>
                     <DatePicker
                       selected={new Date(props.curIndex)}
@@ -99,35 +82,11 @@ function HeaderBar(props) {
             </HeaderLink>
           </Row>
         ) : (
-          
-            <Row className="items-center">
-              <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
-                style={{ textTransform: 'capitalize' }}>
-                {pageName !== 'swiper' ? `${pageName}` : (
-                  <div className="react-datepicker-container" style={{ zIndex: '999' }}>
-                    <DatePicker
-                      selected={new Date(props.curIndex)}
-                      onChange={(date) => props.setSelectedDropdownDate(date)}
-                      customInput={<CustomDateInput />}
-                    />
-                  </div>
-                )}
-              </HeaderLink>
-            </Row>
-        )}
 
-        {/* {props.datePickerVisible ? (
-          <>
-            {headerLoad && headerLoad === 'true' ? (
-              <div className="react-datepicker-container" style={{ zIndex: '999' }}>
-                <DatePicker
-                  selected={new Date(props.curIndex)}
-                  onChange={(date) => props.setSelectedDropdownDate(date)}
-                  customInput={<CustomDateInput />}
-                />
-              </div>
-            ) : (
-              <FadeIn delay={50} childClassName="child-content">
+          <Row className="items-center">
+            <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
+              style={{ textTransform: 'capitalize' }}>
+              {pageName !== 'swiper' ? <p className={"page-name"}>{pageName}</p> : (
                 <div className="react-datepicker-container" style={{ zIndex: '999' }}>
                   <DatePicker
                     selected={new Date(props.curIndex)}
@@ -135,13 +94,10 @@ function HeaderBar(props) {
                     customInput={<CustomDateInput />}
                   />
                 </div>
-              </FadeIn>
-            )}
-          </>
-        ) : <></>
-        } */}
-
-
+              )}
+            </HeaderLink>
+          </Row>
+        )}
       </div>
       <div className="header-right-holder">
         {props.userImageVisible ?
@@ -160,7 +116,9 @@ function HeaderBar(props) {
               style={{ margin: 'auto' }}
               src="./menu-bars-icon.png" alt="/" /> */}
           </div>
-        ) : <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>}
+        ) : props.dropId!==undefined ? (
+          <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>
+        ): <Link to={`/login`} id="login-link">Log In</Link>}
       </div>
     </div>
 
