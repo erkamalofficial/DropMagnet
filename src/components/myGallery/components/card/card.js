@@ -111,6 +111,9 @@ const Artist = styled.p`
     letter-spacing: normal;
     line-height: normal;
     text-align: center;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis
 `;
 const EditModal = styled.div`
     position: absolute;

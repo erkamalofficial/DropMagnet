@@ -68,7 +68,7 @@ const MyGallery = () => {
     }, [])
 
     return (
-        <div>
+        <div style={{marginTop: '70px'}}>
             <Header />
             <Search type="search" placeholder="Search" />
             <div style={{ marginBottom: '96px' }}>

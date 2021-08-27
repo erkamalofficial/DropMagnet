@@ -61,6 +61,11 @@ const UserLogo = styled.div`
 `;
 const Navbar = styled.nav`
     padding: 16px;
+    position: fixed;
+    z-index: 9999999;
+    top: 0;
+    backdrop-filter: blur(42px);
+    width: 100%
 `;
 
 
