@@ -15,6 +15,15 @@ export default function MainMenu(props) {
   const [open, setOpen] = useState(false);
   const [verified, setVerified] = useState(false)
 
+  useEffect(() => {
+    if(open){
+      document.body.style.overflow = 'hidden'
+    }
+    else{
+      document.body.style.overflow = 'auto'
+    }
+  }, [open])
+
   const checkIfVerified = async () => {
     const r = await currentUser.getIdTokenResult()
     const is_verified = r.claims["verified"]
@@ -54,7 +63,7 @@ export default function MainMenu(props) {
     return (
       <Link
         className="main-menu-item"
-        style={{ marginBottom: "16px" }}
+        style={{ marginBottom: "16px"}}
         key={index}
         to={item.link}
         onClick={() => props.setOpen(false)}
