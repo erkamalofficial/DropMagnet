@@ -7,6 +7,7 @@ export const Container = styled.div`
     // margin: 0 auto;
     background-color: #242424;
     border-top: 1px solid #000000;
+    overflow-x: hidden;
     &.mt-5{
     margin-top: 5px
     }
