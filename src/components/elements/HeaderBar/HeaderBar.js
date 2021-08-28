@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory, withRouter } from 'react-router-dom'
 import "./HeaderBar.css"
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
@@ -49,6 +49,9 @@ function HeaderBar(props) {
   function openItem(e) {
   }
 
+  if(h.location.pathname === '/drop-magnet/artgallery.link/verticaly'){
+    return null
+  }
 
   return (
     <div className="header-container">
@@ -56,14 +59,14 @@ function HeaderBar(props) {
 
       <div className="header-left-holder">
         <img alt={'logo'}
-        onClick={() => {
-          if (props.location.pathname === '/home') {
-            props.history.push('/');
-          } else {
-            props.history.push('/home');
-            sessionStorage.removeItem('headerLoad')
-          }
-        }} className="header-left-image clickable" src={Logo} />
+          onClick={() => {
+            if (props.location.pathname === '/home') {
+              props.history.push('/');
+            } else {
+              props.history.push('/home');
+              sessionStorage.removeItem('headerLoad')
+            }
+          }} className="header-left-image clickable" src={Logo} />
 
         {headerLoad && headerLoad === 'true' ? (
           <Row className="items-center">
@@ -117,9 +120,9 @@ function HeaderBar(props) {
               style={{ margin: 'auto' }}
               src="./menu-bars-icon.png" alt="/" /> */}
           </div>
-        ) : props.dropId!==undefined ? (
+        ) : props.dropId !== undefined ? (
           <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>
-        ): <Link to={`/login`} id="login-link">Log In</Link>}
+        ) : <Link to={`/login`} id="login-link">Log In</Link>}
       </div>
     </div>
 

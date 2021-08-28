@@ -65,7 +65,7 @@ export default function Login() {
             }
             else {
               sessionStorage.removeItem('headerLoad')
-              history.push("/home");
+              history.push("/");
             }
           } else {
             setError("Email not verified!! check your inbox and verifiy");
@@ -142,7 +142,7 @@ export default function Login() {
         }
         else {
           sessionStorage.removeItem('headerLoad')
-          history.push("/home");
+          history.push("/");
           setLoading(false)
         }
       }
