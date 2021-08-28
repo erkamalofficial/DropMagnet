@@ -57,7 +57,7 @@ const HomePage = () => {
 
     return (
         <Container>
-            <Border><div></div></Border>
+            {/* <Border><div></div></Border> */}
             <InsetBox>
                 <Row className="items-center justify-between mx-auto max-w-324">
                     <InsetBoxIcon>

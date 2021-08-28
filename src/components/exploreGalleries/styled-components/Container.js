@@ -6,6 +6,7 @@ export const Container = styled.div`
     // padding: 0 15px;
     // margin: 0 auto;
     background-color: #242424;
+    border-top: 1px solid #000000;
     &.mt-5{
     margin-top: 5px
     }
