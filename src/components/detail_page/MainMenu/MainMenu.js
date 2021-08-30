@@ -16,10 +16,10 @@ export default function MainMenu(props) {
   const [verified, setVerified] = useState(false)
 
   useEffect(() => {
-    if(open){
+    if (open) {
       document.body.style.overflow = 'hidden'
     }
-    else{
+    else {
       document.body.style.overflow = 'auto'
     }
   }, [open])
@@ -63,7 +63,7 @@ export default function MainMenu(props) {
     return (
       <Link
         className="main-menu-item"
-        style={{ marginBottom: "16px"}}
+        style={{ marginBottom: "16px" }}
         key={index}
         to={item.link}
         onClick={() => props.setOpen(false)}
