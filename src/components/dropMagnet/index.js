@@ -34,7 +34,7 @@ const DropMagnet = () => {
 		<div>
 			<Route exact path="/drop-magnet" render={()=> <Redirect to="/drop-magnet/artgallery.link" />}/>
 			<Route exact path="/drop-magnet/artgallery.link">
-				<Navbar path={'/drop-magnet/artgallery.link'} text={'ArtGallery.Link'}/>
+				{/* <Navbar path={'/drop-magnet/artgallery.link'} text={'ArtGallery.Link'}/> */}
 				<SliderPage/>
 			</Route>
 

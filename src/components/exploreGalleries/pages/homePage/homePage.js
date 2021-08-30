@@ -74,26 +74,23 @@ const HomePage = () => {
             </InsetBox>
             <div className="flex-content">
                 <CardsWrapper>
-
-
                     <Link to="/my-gallery">
-                        <Card title="Rooms" img={partEmoji} />
+                        <Card title="Rooms" icon={'🥳'} />
                     </Link>
-                    <Link to="/home/connected-wallets">
-                        <Card title="My Wallets" img={diamond} />
-                    </Link>
-                    <Card title="Explore Galleries" img={frame} />
-
-                    <Link to="/swiper">
-                        <Card title="Drop Swipe" img={diamond} />
-                    </Link>
-
                     <Link to="/my-gallery">
-                        <Card title="My SmartURLs" img={frame} />
+                        <Card title="Explore" icon={'🚀'} />
                     </Link>
-
+                    <Link to="/my-gallery">
+                        <Card title="Meta URLs" icon={'🔗'} />
+                    </Link>
                     <Link to="/drop-magnet/artgallery.link/verticaly">
-                        <Card title="Schedule Drop" img={glass} />
+                        <Card title="Schedule Drop" icon={'💎'} />
+                    </Link>
+                    <Link to="/swiper">
+                        <Card title="Drop Swipe" icon={'👓'} />
+                    </Link>
+                    <Link to="/settings">
+                        <Card title="Settings" icon={'⚙️'} />
                     </Link>
                 </CardsWrapper>
             </div>

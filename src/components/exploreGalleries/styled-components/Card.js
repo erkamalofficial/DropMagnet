@@ -87,12 +87,12 @@ const CardTitle = styled.p`
 
 
 
-const Card = ({title,subtitle, img, className}) => {
+const Card = ({title,subtitle, icon, className}) => {
     return (
         <CardWrapper className={className}>
             <CardContent>
                 <CardIcon>
-                    <img src={img} alt=""/>
+                    <p style={{fontSize: '18px'}}>{icon}</p>
                 </CardIcon>
                 <CardTitle>{title}</CardTitle>
                 {/*<CardSubtitle>{subtitle}</CardSubtitle>*/}
