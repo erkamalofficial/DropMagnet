@@ -37,7 +37,7 @@ export default function LazyProfile(props) {
         <>
             <div>
                 <div className="profile-container loader">
-                    <FadeIn delay={400}>
+                    <FadeIn delay={120}>
                         <div className="profile-detail-container loader"
                             style={{ display: `${false ? "none" : "flex"}` }}>
 
@@ -81,7 +81,7 @@ export default function LazyProfile(props) {
                         </FadeIn>
                     </FooterContainer>
 
-                    <FadeIn delay={800}>
+                    <FadeIn delay={240}>
                         <TabContainer>
                             <Tabs activeTabIndex={0}
                                 handleActiveTabIndex={(index) => { }}
@@ -89,30 +89,6 @@ export default function LazyProfile(props) {
                         </TabContainer>
                     </FadeIn>
 
-                    <FadeIn delay={1000}>
-                        <div className="drop-list">
-                            {[1, 2, 3].map(d => (
-                                <div key={d} className="landing-cell lazy">
-                                    <div className="drop-inner">
-                                        <div className="drop-details">
-                                            <div className="drop-header" >
-                                                <div className="basic small-round-profile-basic"></div>
-                                                <div className="basic drop-artist-basic" ></div>
-                                            </div>
-                                            <div className="basic drop-title-basic"></div>
-                                            <div className="basic date-basic"></div>
-                                            <div className="drop-footer">
-                                                <p2 className="basic tag-basic"></p2>
-                                                <p2 className="basic tag-basic"></p2>
-                                                <p2 className="basic tag-basic"></p2>
-                                            </div>
-                                        </div>
-                                        <div className="basic drop-image-basic" />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </FadeIn>
                 </div>
 
             </div>

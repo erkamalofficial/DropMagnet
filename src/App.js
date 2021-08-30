@@ -121,6 +121,7 @@ function App() {
   const addFlag = () => {
     if (!sessionStorage.reloading) {
       sessionStorage.setItem("reloading", "true");
+      sessionStorage.removeItem("profileDetails");
     }
   }
   const removeFlag = () => {
