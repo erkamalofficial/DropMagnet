@@ -47,8 +47,6 @@ const SettingsPage = (props) => {
         setName(newName)
     }
 
-    console.log(name)
-
     function openHome() {
         history.push("/");
     }

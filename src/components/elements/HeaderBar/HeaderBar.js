@@ -23,7 +23,10 @@ function HeaderBar(props) {
   pageName = pageName === '' ? 'Landing Page' : pageName
 
   function showUserAction() {
-    if (props && props.userLoggedIn && userDetails) {
+    if (props 
+      && props.userLoggedIn 
+      && userDetails
+      && h.location.pathname !== '/profile') {
       return <Link to={'/profile'} style={{ textDecoration: 'none' }}>
 
         <div className="header-profile-img-holder">

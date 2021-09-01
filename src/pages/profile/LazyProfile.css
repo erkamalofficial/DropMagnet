@@ -3,7 +3,7 @@
   flex: 1 1 auto;
   overflow: auto;
   /* width: calc(100% - 24px); */
-  margin: auto;
+  /* margin: auto; */
 }
 
 .landing-cell.lazy{
