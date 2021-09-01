@@ -26,12 +26,17 @@ const SettingsPage = (props) => {
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [url, setUrl] = useState('')
+    const [subscription, setSubscription] = useState(null)
 
     useEffect(() => {
         if (user) {
             setEmail(user.email)
             setName(user.name)
             // setUrl(user.profileUrl)
+            let sub = user.subscription
+            sub = sub.charAt(0).toUpperCase() + sub.slice(1);
+            console.log(sub)
+            setSubscription(sub)
         }
     }, [])
 
@@ -78,7 +83,7 @@ const SettingsPage = (props) => {
             <TextField setInputValue={(val) => handleName(val, 1)} title={"Last Name"} placeholder={"Enter last name"} value={name.split(' ')[1]} />
             <TextField setInputValue={() => { }} title={"Main Profile URL"} placeholder={"Enter profile link"} />
             <LabeledButton onClickBtn={() => { }} title={"2FA"} buttonLabel={"Set Up"} />
-            <LabeledButton onClickBtn={() => { }} title={"Drop Swipe Subscription"} buttonLabel={"Active: Pro Collector\n\n(Tap to Edit Subscription)"} />
+            <LabeledButton onClickBtn={() => props.history.push('/subscription')} title={"Drop Swipe Subscription"} buttonLabel={`Active: ${subscription} Collector (Tap to Edit Subscription)`} />
             <LabeledButton onClickBtn={() => { }} title={"KYC for Utility Token AirDrop"} buttonLabel={"Coming Soon"} />
             <ButtonContainer>
                 <Button className={'blank-gradient-button custom'}

@@ -155,6 +155,11 @@ export function updateUserAvatar(imageFile, imageType, access_token) {
   return customAPICallUpdateAvatar(updateEndpoint, payload, "PUT", access_token)
 }
 
+export function updateSubscription(field, value, access_token) {
+  const updateEndpoint = `profiles/${field}?v=${value}`
+  return customAPICall(updateEndpoint, {}, "PUT", access_token)
+}
+
 
 // Drop creation
 

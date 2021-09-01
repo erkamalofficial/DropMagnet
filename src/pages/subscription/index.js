@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import FadeIn from 'react-fade-in'
 import { useHistory } from 'react-router-dom'
 import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
@@ -12,7 +12,14 @@ import Subscriptions from "./subscriptions.json"
 
 const SubscriptionPage = (props) => {
 
-    console.log(Subscriptions)
+    const user = JSON.parse(localStorage.getItem('userDetails'))
+    const [subscription, setSubscription] = useState(null)
+
+    useEffect(() => {
+        if(user){
+            setSubscription(user.subscription)
+        }
+    }, [])
 
     const history = useHistory()
 
@@ -46,7 +53,8 @@ const SubscriptionPage = (props) => {
             }}>
                 <div className="plans-container">
                     {Subscriptions.map(p => (
-                        <Plan plan={p} />
+                        <Plan plan={p} 
+                        purchased={p.name.toLocaleLowerCase() === subscription} />
                     ))}
                 </div>
             </div>
