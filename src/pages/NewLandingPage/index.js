@@ -31,6 +31,7 @@ const HomeContainer = styled.div`
 `;
 const LinksPage = styled.div`
   display: flex;
+  margin-top: 68px;
   flex-direction: column;
   // margin: 16px;
   @media (max-width: 576px){
@@ -70,7 +71,7 @@ const LinksHome = (props) => {
 
   return (
     <LinksPage>
-      {props.reload ? (
+      {/* {props.reload ? (
         <FadeIn delay={200}>
           <LandingPageHeader
             isLoggedIn={localStorage.getItem("userDetails") ? true : false}
@@ -80,7 +81,7 @@ const LinksHome = (props) => {
         <LandingPageHeader
           isLoggedIn={localStorage.getItem("userDetails") ? true : false}
           setCurTab={setCurTab} />
-      )}
+      )} */}
 
       <FadeIn delay={200}>
         <Tabs tabs={TAB_LIST} activeTabIndex={curTab} onChangeTab={(index) => {
