@@ -230,10 +230,10 @@ export default function Profile(props) {
 
   useEffect(() => {
     setCategoryList(collectibleArts);
-    if(!loading.drops){
-      setLoading({...loading, drops: true})
+    if (!loading.drops) {
+      setLoading({ ...loading, drops: true })
     }
-    
+
     const user_id = currentUser.uid;
     currentUser
       .getIdToken(false)
@@ -653,36 +653,8 @@ export default function Profile(props) {
                   )}
 
                   <div className="profile-button-option-holder">
-                    {scheduledPosts.length > 0 ? (
-                      <div
-                        className={
-                          selectedProfileList === "scheduled"
-                            ? "profile-button-option-selected"
-                            : "profile-button-option"
-                        }
-                        onClick={() => {
-                          setSelectedProfileList("scheduled");
-                          setCategoryList(collectibleArts);
-                        }}
-                      >
-                        My Drops ({scheduledPosts.length})
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                    <div
-                      className={
-                        selectedProfileList === "saved"
-                          ? "profile-button-option-selected"
-                          : "profile-button-option"
-                      }
-                      onClick={() => {
-                        setSelectedProfileList("saved");
-                        setCategoryList(fashionArts);
-                      }}
-                    >
-                      Saved Drops ({savedPosts.length})
-                    </div>
+                    <div className={"profile-button-option"}>My Drops</div>
+                    <div className={"profile-button-option"}>Saved</div>
                   </div>
 
                 </FooterContainer>
@@ -874,7 +846,7 @@ export default function Profile(props) {
                   )}
 
                   <div className="profile-button-option-holder">
-                    {scheduledPosts.length > 0 ? (
+                    {/* {scheduledPosts.length > 0 ? (
                       <div
                         className={
                           selectedProfileList === "scheduled"
@@ -890,7 +862,24 @@ export default function Profile(props) {
                       </div>
                     ) : (
                       <></>
-                    )}
+                    )} */}
+                    <div
+                      className={
+                        selectedProfileList === "scheduled"
+                          ? "profile-button-option-selected"
+                          : selectedProfileList !== "scheduled" && scheduledPosts.length === 0
+                            ? "profile-button-option-disabled"
+                            : "profile-button-option"
+                      }
+                      onClick={() => {
+                        if (scheduledPosts.length > 0) {
+                          setSelectedProfileList("scheduled");
+                          setCategoryList(collectibleArts);
+                        }
+                      }}
+                    >
+                      My Drops ({scheduledPosts.length})
+                    </div>
                     <div
                       className={
                         selectedProfileList === "saved"
@@ -908,7 +897,7 @@ export default function Profile(props) {
 
                 </FooterContainer>
 
-                {currUserPosts.length > 0  &&
+                {currUserPosts.length > 0 &&
                   selectedProfileList === "scheduled" ? (
                   renderDrops(currUserPosts)
                 ) : currSavedPosts.length > 0 && selectedProfileList === "saved" ? (

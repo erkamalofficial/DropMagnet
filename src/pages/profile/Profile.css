@@ -50,6 +50,21 @@
   cursor: pointer;
 }
 
+.profile-button-option-disabled{
+  font-family: Quicksand;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px 14px;
+  cursor: pointer;
+  background: #4e4e4e;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  cursor: not-allowed;
+}
+
 .profile-button-option-selected {
   font-family: Quicksand;
   font-size: 16px;
