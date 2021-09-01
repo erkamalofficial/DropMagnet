@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import chat from "../../assets/chat.svg";
 import notification from "../../assets/notification.svg";
 import { Container } from "../../styled-components/Container";
@@ -18,6 +18,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import "./feeds.css"
 import d from "../../assets/sampleFeed.jpg"
+import { useAuth } from "../../../../contexts/FirebaseAuthContext";
 
 const Link = styled(NavLink)`
     width: 100%;
@@ -47,6 +48,9 @@ const Border = styled.div`
 
 const HomePage = () => {
 
+    const [verified, setVerified] = useState(false)
+    const { currentUser } = useAuth()
+
     const feeds = [
         'https://99designs-blog.imgix.net/blog/wp-content/uploads/2021/05/merlin_184196631_939fb22d-b909-4205-99d9-b464fb961d32-superJumbo.jpeg?auto=format&q=60&fit=max&w=930',
         'https://miro.medium.com/max/1200/1*XVCw5JGYeHX_dj15uEv9Vw.jpeg',
@@ -54,6 +58,16 @@ const HomePage = () => {
         'https://static.stambol.com/wordpress/wp-content/uploads/2021/05/cryptoart-nft-redefining-real-683x1024.jpg',
         'https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2021/03/12/e7e1447c-8288-11eb-87b1-2ad3cd5fba10_image_hires_080000.jpg'
     ]
+
+    const checkIfVerified = async () => {
+        const r = await currentUser.getIdTokenResult()
+        const is_verified = r.claims["verified"]
+        setVerified(is_verified)
+    }
+
+    useEffect(() => {
+        checkIfVerified()
+    }, [])
 
     return (
         <Container>
@@ -74,24 +88,34 @@ const HomePage = () => {
             </InsetBox>
             <div className="flex-content">
                 <CardsWrapper>
-                    <Link to="/my-gallery">
-                        <Card title="Rooms" icon={'🥳'} />
-                    </Link>
-                    <Link to="/my-gallery">
-                        <Card title="Explore" icon={'🚀'} />
-                    </Link>
-                    <Link to="/my-gallery">
-                        <Card title="Meta URLs" icon={'🔗'} />
-                    </Link>
-                    <Link to="/drop-magnet/artgallery.link/verticaly">
-                        <Card title="Schedule Drop" icon={'💎'} />
-                    </Link>
-                    <Link to="/swiper">
-                        <Card title="Drop Swipe" icon={'👓'} />
-                    </Link>
-                    <Link to="/settings">
-                        <Card title="Settings" icon={'⚙️'} />
-                    </Link>
+                    <div className="first-row">
+                        <Link to="/my-gallery">
+                            <Card title="Rooms" icon={'🥳'} />
+                        </Link>
+                        <Link to="/my-gallery">
+                            <Card title="Explore" icon={'🚀'} />
+                        </Link>
+                        <Link to="/my-gallery">
+                            <Card title="Meta URLs" icon={'🔗'} />
+                        </Link>
+                    </div>
+                    <div className="second-row">
+                        {verified ?
+                            <Link to="/drop-magnet/artgallery.link/verticaly">
+                                <Card title="Schedule Drop" icon={'💎'} />
+                            </Link>
+                            : <Link to="/home">
+                                <Card title="Apply As An Artist" icon={'🎨'} />
+                            </Link>}
+
+                        <Link to="/swiper">
+                            <Card title="Drop Swipe" icon={'👓'} />
+                        </Link>
+                        <Link to="/settings">
+                            <Card title="Settings" icon={'⚙️'} />
+                        </Link>
+                    </div>
+
                 </CardsWrapper>
             </div>
 
