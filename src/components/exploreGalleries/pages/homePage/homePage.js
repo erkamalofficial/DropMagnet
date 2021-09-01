@@ -92,7 +92,7 @@ const HomePage = () => {
                         <Link to="/my-gallery">
                             <Card title="Rooms" icon={'🥳'} />
                         </Link>
-                        <Link to="/my-gallery">
+                        <Link to="/drop-magnet/artgallery.link/verticaly">
                             <Card title="Explore" icon={'🚀'} />
                         </Link>
                         <Link to="/my-gallery">
@@ -101,7 +101,7 @@ const HomePage = () => {
                     </div>
                     <div className="second-row">
                         {verified ?
-                            <Link to="/drop-magnet/artgallery.link/verticaly">
+                            <Link to="/create_drop">
                                 <Card title="Schedule Drop" icon={'💎'} />
                             </Link>
                             : <Link to="/home">
