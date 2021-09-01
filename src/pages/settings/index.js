@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import FadeIn from 'react-fade-in'
 import { useHistory } from 'react-router-dom'
 import HeaderBar from '../../components/elements/HeaderBar/HeaderBar'
@@ -19,7 +19,35 @@ const Button = styled.button`
 
 const SettingsPage = (props) => {
 
+    const user = JSON.parse(localStorage.getItem('userDetails'))
+
     const history = useHistory()
+
+    const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const [url, setUrl] = useState('')
+
+    useEffect(() => {
+        if (user) {
+            setEmail(user.email)
+            setName(user.name)
+            // setUrl(user.profileUrl)
+        }
+    }, [])
+
+    const handleName = (val, i) => {
+        let n = name.split(' ')[1-i]
+        let newName;
+        if (i === 0) {
+            newName = val + ' ' + n
+        }
+        else{
+            newName = n + ' ' + val
+        }
+        setName(newName)
+    }
+
+    console.log(name)
 
     function openHome() {
         history.push("/");
@@ -47,9 +75,9 @@ const SettingsPage = (props) => {
 
     function renderForm() {
         return <div className="settings-fields">
-            <TextField setInputValue={() => { }} title={"Email Address"} placeholder={"Enter email"} />
-            <TextField setInputValue={() => { }} title={"First Name"} placeholder={"Enter first name"} />
-            <TextField setInputValue={() => { }} title={"Last Name"} placeholder={"Enter last name"} />
+            <TextField setInputValue={(val) => setEmail(val)} title={"Email Address"} placeholder={"Enter email"} value={email} />
+            <TextField setInputValue={(val) => handleName(val, 0)} title={"First Name"} placeholder={"Enter first name"} value={name.split(' ')[0]} />
+            <TextField setInputValue={(val) => handleName(val, 1)} title={"Last Name"} placeholder={"Enter last name"} value={name.split(' ')[1]} />
             <TextField setInputValue={() => { }} title={"Main Profile URL"} placeholder={"Enter profile link"} />
             <LabeledButton onClickBtn={() => { }} title={"2FA"} buttonLabel={"Set Up"} />
             <LabeledButton onClickBtn={() => { }} title={"Drop Swipe Subscription"} buttonLabel={"Active: Pro Collector\n\n(Tap to Edit Subscription)"} />
