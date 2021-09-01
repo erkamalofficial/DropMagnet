@@ -25,9 +25,14 @@ export default function MainMenu(props) {
   }, [open])
 
   const checkIfVerified = async () => {
-    const r = await currentUser.getIdTokenResult()
-    const is_verified = r.claims["verified"]
-    setVerified(is_verified)
+    try {
+      const r = await currentUser.getIdTokenResult()
+      const is_verified = r.claims["verified"]
+      setVerified(is_verified)     
+    } catch (error) {
+      setVerified(false);
+    }
+ 
   }
 
   const h = useHistory()
