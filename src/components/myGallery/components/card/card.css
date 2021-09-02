@@ -20,7 +20,7 @@
 }
 
 @media (max-width: 576px) {
-    .content{
+    .cnf-modal .content{
         margin: 0 16px;
     }
 }
