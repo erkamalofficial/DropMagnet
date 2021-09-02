@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react"
 import styled from "styled-components";
 import DropDetail from "../../../components/detail_page/DropDetail/DropDetail.js"
 import "../card.css"
-import UserIcon from "../../../asstes/add-user-icon.png"
+import UserIcon from "../../../assets/add-user-icon.png"
 import Avatar from "../../../components/elements/Avatar/Avatar.js";
 import { getInitials } from "../../../utils/index.js";
-import video from '../../../asstes/sample-mp4-file.mp4';
+import video from '../../../assets/sample-mp4-file.mp4';
 import VideoPlayer from '../../../components/VideoPlayer';
 
 const SwipeCard = styled.div`
@@ -75,26 +75,16 @@ const FooterButtons = styled.div`
   font-weight: 700;
   line-height: 22px;
   margin-bottom: var(--card-title-section-text-margin);
-  div {
-    padding: 0 10px;
-    border-radius: 3px;
-    font-size: 14px
+  p2 {
+    height: 24px
   }
-  .rare {
-    background: var(--corePurple);
+  .market {
     margin-right: 8px;
   }
-  .art {
-    background: var(--coreBlue);
+  .type {
     margin: 0 8px;
   }
   .price {
-    height: 24px;
-    border-radius: 3px;
-    background-color: #6a8ad5;
-    display: flex;
-    align-items: center;
-    column-gap: 4px;
     margin-left: 8px;
   }
 `;
@@ -179,9 +169,9 @@ const DummyCard = (props) => {
           <FooterTitle>{props.heading} </FooterTitle>
           {props.is_categories === 'enable' && (
             <FooterButtons>
-              <div className="rare">{cats[0]}</div>
-              <div className="art">{cats[1]}</div>
-              <div className="price"><span>Ξ</span>{cats[2]}</div>
+              <p2 className="drop-marketplace-title market">{cats[0]}</p2>
+              <p2 className="drop-category-title type">{cats[1]}</p2>
+              <p2 className="drop-price price"><span>Ξ</span> {cats[2]}</p2>
             </FooterButtons>
           )}
         </FooterSection>

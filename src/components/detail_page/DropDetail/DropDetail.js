@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
+import Link from "../../../assets/linkIcon.svg"
 
 export default function DropDetail(props) {
 
@@ -107,16 +108,16 @@ export default function DropDetail(props) {
       }
 
       <div className="detail-view-header">
-        <Avatar userImage={artist_image} 
-        initial={getInitials(props.drop?.artist?.name || 'Test User')} 
-        view_only 
-        small 
-        style={{ margin: 10 }}
-        userId={props.drop.user_id} />
+        <Avatar userImage={artist_image}
+          initial={getInitials(props.drop?.artist?.name || 'Test User')}
+          view_only
+          small
+          style={{ margin: 10 }}
+          userId={props.drop.user_id} />
         {/* <img className="detail-view-header-image" src={artist_image} /> */}
         <h1 className="drop-detail-title"
-        style={{cursor: 'pointer'}}
-        onClick={openUser}
+          style={{ cursor: 'pointer' }}
+          onClick={openUser}
         >{artist_name}
         </h1>
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
@@ -160,18 +161,18 @@ export default function DropDetail(props) {
             : props.drop.auction_price !== '0' && props.drop.auction_price !== undefined ? props.drop.auction_price
               : 0}
         </p2>
+        {props.show && (
+          <p2 className="drop-link"
+            onClick={copyURL}>
+            <img src={Link} alt="" />
+          </p2>
+        )}
       </div>
       <div className="drop-detail-holder" style={{ marginTop: '0px' }}>
         {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
-        <p2 className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p2>
+        <p className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p>
       </div>
-      {props.show && (
-        <FormBtn className="w-100" type="submit"
-          onClick={copyURL}
-          style={{ margin: "10px auto", width: "fit-content" }}>
-          Get Sharable URL
-        </FormBtn>
-      )}
+      
       <div className="drop-description-holder">
         <p1 className="drop-detail-description-text">
           {props.drop.desc}

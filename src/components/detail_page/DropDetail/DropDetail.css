@@ -159,6 +159,7 @@
 .drop-detail-holder {
   display: flex;
   margin: 12px auto 12px auto;
+  column-gap: 16px;
 }
 
 .drop-description-holder {
@@ -192,6 +193,7 @@
   line-height: normal;
   text-align: left;
   padding-left: 8px;
+  margin: 0px;
 }
 
 .drop-detail-description-text {
@@ -205,8 +207,9 @@
   text-align: justify;
 }
 
-.dismiss-button-selected {
-
+.drop-detail-holder p2{
+  height: 24px;
+  margin: 0;
 }
 
 .dismiss-button-unselected {

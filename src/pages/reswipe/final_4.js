@@ -1,7 +1,7 @@
 import React from "react";
 import ReswipeCard from "./reswipe_card";
 import styled from "styled-components";
-import {ReactComponent as MaximizeIcon} from '../../asstes/capture.svg';
+import {ReactComponent as MaximizeIcon} from '../../assets/capture.svg';
 
 const Final4Grid = styled.div`
   display: grid;

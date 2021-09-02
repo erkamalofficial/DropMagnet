@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import styled from "styled-components";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail.js"
 import "./card.css"
-import UserIcon from "../../asstes/add-user-icon.png"
+import UserIcon from "../../assets/add-user-icon.png"
 import Avatar from "../../components/elements/Avatar/Avatar.js";
 import { getInitials } from "../../utils/index.js";
 import { useHistory } from 'react-router-dom';

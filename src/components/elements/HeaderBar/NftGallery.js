@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import styled from "styled-components";
 import LandingPageHeader from './LandingPageHeader';
 import NftTabs from './NftTabs';
-import DummyPic from "../../../asstes/dummyMobile.png"
+import DummyPic from "../../../assets/dummyMobile.png"
 
 
 const Paragraph = styled.div`

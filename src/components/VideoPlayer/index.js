@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
 import styled from "styled-components";
-import video from '../../asstes/sample-mp4-file.mp4';
+import video from '../../assets/sample-mp4-file.mp4';
 
 const VideoPlayerContainer = styled.div`
   position: relative;

@@ -6,7 +6,7 @@ import { getInitials } from '../../../utils'
 import { FormBtn } from '../../../pages/register/FormComponents'
 import VideoPlayer from '../../VideoPlayer'
 import styled from "styled-components";
-import video from '../../../asstes/sample-mp4-file.mp4';
+import video from '../../../assets/sample-mp4-file.mp4';
 
 
 const VideoHolder = styled.div`
