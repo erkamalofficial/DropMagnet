@@ -46,6 +46,11 @@
 .img-el{
     max-height: 95vh;
 }
+
+.img-el img{
+    height: 100%;
+}
+
 .full-img-cont img{
     margin: auto;
     max-width: 100%;

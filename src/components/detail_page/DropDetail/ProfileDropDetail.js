@@ -104,7 +104,7 @@ export default function ProfileDropDetail(props) {
       }
       <div className="detail-view-header">
         <Avatar userImage={artist_image}
-          style={{ margin: 10 }}
+          style={{ margin: 'auto 10px' }}
           initial={getInitials(artist_name)}
           view_only small
           userId={props.drop.user_id} />

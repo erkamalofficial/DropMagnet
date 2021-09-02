@@ -108,11 +108,12 @@ export default function DropDetail(props) {
       }
 
       <div className="detail-view-header">
+        
         <Avatar userImage={artist_image}
           initial={getInitials(props.drop?.artist?.name || 'Test User')}
           view_only
           small
-          style={{ margin: 10 }}
+          style={{ margin: 'auto 10px' }}
           userId={props.drop.user_id} />
         {/* <img className="detail-view-header-image" src={artist_image} /> */}
         <h1 className="drop-detail-title exp-view"

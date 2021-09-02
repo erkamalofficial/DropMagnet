@@ -33,7 +33,8 @@ const ImgModal = ({ sourceIdx, setImgModal, medias }) => {
                             return (
                                 <div className="full-img-cont">
                                     <TransformWrapper
-                                        initialScale={1}>
+                                        initialScale={1}
+                                    >
                                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                                             <div className="zoom-pane">
                                                 <div className="zoom-tools">
