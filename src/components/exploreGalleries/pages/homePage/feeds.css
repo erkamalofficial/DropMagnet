@@ -8,6 +8,12 @@
     margin-right: -8.5px;
 }
 
+.first-row a,
+.second-row a{
+    outline: none !important;
+    text-decoration: none !important;
+}
+
 @media (max-width: 564px) {
     .first-row,
     .second-row{

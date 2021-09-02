@@ -18,6 +18,13 @@
     cursor: pointer;
 }
 
+.avatar-container.small-avatar>label{
+    display: flex;
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+}
+
 
 .avatar-img-uploader.small-avatar-label > span > span{
     font-size: 12px;
