@@ -101,7 +101,7 @@ const categoryReducer = (state = initialState, action) => {
       const artsCollection = getProcessedCollection(state, action, "arts");
       return artsCollection;
     }
-    case "FETCH_COLLECTABLES_REQUEST": {
+    case "FETCH_COLLECTIBLES_REQUEST": {
       const general = {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
@@ -109,13 +109,13 @@ const categoryReducer = (state = initialState, action) => {
       };
       return { ...state, general };
     }
-    case "FETCH_COLLECTABLES_SUCCESS": {
-      const collectablesCollection = getProcessedCollection(
+    case "FETCH_COLLECTIBLES_SUCCESS": {
+      const collectiblesCollection = getProcessedCollection(
         state,
         action,
-        "collectables"
+        "collectible"
       );
-      return collectablesCollection;
+      return collectiblesCollection;
     }
 
     case "FETCH_FASHION_REQUEST": {
@@ -239,15 +239,15 @@ const categoryReducer = (state = initialState, action) => {
       const { newBucket } = action.payload;
       const currentTab = tabList[state.general.activeTabIndex];
       const reswipedDrops = {
-        "arts": {},
+        "art": {},
         "music": {},
         "fashion": {},
-        "collectables": {}
+        "collectible": {}
       };
       newBucket.map((d) => {
         switch (d.category) {
           case 'art': {
-            reswipedDrops["arts"][d.id] = d;
+            reswipedDrops["art"][d.id] = d;
             break;
           }
           case 'music': {
@@ -259,8 +259,8 @@ const categoryReducer = (state = initialState, action) => {
 
             break;
           }
-          case 'collectables': {
-            reswipedDrops["collectables"][d.id] = d;
+          case 'collectible': {
+            reswipedDrops["collectible"][d.id] = d;
             break;
           }
           default: ;
@@ -276,7 +276,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         general,
         "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
-        "collectables": { ...state.collectible, reswipedDrops: reswipedDrops["collectables"] },
+        "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
       }
@@ -289,7 +289,7 @@ const categoryReducer = (state = initialState, action) => {
         "arts": {},
         "music": {},
         "fashion": {},
-        "collectables": {}
+        "collectible": {}
       };
       savedDrops.map((d) => {
         switch (d.category) {
@@ -306,8 +306,8 @@ const categoryReducer = (state = initialState, action) => {
 
             break;
           }
-          case 'collectables': {
-            reswipedDrops["collectables"][d.id] = d;
+          case 'collectible': {
+            reswipedDrops["collectible"][d.id] = d;
             break;
           }
           default: ;
@@ -327,7 +327,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         general,
         "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
-        "collectables": { ...state.collectible, reswipedDrops: reswipedDrops["collectables"] },
+        "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
       }

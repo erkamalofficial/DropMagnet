@@ -87,12 +87,12 @@ export const fetchColletibles =
   ({ activeTabIndex, extras }) =>
     async (dispatch, getState) => {
       dispatch({
-        type: "FETCH_COLLECTABLES_REQUEST",
+        type: "FETCH_COLLECTIBLES_REQUEST",
         payload: {
           activeTabIndex,
         },
       });
-      getDataFromDb(dispatch, "Collectible", "FETCH_COLLECTABLES_SUCCESS", extras);
+      getDataFromDb(dispatch, "Collectible", "FETCH_COLLECTIBLES_SUCCESS", extras);
     };
 export const fetchFashion =
   ({ activeTabIndex, extras }) =>

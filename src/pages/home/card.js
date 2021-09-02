@@ -75,26 +75,16 @@ const FooterButtons = styled.div`
   font-weight: 700;
   line-height: 22px;
   margin-bottom: var(--card-title-section-text-margin);
-  div {
-    padding: 0 10px;
-    border-radius: 3px;
-    font-size: 14px
+  p2 {
+    height: 24px
   }
-  .rare {
-    background: var(--corePurple);
+  .market {
     margin-right: 8px;
   }
-  .art {
-    background: var(--coreBlue);
+  .type {
     margin: 0 8px;
   }
   .price {
-    height: 24px;
-    border-radius: 3px;
-    background-color: #6a8ad5;
-    display: flex;
-    align-items: center;
-    column-gap: 4px;
     margin-left: 8px;
   }
 `;
@@ -166,8 +156,8 @@ const Card = (props) => {
             userId={props.user_id} />
           {/* <UserAvatar src={artistImg} /> */}
           <div className="card-title"
-          style={{cursor: 'pointer'}}
-          onClick={openUser}
+            style={{ cursor: 'pointer' }}
+            onClick={openUser}
           >
             {artist.username}
             {/* - {props.id} */}
@@ -185,13 +175,13 @@ const Card = (props) => {
         <FooterSection key={3}>
           <FooterTitle>{props.title} </FooterTitle>
           <FooterButtons>
-            <div className="rare">{props.marketplace.toUpperCase()}</div>
-            <div className="art">{props.category.toUpperCase()}</div>
-            <div className="price"><span>Ξ</span>
+            <p2 className="drop-marketplace-title market">{props.marketplace.toUpperCase()}</p2>
+            <p2 className="drop-category-title type">{props.category.toUpperCase()}</p2>
+            <p2 className="drop-price price"><span>Ξ</span>
               {props.price !== '0' && props.price !== undefined ? props.price
                 : props.auction_price !== '0' && props.auction_price !== undefined ? props.auction_price
                   : 0}
-            </div>
+            </p2>
           </FooterButtons>
         </FooterSection>
       </SwipeCardDeviceContainer>
