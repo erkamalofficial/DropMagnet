@@ -115,7 +115,7 @@ export default function DropDetail(props) {
           style={{ margin: 10 }}
           userId={props.drop.user_id} />
         {/* <img className="detail-view-header-image" src={artist_image} /> */}
-        <h1 className="drop-detail-title"
+        <h1 className="drop-detail-title exp-view"
           style={{ cursor: 'pointer' }}
           onClick={openUser}
         >{artist_name}

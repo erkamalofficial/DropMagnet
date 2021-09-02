@@ -115,6 +115,8 @@
   margin: 0;
   line-height: 14px;
   margin-top: 3px;
+  font-family: 'Azo Sans';
+  font-weight: 400;
 }
 
 .react-datepicker-container .svg-icon{

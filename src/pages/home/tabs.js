@@ -38,7 +38,6 @@ const TabsWrapper = styled.ul`
 `;
 const TabItem = styled.li`
   border: none;
-  font-family: Quicksand;
   font-size: 16px;
   font-weight: 700;
   font-style: normal;
@@ -48,6 +47,9 @@ const TabItem = styled.li`
   cursor: pointer;
   background-clip: text;
   -webkit-background-clip: text;
+  font-family: 'Azo Sans';
+  margin-bottom: -3px;
+  font-weight: 400
 `;
 const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList }) => {
   return (

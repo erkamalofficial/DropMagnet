@@ -80,10 +80,11 @@
   font-family: 'Azo Sans';
   font-size: 24px;
   font-weight: 500;
+  margin-bottom: -4px;
 }
 
 .drop-detail-title.exp-view{
-  margin-bottom: -4px;
+  margin: auto;
 }
 
 .drop-detail-image {
@@ -220,7 +221,7 @@
   margin: 0;
   font-family: 'Azo Sans';
   line-height: 25px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .dismiss-button-unselected {

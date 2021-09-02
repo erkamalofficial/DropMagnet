@@ -160,7 +160,7 @@ function Swiper(props) {
               <Card {...cardDetails} />
             </TinderCard>
           );
-        }) : <h4 style={{ textAlign: 'center', width: '100%' }}>No Drops Available</h4>}
+        }) : <h4 style={{ textAlign: 'center', width: '100%', fontFamily: 'Azo Sans' }}>No Drops Available</h4>}
       </CardContainer>
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         <MinusBtn onClick={() => {

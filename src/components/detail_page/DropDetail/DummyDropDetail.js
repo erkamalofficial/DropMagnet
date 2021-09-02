@@ -50,7 +50,7 @@ export default function DummyDropDetail(props) {
         <div className="detail-view dummy">
             <div className="detail-view-header">
                 <Avatar userImage={''} initial={getInitials("Admin", "")} view_only small style={{ margin: 10 }} />
-                <h1 className="drop-detail-title">Admin</h1>
+                <h1 className="drop-detail-title exp-view">Admin</h1>
                 <img className="close-detail-button close-button view-close-btn"
                     style={{ width: '39px', height: '39px', cursor: 'pointer' }}
                     onClick={() => closeDetail()} src="./close-icon.png"
@@ -66,7 +66,7 @@ export default function DummyDropDetail(props) {
                 </VideoHolder>
             </div>
 
-            <h1 className="drop-detail-title">{props.drop.heading}</h1>
+            <h1 className="drop-detail-title exp-view">{props.drop.heading}</h1>
             <div style={{ height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px' }} />
             {
                 props.drop.is_categories === 'enable' && (
