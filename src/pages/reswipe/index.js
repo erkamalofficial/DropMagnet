@@ -65,7 +65,7 @@ function Reswipe(props) {
   const [isFinal4Left, setIsFinal4Left] = useState(false);
   const { idToken } = useAuth();
 
-  const tabList = ["arts", "music", "collectible", "fashion"];
+  const tabList = ["art", "music", "collectible", "fashion"];
 
   const { reswipedDrops } = useSelector((state) => {
     return state.category[curTab];

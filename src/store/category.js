@@ -64,7 +64,7 @@ const getProcessedCollection = (state, action, type) => {
 
 
 const categoryReducer = (state = initialState, action) => {
-  const tabList = ["arts", "music", "collectible", "fashion"];
+  const tabList = ["art", "music", "collectible", "fashion"];
 
   switch (action.type) {
     case "general": {
@@ -98,7 +98,7 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, general };
     }
     case "FETCH_ARTS_SUCCESS": {
-      const artsCollection = getProcessedCollection(state, action, "arts");
+      const artsCollection = getProcessedCollection(state, action, "art");
       return artsCollection;
     }
     case "FETCH_COLLECTIBLES_REQUEST": {
@@ -270,12 +270,12 @@ const categoryReducer = (state = initialState, action) => {
 
       const general = {
         ...state.general,
-        reswipeModeActive: Object.keys(reswipedDrops['arts']).length >= 1 ? true : false
+        reswipeModeActive: Object.keys(reswipedDrops['art']).length >= 1 ? true : false
       }
       return {
         ...state,
         general,
-        "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
+        "art": { ...state.art, reswipedDrops: reswipedDrops["art"] },
         "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
@@ -286,7 +286,7 @@ const categoryReducer = (state = initialState, action) => {
       const savedDrops = action.payload;
       const currentTab = tabList[state.general.activeTabIndex];
       const reswipedDrops = {
-        "arts": {},
+        "art": {},
         "music": {},
         "fashion": {},
         "collectible": {}
@@ -294,7 +294,7 @@ const categoryReducer = (state = initialState, action) => {
       savedDrops.map((d) => {
         switch (d.category) {
           case 'art': {
-            reswipedDrops["arts"][d.id] = d;
+            reswipedDrops["art"][d.id] = d;
             break;
           }
           case 'music': {
@@ -326,7 +326,7 @@ const categoryReducer = (state = initialState, action) => {
       return {
         ...state,
         general,
-        "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
+        "art": { ...state.art, reswipedDrops: reswipedDrops["art"] },
         "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }

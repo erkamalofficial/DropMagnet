@@ -167,7 +167,6 @@
 .drop-detail-holder {
   display: flex;
   margin: 12px auto 12px auto;
-  column-gap: 16px;
 }
 
 .drop-description-holder {
@@ -193,7 +192,7 @@
 
 .drop-detail-date {
   color: #7A7A7A;
-  font-family: Quicksand;
+  font-family: 'Azo Sans';
   font-size: 14px;
   font-weight: 700;
   font-style: normal;
@@ -218,7 +217,7 @@
 
 .drop-detail-holder p2{
   height: 24px;
-  margin: 0;
+  margin: 0 8px;
   font-family: 'Azo Sans';
   line-height: 25px;
   font-weight: 500;
