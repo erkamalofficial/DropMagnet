@@ -92,7 +92,7 @@ export const fetchColletibles =
           activeTabIndex,
         },
       });
-      getDataFromDb(dispatch, "Collectables", "FETCH_COLLECTABLES_SUCCESS", extras);
+      getDataFromDb(dispatch, "Collectible", "FETCH_COLLECTABLES_SUCCESS", extras);
     };
 export const fetchFashion =
   ({ activeTabIndex, extras }) =>

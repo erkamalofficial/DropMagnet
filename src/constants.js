@@ -1,14 +1,14 @@
 export const tabNames = {
-    ARTS: 'arts',
+    ARTS: 'art',
     MUSIC: 'music',
-    COLLECTABLES: 'collectables',
+    COLLECTIBLES: 'collectibles',
     FASHION: 'fashion'
 }
 
 const BACKEND_TAB = {
     [tabNames.ARTS]: 'art',
     [tabNames.MUSIC]: 'music',
-    [tabNames.COLLECTABLES]: 'collectible',
+    [tabNames.COLLECTIBLES]: 'collectible',
     [tabNames.FASHION]: 'fashion'
 }
 
@@ -16,4 +16,4 @@ export const getCategoryFromTab = (tabName)=>{
     return BACKEND_TAB[tabName]
 }
 
-export const tabList = [tabNames.ARTS, tabNames.MUSIC, tabNames.COLLECTABLES, tabNames.FASHION];
+export const tabList = [tabNames.ARTS, tabNames.MUSIC, tabNames.COLLECTIBLES, tabNames.FASHION];

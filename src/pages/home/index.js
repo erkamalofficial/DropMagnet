@@ -21,7 +21,7 @@ import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
 import LazyCard from "./LazyCard";
 import LazyTab from "./LazyTab";
-import { tabList } from "../../constants";
+import { getCategoryFromTab, tabList } from "../../constants";
 import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
 import FadeIn from 'react-fade-in';
@@ -159,7 +159,7 @@ const Home = (props) => {
     const curDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
     return curDate
   }
-  const currentTabId = tabList[activeTabIndex];
+  const currentTabId = getCategoryFromTab(tabList[activeTabIndex]);;
   const { activeBucket } = useSelector((state) => {
     return state.category[currentTabId];
   });
@@ -178,7 +178,7 @@ const Home = (props) => {
 
   const handleActiveTabIndex = (index) => {
 
-    const activeTab = tabList[index];
+    const activeTab = getCategoryFromTab(tabList[index]);
 
     let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
@@ -190,10 +190,10 @@ const Home = (props) => {
     if (activeTab === "music") {
       dispatch(fetchMusic({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
-    if (activeTab === "arts") {
+    if (activeTab === "art") {
       dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
-    if (activeTab === "collectables") {
+    if (activeTab === "collectible") {
       dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
     if (activeTab === "fashion") {

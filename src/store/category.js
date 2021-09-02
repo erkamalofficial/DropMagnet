@@ -64,7 +64,7 @@ const getProcessedCollection = (state, action, type) => {
 
 
 const categoryReducer = (state = initialState, action) => {
-  const tabList = ["arts", "music", "collectables", "fashion"];
+  const tabList = ["arts", "music", "collectible", "fashion"];
 
   switch (action.type) {
     case "general": {
@@ -276,7 +276,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         general,
         "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
-        "collectables": { ...state.collectables, reswipedDrops: reswipedDrops["collectables"] },
+        "collectables": { ...state.collectible, reswipedDrops: reswipedDrops["collectables"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
       }
@@ -327,7 +327,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         general,
         "arts": { ...state.arts, reswipedDrops: reswipedDrops["arts"] },
-        "collectables": { ...state.collectables, reswipedDrops: reswipedDrops["collectables"] },
+        "collectables": { ...state.collectible, reswipedDrops: reswipedDrops["collectables"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
       }

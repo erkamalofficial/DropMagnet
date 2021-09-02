@@ -142,7 +142,7 @@ const DummyHome = (props) => {
         if (activeTab === "arts") {
             dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
         }
-        if (activeTab === "collectables") {
+        if (activeTab === "collectible") {
             dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
         }
         if (activeTab === "fashion") {
