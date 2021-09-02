@@ -95,7 +95,7 @@ export default function DummyDropDetail(props) {
             </div>
             <div className="bottom-button-holder">
                 <div className="dismiss-button-unselected">
-                    <div style={{ margin: '-6px auto 0 auto' }}>
+                    <div style={{ margin: '0px auto 0 auto' }}>
                         <img width={32} src="./discard-icon.png" className={'clickable'} alt="/"/>
                     </div>
                 </div>

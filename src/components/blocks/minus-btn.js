@@ -13,7 +13,6 @@ const MinusBtnWrapper = styled.div`
   img {
     width: 36px;
     height: 6px;
-    margin-bottom: 12px;
   }
   @media (max-width: 340px) {
     min-width: 135px;

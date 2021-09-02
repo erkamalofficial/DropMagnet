@@ -540,7 +540,7 @@ class SwipeCard extends React.Component {
 				</div>
 				<div className="swipe-card-bottom-button-holder">
 					<div onClick={() => this.handleButtonClickLeft()} className="dismiss-button-unselected">
-						<div style={{ margin: '-6px auto 0 auto' }}>
+						<div style={{ margin: '0px auto 0 auto' }}>
 							<img className="dislike-icon" src="./discard-icon.png" />
 						</div>
 					</div>
