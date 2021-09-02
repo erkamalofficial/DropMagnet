@@ -30,12 +30,13 @@ const SettingsPage = (props) => {
 
     useEffect(() => {
         if (user) {
-            setEmail(user.email)
-            setName(user.name)
-            // setUrl(user.profileUrl)
             let sub = user.subscription
             sub = sub.charAt(0).toUpperCase() + sub.slice(1);
-            console.log(sub)
+            let pUrl = `http://dropmagnet.com/${user.username}`
+
+            setEmail(user.email)
+            setName(user.name)
+            setUrl(pUrl)
             setSubscription(sub)
         }
     }, [])
@@ -81,7 +82,7 @@ const SettingsPage = (props) => {
             <TextField setInputValue={(val) => setEmail(val)} title={"Email Address"} placeholder={"Enter email"} value={email} />
             <TextField setInputValue={(val) => handleName(val, 0)} title={"First Name"} placeholder={"Enter first name"} value={name.split(' ')[0]} />
             <TextField setInputValue={(val) => handleName(val, 1)} title={"Last Name"} placeholder={"Enter last name"} value={name.split(' ')[1]} />
-            <TextField setInputValue={() => { }} title={"Main Profile URL"} placeholder={"Enter profile link"} />
+            <TextField setInputValue={(val) => { }} title={"Main Profile URL"} placeholder={"Enter profile link"} value={url} />
             <LabeledButton onClickBtn={() => { }} title={"2FA"} buttonLabel={"Set Up"} />
             <LabeledButton onClickBtn={() => props.history.push('/subscription')} title={"Drop Swipe Subscription"} buttonLabel={`Active: ${subscription} Collector (Tap to Edit Subscription)`} />
             <LabeledButton onClickBtn={() => { }} title={"KYC for Utility Token AirDrop"} buttonLabel={"Coming Soon"} />
