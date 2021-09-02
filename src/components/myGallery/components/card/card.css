@@ -59,6 +59,10 @@
     justify-content: center;
 }
 
+.bn-onboard-custom{
+    z-index: 9999 !important;
+}
+
 .web3modal-modal-lightbox{
     z-index: 9999 !important;
 }
