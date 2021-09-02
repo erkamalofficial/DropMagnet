@@ -407,6 +407,7 @@ function App() {
             logout()
               .then(() => {
                 localStorage.removeItem('userDetails')
+                sessionStorage.removeItem('profileDetails')
                 props.history.push('/')
               })
               .catch(() => {

@@ -48,8 +48,7 @@ export default function Login() {
         emailRef.current.value,
         passwordRef.current.value
       );
-      
-      console.log(res.user.uid, res)
+
 
       
       getUserProfile(res.user.uid, res.user.Aa).then(function (response) {
@@ -128,8 +127,9 @@ export default function Login() {
   const userLogin = async (token) => { // This one is for wallet
     const res = await signInWithCustomToken(token)
       .then(cred => cred)
-
-    getUserProfile(res.user.uid, res.user.za).then(function (response) {
+    
+      console.log(res)
+    getUserProfile(res.user.uid, res.user.Aa).then(function (response) {
       console.log('user profile response', response)
       if (response.status === "error") {
         setLoading(false);
