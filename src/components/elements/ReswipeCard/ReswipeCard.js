@@ -73,7 +73,16 @@ export default function ReswipeCard(props) {
         <h3 style={{ textAlign: 'center', margin: '22px 66px 24px 66px' }}>You’re On Your Way To Becoming A Top Art Collector!</h3>
         <div className="h1-large" style={{ fontWeight: 'bold', textAlign: 'center' }}>It’s Time To ReSwipe!</div>
         <div className="reswipe-video-holder">
-          <h1 style={{ textAlign: 'center' }}>What Is ReSwipe?</h1>
+          <h1 style={{
+            textAlign: 'center',
+            fontSize: "24px",
+            whiteSpace: 'nowrap',
+            fontWeight: '700',
+            fontStyle: 'italic',
+            fontFamily: 'Azo Sans',
+          }}>
+            What Is ReSwipe?
+          </h1>
           {renderPlayButton()}
         </div>
         <h1 style={{ textAlign: 'center', marginBottom: '22px', marginTop: '0px' }}>You’ve Earned A Noob Gem!</h1>

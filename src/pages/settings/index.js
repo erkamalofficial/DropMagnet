@@ -31,13 +31,13 @@ const SettingsPage = (props) => {
     useEffect(() => {
         if (user) {
             let sub = user.subscription
-            sub = sub.charAt(0).toUpperCase() + sub.slice(1);
+            sub = sub?.charAt(0).toUpperCase() + sub?.slice(1);
             let pUrl = `http://dropmagnet.com/${user.username}`
 
             setEmail(user.email)
             setName(user.name)
             setUrl(pUrl)
-            setSubscription(sub)
+            setSubscription(sub ? sub : null)
         }
     }, [])
 
@@ -84,7 +84,9 @@ const SettingsPage = (props) => {
             <TextField setInputValue={(val) => handleName(val, 1)} title={"Last Name"} placeholder={"Enter last name"} value={name.split(' ')[1]} />
             <TextField setInputValue={(val) => { }} title={"Main Profile URL"} placeholder={"Enter profile link"} value={url} />
             <LabeledButton onClickBtn={() => { }} title={"2FA"} buttonLabel={"Set Up"} />
-            <LabeledButton onClickBtn={() => props.history.push('/subscription')} title={"Drop Swipe Subscription"} buttonLabel={`Active: ${subscription} Collector (Tap to Edit Subscription)`} />
+            <LabeledButton onClickBtn={() => props.history.push('/subscription')} title={"Drop Swipe Subscription"} 
+            buttonLabel={subscription ? `Active: ${subscription} Collector (Tap to Edit Subscription)`
+        : `Active: No Subscription (Tap to Edit Subscription)`} />
             <LabeledButton onClickBtn={() => { }} title={"KYC for Utility Token AirDrop"} buttonLabel={"Coming Soon"} />
             <ButtonContainer>
                 <Button className={'blank-gradient-button custom'}

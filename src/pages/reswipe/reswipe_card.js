@@ -15,7 +15,7 @@ display: flex;
 flex-direction: column;
 background-size: 0 0;
 @media(max-width: 576px){
-    margin-top: 12px;
+    margin-top: 72px;
 }
 `
 

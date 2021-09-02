@@ -1,7 +1,7 @@
 import React from "react";
 import ReswipeCard from "./reswipe_card";
 import styled from "styled-components";
-import {ReactComponent as MaximizeIcon} from '../../assets/capture.svg';
+import { ReactComponent as MaximizeIcon } from '../../assets/capture.svg';
 
 const Final4Grid = styled.div`
   display: grid;
@@ -14,7 +14,7 @@ const Final4Grid = styled.div`
 const DropCard = styled.div`
   width: 150px;
   height: 150px;
-  border-radius: 12px;
+  border-radius: 3px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -83,7 +83,7 @@ const MaximizeSVGContainer = styled.span`
 `
 
 
-export default function FinalFour({ bucket, deleted, onChange,onExpand }) {
+export default function FinalFour({ bucket, deleted, onChange, onExpand }) {
   const handleChange = (isDeleted, index) => {
     onChange(isDeleted, index);
   };
@@ -91,9 +91,18 @@ export default function FinalFour({ bucket, deleted, onChange,onExpand }) {
     <ReswipeCard>
       <h1
         className={"h1-large"}
-        style={{ fontSize: "22px", textAlign: "center", whiteSpace: 'nowrap' }}
+        style={{
+          fontSize: "22px",
+          textAlign: "center",
+          whiteSpace: 'nowrap',
+          fontWeight: 'bold',
+          fontStyle: 'italic',
+          fontFamily: 'Azo Sans',
+          marginTop: '18px',
+          marginBottom: '25px'
+        }}
       >
-        You’re so good at this!
+        Keep all or remove with a tap!
       </h1>
       <Final4Grid>
         {bucket.map((item, i) => {
@@ -101,15 +110,15 @@ export default function FinalFour({ bucket, deleted, onChange,onExpand }) {
             <DropCard
               className={deleted[i] && "delete-drop-card"}
             >
-            <MaximizeSVGContainer onClick={()=>onExpand(i)} >
+              <MaximizeSVGContainer onClick={() => onExpand(i)} >
                 <MaximizeIcon title={'Maximize'} />
-            </MaximizeSVGContainer> 
-            <CloseSVGContainer className={deleted[i] && "delete-svg-container-tick"}>
-              <CloseSVG viewBox="0 0 12 10" className={deleted[i] && "delete-svg-tick"}>
-                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-              </CloseSVG>   
-            </CloseSVGContainer> 
-            
+              </MaximizeSVGContainer>
+              <CloseSVGContainer className={deleted[i] && "delete-svg-container-tick"}>
+                <CloseSVG viewBox="0 0 12 10" className={deleted[i] && "delete-svg-tick"}>
+                  <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                </CloseSVG>
+              </CloseSVGContainer>
+
               <img
                 onClick={() => handleChange(!deleted[i], i)}
                 src={item.media && item.media[0].url}
@@ -122,9 +131,19 @@ export default function FinalFour({ bucket, deleted, onChange,onExpand }) {
       </Final4Grid>
       <h1
         className={"h1-large"}
-        style={{ fontSize: "22px", textAlign: "center", whiteSpace: 'nowrap' }}
+        style={{
+          textAlign: 'center',
+          marginBottom: '10px',
+          marginTop: '14px',
+          fontFamily: 'Azo Sans',
+          fontStyle: 'italic',
+          fontWeight: '900',
+          opacity: '19%',
+          fontSize: '31px',
+          whiteSpace: 'nowrap',
+        }}
       >
-        Keep all or remove with a tap!
+        You’re a pro collector
       </h1>
     </ReswipeCard>
   );

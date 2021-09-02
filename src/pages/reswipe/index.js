@@ -28,7 +28,7 @@ const MainContainer = styled.div`
 `;
 
 const ReswipedButtonContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   width: 426px;
   @media (max-width: 576px) {
     width: 386px;
@@ -291,7 +291,7 @@ function Reswipe(props) {
                 onClick={() => setIsReswipeStarted(true)}
                 style={{ width: "calc(100% - 50px )", textAlign: "center" }}
               >
-                <h1 style={{ textAlign: "center", width: "100%" }}> Start </h1>
+                <h1 style={{ textAlign: "center", width: "100%", fontSize: '24px' }}> Start </h1>
               </button>
             )}
             {showRestartReSwipeMessage && (
