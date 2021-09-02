@@ -5,6 +5,7 @@ const TabsWrapper = styled.ul`
   display: flex;
   flex-direction: row;
   width: var(--card-container-width);
+  height: 37px;
   color: #ebeae8;
   padding: 6px 10px;
   margin: 0;
@@ -14,6 +15,7 @@ const TabsWrapper = styled.ul`
     inset 0 2px 4px rgb(0 0 0 / 50%), 0 3px 2px rgb(0 0 0 / 13%);
   border-radius: 22px;
   justify-content: space-evenly;
+  align-items: center;
   background-clip: text;
   -webkit-background-clip: text;
   list-style: none;

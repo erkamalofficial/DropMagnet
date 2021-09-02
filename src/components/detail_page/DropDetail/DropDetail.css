@@ -77,6 +77,10 @@
   margin-left: 12px;
   margin-right: 12px;
   text-align: center;
+  font-family: 'Azo Sans';
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: -4px;
 }
 
 .drop-detail-image {
@@ -200,16 +204,20 @@
   color: #ffffff;
   /* font-family: "Quicksand Medium"; */
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 300;
   font-style: normal;
   letter-spacing: normal;
   line-height: normal;
   text-align: justify;
+  font-family: 'Azo Sans';
 }
 
 .drop-detail-holder p2{
   height: 24px;
   margin: 0;
+  font-family: 'Azo Sans';
+  line-height: 25px;
+  font-weight: 700;
 }
 
 .dismiss-button-unselected {
