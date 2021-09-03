@@ -7,7 +7,9 @@
     bottom: 32px;
     display: flex;
     align-items: center;
-    background-color: #161616;
+    background-image: linear-gradient(90deg, #181818, #131313);
+    border: 0.75px solid black;
+    box-shadow: 0 1px 1px #0000006E;
     z-index: 99;
     cursor: pointer;
     border-radius: 31px;
@@ -45,7 +47,7 @@
 
 .chain-icon{
     position: absolute;
-    left: 8px;
+    left: 6px;
     width: 45px;
     height: 45px;
     display: flex;
