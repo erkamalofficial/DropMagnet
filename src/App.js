@@ -402,7 +402,6 @@ function App() {
             )}
           />
 
-
           <Route exact path="/oldLandingPage" component={PersonalLinksHome} />
 
           <Route exact path="/logout" render={(props) => {
