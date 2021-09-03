@@ -37,11 +37,11 @@ const ImgModal = ({ sourceIdx, setImgModal, medias }) => {
                                     >
                                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                                             <div className="zoom-pane">
-                                                <div className="zoom-tools">
+                                                {/* <div className="zoom-tools">
                                                     <button onClick={() => zoomIn()}>+</button>
                                                     <button onClick={() => zoomOut()}>-</button>
                                                     <button onClick={() => resetTransform()}>x</button>
-                                                </div>
+                                                </div> */}
                                                 <TransformComponent>
                                                     <div className="img-el">
                                                         <img src={img.url} alt="/"

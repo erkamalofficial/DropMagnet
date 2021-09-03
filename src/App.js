@@ -115,6 +115,7 @@ function App() {
   const [date, setDate] = useState(new Date(curIndex))
 
   const [reload, setReload] = useState(true)
+  const [curUser, setCurUser] = useState(null)
 
   const headerLoad = sessionStorage.headerLoad
 
@@ -162,6 +163,7 @@ function App() {
           // setLoginError(response.message);
         } else {
           localStorage.setItem('userDetails', JSON.stringify(response));
+          setCurUser(response)
         }
       })
     }
@@ -170,7 +172,7 @@ function App() {
   }, [idToken, currentUser]);
 
   return (
-    <GlobalContext.Provider value={{ date, setDate }}>
+    <GlobalContext.Provider value={{ date, setDate, setCurUser, curUser }}>
       <Router>
         <div className="fixed-container"
           style={{ top: '0' }}>
@@ -408,6 +410,7 @@ function App() {
               .then(() => {
                 localStorage.removeItem('userDetails')
                 sessionStorage.removeItem('profileDetails')
+                setCurUser(null)
                 props.history.push('/')
               })
               .catch(() => {

@@ -20,7 +20,6 @@ import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
 import * as DropMagnetAPI from "../../DropMagnetAPI"
 
-
 export default function Login() {
 
   let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
@@ -49,9 +48,9 @@ export default function Login() {
         passwordRef.current.value
       );
 
-
+      let tk = await res.user.getIdToken()
       
-      getUserProfile(res.user.uid, res.user.Aa).then(function (response) {
+      getUserProfile(res.user.uid, tk).then(function (response) {
         console.log('user profile response', response)
         if (response.status === "error") {
           // setLoginError(response.message);
@@ -128,8 +127,9 @@ export default function Login() {
     const res = await signInWithCustomToken(token)
       .then(cred => cred)
     
-      console.log(res)
-    getUserProfile(res.user.uid, res.user.Aa).then(function (response) {
+    let tk = await res.user.getIdToken()
+
+    getUserProfile(res.user.uid, tk).then(function (response) {
       console.log('user profile response', response)
       if (response.status === "error") {
         setLoading(false);
@@ -222,7 +222,7 @@ export default function Login() {
                 </GridItem>
                 {!loading && (
                   <FormBtn disabled={loading} className="w-100" type="submit">
-                    Log In
+                    <p style={{margin: '0', marginTop: '3px'}}>Log In</p>
                   </FormBtn>
                 )}
 
@@ -240,7 +240,7 @@ export default function Login() {
             <FormBtn className="w-100" type="submit"
               onClick={connectWallet}
               style={{ marginTop: "20px" }}>
-              Sign In Using Wallet
+              <p style={{margin: '0', marginTop: '3px'}}>Sign In Using Wallet</p>
             </FormBtn>
           )}
 

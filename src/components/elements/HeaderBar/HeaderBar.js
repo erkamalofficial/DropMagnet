@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory, withRouter } from 'react-router-dom'
 import "./HeaderBar.css"
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
@@ -10,13 +10,16 @@ import { Row } from "../../exploreGalleries/styled-components/Row";
 import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
 import FadeIn from 'react-fade-in'
 import Logo from "../../dropMagnet/assets/logo.svg"
+import { GlobalContext } from '../../../utils/GlobalContext'
 
 function HeaderBar(props) {
 
   const headerLoad = sessionStorage.getItem('headerLoad')
+  const {curUser} = useContext(GlobalContext)
 
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
-  const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+  let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+  userDetails = userDetails ? userDetails : curUser
 
   const h = useHistory()
   let pageName = h.location.pathname.split('/')[1].toLowerCase()

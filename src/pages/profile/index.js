@@ -919,7 +919,7 @@ export default function Profile(props) {
                       You don't have any drops saved yet. Go to the{" "}
                       <span onClick={() => {
                         sessionStorage.removeItem('headerLoad')
-                        props.history.push("/home")
+                        props.history.push("/swiper")
                       }}>
                         swiper page
                       </span>{" "}

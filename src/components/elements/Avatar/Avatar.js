@@ -20,6 +20,7 @@ const InitialCircle = styled.span`
     letter-spacing: 2px;
     font-size: 32px;
     color: #fff;
+    height: 32px
   }
 `;
 
