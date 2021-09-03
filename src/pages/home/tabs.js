@@ -10,9 +10,11 @@ const TabsWrapper = styled.ul`
   padding: 6px 10px;
   margin: 0;
   margin-bottom: var(--gap-bottom);
-  box-shadow: inset 0 1px 3px rgb(0 0 0 / 50%),
-    inset 0 -1px 2px rgb(0 0 0 / 50%), inset 0 -3px 0 rgb(37 37 37 / 50%),
-    inset 0 2px 4px rgb(0 0 0 / 50%), 0 3px 2px rgb(0 0 0 / 13%);
+  background-image: linear-gradient(
+    #181818,
+    #131313 83%,
+  );
+  border: 0.75px solid black;
   border-radius: 22px;
   justify-content: space-evenly;
   align-items: center;
@@ -34,6 +36,8 @@ const TabsWrapper = styled.ul`
     -webkit-text-fill-color: transparent;
     border: none;
     -webkit-background-clip: text;
+    border-bottom: 1px solid #252525;
+    padding 3px 0 2px 0;
   }
 `;
 const TabItem = styled.li`
@@ -49,7 +53,9 @@ const TabItem = styled.li`
   -webkit-background-clip: text;
   font-family: 'Azo Sans';
   margin-bottom: -3px;
-  font-weight: 400
+  font-weight: 400;
+  margin-right: 18px;
+  margin-left: 18px
 `;
 const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList }) => {
   return (
