@@ -14,12 +14,15 @@ const SubscriptionPage = (props) => {
 
     const user = JSON.parse(localStorage.getItem('userDetails'))
     const [subscription, setSubscription] = useState(null)
+    const [others, setOthers] = useState([])
+    const [loader, setLoader] = useState(false)
 
     useEffect(() => {
         if(user){
             setSubscription(user.subscription)
+            setOthers(user.prevSubs ? user.prevSubs : [])
         }
-    }, [])
+    }, [user.subscription])
 
     const history = useHistory()
 
@@ -54,7 +57,11 @@ const SubscriptionPage = (props) => {
                 <div className="plans-container">
                     {Subscriptions.map(p => (
                         <Plan plan={p} 
-                        purchased={p.name.toLocaleLowerCase() === subscription} />
+                        purchased={p.name.toLocaleLowerCase() === subscription}
+                        setSubscription={setSubscription}
+                        loader={loader}
+                        setLoader={setLoader}
+                        others={others} />
                     ))}
                 </div>
             </div>

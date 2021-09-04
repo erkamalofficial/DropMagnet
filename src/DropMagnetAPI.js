@@ -35,7 +35,7 @@ async function customAPICall(endpoint, data, method, access_token) {
 }
 
 
-async function saveLinkAPICall(endpoint, data, method, access_token) {
+async function saveAPICall(endpoint, data, method, access_token) {
 
   const uri = host + endpoint
   const res = await fetch(uri, {
@@ -157,7 +157,7 @@ export function updateUserAvatar(imageFile, imageType, access_token) {
 
 export function updateSubscription(field, value, access_token) {
   const updateEndpoint = `profiles/${field}?v=${value}`
-  return customAPICall(updateEndpoint, {}, "PUT", access_token)
+  return saveAPICall(updateEndpoint, {}, "PUT", access_token)
 }
 
 
@@ -184,7 +184,7 @@ export function createDrop(title, desc, category, drop_date, marketplace, link, 
 
 export function saveDropLink(link, dropId, token){
   const saveDropLinkEndpoint = `drops/${dropId}/link?l=${link}`
-  return saveLinkAPICall(saveDropLinkEndpoint, {}, "PUT", token)
+  return saveAPICall(saveDropLinkEndpoint, {}, "PUT", token)
 }
 
 export function createDropImage(image) {

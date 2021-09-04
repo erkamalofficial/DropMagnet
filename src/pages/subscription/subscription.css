@@ -86,3 +86,22 @@
     z-index: 0;
     opacity: 1 !important;  
 }
+
+
+.plan-card .loader{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    backdrop-filter: blur(22px);
+    z-index: 9999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Azo Sans";
+    font-size: 22px;
+    font-weight: 700;
+    color: #8f8f8f;
+}
