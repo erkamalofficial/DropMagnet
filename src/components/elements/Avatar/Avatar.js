@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "./Avatar.css";
 import CropModal from "./CropModal";
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
-
+import CloseIcon from "../../../assets/close-icon.png"
 
 const InitialCircle = styled.span`
   width: 100%;
@@ -90,7 +90,7 @@ function Avatar({
           <img
             style={{ width: "20px", height: "20px", cursor: "pointer" }}
             alt={"remove-btn"}
-            src="./close-icon.png"
+            src={CloseIcon}
           />
         </span>
       )}

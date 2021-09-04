@@ -21,6 +21,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import LazyProfile from "./LazyProfile";
 import FadeIn from 'react-fade-in';
 import LazyDropCells from "./LazyDropCells";
+import InstaIcon from "../../assets/insta-icon.png"
+import TwitterIcon from "../../assets/twitter-icon.png"
 
 const FooterContainer = styled.div`
   margin-top: 16px;
@@ -557,8 +559,9 @@ export default function Profile(props) {
                     <img
                       width={37}
                       height={24}
-                      src="./twitter-icon.png"
+                      src={TwitterIcon}
                       style={{ paddingRight: "8px" }}
+                      alt="/"
                     />
                     <div className="profile-medium-title">
                       {twitterHandle !== "" && twitterHandle.length > 8 ? (
@@ -582,7 +585,7 @@ export default function Profile(props) {
                     style={{ display: "flex", cursor: "pointer" }}
                     onClick={() => handleProfileEdit("insta")}
                   >
-                    <img width={24} height={24} src="./insta-icon.png" />
+                    <img width={24} height={24} src={InstaIcon} alt="/"/>
                     <div
                       className="profile-medium-title"
                       style={{ marginLeft: "10px" }}
@@ -750,8 +753,9 @@ export default function Profile(props) {
                     <img
                       width={37}
                       height={24}
-                      src="./twitter-icon.png"
+                      src={TwitterIcon}
                       style={{ paddingRight: "8px" }}
+                      alt="/"
                     />
                     <div className="profile-medium-title">
                       {twitterHandle !== "" && twitterHandle.length > 8 ? (
@@ -775,7 +779,7 @@ export default function Profile(props) {
                     style={{ display: "flex", cursor: "pointer" }}
                     onClick={() => handleProfileEdit("insta")}
                   >
-                    <img width={24} height={24} src="./insta-icon.png" />
+                    <img width={24} height={24} src={InstaIcon} alt="/"/>
                     <div
                       className="profile-medium-title"
                       style={{ marginLeft: "10px" }}
