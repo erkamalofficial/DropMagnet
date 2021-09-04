@@ -125,7 +125,7 @@ const LazyCard = () => {
     >
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>
-          <div className="stripe round-stripe"></div>
+          <div className="stripe circular-stripe"></div>
           <div className="stripe medium-stripe"></div>
           <div className="empty">......</div>
         </HeaderSection>

@@ -40,6 +40,7 @@ const HeaderSection = styled.div`
   justify-content: space-between;
   position: var(--card-elem-pos);
   width: 100%;
+  align-items: center;
   .empty {
     opacity: 0;
   }
@@ -76,7 +77,8 @@ const FooterButtons = styled.div`
   line-height: 22px;
   margin-bottom: var(--card-title-section-text-margin);
   p2 {
-    height: 24px
+    height: 24px;
+    padding-top: 3px
   }
   .market {
     margin-right: 8px;
