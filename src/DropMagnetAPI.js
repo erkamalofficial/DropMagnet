@@ -35,7 +35,7 @@ async function customAPICall(endpoint, data, method, access_token) {
 }
 
 
-async function saveAPICall(endpoint, data, method, access_token) {
+async function normalAPICall(endpoint, data, method, access_token) {
 
   const uri = host + endpoint
   const res = await fetch(uri, {
@@ -157,7 +157,7 @@ export function updateUserAvatar(imageFile, imageType, access_token) {
 
 export function updateSubscription(field, value, access_token) {
   const updateEndpoint = `profiles/${field}?v=${value}`
-  return saveAPICall(updateEndpoint, {}, "PUT", access_token)
+  return normalAPICall(updateEndpoint, {}, "PUT", access_token)
 }
 
 
@@ -184,7 +184,7 @@ export function createDrop(title, desc, category, drop_date, marketplace, link, 
 
 export function saveDropLink(link, dropId, token){
   const saveDropLinkEndpoint = `drops/${dropId}/link?l=${link}`
-  return saveAPICall(saveDropLinkEndpoint, {}, "PUT", token)
+  return normalAPICall(saveDropLinkEndpoint, {}, "PUT", token)
 }
 
 export function createDropImage(image) {
@@ -251,4 +251,24 @@ export function createWalletUser(username, name, address) {
     address: address
   }
   return customAPICall(userEndPoint, payload, "POST", "");
+}
+
+
+// 2-Factor Auth
+
+export function generateQR(address) {
+  const endPoint = `getqr`;
+  const payload = {
+    address: address
+  }
+  return customAPICall(endPoint, payload, "POST", "");
+}
+
+export function verifyCode(secret, token) {
+  const endPoint = `verifyqr`;
+  const payload = {
+    secret: secret,
+    token: token 
+  }
+  return customAPICall(endPoint, payload, "POST", "");
 }

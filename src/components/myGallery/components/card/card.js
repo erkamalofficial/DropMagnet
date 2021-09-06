@@ -9,6 +9,7 @@ import "./card.css"
 import web3 from 'web3'
 import AddWallet from "./addWallet";
 import QRCode from 'qrcode'
+import * as DropMagnetAPI from "../../../../DropMagnetAPI"
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -303,18 +304,6 @@ const Remove = styled.div`
     cursor: pointer;
     width:fit-content;
 `;
-const Add = styled.div`
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 500;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: normal;
-    text-align: center;
-    cursor: pointer;
-    margin: 0 auto;
-    width:fit-content;
-`;
 
 
 const Card = (props) => {
@@ -339,6 +328,7 @@ const Card = (props) => {
     const [start, setStart] = useState(0)
     const [end, setEnd] = useState(3)
     const [page, setPage] = useState(0)
+    const [tfaCode, setTfaCode] = useState('')
 
     const tabs = [
         { id: "public" },
@@ -352,29 +342,8 @@ const Card = (props) => {
         setWalletEdit(false);
         setLinkCopied(false);
     };
-    const handleChangeTab = useCallback((id) => setActiveTab(id), []);
+    const handleChangeTab = useCallback((id) => setActiveTab(id), [])
 
-    const generateQR = async () => {
-        try {
-            var opts = {
-                errorCorrectionLevel: 'H',
-                type: 'image/jpeg',
-                quality: 0.3,
-                margin: 1
-            }
-            var segs = [
-                { data: "21", mode: 'numeric' }
-            ]
-            let qrUrl = await QRCode.toDataURL(segs, opts)
-            console.log(qrUrl)
-            return qrUrl
-        } catch (err) {
-            console.error(err)
-            return null
-        }
-    }
-
-    
 
     const inc = () => {
         let pages = Math.floor(curMetaURLCard?.addresses.length / 3)
@@ -387,7 +356,6 @@ const Card = (props) => {
 
     const dec = () => {
         if (page >= 1) {
-            console.log(page)
             setPage(page - 1)
             setStart(start - 3)
             setEnd(end - 3)
@@ -406,7 +374,10 @@ const Card = (props) => {
                         typeface without relying on meaningful content.
                         Lorem ipsum may be used as a placeholder before final copy is available.
                     </p>
-                    <button>
+                    <button onClick={() => {
+                        markVerified(selected.address)
+                        setTnc(false)
+                    }}>
                         I understand & agree.
                     </button>
                     <p>or</p>
@@ -432,12 +403,7 @@ const Card = (props) => {
 
                     <img className="qr-code"
                         src={qrImg} alt="/" />
-                    <button onClick={() => {
-                        setConfirmation(false)
-                        window.location.reload()
-                    }}>
-                        Scan code with your authenticator
-                    </button>
+                    Scan code with your authenticator
                     <p>or</p>
                     <button onClick={() => {
                         setConfirmation(false)
@@ -462,7 +428,12 @@ const Card = (props) => {
                         first set up 2FA. NFTs display either way.
                     </p>
 
-                    <input placeholder="Enter 2FA code here" />
+                    <input placeholder="Enter 2FA code here"
+                        value={tfaCode}
+                        onChange={(e) => setTfaCode(e.target.value)} />
+                    <button onClick={() => verifyCode(tfaCode, selected.secret)}>
+                        Verify Code
+                    </button>
                     <p>or</p>
                     <button onClick={() => setAuth(false)}>
                         Keep pay button deactivated
@@ -498,17 +469,23 @@ const Card = (props) => {
         )
     }
 
-    const insertAddress = (ad) => {
+    const insertAddress = async (ad) => {
         let wallets = cntWallets
         let flag = 0;
         if (wallets.length >= 1) {
             wallets.forEach(async (w) => {
                 if (w.id === id) {
-                    if (!w.addresses.includes(ad)) {
-                        w.addresses.push(ad);
+                    let target = w.addresses.filter(wa => wa.address === ad)
+                    if (target.length === 0) {
                         flag = 1;
-                        let res = await generateQR()
-                        setQrImg(res)
+                        let res = await DropMagnetAPI.generateQR(ad)
+                        w.addresses.push({
+                            address: ad,
+                            secret: res.secret,
+                            verified: false
+                        })
+                        localStorage.setItem('cntWallets', JSON.stringify(wallets))
+                        setQrImg(res.src)
                         setConfirmation(true)
                     }
                     else {
@@ -519,12 +496,58 @@ const Card = (props) => {
                 }
             });
             if (flag === 0) {
-                wallets.push({ id: id, addresses: [ad] })
+                let res = await DropMagnetAPI.generateQR(ad)
+                wallets.push({
+                    id: id,
+                    addresses: [{
+                        address: ad,
+                        secret: res.secret,
+                        verified: false
+                    }]
+                })
+                localStorage.setItem('cntWallets', JSON.stringify(wallets))
+                setQrImg(res.src)
+                setConfirmation(true)
             }
         }
         else {
-            wallets.push({ id: id, addresses: [ad] })
+            let res = await DropMagnetAPI.generateQR(ad)
+            wallets.push({
+                id: id,
+                addresses: [{
+                    address: ad,
+                    secret: res.secret,
+                    verified: false
+                }]
+            })
+            localStorage.setItem('cntWallets', JSON.stringify(wallets))
+            setQrImg(res.src)
+            setConfirmation(true)
         }
+    }
+
+    const verifyCode = async (code, sct) => {
+        let res = await DropMagnetAPI.verifyCode(sct, code)
+        if (res.status === 1) {
+            setAuth(false)
+            setTnc(true)
+        }
+        else {
+            alert(res.message)
+        }
+    }
+
+    const markVerified = (ad) => {
+        let wallets = cntWallets
+        wallets.forEach(w => {
+            if (w.id === id) {
+                w.addresses.forEach(w => {
+                    if (w.address === ad) {
+                        w.verified = true
+                    }
+                });
+            }
+        });
         localStorage.setItem('cntWallets', JSON.stringify(wallets))
     }
 
@@ -532,26 +555,12 @@ const Card = (props) => {
         let wallets = cntWallets
         wallets.forEach(w => {
             if (w.id === id) {
-                let newAds = w.addresses.filter(w => w !== ad);
+                let newAds = w.addresses.filter(w => w.address !== ad);
                 w.addresses = newAds
             }
         });
         localStorage.setItem('cntWallets', JSON.stringify(wallets))
         setRmvCnf(false)
-    }
-
-    const handleConnect = async (e) => {
-        e.preventDefault()
-        await window.ethereum.request({
-            method: "wallet_requestPermissions",
-            params: [{ eth_accounts: {} }]
-        });
-        const address = await window.ethereum.request({
-            method: "eth_requestAccounts",
-            params: [{}]
-        })
-        let ad = web3.utils.toChecksumAddress(address[0])
-        insertAddress(ad);
     }
 
     const showModals = () => {
@@ -643,40 +652,46 @@ const Card = (props) => {
                         <p>Connected Wallets</p>
                     </Title>
                     <Form>
-                        {curMetaURLCard?.addresses.slice(start,end)
-                        .map(wa => (
-                            <Address
-                                style={{
-                                    background: `${selected === wa ? '#09200087' : ''}`
-                                }}>
-                                <EditName
-                                    onClick={() => {
-                                        setAuth(true)
-                                        setSelected(wa)
+                        {curMetaURLCard?.addresses.slice(start, end)
+                            .map(wa => (
+                                <Address
+                                    style={{
+                                        background: `${selected?.address === wa.address ? '#09200087' : ''}`
                                     }}>
-                                    <input id="name"
-                                        type="text"
-                                        value={wa}
-                                        readOnly={true}
-                                        style={{
-                                            border: `${selected === wa ? '1px solid #52FF02' : ''}`
-                                        }}
-                                    />
-                                </EditName>
-                                <Remove onClick={() => {
-                                    setAddress(wa)
-                                    setRmvCnf(true)
-                                }}>
-                                    remove
-                                </Remove>
-                            </Address>
-                        ))}
+                                    <EditName
+                                        onClick={() => {
+                                            if (!wa.verified) {
+                                                setAuth(true)
+                                                setSelected(wa)
+                                            }
+                                        }}>
+                                        <input id="name"
+                                            type="text"
+                                            value={wa.address}
+                                            readOnly={true}
+                                            style={{
+                                                border: `${selected?.address === wa.address ? '1px solid #52FF02' : ''}`
+                                            }}
+                                        />
+                                    </EditName>
+                                    <Remove onClick={() => {
+                                        setAddress(wa.address)
+                                        setRmvCnf(true)
+                                    }}>
+                                        remove
+                                    </Remove>
+                                </Address>
+                            ))}
                     </Form>
 
                     {/* <Add onClick={handleConnect}>Add another wallet</Add> */}
-                    {<AddWallet insertAd={insertAddress}
-                    increase={inc}
-                    decrease={dec} />}
+                    {curMetaURLCard?.addresses?.length > 0 ? <AddWallet insertAd={insertAddress}
+                        increase={inc}
+                        decrease={dec} />
+                        : <AddWallet insertAd={insertAddress}
+                            increase={inc}
+                            decrease={dec}
+                            wallets={0} />}
                 </EditModal>
             )
         } else {
@@ -689,6 +704,7 @@ const Card = (props) => {
     return (
         <CardWrapper>
             {confirmation && showConfirmationModal()}
+            {tnc && showTNC()}
             {rmvCnf && showRemoveModal(address)}
             {auth && show2FAModal()}
             <CardSize>

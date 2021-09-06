@@ -23,6 +23,25 @@ const Add = styled.div`
     // margin-top: 10px
 `;
 
+const Tap = styled.div`
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: center;
+    cursor: pointer;
+    margin: 0 auto;
+    width:fit-content;
+    background-color: #0000004F;
+    padding: 18px 22px 16px 22px;
+    border-radius: 11px;
+    backdrop-filter: blur(18px);
+    margin-top: 80px
+`;
+
+
 const AddWallet = (props) => {
 
     const coinbase = getProviderInfoByName('Coinbase')
@@ -148,7 +167,6 @@ const AddWallet = (props) => {
         var onboard = Onboard(opt)
         await onboard.walletReset()
         await onboard.walletSelect()
-        await onboard.walletCheck()
     }
 
     const connectWallet = async () => {
@@ -170,12 +188,18 @@ const AddWallet = (props) => {
     }
 
     return (
-        <div className="wallets-controls">
-            <div className="prev-btn" onClick={props.decrease}> <ChevronLeftIcon /> </div>
-            <Add onClick={handleConnect}>Add another wallet</Add>
-            <div className="nxt-btn" onClick={props.increase}> <ChevronRightIcon /> </div>
-        </div>
-        
+        <>
+            {props.wallets !== 0 ? (
+                <div className="wallets-controls">
+                    <div className="prev-btn" onClick={props.decrease}> <ChevronLeftIcon /> </div>
+                    <Add onClick={handleConnect}>Add another wallet</Add>
+                    <div className="nxt-btn" onClick={props.increase}> <ChevronRightIcon /> </div>
+                </div>
+            ) : (
+                <Tap onClick={handleConnect}>Tap To Connect Wallet</Tap>
+            )
+            }
+        </>
     )
 }
 
