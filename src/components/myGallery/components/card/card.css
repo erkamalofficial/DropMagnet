@@ -66,3 +66,23 @@
 .web3modal-modal-lightbox{
     z-index: 9999 !important;
 }
+
+.wallets-controls{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 26px;
+    margin-top: 12px;
+}
+
+.wallets-controls .prev-btn,
+.wallets-controls .nxt-btn{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.31);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

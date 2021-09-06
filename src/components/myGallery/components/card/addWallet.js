@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from "styled-components";
 import Web3 from "web3";
 import Onboard from 'bnc-onboard'
-import Web3Modal, { getProviderInfoByName } from "web3modal";
+import Web3Modal, { getProviderInfoByName, local } from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 const Add = styled.div`
     color: #ffffff;
@@ -17,13 +19,20 @@ const Add = styled.div`
     text-align: center;
     cursor: pointer;
     margin: 0 auto;
-    width:fit-content;
-    margin-top: 10px
+    // width:fit-content;
+    // margin-top: 10px
 `;
 
 const AddWallet = (props) => {
 
     const coinbase = getProviderInfoByName('Coinbase')
+    const sAd = localStorage.getItem('curAd')
+    useEffect(() => {
+        if (sAd) {
+            props.insertAd(sAd)
+            localStorage.removeItem('curAd')
+        }
+    }, [sAd])
 
     const walletLink = new WalletLink({
         appName: "Dropmagnet",
@@ -87,14 +96,11 @@ const AddWallet = (props) => {
     const NETWORK_ID = 4
 
     // initialize onboard
-    const onboard = Onboard({
+    const opt = {
         darkMode: true,
         dappId: BLOCKNATIVE_KEY,
         networkId: NETWORK_ID,
         subscriptions: {
-            address: (ad) => {
-                return ad
-            },
             wallet: async (wallet) => {
                 web3 = new Web3(wallet.provider)
                 if (web3.currentProvider !== null) {
@@ -105,6 +111,8 @@ const AddWallet = (props) => {
                     await web3.currentProvider.request({
                         method: "eth_requestAccounts",
                         params: [{}]
+                    }).then(res => {
+                        props.insertAd(res[0])
                     })
                     await wallet.connect()
                 }
@@ -131,18 +139,16 @@ const AddWallet = (props) => {
             { checkName: 'accounts' },
             { checkName: 'connect' },
         ]
-    })
-
-    // Prompt user to select a wallet
+    }
 
 
     // Run wallet checks to make sure that user is ready to transact
 
     const handleConnect = async () => {
+        var onboard = Onboard(opt)
         await onboard.walletReset()
-        let res = await onboard.walletSelect()
-        await onboard.walletCheck()        
-        console.log(res)
+        await onboard.walletSelect()
+        await onboard.walletCheck()
     }
 
     const connectWallet = async () => {
@@ -159,12 +165,17 @@ const AddWallet = (props) => {
         })
             .then(acc => {
                 console.log(acc)
-                props.insert(acc[0])
+                props.insertAd(acc[0])
             })
     }
 
     return (
-        <Add onClick={connectWallet}>Add another wallet</Add>
+        <div className="wallets-controls">
+            <div className="prev-btn" onClick={props.decrease}> <ChevronLeftIcon /> </div>
+            <Add onClick={handleConnect}>Add another wallet</Add>
+            <div className="nxt-btn" onClick={props.increase}> <ChevronRightIcon /> </div>
+        </div>
+        
     )
 }
 

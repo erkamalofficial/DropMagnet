@@ -8,6 +8,7 @@ import MoreBtn from "../../styled-components/moreBtn";
 import "./card.css"
 import web3 from 'web3'
 import AddWallet from "./addWallet";
+import QRCode from 'qrcode'
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -117,14 +118,14 @@ const Artist = styled.p`
 `;
 const EditModal = styled.div`
     position: absolute;
-    z-index: 9999;
+    z-index: 999;
     top:0;
     left:0;
     width: 100%;    
     height: 100%;
     background-color: rgba(6, 6, 6, 0.41);
     backdrop-filter: blur(20px);
-    padding-top: 32px;
+    padding-top: 8px;
 `;
 const Save = styled.button`
     border: none;
@@ -161,7 +162,7 @@ const Title = styled.div`
         text-align: left;
         margin: 0 0 0 16px;
     }
-    margin-bottom:24px;
+    margin-bottom:14px;
 `;
 const Form = styled.div`
     display:flex;
@@ -334,6 +335,10 @@ const Card = (props) => {
     const [rmvCnf, setRmvCnf] = useState(false)
     const [address, setAddress] = useState(null)
     const [selected, setSelected] = useState(null)
+    const [qrImg, setQrImg] = useState(null)
+    const [start, setStart] = useState(0)
+    const [end, setEnd] = useState(3)
+    const [page, setPage] = useState(0)
 
     const tabs = [
         { id: "public" },
@@ -348,6 +353,46 @@ const Card = (props) => {
         setLinkCopied(false);
     };
     const handleChangeTab = useCallback((id) => setActiveTab(id), []);
+
+    const generateQR = async () => {
+        try {
+            var opts = {
+                errorCorrectionLevel: 'H',
+                type: 'image/jpeg',
+                quality: 0.3,
+                margin: 1
+            }
+            var segs = [
+                { data: "21", mode: 'numeric' }
+            ]
+            let qrUrl = await QRCode.toDataURL(segs, opts)
+            console.log(qrUrl)
+            return qrUrl
+        } catch (err) {
+            console.error(err)
+            return null
+        }
+    }
+
+    
+
+    const inc = () => {
+        let pages = Math.floor(curMetaURLCard?.addresses.length / 3)
+        if (page < pages) {
+            setPage(page + 1)
+            setStart(start + 3)
+            setEnd(end + 3)
+        }
+    }
+
+    const dec = () => {
+        if (page >= 1) {
+            console.log(page)
+            setPage(page - 1)
+            setStart(start - 3)
+            setEnd(end - 3)
+        }
+    }
 
     const showTNC = () => {
         return (
@@ -386,11 +431,18 @@ const Card = (props) => {
                     </p>
 
                     <img className="qr-code"
-                        src="./sampleQR.jpg" alt="/" />
-
-                    <p>Scan code with your authenticator</p>
+                        src={qrImg} alt="/" />
+                    <button onClick={() => {
+                        setConfirmation(false)
+                        window.location.reload()
+                    }}>
+                        Scan code with your authenticator
+                    </button>
                     <p>or</p>
-                    <button onClick={() => setConfirmation(false)}>
+                    <button onClick={() => {
+                        setConfirmation(false)
+                        window.location.reload()
+                    }}>
                         Keep pay button deactivated
                     </button>
                 </div>
@@ -450,16 +502,19 @@ const Card = (props) => {
         let wallets = cntWallets
         let flag = 0;
         if (wallets.length >= 1) {
-            wallets.forEach(w => {
+            wallets.forEach(async (w) => {
                 if (w.id === id) {
                     if (!w.addresses.includes(ad)) {
                         w.addresses.push(ad);
                         flag = 1;
+                        let res = await generateQR()
+                        setQrImg(res)
                         setConfirmation(true)
                     }
                     else {
                         alert("This wallet already exists.")
                         flag = 1;
+                        window.location.reload()
                     }
                 }
             });
@@ -588,7 +643,8 @@ const Card = (props) => {
                         <p>Connected Wallets</p>
                     </Title>
                     <Form>
-                        {curMetaURLCard?.addresses.map(wa => (
+                        {curMetaURLCard?.addresses.slice(start,end)
+                        .map(wa => (
                             <Address
                                 style={{
                                     background: `${selected === wa ? '#09200087' : ''}`
@@ -618,8 +674,9 @@ const Card = (props) => {
                     </Form>
 
                     {/* <Add onClick={handleConnect}>Add another wallet</Add> */}
-                    <AddWallet 
-                    insert={insertAddress}/>
+                    {<AddWallet insertAd={insertAddress}
+                    increase={inc}
+                    decrease={dec} />}
                 </EditModal>
             )
         } else {

@@ -10,7 +10,7 @@
     background-image: linear-gradient(90deg, #181818, #131313);
     border: 0.75px solid black;
     box-shadow: 0 1px 1px #0000006E;
-    z-index: 99;
+    z-index: 999;
     cursor: pointer;
     border-radius: 31px;
     padding: 6px 0;
