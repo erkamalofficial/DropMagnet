@@ -59,12 +59,12 @@ function Swiper(props) {
   );
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
-  const swiped = (direction, drop_id, index) => {
+  const swiped = (direction, drop_id, index, drop) => {
     // console.log("direction:KKK " + direction);
     if (reswipeModeActive) {
       props.onReswipe(direction, drop_id, index);
     } else {
-      props.onSwipe && props.onSwipe(direction, drop_id);
+      props.onSwipe && props.onSwipe(direction, drop_id, drop);
       if (direction === "right") {
         dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index } });
       }
@@ -149,7 +149,7 @@ function Swiper(props) {
                 const u = JSON.parse(localStorage.getItem('userDetails'));
                 if (u) {
                   setSwiping(true)
-                  return swiped(dir, id, index)
+                  return swiped(dir, id, index, cardDetails)
                 }
                 else { history.push("/login") }
               }}

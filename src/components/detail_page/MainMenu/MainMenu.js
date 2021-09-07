@@ -14,6 +14,8 @@ export default function MainMenu(props) {
   const { currentUser } = useAuth()
   const [open, setOpen] = useState(false);
   const [verified, setVerified] = useState(false)
+  
+  const user = JSON.parse(localStorage.getItem('userDetails'))
 
   useEffect(() => {
     if (open) {
@@ -28,7 +30,7 @@ export default function MainMenu(props) {
     try {
       const r = await currentUser.getIdTokenResult()
       const is_verified = r.claims["verified"]
-      setVerified(is_verified)     
+      setVerified(is_verified)
     } catch (error) {
       setVerified(false);
     }
@@ -86,8 +88,13 @@ export default function MainMenu(props) {
       <div className="main-menu-holder">
         {props.userDetails !== {} && props.userDetails !== undefined ? (
           <div className="main-menu-header">
-            <p1 style={{ fontWeight: "bold" }}>{props.userDetails.name}</p1>
-            <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
+            <div className="user-details">
+              <p1 style={{ fontWeight: "bold" }}>{props.userDetails.name}</p1>
+              <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
+            </div>
+            <div className="show-tokens">
+              <span>{user.tokens? user.tokens : 0} Drop Tokens Earned</span>
+            </div>
           </div>
         ) : (
           <></>
