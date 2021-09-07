@@ -380,9 +380,10 @@ export default function Profile(props) {
 
   const updateDetails = (field, value) => {
     currentUser.getIdToken(false).then(function (idToken) {
-      DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) =>
+      DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) =>{
         alert("Successfully updated.")
-      );
+        window.location.reload()
+      });
     });
   };
   const saveForm = () => {

@@ -48,6 +48,8 @@ const Border = styled.div`
 
 const HomePage = () => {
 
+    const user = JSON.parse(localStorage.getItem('userDetails'))
+
     const [verified, setVerified] = useState(false)
     const { currentUser } = useAuth()
 
@@ -84,7 +86,7 @@ const HomePage = () => {
                         <p className="left-top-tooltip">9+</p>
                     </InsetBoxIcon>
                     {/*<SwitchToggle/>*/}
-                    <div className="greeting-Alexander">Greetings, Alexander</div>
+                    <div className="greeting-Alexander">Greetings, {user.name.split(' ')[0]}</div>
                     <InsetBoxIcon>
                         <img src={notification} alt="icon" />
                         <p className="right-top-tooltip">9+</p>

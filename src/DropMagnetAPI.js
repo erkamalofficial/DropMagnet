@@ -142,7 +142,7 @@ export function changeUserImage(image, access_token) {
 
 export function updateUserDetails(field, value, access_token) {
   const updateEndpoint = `profiles/${field}?v=${value}`
-  return customAPICall(updateEndpoint, {}, "PUT", access_token)
+  return normalAPICall(updateEndpoint, {}, "PUT", access_token)
 }
 
 export function updateUserAvatar(imageFile, imageType, access_token) {
