@@ -4,10 +4,11 @@ import axios from "axios";
 import { useAuth } from "../../contexts/FirebaseAuthContext"
 import * as DropMagnetAPI from "../../DropMagnetAPI"
 import Spinner from '../../components/blocks/spinner'
+import GlossyButton from '../../components/elements/GlossyButton/GlossyButton';
 
 const Plan = (props) => {
 
-    const { plan, purchased, others } = props
+    const { plan, purchased, others, borders } = props
     const { currentUser } = useAuth()
 
     const onToken = async (token, address) => {
@@ -80,18 +81,60 @@ const Plan = (props) => {
                         amount={priceVal ? Math.round(priceVal * 100) : 0}
                         name={`${plan.name} Subscription`}
                     >
-                        <button className="purchase-btn">
-                            {purchased ? <span>Subscribed</span>
-                                : <span>Purchase</span>}
-                        </button>
+                        <GlossyButton
+                            label={`${purchased ? 'Subscribed': 'Purchase'}`}
+                            btnStyle={{
+                                padding: '10px 14px 10px 14px',
+                                borderRadius: '27px',
+                                fontSixe: '16px',
+                                textTransform: 'uppercase',
+                                cursor: 'pointer',
+                                fontWeight: '700'
+                            }}
+                            borderStyle={{
+                                pos: '-4px',
+                                borderRadius: '27px',
+                                border: '4px',
+                                grd1: '#242424',
+                                grd2: '#242424',
+                                grd3: `${borders.grd3}`,
+                                grd4: `${borders.grd4}`
+                            }}
+                            lableStyle={{
+                                marginBottom: '-4px'
+                            }}
+                        ></GlossyButton>
                     </StripeCheckout>
                 ) : (
-                    <button className="purchase-btn"
-                        onClick={handleClick}>
-                        {purchased ? <span>Subscribed</span>
-                            : others.includes(plan.name.toLowerCase()) ? <span>Activate</span>
-                                : <span>Purchase</span>}
-                    </button>
+                    <div onClick={handleClick}>
+                        <GlossyButton
+                            label={`${purchased ? 'Subscribed'
+                                : others.includes(plan.name.toLowerCase()) ? 'Activate'
+                                    : 'Purchase'}`}
+                            btnStyle={{
+                                padding: '10px 10px 10px 10px',
+                                borderRadius: '27px',
+                                fontSixe: '16px',
+                                textTransform: 'uppercase',
+                                cursor: 'pointer',
+                                fontWeight: '700'
+                            }}
+                            borderStyle={{
+                                pos: '-4px',
+                                borderRadius: '27px',
+                                border: '4px',
+                                grd1: '#242424',
+                                grd2: '#242424',
+                                grd3: `${borders.grd3}`,
+                                grd4: `${borders.grd4}`
+                            }}
+                            lableStyle={{
+                                marginBottom: '-4px'
+                            }}
+                        ></GlossyButton>
+                    </div>
+
+
                 )}
 
             </div>

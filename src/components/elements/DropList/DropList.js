@@ -69,13 +69,6 @@ export default function DropList(props) {
   const trailingActions = () => (
     <TrailingActions>
       <SwipeAction
-        onClick={() => alert('Edit action will be triggered.')}
-      >
-        <div className="icon">
-          <EditIcon className="svg-icon edit" />
-        </div>
-      </SwipeAction>
-      <SwipeAction
         onClick={() => alert('Delete action will be triggered.')}
       >
         <div className="icon">

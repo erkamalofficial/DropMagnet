@@ -8,6 +8,7 @@ import FadeIn from 'react-fade-in';
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
 import { Row } from "../../exploreGalleries/styled-components/Row";
 import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
+import GlossyButton from "../../elements/GlossyButton/GlossyButton";
 
 export default function MainMenu(props) {
 
@@ -92,9 +93,27 @@ export default function MainMenu(props) {
               <p1 style={{ fontWeight: "bold" }}>{props.userDetails.name}</p1>
               <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
             </div>
-            <div className="show-tokens">
-              <span>{user.tokens? user.tokens : 0} Drop Tokens Earned</span>
-            </div>
+            <GlossyButton
+              label={`${user.tokens ? user.tokens : 0} Drop Tokens Earned`}
+              btnStyle={{ 
+                padding: '12px 14px 10px 14px', 
+                borderRadius: '27px',
+                fontSize: '12px',
+                fontWeight: '500'
+              }}
+              borderStyle={{
+                pos: '-1px',
+                borderRadius: '27px',
+                border: '1px',
+                grd1: '#181818',
+                grd2: '#181818',
+                grd3: '#6C00FF',
+                grd4: '#FF00C7'
+              }}
+              lableStyle={{
+                marginBottom: '-2px'
+              }}
+            ></GlossyButton>
           </div>
         ) : (
           <></>

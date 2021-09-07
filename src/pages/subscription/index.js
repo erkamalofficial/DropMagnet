@@ -12,6 +12,25 @@ import Subscriptions from "./subscriptions.json"
 
 const SubscriptionPage = (props) => {
 
+    const borderstyles = [
+        {
+            grd3: '#B283FF',
+            grd4: '#B283FF'
+        },
+        {
+            grd3: '#7000FE',
+            grd4: '#7000FE'
+        },
+        {
+            grd3: '#478CE0',
+            grd4: '#478CE0'
+        },
+        {
+            grd3: '#6C00FF',
+            grd4: '#FF00C7'
+        }
+    ]
+
     const user = JSON.parse(localStorage.getItem('userDetails'))
     const [subscription, setSubscription] = useState(null)
     const [others, setOthers] = useState([])
@@ -55,13 +74,14 @@ const SubscriptionPage = (props) => {
                 padding: '56px 16px 128px 16px'
             }}>
                 <div className="plans-container">
-                    {Subscriptions.map(p => (
+                    {Subscriptions.map((p, i) => (
                         <Plan plan={p} 
                         purchased={p.name.toLocaleLowerCase() === subscription}
                         setSubscription={setSubscription}
                         loader={loader}
                         setLoader={setLoader}
-                        others={others} />
+                        others={others}
+                        borders={borderstyles[i]} />
                     ))}
                 </div>
             </div>
