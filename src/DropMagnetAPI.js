@@ -187,6 +187,11 @@ export function createDrop(title, desc, category, drop_date, marketplace, link, 
   return customAPICallAddDrop(createDropEndpoint, payload, "POST", access_token)
 }
 
+export function deleteDrop(dropId, token){
+  const deleteDropEndPoint = `drops/delete/${dropId}`
+  return customAPICall(deleteDropEndPoint, {}, "DELETE", token)
+}
+
 export function saveDropLink(link, dropId, token){
   const saveDropLinkEndpoint = `drops/${dropId}/link?l=${link}`
   return normalAPICall(saveDropLinkEndpoint, {}, "PUT", token)

@@ -14,12 +14,17 @@ import {
 import 'react-swipeable-list/dist/styles.css';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import { useAuth } from '../../../contexts/FirebaseAuthContext';
+import * as DropMagnetAPI from "../../../DropMagnetAPI"
+import LoadingModal from '../LoadingModal/LoadingModal';
 
 export default function DropList(props) {
   const [listItems, setListItems] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [swiping, setSwiping] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const { currentUser } = useAuth()
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -66,10 +71,23 @@ export default function DropList(props) {
   //   </LeadingActions>
   // );
 
-  const trailingActions = () => (
+  const trailingActions = (drop) => (
     <TrailingActions>
       <SwipeAction
-        onClick={() => alert('Delete action will be triggered.')}
+        onClick={() => {
+          let ans = window.confirm("Do you really want to delete the drop?")
+          if (ans) {
+            setLoading(true)
+            currentUser && currentUser.getIdToken().then((idToken) => {
+              DropMagnetAPI.deleteDrop(drop.id, idToken)
+                .then(res => {
+                  alert(res.message)
+                  setLoading(false)
+                  window.location.reload()
+                })
+            })
+          }
+        }}
       >
         <div className="icon">
           <DeleteIcon className="svg-icon delete" />
@@ -80,33 +98,45 @@ export default function DropList(props) {
 
   return (
     <div className="drop-list">
-      <SwipeableList
-        type={ListType.IOS}
-        scrollStartThreshold={0}>
-        {
-          listItems.map(drop => (
-            <SwipeableListItem
-              swipeStartThreshold={0}
-              // leadingActions={leadingActions()}
-              trailingActions={trailingActions()}
-              onSwipeProgress={progress => {
-                console.log(progress)
-                setSwiping(true)
-              }}
-              onSwipeEnd={p => {
-                setTimeout(() => {
-                  setSwiping(false)
-                }, 800);
-              }}
-              onSwipeStart={p => setSwiping(true)}
-            >
+      {loading && (<LoadingModal label={'Deleting Drop...'} />)}
+      {!props.isSaved ? (
+        <SwipeableList
+          type={ListType.IOS}
+          scrollStartThreshold={0}>
+          {
+            listItems.map(drop => (
+              <SwipeableListItem
+                swipeStartThreshold={0}
+                // leadingActions={leadingActions()}
+                trailingActions={trailingActions(drop)}
+                onSwipeProgress={progress => {
+                  console.log(progress)
+                  setSwiping(true)
+                }}
+                onSwipeEnd={p => {
+                  setTimeout(() => {
+                    setSwiping(false)
+                  }, 800);
+                }}
+                onSwipeStart={p => setSwiping(true)}
+              >
+                <div className="card">
+                  {renderDropCell(drop)}
+                </div>
+              </SwipeableListItem>
+
+            ))}
+        </SwipeableList>
+      ) : (
+        <>
+          {
+            listItems.map(drop => (
               <div className="card">
                 {renderDropCell(drop)}
               </div>
-            </SwipeableListItem>
-
-          ))}
-      </SwipeableList>
+            ))}
+        </>
+      )}
       {/* {isFetching && 'Fetching more list items...'} */}
     </div >
   );

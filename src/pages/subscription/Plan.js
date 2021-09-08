@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/FirebaseAuthContext"
 import * as DropMagnetAPI from "../../DropMagnetAPI"
 import Spinner from '../../components/blocks/spinner'
 import GlossyButton from '../../components/elements/GlossyButton/GlossyButton';
+import LoadingModal from '../../components/elements/LoadingModal/LoadingModal';
 
 const Plan = (props) => {
 
@@ -59,12 +60,7 @@ const Plan = (props) => {
     return (
         <div className="plan-card">
             {props.loader && (
-                <div className="loader">
-                    <div className="cnt">
-                        <Spinner />
-                    </div>
-                    Subscribing...
-                </div>
+                <LoadingModal label={'Subscribing...'} />
             )}
             <div className="plan-card-top">
                 <div>

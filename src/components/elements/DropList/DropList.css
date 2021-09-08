@@ -3,15 +3,16 @@
   margin-bottom: 140px;
   flex: 1 1 auto;
   overflow: auto;
-}
-
-.swipeable-list{
   max-width: 576px;
   margin: auto;
 }
 
+.swipeable-list{
+  margin: auto;
+}
+
 .swipeable-list-item{
-  margin: 10px 0;
+  margin-bottom: 10px;
 }
 
 .card{
@@ -53,7 +54,10 @@
 }
 
 @media(max-width: 576px){
-  .swipeable-list{
+  /* .swipeable-list{
+    width: calc(100vw - 24px) !important;
+  } */
+  .drop-list{
     width: calc(100vw - 24px) !important;
   }
 }
