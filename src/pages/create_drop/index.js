@@ -19,6 +19,7 @@ import '../../components/detail_page/DateMenu/DateMenu.css'
 import DatePicker from 'react-datepicker'
 import "./CreateDrop.css"
 import validUrl from 'valid-url'
+import LoadingModal from '../../components/elements/LoadingModal/LoadingModal'
 
 export default function DropCreation(props) {
 
@@ -37,6 +38,7 @@ export default function DropCreation(props) {
   const [selectedMonth, setSelectedMonth] = useState('April')
   const [files, setFiles] = useState([])
   const [inComplete, setInComplete] = useState(false)
+  const [loading, setLoading] = useState(false)
 
 
   const [date, setDate] = useState(new Date());
@@ -175,6 +177,7 @@ export default function DropCreation(props) {
 
       else if (dropCreationStep === 4) {
         if (files.length > 0) {
+          setLoading(true)
           createDrop()
         }
         else {
@@ -281,7 +284,7 @@ export default function DropCreation(props) {
 
   return (
     <div className="create-drop-container">
-      <img style={{ position: "fixed", top: '26px', right: '20px', width: '30px', height: '30px', cursor: 'pointer' }} className={'close-button'} onClick={() => history.goBack()} src="./close-icon.png" />
+      {loading && (<LoadingModal label={'Uploading...'} />)}
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 36px 128px 36px' }}>
         <div style={{ display: 'flex', maxWidth: "238px", margin: '40px auto 30px auto' }}>
           <PageIndexItem index={1} selected={dropCreationStep >= 0} />
@@ -294,7 +297,17 @@ export default function DropCreation(props) {
         {renderStep()}
       </div>
       <div className={'main-button-container'} style={{ position: 'fixed', bottom: '24px', left: '50%', transform: 'translate(-50%, 0%)',display: 'flex',alignItems: 'center',justifyContent: 'center' }} >
-        {dropCreationStep > 0 && <button className="main-button create_drop_button" onClick={() => setStepAction('decrease')}>{"Back"}</button>}
+        {dropCreationStep >= 0 && <button className="main-button create_drop_button" 
+        onClick={() => {
+          if(dropCreationStep > 0) {
+            setStepAction('decrease')
+          }
+          else{
+            history.goBack()
+          }
+        }}>
+          {dropCreationStep > 0 ? "Back" : "Cancel"}
+        </button>}
         <button className="main-button create_drop_button" onClick={() => setStepAction('increase')}>{dropCreationStep === 4 ? "Finish" : "Next"}</button>
       </div>
     </div>
