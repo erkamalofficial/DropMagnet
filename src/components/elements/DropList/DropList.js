@@ -131,7 +131,7 @@ export default function DropList(props) {
         <>
           {
             listItems.map(drop => (
-              <div className="card">
+              <div className="card" style={{marginBottom: '10px'}}>
                 {renderDropCell(drop)}
               </div>
             ))}
