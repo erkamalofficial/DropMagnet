@@ -23,8 +23,8 @@ const CardContainer = styled.div`
   margin-bottom: 26px;
   margin-top: var(--main-header-margin-top);
   @media(max-width: 576px){
-    margin-top: 0,
-    margin-bottom: 26px;
+    margin-top: 0;
+    margin-bottom: 18px;
   }
 `;
 

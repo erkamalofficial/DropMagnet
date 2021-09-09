@@ -36,6 +36,7 @@ const HomeContainer = styled.div`
     user-select: none;
     padding-top: var(--main-header-margin-top);
     margin-top: 68px;
+    z-index: 9999999;
     @media (max-width: 500px) {
       padding-top: 2px
     }
