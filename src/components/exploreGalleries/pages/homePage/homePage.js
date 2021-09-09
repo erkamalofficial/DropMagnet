@@ -65,11 +65,11 @@ const HomePage = () => {
         try {
             const r = await currentUser.getIdTokenResult()
             const is_verified = r.claims["verified"]
-            setVerified(is_verified)    
+            setVerified(is_verified)
         } catch (error) {
             setVerified(false);
         }
-        
+
     }
 
     useEffect(() => {
@@ -86,7 +86,14 @@ const HomePage = () => {
                         <p className="left-top-tooltip">9+</p>
                     </InsetBoxIcon>
                     {/*<SwitchToggle/>*/}
-                    <div className="greeting-Alexander">Greetings, {user.name.split(' ')[0]}</div>
+
+                    {!user ? (
+                        <div className="stripe medium-stripe"></div>
+                    ) : (
+                        <div className="greeting-Alexander">
+                            Greetings, {user.name.split(' ')[0]}
+                        </div>
+                    )}
                     <InsetBoxIcon>
                         <img src={notification} alt="icon" />
                         <p className="right-top-tooltip">9+</p>

@@ -192,11 +192,11 @@ const AddWallet = (props) => {
             {props.wallets !== 0 ? (
                 <div className="wallets-controls">
                     <div className="prev-btn" onClick={props.decrease}> <ChevronLeftIcon /> </div>
-                    <Add onClick={handleConnect}>Add another wallet</Add>
+                    <Add onClick={connectWallet}>Add another wallet</Add>
                     <div className="nxt-btn" onClick={props.increase}> <ChevronRightIcon /> </div>
                 </div>
             ) : (
-                <Tap onClick={handleConnect}>Tap To Connect Wallet</Tap>
+                <Tap onClick={connectWallet}>Tap To Connect Wallet</Tap>
             )
             }
         </>

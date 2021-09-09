@@ -46,7 +46,9 @@ export default function Signup(props) {
       let name = res.user.displayName === null ? username : res.user.displayName
       let email = res.user.email
 
-      DropMagnetAPI.createNewUserProfile(name, username, email, res.user.za)
+      let tk = await res.user.getIdToken()
+
+      DropMagnetAPI.createNewUserProfile(name, username, email, tk)
       .then(async function (response) {
         console.log('error', response)
         if (response.status === "error") {

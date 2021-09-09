@@ -43,7 +43,7 @@ const ProfileForm = () => {
                         setLoading(false)
                         sessionStorage.removeItem('headerLoad')
                         history.push("/home")
-                        localStorage.setItem('userDetails', JSON.stringify(cred));
+                        
                     })
                 }
 
