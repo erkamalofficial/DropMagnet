@@ -21,9 +21,13 @@ export default function MainMenu(props) {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
+      let header = document.getElementsByClassName('fixed-container')[0]
+      header.style.zIndex = 999999
     }
     else {
       document.body.style.overflow = 'auto'
+      let header = document.getElementsByClassName('fixed-container')[0]
+      header.style.zIndex = 9998
     }
   }, [open])
 
