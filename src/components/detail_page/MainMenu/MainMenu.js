@@ -9,13 +9,16 @@ import { useAuth } from "../../../contexts/FirebaseAuthContext";
 import { Row } from "../../exploreGalleries/styled-components/Row";
 import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
 import GlossyButton from "../../elements/GlossyButton/GlossyButton";
+import { getTokens } from "../../../DropMagnetAPI";
 
 export default function MainMenu(props) {
 
   const { currentUser } = useAuth()
   const [open, setOpen] = useState(false);
   const [verified, setVerified] = useState(false)
-  
+  const [tokens, setTokens] = useState(0)
+  const [loading, setLoading] = useState(false)
+
   const user = JSON.parse(localStorage.getItem('userDetails'))
 
   useEffect(() => {
@@ -31,6 +34,20 @@ export default function MainMenu(props) {
     }
   }, [open])
 
+  useEffect(() => {
+    if (props.open) {
+      setLoading(true)
+      currentUser.getIdToken().then((idToken) => {
+        getTokens(user.id, idToken).then(res => {
+          setTokens(res.tokens)
+          setTimeout(() => {
+            setLoading(false)
+          }, 500);
+        })
+      })
+    }
+  }, [props.open])
+
   const checkIfVerified = async () => {
     try {
       const r = await currentUser.getIdTokenResult()
@@ -39,7 +56,7 @@ export default function MainMenu(props) {
     } catch (error) {
       setVerified(false);
     }
- 
+
   }
 
   const h = useHistory()
@@ -97,27 +114,31 @@ export default function MainMenu(props) {
               <p1 style={{ fontWeight: "bold" }}>{props.userDetails.name}</p1>
               <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
             </div>
-            <GlossyButton
-              label={`${user.tokens ? user.tokens : 0} Drop Tokens Earned`}
-              btnStyle={{ 
-                padding: '12px 14px 10px 14px', 
-                borderRadius: '27px',
-                fontSize: '12px',
-                fontWeight: '500'
-              }}
-              borderStyle={{
-                pos: '-1px',
-                borderRadius: '27px',
-                border: '1px',
-                grd1: '#181818',
-                grd2: '#181818',
-                grd3: '#6C00FF',
-                grd4: '#FF00C7'
-              }}
-              lableStyle={{
-                marginBottom: '-2px'
-              }}
-            ></GlossyButton>
+            {loading ? (
+              <div className="stripe token-sec-stripe"></div>
+            ) : (
+              <GlossyButton
+                label={`${tokens} Drop Tokens Earned`}
+                btnStyle={{
+                  padding: '12px 14px 10px 14px',
+                  borderRadius: '27px',
+                  fontSize: '12px',
+                  fontWeight: '500'
+                }}
+                borderStyle={{
+                  pos: '-1px',
+                  borderRadius: '27px',
+                  border: '1px',
+                  grd1: '#181818',
+                  grd2: '#181818',
+                  grd3: '#6C00FF',
+                  grd4: '#FF00C7'
+                }}
+                lableStyle={{
+                  marginBottom: '-2px'
+                }}
+              ></GlossyButton>
+            )}
           </div>
         ) : (
           <></>

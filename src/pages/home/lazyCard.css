@@ -65,6 +65,12 @@
       height: 30px;
   }
 
+  .token-sec-stripe{
+    width: 158px;
+    height: 40px !important;
+    border-radius: 27px !important;
+  }
+
   .long-stripe{
       width: 60%;
   }

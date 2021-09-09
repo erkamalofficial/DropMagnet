@@ -160,9 +160,9 @@ export function updateSubscription(field, value, access_token) {
   return normalAPICall(updateEndpoint, {}, "PUT", access_token)
 }
 
-export function updateTokens(artistId) {
-  const updateEndpoint = `profiles/artist/${artistId}`
-  return normalAPICall(updateEndpoint, {}, "POST", '')
+export function getTokens(artistId, idToken) {
+  const getTokensEndpoint = `drops/tokens/${artistId}`
+  return customAPICall(getTokensEndpoint, '', "GET", idToken)
 }
 
 
