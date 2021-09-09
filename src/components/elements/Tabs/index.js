@@ -7,7 +7,7 @@ const MOB_WIDTH = 126;
 const SMALL_MOB_WIDTH = 102;
 
 const TabContainer = styled.div`
-  margin:10px auto;
+  margin: 4px auto 16px auto;
   display: flex;
   align-items: center;
   border-radius: 22px;

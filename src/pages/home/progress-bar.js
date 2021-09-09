@@ -8,7 +8,7 @@ const ProgressBarWrapper = styled.div`
     inset 0 -1px 2px rgb(0 0 0 / 50%), inset 0 -3px 0 rgb(37 37 37 / 50%),
     inset 0 2px 4px rgb(0 0 0 / 50%), 0 3px 2px rgb(0 0 0 / 13%);
   justify-content: space-between;
-  margin-bottom: var(--gap-bottom);
+  margin-bottom: 16px;
   padding: 6px 16px;
   border-radius: 22px;
   z-index: 1;

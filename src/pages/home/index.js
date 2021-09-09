@@ -37,7 +37,7 @@ const HomeContainer = styled.div`
     padding-top: var(--main-header-margin-top);
     margin-top: 68px;
     @media (max-width: 500px) {
-      padding-top: 10px
+      padding-top: 2px
     }
   }
 `;

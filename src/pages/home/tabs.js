@@ -9,7 +9,7 @@ const TabsWrapper = styled.ul`
   color: #ebeae8;
   padding: 6px 10px;
   margin: 0;
-  margin-bottom: var(--gap-bottom);
+  margin-bottom: 16px;
   background-image: linear-gradient(
     #181818,
     #131313 83%,

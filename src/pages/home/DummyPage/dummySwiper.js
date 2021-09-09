@@ -20,10 +20,11 @@ const ActionSection = styled.div`
 const CardContainer = styled.div`
   width: var(--card-container-width);
   height: var(--card-container-height);
-  margin-bottom: var(--gap-bottom);
+  margin-bottom: 26px;
   margin-top: var(--main-header-margin-top);
   @media(max-width: 576px){
-    margin-top: 0
+    margin-top: 0,
+    margin-bottom: 26px;
   }
 `;
 

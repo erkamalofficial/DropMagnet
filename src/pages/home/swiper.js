@@ -17,7 +17,11 @@ const ActionSection = styled.div`
 const CardContainer = styled.div`
   width: var(--card-container-width);
   height: var(--card-container-height);
-  margin-bottom: var(--gap-bottom);
+  margin-bottom: 26px;
+  @media(max-width: 576px){
+    margin-bottom: 18px;
+  }
+  
 `;
 
 const alreadyRemoved = [];
