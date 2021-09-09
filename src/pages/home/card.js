@@ -12,7 +12,7 @@ const SwipeCard = styled.div`
   cursor: pointer;
   background-color: #262626;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+  // box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
   background-size: auto 70%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -148,6 +148,7 @@ const Card = (props) => {
 
   return (
     <SwipeCard data-key="card-bdr"
+    className="swiper-card"
     >
       <SwipeCardDeviceContainer data-key="card-rel-container">
         <HeaderSection key={1}>

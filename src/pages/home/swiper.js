@@ -139,7 +139,7 @@ function Swiper(props) {
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>
-      <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
+      <CardContainer key="cardContainer" className={'fix-minor-bug-swipe swiper-card-container'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
         {cards.length > 0 ? cards.map((cardDetails, index) => {
           const { id } = cardDetails;
 

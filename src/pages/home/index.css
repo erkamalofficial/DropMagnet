@@ -46,7 +46,11 @@
     align-items: center;
     color: white;
     padding-bottom: 10px;
-  }
+}
+
+.swiper-card-container .swipe:last-child .swiper-card{
+    box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+}
   
   @media screen and (min-device-height: 667px) {
     .card-container > div {
