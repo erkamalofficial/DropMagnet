@@ -30,7 +30,9 @@ export default function MainMenu(props) {
     else {
       document.body.style.overflow = 'auto'
       let header = document.getElementsByClassName('fixed-container')[0]
-      header.style.zIndex = 9998
+      setTimeout(() => {
+        header.style.zIndex = 9998
+      }, 600);
     }
   }, [open])
 
