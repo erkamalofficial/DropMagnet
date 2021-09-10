@@ -1,10 +1,10 @@
 .drop-list {
   margin-top: 12px;
-  margin-bottom: 140px;
   flex: 1 1 auto;
   overflow: auto;
   max-width: 576px;
   margin: auto;
+  margin-bottom: 140px;
 }
 
 .swipeable-list{

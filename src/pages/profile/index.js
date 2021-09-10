@@ -23,6 +23,7 @@ import FadeIn from 'react-fade-in';
 import LazyDropCells from "./LazyDropCells";
 import InstaIcon from "../../assets/insta-icon.png"
 import TwitterIcon from "../../assets/twitter-icon.png"
+import LoadingModal from "../../components/elements/LoadingModal/LoadingModal";
 
 const FooterContainer = styled.div`
   margin-top: 16px;
@@ -96,6 +97,7 @@ export default function Profile(props) {
   const [detailView, setDetailView] = useState(false);
   const [cropModal, setCropModal] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [updating, setUpdating] = useState(false)
 
   const { currentUser } = useAuth();
 
@@ -379,10 +381,13 @@ export default function Profile(props) {
   };
 
   const updateDetails = (field, value) => {
+    setUpdating(true)
     currentUser.getIdToken(false).then(function (idToken) {
-      DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) =>{
-        alert("Successfully updated.")
-        window.location.reload()
+      DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) => {
+        setTimeout(() => {
+          alert("Successfully updated.")
+          window.location.reload()
+        }, 400)
       });
     });
   };
@@ -462,7 +467,9 @@ export default function Profile(props) {
 
   return (
     <div>
-
+      {updating && (
+        <LoadingModal label="Updating...." />
+      )}
       {loading.profile && loading.drops ? (
         <div>
           <LazyProfile />
@@ -586,7 +593,7 @@ export default function Profile(props) {
                     style={{ display: "flex", cursor: "pointer" }}
                     onClick={() => handleProfileEdit("insta")}
                   >
-                    <img width={24} height={24} src={InstaIcon} alt="/"/>
+                    <img width={24} height={24} src={InstaIcon} alt="/" />
                     <div
                       className="profile-medium-title"
                       style={{ marginLeft: "10px" }}
@@ -780,7 +787,7 @@ export default function Profile(props) {
                     style={{ display: "flex", cursor: "pointer" }}
                     onClick={() => handleProfileEdit("insta")}
                   >
-                    <img width={24} height={24} src={InstaIcon} alt="/"/>
+                    <img width={24} height={24} src={InstaIcon} alt="/" />
                     <div
                       className="profile-medium-title"
                       style={{ marginLeft: "10px" }}
