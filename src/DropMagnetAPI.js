@@ -282,3 +282,52 @@ export function verifyCode(secret, token) {
   }
   return customAPICall(endPoint, payload, "POST", "");
 }
+
+
+// MetaURLs API
+
+export function createMetaURL(data, idToken) {
+  const endPoint = `metaurls`;
+  const payload = {
+    url: data.url,
+    name: data.name,
+    privacy: data.privacy,
+    nfts: data.nfts
+  }
+  return customAPICall(endPoint, payload, "POST", idToken);
+}
+
+export function getUserMetaURLs(idToken) {
+  const endPoint = `metaurls`;
+  return customAPICall(endPoint, '', "GET", idToken);
+}
+
+export function getMetaURLById(id, idToken) {
+  const endPoint = `metaurls/${id}`;
+  return customAPICall(endPoint, '', "GET", idToken);
+}
+
+export function connectWalletToMetaURL(data, id, idToken) {
+  const endPoint = `metaurls/connect/${id}`;
+  const payload = {
+    address: data.address,
+    secret: data.secret
+  }
+  return customAPICall(endPoint, payload, "PUT", idToken);
+}
+
+export function removeWalletFromMetaURL(data, id, idToken) {
+  const endPoint = `metaurls/remove/${id}`;
+  const payload = {
+    address: data.address
+  }
+  return customAPICall(endPoint, payload, "PUT", "");
+}
+
+export function selectWalletForMetaURL(data, id, idToken) {
+  const endPoint = `metaurls/select/${id}`;
+  const payload = {
+    address: data.address
+  }
+  return customAPICall(endPoint, payload, "PUT", idToken);
+}
