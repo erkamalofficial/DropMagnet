@@ -76,8 +76,8 @@ const MyGallery = () => {
             DropMagnetAPI.getUserMetaURLs(idToken)
                 .then(res => {
                     setTimeout(() => {
-                        setLoading(false)
                         setMetaURLs(res)
+                        setLoading(false)
                     }, 600);
                 })
         })
@@ -100,6 +100,9 @@ const MyGallery = () => {
                     </>
                 )
                 }
+                {metaURLs && metaURLs.length === 0 && (
+                    <p style={{textAlign: 'center'}}>No MetaURL</p>
+                )}
             </div>
             <CreateURL />
         </div>
