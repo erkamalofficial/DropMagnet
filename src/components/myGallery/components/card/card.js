@@ -498,6 +498,7 @@ const Card = (props) => {
 
     const verifyCode = async (code, sct) => {
         setLoading(true)
+        setAuth(false)
 
         await DropMagnetAPI.verifyCode(sct, code)
             .then(res => {
@@ -508,6 +509,7 @@ const Card = (props) => {
                 }
                 else {
                     alert(res.message)
+                    setAuth(true)
                 }
 
             })
