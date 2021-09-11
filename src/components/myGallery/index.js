@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/header/header";
 import Search from "./styled-components/textfield";
 import Card from "./components/card/card";
@@ -10,9 +10,13 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from 'axios';
 import HeaderBar from "../elements/HeaderBar/HeaderBar";
+import {useAuth} from "../../contexts/FirebaseAuthContext"
+import * as DropMagnetAPI from "../../DropMagnetAPI"
 
 
 const MyGallery = () => {
+
+    const [metaURLs, setMetaURLs] = useState(null)
 
     const fetchNFTs = () => {
         // const ethereum = window.ethereum;
@@ -57,6 +61,8 @@ const MyGallery = () => {
         // });
     }
 
+    const {currentUser} = useAuth()
+
     const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
     useEffect(() => {
         if (!cntWallets) {
@@ -68,14 +74,25 @@ const MyGallery = () => {
         fetchNFTs()
     }, [])
 
+    useEffect(() => {
+        currentUser.getIdToken().then((idToken) => {
+            DropMagnetAPI.getUserMetaURLs(idToken)
+            .then(res => {
+                console.log(res)
+                setMetaURLs(res)
+            })
+        })
+    }, [])
+
     return (
         <div style={{ marginTop: '70px' }}>
             <Search type="search" placeholder="Search" />
             <div style={{ marginBottom: '96px' }}>
-                {[1, 2, 3, 4].map(c => (
-                    <Card key={c}
-                        id={c}
-                        nft={10} artist={"Artist.link/CryptoArtMan"} image={image1} />
+                {metaURLs && metaURLs.map(m => (
+                    <Card key={m.id}
+                        id={m.id}
+                        metaurl={m}
+                        image={image1} />
                 ))}
             </div>
             <CreateURL />

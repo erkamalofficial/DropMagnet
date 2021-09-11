@@ -308,9 +308,8 @@ const Remove = styled.div`
 
 const Card = (props) => {
 
-    const { nft, artist, image, id } = props;
+    const { metaurl, image, id } = props;
     const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
-    const curMetaURLCard = cntWallets?.filter(cw => cw.id === id)[0]
 
     const [isOpen, setIsOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -346,7 +345,7 @@ const Card = (props) => {
 
 
     const inc = () => {
-        let pages = Math.floor(curMetaURLCard?.addresses.length / 3)
+        let pages = Math.floor(metaurl.addresses.length / 3)
         if (page < pages) {
             setPage(page + 1)
             setStart(start + 3)
@@ -613,7 +612,7 @@ const Card = (props) => {
                     <Form>
                         <EditName>
                             <label htmlFor="name">Name</label>
-                            <input id="name" type="text" value={"Alexander Newton"} readOnly={true} />
+                            <input id="name" type="text" value={metaurl.name} readOnly={true} />
                         </EditName>
                     </Form>
                     <Privacy>
@@ -624,9 +623,11 @@ const Card = (props) => {
                                     return (
                                         <React.Fragment key={i}>
                                             <label key={i} htmlFor={tab.id}
-                                                onClick={() => handleChangeTab(tab.id)}>{tab.id}</label>
+                                                onClick={() => handleChangeTab(tab.id)}>
+                                                    {tab.id}
+                                            </label>
                                             <input type="radio" id={tab.id} name="tabs"
-                                                defaultChecked={tab.id === activeTab} />
+                                                defaultChecked={tab.id.toLowerCase() === metaurl.privacy} />
                                         </React.Fragment>
                                     )
                                 })
@@ -652,11 +653,11 @@ const Card = (props) => {
                         <p>Connected Wallets</p>
                     </Title>
                     <Form>
-                        {curMetaURLCard?.addresses.slice(start, end)
+                        {metaurl.addresses.slice(start, end)
                             .map(wa => (
                                 <Address
                                     style={{
-                                        background: `${selected?.address === wa.address ? '#09200087' : ''}`
+                                        background: `${wa.selected ? '#09200087' : ''}`
                                     }}>
                                     <EditName
                                         onClick={() => {
@@ -670,7 +671,7 @@ const Card = (props) => {
                                             value={wa.address}
                                             readOnly={true}
                                             style={{
-                                                border: `${selected?.address === wa.address ? '1px solid #52FF02' : ''}`
+                                                border: `${wa.selected ? '1px solid #52FF02' : ''}`
                                             }}
                                         />
                                     </EditName>
@@ -684,8 +685,7 @@ const Card = (props) => {
                             ))}
                     </Form>
 
-                    {/* <Add onClick={handleConnect}>Add another wallet</Add> */}
-                    {curMetaURLCard?.addresses?.length > 0 ? <AddWallet insertAd={insertAddress}
+                    {metaurl?.addresses?.length > 0 ? <AddWallet insertAd={insertAddress}
                         increase={inc}
                         decrease={dec} />
                         : <AddWallet insertAd={insertAddress}
@@ -710,8 +710,8 @@ const Card = (props) => {
             <CardSize>
                 <img src={image} alt="back" />
                 <MoreBtn handleClick={handleMenu} isOpen={isOpen} />
-                <NFT>{nft} NFTs</NFT>
-                <Artist>{artist}</Artist>
+                <NFT>{metaurl.nfts} NFTs</NFT>
+                <Artist>{metaurl.url}</Artist>
                 {memoizedShowModals}
             </CardSize>
         </CardWrapper>
