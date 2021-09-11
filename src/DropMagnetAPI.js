@@ -263,27 +263,6 @@ export function createWalletUser(username, name, address) {
   return customAPICall(userEndPoint, payload, "POST", "");
 }
 
-
-// 2-Factor Auth
-
-export function generateQR(address) {
-  const endPoint = `getqr`;
-  const payload = {
-    address: address
-  }
-  return customAPICall(endPoint, payload, "POST", "");
-}
-
-export function verifyCode(secret, token) {
-  const endPoint = `verifyqr`;
-  const payload = {
-    secret: secret,
-    token: token 
-  }
-  return customAPICall(endPoint, payload, "POST", "");
-}
-
-
 // MetaURLs API
 
 export function createMetaURL(data, idToken) {
@@ -330,4 +309,30 @@ export function selectWalletForMetaURL(data, id, idToken) {
     address: data.address
   }
   return normalAPICall(endPoint, payload, "PUT", idToken);
+}
+
+export function veridyWalletForMetaURL(data, id, idToken) {
+  const endPoint = `metaurls/verify/${id}`;
+  const payload = {
+    address: data.address
+  }
+  return normalAPICall(endPoint, payload, "PUT", idToken);
+}
+
+
+export function generateQR(address) {
+  const endPoint = `metaurls/address/getqr`;
+  const payload = {
+    address: address
+  }
+  return customAPICall(endPoint, payload, "POST", "");
+}
+
+export function verifyCode(secret, token) {
+  const endPoint = `metaurls/address/verifyqr`;
+  const payload = {
+    secret: secret,
+    token: token 
+  }
+  return customAPICall(endPoint, payload, "POST", "");
 }

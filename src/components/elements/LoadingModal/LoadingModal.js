@@ -18,6 +18,7 @@ const Loader = styled.div`
     font-size: 22px;
     font-weight: 700;
     color: #8f8f8f;
+    z-index: 9999999;
 `
 
 const LoadingModal = ({label}) => {

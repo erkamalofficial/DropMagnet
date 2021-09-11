@@ -10,7 +10,7 @@ import web3 from 'web3'
 import AddWallet from "./addWallet";
 import QRCode from 'qrcode'
 import * as DropMagnetAPI from "../../../../DropMagnetAPI"
-import {useAuth} from "../../../../contexts/FirebaseAuthContext"
+import { useAuth } from "../../../../contexts/FirebaseAuthContext"
 import LoadingModal from "../../../elements/LoadingModal/LoadingModal.js"
 
 const CardWrapper = styled.div`
@@ -312,7 +312,7 @@ const Card = (props) => {
 
     const { metaurl, image, id } = props;
     const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
-    const {currentUser} = useAuth()
+    const { currentUser } = useAuth()
 
     const [isOpen, setIsOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -379,7 +379,7 @@ const Card = (props) => {
                         Lorem ipsum may be used as a placeholder before final copy is available.
                     </p>
                     <button onClick={() => {
-                        markVerified(selected.address)
+                        makeAddressVerified(selected.address)
                         setTnc(false)
                     }}>
                         I understand & agree.
@@ -484,72 +484,78 @@ const Card = (props) => {
         }
         currentUser.getIdToken().then((idToken) => {
             DropMagnetAPI.connectWalletToMetaURL(data, id, idToken)
-            .then(res => {
-                setLoading(false)
-                if(res.status === 409){
-                    alert("This wallet already exists.")
-                }
-                else{
-                    setConfirmation(true)
-                }
-            })
+                .then(res => {
+                    setLoading(false)
+                    if (res.status === 409) {
+                        alert("This wallet already exists.")
+                    }
+                    else {
+                        setConfirmation(true)
+                    }
+                })
         })
     }
 
     const verifyCode = async (code, sct) => {
-        let res = await DropMagnetAPI.verifyCode(sct, code)
-        if (res.status === 1) {
-            setAuth(false)
-            setTnc(true)
-        }
-        else {
-            alert(res.message)
-        }
-    }
+        setLoading(true)
 
-    const markVerified = (ad) => {
-        let wallets = cntWallets
-        wallets.forEach(w => {
-            if (w.id === id) {
-                w.addresses.forEach(w => {
-                    if (w.address === ad) {
-                        w.verified = true
-                    }
-                });
-            }
-        });
-        localStorage.setItem('cntWallets', JSON.stringify(wallets))
+        await DropMagnetAPI.verifyCode(sct, code)
+            .then(res => {
+                setLoading(false)
+                if (res.status === 1) {
+                    setAuth(false)
+                    setTnc(true)
+                }
+                else {
+                    alert(res.message)
+                }
+
+            })
+
     }
 
     const removeAddress = async (ad) => {
         setRmvCnf(false)
         setLoading(true)
-        const data = {address: ad}
+        const data = { address: ad }
 
         currentUser.getIdToken().then((idToken) => {
             DropMagnetAPI.removeWalletFromMetaURL(data, id, idToken)
-            .then(res => {
-                setLoading(false)
-                if(res.status === 204){
-                    alert("This wallet doesn't exist.")
-                }
-                else{
-                    window.location.reload()
-                }
-            })
+                .then(res => {
+                    setLoading(false)
+                    if (res.status === 204) {
+                        alert("This wallet doesn't exist.")
+                    }
+                    else {
+                        window.location.reload()
+                    }
+                })
         })
     }
 
     const selectAddress = (ad) => {
 
         setLoading(true)
-        const data = {address: ad}
+        const data = { address: ad }
 
         currentUser.getIdToken().then((idToken) => {
             DropMagnetAPI.selectWalletForMetaURL(data, id, idToken)
-            .then(res => {
-                setLoading(false)
-            })
+                .then(res => {
+                    setLoading(false)
+                    window.location.reload()
+                })
+        })
+    }
+
+    const makeAddressVerified = async (ad) => {
+        setLoading(true)
+        const data = { address: ad }
+
+        currentUser.getIdToken().then((idToken) => {
+            DropMagnetAPI.veridyWalletForMetaURL(data, id, idToken)
+                .then(res => {
+                    selectAddress(ad)
+                })
         })
     }
 
@@ -615,7 +621,7 @@ const Card = (props) => {
                                         <React.Fragment key={i}>
                                             <label key={i} htmlFor={tab.id}
                                                 onClick={() => handleChangeTab(tab.id)}>
-                                                    {tab.id}
+                                                {tab.id}
                                             </label>
                                             <input type="radio" id={tab.id} name="tabs"
                                                 defaultChecked={tab.id.toLowerCase() === metaurl.privacy} />
@@ -655,7 +661,7 @@ const Card = (props) => {
                                             if (!wa.verified) {
                                                 setAuth(true)
                                                 setSelected(wa)
-                                            }else if(!wa.selected){
+                                            } else if (!wa.selected) {
                                                 await selectAddress(wa.address)
                                             }
                                         }}>
@@ -696,7 +702,7 @@ const Card = (props) => {
 
     return (
         <CardWrapper>
-            {loading && <LoadingModal label="Saving changes...."/> }
+            {loading && <LoadingModal label="Saving changes...." />}
             {confirmation && showConfirmationModal()}
             {tnc && showTNC()}
             {rmvCnf && showRemoveModal(address)}
