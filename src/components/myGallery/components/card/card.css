@@ -89,3 +89,73 @@
     align-items: center;
     justify-content: center;
 }
+
+/* Lazy Loading */
+
+.url, .circular, .nft{
+    background-color: #242424;
+    height: 38px;
+    border-radius: 5px;
+}
+
+.url{
+    max-width: 228px;
+    position: absolute;
+    left:0;
+    right:0;
+    bottom: 12px;
+    margin: auto;
+}
+
+.circular{
+    width: 38px;
+    border-radius: 50%;
+    position:absolute;
+    top:8px;
+    left: 8px;
+}
+
+.nft{
+    width: 100px;
+    position:absolute;
+    top:8px;
+    right: 8px;
+}
+
+.lazy-card{
+    background-color: #353535;
+    position: relative;
+}
+
+.lazy-card, .lazy {
+    animation: hintloading 2s ease-in-out 0s infinite reverse;
+    -webkit-animation: hintloading 2s ease-in-out 0s infinite reverse;
+}
+
+
+  
+@keyframes hintloading
+{
+  0% {
+    opacity: 0.5;
+  }
+  50%  {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@-webkit-keyframes hintloading
+{
+  0% {
+    opacity: 0.5;
+  }
+  50%  {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

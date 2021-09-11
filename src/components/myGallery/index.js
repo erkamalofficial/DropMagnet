@@ -3,20 +3,16 @@ import Header from "./components/header/header";
 import Search from "./styled-components/textfield";
 import Card from "./components/card/card";
 import image1 from "./assets/background.png";
-import image2 from "./assets/background2.png";
 import CreateURL from "./components/createurl/CreateURL";
-import { FetchWrapper } from "use-nft";
-import { ethers } from "ethers";
-import Web3 from "web3";
-import axios from 'axios';
-import HeaderBar from "../elements/HeaderBar/HeaderBar";
-import {useAuth} from "../../contexts/FirebaseAuthContext"
+import { useAuth } from "../../contexts/FirebaseAuthContext"
 import * as DropMagnetAPI from "../../DropMagnetAPI"
+import LazyCards from "./components/card/LazyCards";
 
 
 const MyGallery = () => {
 
     const [metaURLs, setMetaURLs] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const fetchNFTs = () => {
         // const ethereum = window.ethereum;
@@ -61,7 +57,7 @@ const MyGallery = () => {
         // });
     }
 
-    const {currentUser} = useAuth()
+    const { currentUser } = useAuth()
 
     const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
     useEffect(() => {
@@ -75,12 +71,15 @@ const MyGallery = () => {
     }, [])
 
     useEffect(() => {
+        setLoading(true)
         currentUser.getIdToken().then((idToken) => {
             DropMagnetAPI.getUserMetaURLs(idToken)
-            .then(res => {
-                console.log(res)
-                setMetaURLs(res)
-            })
+                .then(res => {
+                    setTimeout(() => {
+                        setLoading(false)
+                        setMetaURLs(res)
+                    }, 600);
+                })
         })
     }, [])
 
@@ -88,12 +87,19 @@ const MyGallery = () => {
         <div style={{ marginTop: '70px' }}>
             <Search type="search" placeholder="Search" />
             <div style={{ marginBottom: '96px' }}>
-                {metaURLs && metaURLs.map(m => (
-                    <Card key={m.id}
-                        id={m.id}
-                        metaurl={m}
-                        image={image1} />
-                ))}
+                {!metaURLs && loading ? (
+                    <>{[1, 2, 3, 4].map(m => <LazyCards key={m} />)}</>
+                ) : (
+                    <>
+                        {metaURLs && metaURLs.map(m => (
+                            <Card key={m.id}
+                                id={m.id}
+                                metaurl={m}
+                                image={image1} />
+                        ))}
+                    </>
+                )
+                }
             </div>
             <CreateURL />
         </div>
