@@ -10,6 +10,8 @@ import web3 from 'web3'
 import AddWallet from "./addWallet";
 import QRCode from 'qrcode'
 import * as DropMagnetAPI from "../../../../DropMagnetAPI"
+import {useAuth} from "../../../../contexts/FirebaseAuthContext"
+import LoadingModal from "../../../elements/LoadingModal/LoadingModal.js"
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -310,12 +312,15 @@ const Card = (props) => {
 
     const { metaurl, image, id } = props;
     const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
+    const {currentUser} = useAuth()
 
     const [isOpen, setIsOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [walletEdit, setWalletEdit] = useState(false);
     const [activeTab, setActiveTab] = useState("public");
     const [linkCopied, setLinkCopied] = useState(false);
+
+    const [loading, setLoading] = useState(false)
 
     const [tnc, setTnc] = useState(false)
     const [auth, setAuth] = useState(false)
@@ -455,7 +460,7 @@ const Card = (props) => {
                     </p>
 
                     <div className="btn-cnt">
-                        <button onClick={() => removeAddress(ad)}>
+                        <button onClick={async () => await removeAddress(ad)}>
                             Yes
                         </button>
                         <p>or</p>
@@ -469,60 +474,26 @@ const Card = (props) => {
     }
 
     const insertAddress = async (ad) => {
-        let wallets = cntWallets
-        let flag = 0;
-        if (wallets.length >= 1) {
-            wallets.forEach(async (w) => {
-                if (w.id === id) {
-                    let target = w.addresses.filter(wa => wa.address === ad)
-                    if (target.length === 0) {
-                        flag = 1;
-                        let res = await DropMagnetAPI.generateQR(ad)
-                        w.addresses.push({
-                            address: ad,
-                            secret: res.secret,
-                            verified: false
-                        })
-                        localStorage.setItem('cntWallets', JSON.stringify(wallets))
-                        setQrImg(res.src)
-                        setConfirmation(true)
-                    }
-                    else {
-                        alert("This wallet already exists.")
-                        flag = 1;
-                        window.location.reload()
-                    }
+
+        setLoading(true)
+        let res = await DropMagnetAPI.generateQR(ad)
+        setQrImg(res.src)
+        const data = {
+            address: ad,
+            secret: res.secret
+        }
+        currentUser.getIdToken().then((idToken) => {
+            DropMagnetAPI.connectWalletToMetaURL(data, id, idToken)
+            .then(res => {
+                setLoading(false)
+                if(res.status === 409){
+                    alert("This wallet already exists.")
                 }
-            });
-            if (flag === 0) {
-                let res = await DropMagnetAPI.generateQR(ad)
-                wallets.push({
-                    id: id,
-                    addresses: [{
-                        address: ad,
-                        secret: res.secret,
-                        verified: false
-                    }]
-                })
-                localStorage.setItem('cntWallets', JSON.stringify(wallets))
-                setQrImg(res.src)
-                setConfirmation(true)
-            }
-        }
-        else {
-            let res = await DropMagnetAPI.generateQR(ad)
-            wallets.push({
-                id: id,
-                addresses: [{
-                    address: ad,
-                    secret: res.secret,
-                    verified: false
-                }]
+                else{
+                    setConfirmation(true)
+                }
             })
-            localStorage.setItem('cntWallets', JSON.stringify(wallets))
-            setQrImg(res.src)
-            setConfirmation(true)
-        }
+        })
     }
 
     const verifyCode = async (code, sct) => {
@@ -550,16 +521,36 @@ const Card = (props) => {
         localStorage.setItem('cntWallets', JSON.stringify(wallets))
     }
 
-    const removeAddress = (ad) => {
-        let wallets = cntWallets
-        wallets.forEach(w => {
-            if (w.id === id) {
-                let newAds = w.addresses.filter(w => w.address !== ad);
-                w.addresses = newAds
-            }
-        });
-        localStorage.setItem('cntWallets', JSON.stringify(wallets))
+    const removeAddress = async (ad) => {
         setRmvCnf(false)
+        setLoading(true)
+        const data = {address: ad}
+
+        currentUser.getIdToken().then((idToken) => {
+            DropMagnetAPI.removeWalletFromMetaURL(data, id, idToken)
+            .then(res => {
+                setLoading(false)
+                if(res.status === 204){
+                    alert("This wallet doesn't exist.")
+                }
+                else{
+                    window.location.reload()
+                }
+            })
+        })
+    }
+
+    const selectAddress = (ad) => {
+
+        setLoading(true)
+        const data = {address: ad}
+
+        currentUser.getIdToken().then((idToken) => {
+            DropMagnetAPI.selectWalletForMetaURL(data, id, idToken)
+            .then(res => {
+                setLoading(false)
+            })
+        })
     }
 
     const showModals = () => {
@@ -660,10 +651,12 @@ const Card = (props) => {
                                         background: `${wa.selected ? '#09200087' : ''}`
                                     }}>
                                     <EditName
-                                        onClick={() => {
+                                        onClick={async () => {
                                             if (!wa.verified) {
                                                 setAuth(true)
                                                 setSelected(wa)
+                                            }else if(!wa.selected){
+                                                await selectAddress(wa.address)
                                             }
                                         }}>
                                         <input id="name"
@@ -703,6 +696,7 @@ const Card = (props) => {
 
     return (
         <CardWrapper>
+            {loading && <LoadingModal label="Saving changes...."/> }
             {confirmation && showConfirmationModal()}
             {tnc && showTNC()}
             {rmvCnf && showRemoveModal(address)}

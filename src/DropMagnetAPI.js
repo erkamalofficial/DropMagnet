@@ -313,7 +313,7 @@ export function connectWalletToMetaURL(data, id, idToken) {
     address: data.address,
     secret: data.secret
   }
-  return customAPICall(endPoint, payload, "PUT", idToken);
+  return normalAPICall(endPoint, payload, "PUT", idToken);
 }
 
 export function removeWalletFromMetaURL(data, id, idToken) {
@@ -321,7 +321,7 @@ export function removeWalletFromMetaURL(data, id, idToken) {
   const payload = {
     address: data.address
   }
-  return customAPICall(endPoint, payload, "PUT", "");
+  return normalAPICall(endPoint, payload, "PUT", idToken);
 }
 
 export function selectWalletForMetaURL(data, id, idToken) {
@@ -329,5 +329,5 @@ export function selectWalletForMetaURL(data, id, idToken) {
   const payload = {
     address: data.address
   }
-  return customAPICall(endPoint, payload, "PUT", idToken);
+  return normalAPICall(endPoint, payload, "PUT", idToken);
 }
