@@ -58,9 +58,6 @@ export default function DropDetail(props) {
     }
   }
 
-  let d = new Date(props?.drop?.drop_date)
-  const date = Moment(d, "MM/DD/YYYY").format("Do MMM YYYY")
-
   let artist_image = props.drop.artist && props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
   let artist_name = props.drop.artist ? props.drop.artist.username : 'Test User'
 
@@ -101,6 +98,9 @@ export default function DropDetail(props) {
     }
   }
 
+  let d = new Date(props?.drop?.drop_date)
+  const date = Moment(d, "MM/DD/YYYY").format("Do MMM YYYY")
+  
   let curDropDate = props.drop.drop_date
   let gmtDate = new Date(calcTime(13)).getTime()
 
@@ -159,7 +159,14 @@ export default function DropDetail(props) {
           </div>
         </div>
       }
-      <h1 className="drop-detail-title exp-view">{props.drop.title}</h1>
+      {gmtDate >= curDropDate && props.drop.link!=='' ? (
+        <a className="drop-detail-title exp-view"
+        style={{color: '#EEEEEE'}}
+         href={props.drop.link}>{props.drop.title}</a>
+      ) : (
+        <h1 className="drop-detail-title exp-view">{props.drop.title}</h1>
+      )}
+      
       <div style={{ height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px' }} />
       <div className="drop-detail-holder" style={{ marginTop: '12px' }}>
         <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
@@ -182,8 +189,8 @@ export default function DropDetail(props) {
       </div> */}
 
       <div className="pieces-and-date">
-        <p>9 Pieces</p>
-        {gmtDate >= curDropDate ? (
+        <p>{props.drop.pieces} Pieces</p>
+        {gmtDate >= curDropDate && props.drop.link!=='' ? (
           <p className="dropped">Dropped</p>
         ) : (
           <p>{date}</p>

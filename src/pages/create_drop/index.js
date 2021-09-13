@@ -101,6 +101,7 @@ export default function DropCreation(props) {
         drop_date,
         marketplace,
         link,
+        Number(dropPieces),
         Number(price),
         Number(auction_price),
         files,

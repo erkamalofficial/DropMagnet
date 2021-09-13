@@ -169,7 +169,7 @@ export function getTokens(artistId, idToken) {
 // Drop creation
 
 
-export function createDrop(title, desc, category, drop_date, marketplace, link, price, auction_price, files, access_token) {
+export function createDrop(title, desc, category, drop_date, marketplace, link, pieces, price, auction_price, files, access_token) {
   const createDropEndpoint = 'drops'
   const content = files;
 
@@ -180,6 +180,7 @@ export function createDrop(title, desc, category, drop_date, marketplace, link, 
     drop_date,
     marketplace,
     link,
+    pieces,
     price,
     auction_price,
     content

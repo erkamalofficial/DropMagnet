@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "./DropDetail.css"
-import { formatDate } from '../../../helpers/DateFormatter'
+import { calcTime, formatDate } from '../../../helpers/DateFormatter'
 import Avatar from '../../elements/Avatar/Avatar'
 import { getInitials } from '../../../utils'
 import { FormBtn } from '../../../pages/register/FormComponents'
@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
 import DropLink from './DropLink'
 import Link from "../../../assets/linkIcon.svg"
+import Moment from 'moment';
 
 export default function ProfileDropDetail(props) {
 
@@ -94,6 +95,12 @@ export default function ProfileDropDetail(props) {
 
   const style = props.style || {};
 
+  let d = new Date(props?.drop?.drop_date)
+  const date = Moment(d, "MM/DD/YYYY").format("Do MMM YYYY")
+
+  let curDropDate = props.drop.drop_date
+  let gmtDate = new Date(calcTime(13)).getTime()
+
   return (
     <div className="detail-view" style={style}>
       {imgModal &&
@@ -154,7 +161,14 @@ export default function ProfileDropDetail(props) {
         </div>
       }
 
-      <h1 className="drop-detail-title exp-view">{props.drop.title}</h1>
+      {/* <h1 className="drop-detail-title exp-view">{props.drop.title}</h1> */}
+      {gmtDate >= curDropDate && props.drop.link!=='' ? (
+        <a className="drop-detail-title exp-view"
+        style={{color: '#EEEEEE'}}
+         href={props.drop.link}>{props.drop.title}</a>
+      ) : (
+        <h1 className="drop-detail-title exp-view">{props.drop.title}</h1>
+      )}
       <div style={{ height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px' }} />
       <div className="drop-detail-holder" style={{ marginTop: '12px' }}>
         <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
@@ -171,9 +185,17 @@ export default function ProfileDropDetail(props) {
           </p2>
         )}
       </div>
-      <div className="drop-detail-holder" style={{ marginTop: '0px' }}>
+      {/* <div className="drop-detail-holder" style={{ marginTop: '0px' }}>
         {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
         <p className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p>
+      </div> */}
+      <div className="pieces-and-date">
+        <p>{props.drop.pieces} Pieces</p>
+        {gmtDate >= curDropDate && props.drop.link!=='' ? (
+          <p className="dropped">Dropped</p>
+        ) : (
+          <p>{date}</p>
+        )}
       </div>
       {/* {props.show && (
         <FormBtn className="w-100" type="submit"
