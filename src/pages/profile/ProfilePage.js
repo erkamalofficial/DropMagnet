@@ -17,6 +17,8 @@ import { getCategoryFromTab, tabList } from "../../constants";
 import { getInitials } from "../../utils";
 import FadeIn from "react-fade-in";
 import LazyProfile from "./LazyProfile";
+import InstaIcon from "../../assets/insta-icon.png"
+import TwitterIcon from "../../assets/twitter-icon.png"
 
 const TabContainer = styled.div`
   margin-top: 12px;
@@ -260,7 +262,7 @@ export default function ProfilePage(props) {
                 <img
                   width={37}
                   height={24}
-                  src="./twitter-icon.png"
+                  src={TwitterIcon}
                   style={{ paddingRight: "8px" }}
                   alt="/"
                 />
@@ -285,7 +287,7 @@ export default function ProfilePage(props) {
               <div
                 style={{ display: "flex", cursor: "pointer" }}
               >
-                <img width={24} height={24} src="./insta-icon.png" alt="/" />
+                <img width={24} height={24} src={InstaIcon} alt="/" />
                 <div
                   className="profile-medium-title"
                   style={{ marginLeft: "10px" }}
