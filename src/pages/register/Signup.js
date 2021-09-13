@@ -21,6 +21,7 @@ if (process.env === "development") {
 
 export default function Signup(props) {
   const emailRef = useRef();
+  const usernameRef = useRef()
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const { signup, currentUser } = useAuth();
@@ -37,38 +38,48 @@ export default function Signup(props) {
     try {
       setError("");
       setLoading(true);
-      const res = await signup(
-        emailRef.current.value,
-        passwordRef.current.value
-      );
+      let username = usernameRef.current.value
 
-      let username = res.user.email.split('@')[0]
-      let name = res.user.displayName === null ? username : res.user.displayName
-      let email = res.user.email
+      if (!username.split(' ')[1]) {
+        const res = await signup(
+          emailRef.current.value,
+          passwordRef.current.value
+        );
 
-      let tk = await res.user.getIdToken()
 
-      DropMagnetAPI.createNewUserProfile(name, username, email, tk)
-      .then(async function (response) {
-        console.log('error', response)
-        if (response.status === "error") {
-          console.log('error', response)
-        }
-        else {
-          try {
-            window.localStorage.setItem("emailForSignIn", emailRef.current.value);
-            await res.user.sendEmailVerification({
-              handleCodeInApp: true,
-              url: `${VERIFY_EMAIL_PATH}/buy-links`,
-            });
-            setMessage("Check your email inbox for further instructions");
-          } catch {
-            setError("Failed to send email");
-          }
-        }
+        let name = res.user.displayName === null ? username : res.user.displayName
+        let email = res.user.email
 
-      })
-    } catch(err) {
+        let tk = await res.user.getIdToken()
+
+        DropMagnetAPI.createNewUserProfile(name, username, email, tk)
+          .then(async function (response) {
+            console.log('error', response)
+            if (response.status === "error") {
+              console.log('error', response)
+            }
+            else {
+              try {
+                window.localStorage.setItem("emailForSignIn", emailRef.current.value);
+                await res.user.sendEmailVerification({
+                  handleCodeInApp: true,
+                  url: `${VERIFY_EMAIL_PATH}/buy-links`,
+                });
+                setMessage("Check your email inbox for further instructions");
+              } catch {
+                setError("Failed to send email");
+              }
+            }
+
+          })
+      }
+      else {
+        alert("Username must be of one word.")
+        setLoading(false)
+      }
+
+
+    } catch (err) {
       setError(err.message);
     }
 
@@ -99,6 +110,10 @@ export default function Signup(props) {
                 <GridItem id="email">
                   <FormLabel>Email</FormLabel>
                   <FormInput type="email" ref={emailRef} required />
+                </GridItem>
+                <GridItem id="username">
+                  <FormLabel>Username</FormLabel>
+                  <FormInput type="text" ref={usernameRef} required />
                 </GridItem>
                 <GridItem id="password">
                   <FormLabel>Password</FormLabel>

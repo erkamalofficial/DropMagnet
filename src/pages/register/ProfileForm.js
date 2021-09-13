@@ -17,6 +17,7 @@ if (process.env === "development") {
 const ProfileForm = () => {
 
     const nameRef = useRef();
+    const usernameRef = useRef();
     const { signInWithCustomToken } = useAuth();
 
     const [error, setError] = useState("");
@@ -31,23 +32,31 @@ const ProfileForm = () => {
         try {
             setError("");
             let name = nameRef.current.value
-            let username = name.split(" ")[0].toLowerCase()
+            let username = usernameRef.current.value
 
-            DropMagnetAPI.createWalletUser(username, name, address).then(async function (response) {
-                if (response.status === "error") {
-                    console.log('error', response)
-                }
-                else {
-                    await signInWithCustomToken(response.token)
-                    .then(cred => {
-                        setLoading(false)
-                        sessionStorage.removeItem('headerLoad')
-                        history.push("/home")
-                        
-                    })
-                }
+            if (!username.split(' ')[1]) {
+                DropMagnetAPI.createWalletUser(username, name, address).then(async function (response) {
+                    if (response.status === "error") {
+                        console.log('error', response)
+                    }
+                    else {
+                        await signInWithCustomToken(response.token)
+                            .then(cred => {
+                                setLoading(false)
+                                sessionStorage.removeItem('headerLoad')
+                                history.push("/home")
 
-            })
+                            })
+                    }
+
+                })
+            }
+            else{
+                alert("Username must be of one word.")
+                setLoading(false)
+            }
+
+
         } catch {
             console.log("Error")
             setError("Failed to create an account");
@@ -75,6 +84,10 @@ const ProfileForm = () => {
                                 <GridItem id="name">
                                     <FormLabel>Name</FormLabel>
                                     <FormInput type="text" ref={nameRef} required />
+                                </GridItem>
+                                <GridItem id="username">
+                                    <FormLabel>Username</FormLabel>
+                                    <FormInput type="text" ref={usernameRef} required />
                                 </GridItem>
                             </>
                         ) : <Spinner />}
