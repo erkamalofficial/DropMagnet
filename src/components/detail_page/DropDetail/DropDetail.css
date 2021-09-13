@@ -29,6 +29,31 @@
   height: 39px !important;
 }
 
+.pieces-and-date{
+  display: flex;
+  align-items: center;
+  margin: auto;
+  margin: 4px auto 12px auto;
+}
+
+.pieces-and-date p{
+  margin: 0;
+  padding: 0 4px;
+  color: #7A7A7A;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dropped{
+  font-size: 14px;
+  font-weight: 500;
+  background: -webkit-linear-gradient(180deg, #32C5FF, #B620E0, #B100F7);
+  text-shadow: 0 2px 4px #00000080;
+  background-clip: text;
+  fill: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 @media(min-width: 1000px) {
   .detail-view {
     width: 90%;

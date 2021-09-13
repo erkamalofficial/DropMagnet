@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./DropDetail.css"
-import { epochToDayMonthHour, formatDate } from '../../../helpers/DateFormatter'
+import { calcTime, epochToDayMonthHour, formatDate } from '../../../helpers/DateFormatter'
 import Avatar from '../../elements/Avatar/Avatar'
 import { getInitials } from '../../../utils'
 import { FormBtn } from '../../../pages/register/FormComponents'
@@ -11,6 +11,7 @@ import Slider from "react-slick";
 import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
 import Link from "../../../assets/linkIcon.svg"
+import Moment from 'moment';
 
 export default function DropDetail(props) {
 
@@ -57,6 +58,9 @@ export default function DropDetail(props) {
     }
   }
 
+  let d = new Date(props?.drop?.drop_date)
+  const date = Moment(d, "MM/DD/YYYY").format("Do MMM YYYY")
+
   let artist_image = props.drop.artist && props.drop.artist.avatar_url !== '' ? props.drop.artist.avatar_url : ''
   let artist_name = props.drop.artist ? props.drop.artist.username : 'Test User'
 
@@ -96,6 +100,9 @@ export default function DropDetail(props) {
       history.push(`/profile`)
     }
   }
+
+  let curDropDate = props.drop.drop_date
+  let gmtDate = new Date(calcTime(13)).getTime()
 
   return (
     <div className="detail-view">
@@ -169,9 +176,18 @@ export default function DropDetail(props) {
           </p2>
         )}
       </div>
-      <div className="drop-detail-holder" style={{ marginTop: '0px' }}>
+      {/* <div className="drop-detail-holder" style={{ marginTop: '0px' }}>
         {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
         <p className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p>
+      </div> */}
+
+      <div className="pieces-and-date">
+        <p>9 Pieces</p>
+        {gmtDate >= curDropDate ? (
+          <p className="dropped">Dropped</p>
+        ) : (
+          <p>{date}</p>
+        )}
       </div>
       
       <div className="drop-description-holder">

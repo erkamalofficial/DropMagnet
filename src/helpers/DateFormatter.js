@@ -18,3 +18,13 @@ export function formatDate(time, past=false){
   if(past)return moment.fromNow();
   else return moment.toNow();
 }
+
+export function calcTime(offset) {
+
+  let d = new Date();
+  let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+  let nd = new Date(utc + (3600000*offset));
+ 
+  // return time as a string
+  return nd;
+}
