@@ -112,6 +112,14 @@ async function customAPICallUpdateAvatar(endpoint, data, method, access_token) {
 
 // User profile
 
+export function isUser(email) {
+  const userProfileEndpoint = `profiles/check`
+  const payload = {
+    email: email
+  }
+  return customAPICall(userProfileEndpoint, payload, "POST", "")
+}
+
 export function createNewUserProfile(name, username, email, token) {
   const profilesEndpoint = 'profiles'
   const payload = {

@@ -8,6 +8,7 @@ import {
   FormInput,
   FormLabel,
   GridItem,
+  FormSuccess,
 } from "./FormComponents";
 import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 import { getUserProfile } from "../../DropMagnetAPI";
@@ -28,8 +29,9 @@ export default function Login() {
 
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login, signInWithCustomToken, currentUser } = useAuth();
+  const { login, signInWithCustomToken, currentUser, sendSignInLinkToEmail } = useAuth();
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("")
 
   const [address, setAddress] = useState(pubAdd || '')
 
@@ -49,7 +51,7 @@ export default function Login() {
       );
 
       let tk = await res.user.getIdToken()
-      
+
       getUserProfile(res.user.uid, tk).then(function (response) {
         console.log('user profile response', response)
         if (response.status === "error") {
@@ -71,7 +73,45 @@ export default function Login() {
           }
         }
       })
-    } catch(err) {
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  }
+
+
+  async function handleSubmitEmailLink(e) {
+    e.preventDefault();
+
+    try {
+      setError("");
+      setLoading(true);
+      const email = emailRef.current.value
+
+      let res = await DropMagnetAPI.isUser(email)
+
+      console.log(res)
+
+      if (res.status) {
+        sendSignInLinkToEmail(email)
+          .then(res => {
+            localStorage.setItem('emailForSignIn', email)
+            setMessage("Email link sent. Please check email.")
+            setLoading(false)
+          })
+          .catch(error => {
+            setError(error.message);
+            setLoading(false);
+          });
+      }
+
+      else{
+        setError("This email is not registered.");
+        setLoading(false);
+      }
+
+
+    } catch (err) {
       setError(err.message);
       setLoading(false);
     }
@@ -126,7 +166,7 @@ export default function Login() {
   const userLogin = async (token) => { // This one is for wallet
     const res = await signInWithCustomToken(token)
       .then(cred => cred)
-    
+
     let tk = await res.user.getIdToken()
 
     getUserProfile(res.user.uid, tk).then(function (response) {
@@ -207,22 +247,19 @@ export default function Login() {
       </div>
       <div style={{ height: 'calc(100vh - 68px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <FormWrapper>
-          <form className="formGrid" onSubmit={handleSubmit}>
+          <form className="formGrid" onSubmit={handleSubmitEmailLink}>
             <h2 className="text-center mb-4">Log In</h2>
             {error && <FormAlert variant="danger">{error}</FormAlert>}
-            {!loading ? (
+            {message && <FormSuccess variant="success">{message}</FormSuccess>}
+            {!loading && !message ? (
               <>
                 <GridItem id="email">
                   <FormLabel>Email</FormLabel>
                   <FormInput type="email" ref={emailRef} required />
                 </GridItem>
-                <GridItem id="password">
-                  <FormLabel>Password</FormLabel>
-                  <FormInput type="password" ref={passwordRef} required />
-                </GridItem>
                 {!loading && (
                   <FormBtn disabled={loading} className="w-100" type="submit">
-                    <p style={{margin: '0', marginTop: '3px'}}>Log In</p>
+                    <p style={{ margin: '0', marginTop: '3px' }}>Log In</p>
                   </FormBtn>
                 )}
 
@@ -233,14 +270,14 @@ export default function Login() {
                 <GridItem>
                   Need an account? <Link to="/signup">Sign Up</Link>
                 </GridItem></>
-            ) : <Spinner />}
+            ) : !message ? <Spinner /> : null}
           </form>
 
-          {!loading && (
+          {!loading && !message && (
             <FormBtn className="w-100" type="submit"
               onClick={connectWallet}
               style={{ marginTop: "20px" }}>
-              <p style={{margin: '0', marginTop: '3px'}}>Sign In Using Wallet</p>
+              <p style={{ margin: '0', marginTop: '3px' }}>Sign In Using Wallet</p>
             </FormBtn>
           )}
 

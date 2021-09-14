@@ -1,0 +1,22 @@
+.verification-page{
+    padding-top: 68px;
+}
+
+.verification-pane{
+    width: 100%;
+    height: calc(100vh - 68px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vf-message{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.success-icon{
+    color: #05ff8a !important;
+    font-size: 40px !important;
+}
