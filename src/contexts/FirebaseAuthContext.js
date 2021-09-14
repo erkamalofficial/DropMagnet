@@ -3,11 +3,15 @@ import { auth } from "../firebase";
 
 const AuthContext = React.createContext({currentUser: {}});
 
-var settings = {
-  url: "http://localhost:3000/verify",
+var signinSettings = {
+  url: "http://localhost:3000/verify/signin",
   handleCodeInApp: true
 };
 
+var signupSettings = {
+  url: "http://localhost:3000/verify/signup",
+  handleCodeInApp: true
+};
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -31,7 +35,10 @@ export function AuthProvider({ children }) {
   }
 
   function sendSignInLinkToEmail(email) {
-    return auth.sendSignInLinkToEmail(email, settings);
+    return auth.sendSignInLinkToEmail(email, signinSettings);
+  }
+  function sendSignUpLinkToEmail(email) {
+    return auth.sendSignInLinkToEmail(email, signupSettings);
   }
   function signInWithEmailLink(email, url) {
     return auth.signInWithEmailLink(email, url);

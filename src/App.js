@@ -48,7 +48,8 @@ import SubscriptionPage from "./pages/subscription";
 import HeaderBar from "./components/elements/HeaderBar/HeaderBar";
 import { GlobalContext } from "./utils/GlobalContext"
 import FadeIn from "react-fade-in";
-import Verify from "./pages/verify/Verify";
+import Verify from "./pages/register/Verify";
+import SignupVerify from "./pages/register/SignupVerify";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -253,8 +254,13 @@ function App() {
           />
 
           <Route
-            path="/verify"
+            path="/verify/signin"
             render={(props) => <Verify {...props} />}
+          />
+
+          <Route
+            path="/verify/signup"
+            render={(props) => <SignupVerify {...props} />}
           />
 
           <Route
@@ -432,9 +438,9 @@ function App() {
           <PrivateRoute path="/buy-links" exact component={BuyLinks} />
 
           <PrivateRoute path="/home"
-          component={ExploreGalleries}
-          reload={reload}
-          setReload={setReload}
+            component={ExploreGalleries}
+            reload={reload}
+            setReload={setReload}
           />
           <PrivateRoute path="/drop-magnet" component={DropMagnet} />
           <PrivateRoute path="/my-gallery" component={MyGallery} />

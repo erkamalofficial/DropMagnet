@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import "./verify.css"
 import {
     FormWrapper,
-    FormBtn
-} from "../register/FormComponents";
+    FormBtn,
+    FormAlert
+} from "./FormComponents";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 
 const Verify = (props) => {
-
+    
     const { isSignInWithEmailLink, signInWithEmailLink, currentUser } = useAuth()
     const [verifying, setVerifying] = useState(false)
     const [error, seterror] = useState(null)
@@ -17,14 +18,12 @@ const Verify = (props) => {
     const verifyEmail = () => {
         setVerifying(true)
         if (isSignInWithEmailLink(window.location.href)) {
-            const email = localStorage.getItem('emailForSignIn');
+            let email = localStorage.getItem('emailForSignIn');
             if (!email) {
                 email = window.prompt('Please provide your email for confirmation');
-                window.location.href = '/login'
             }
             signInWithEmailLink(email, window.location.href)
                 .then(function (result) {
-                    var user = currentUser;
                     setVerifying(false)
                     localStorage.removeItem('emailForSignIn');
                 })
@@ -55,12 +54,12 @@ const Verify = (props) => {
                                     <p>Verifying email...</p>
                                     <CircularProgress color={"#fff"} />
                                 </>
-                            ) : (
+                            ) : !error ? (
                                 <>
                                     <p>Email Verifed</p>
                                     <CheckCircleIcon className="success-icon" />
                                 </>
-                            )}
+                            ) : <FormAlert variant="danger">{error}</FormAlert> }
                         </div>
                         {!verifying && (
                             <FormBtn disabled={verifying} className="w-100" type="submit"
