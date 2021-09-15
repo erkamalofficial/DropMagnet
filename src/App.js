@@ -157,7 +157,7 @@ function App() {
   useEffect(() => {
     // Send token to your backend via HTTPS
     // ...
-    if (currentUser && currentUser.uid) {
+    if (currentUser && currentUser.uid && idToken) {
 
       getUserProfile(currentUser.uid, idToken).then(function (response) {
         // console.log('user profile response', response)

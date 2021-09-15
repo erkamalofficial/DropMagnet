@@ -26,6 +26,7 @@ const ProfileForm = () => {
     const history = useHistory();
 
     const registerUser = async (e) => {
+        e.preventDefault()
         setLoading(true)
         const address = localStorage.getItem('publicAddress')
         e.preventDefault()
@@ -44,7 +45,7 @@ const ProfileForm = () => {
                             .then(cred => {
                                 setLoading(false)
                                 sessionStorage.removeItem('headerLoad')
-                                history.push("/home")
+                                window.location.href = "/home"
 
                             })
                     }

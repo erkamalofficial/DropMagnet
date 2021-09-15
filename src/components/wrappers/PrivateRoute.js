@@ -4,12 +4,13 @@ import { useAuth } from "../../contexts/FirebaseAuthContext";
 
 export default function PrivateRoute({ component: Component, ...rest }) {
   const { currentUser, idToken } = useAuth();
+  const user = JSON.parse(localStorage.getItem('userDetails'))
 
   return (
     <Route
       {...rest}
       render={(props) => {
-        return currentUser ? (
+        return (currentUser || user) ? (
           <Component
             {...props}
             {...rest}
