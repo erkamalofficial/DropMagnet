@@ -99,7 +99,8 @@ const SignupVerify = (props) => {
         }
     }
 
-    const changeRoute = () => {
+    const changeRoute = (e) => {
+        e.preventDefault()
         if (!error && message) {
             // props.history.push("/home")
             window.location.href = "/home"

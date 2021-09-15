@@ -15,7 +15,7 @@ import { GlobalContext } from '../../../utils/GlobalContext'
 function HeaderBar(props) {
 
   const headerLoad = sessionStorage.getItem('headerLoad')
-  const {curUser} = useContext(GlobalContext)
+  const { curUser } = useContext(GlobalContext)
 
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
   let userDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -26,8 +26,8 @@ function HeaderBar(props) {
   pageName = pageName === '' ? 'Landing Page' : pageName
 
   function showUserAction() {
-    if (props 
-      && props.userLoggedIn 
+    if (props
+      && props.userLoggedIn
       && userDetails
       && h.location.pathname !== '/profile') {
       return <Link to={'/profile'} style={{ textDecoration: 'none' }}>
@@ -55,7 +55,7 @@ function HeaderBar(props) {
   function openItem(e) {
   }
 
-  if(h.location.pathname === '/drop-magnet/artgallery.link/verticaly'){
+  if (h.location.pathname === '/drop-magnet/artgallery.link/verticaly') {
     return null
   }
 
@@ -109,27 +109,32 @@ function HeaderBar(props) {
           </Row>
         )}
       </div>
-      <div className="header-right-holder">
-        {props.userImageVisible ?
-          showUserAction()
-          :
-          <></>
-        }
-        {userDetails ? (
-          <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="header-bar-menu-icon"
-            style={{ zIndex: 999999999999 }}>
-            <div class={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>
-              <div class="leftright"></div>
-              <div class="rightleft"></div>
-            </div>
-            {/* <img height={10} width={20}
+
+      {
+        pageName !== 'verify' && (
+          <div className="header-right-holder">
+            {props.userImageVisible ?
+              showUserAction()
+              :
+              <></>
+            }
+            {userDetails ? (
+              <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="header-bar-menu-icon"
+                style={{ zIndex: 999999999999 }}>
+                <div class={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>
+                  <div class="leftright"></div>
+                  <div class="rightleft"></div>
+                </div>
+                {/* <img height={10} width={20}
               style={{ margin: 'auto' }}
               src="./menu-bars-icon.png" alt="/" /> */}
+              </div>
+            ) : props.dropId !== undefined ? (
+              <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>
+            ) : <Link to={`/login`} id="login-link">Log In</Link>}
           </div>
-        ) : props.dropId !== undefined ? (
-          <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>
-        ) : <Link to={`/login`} id="login-link">Log In</Link>}
-      </div>
+        )
+      }
     </div>
 
   );

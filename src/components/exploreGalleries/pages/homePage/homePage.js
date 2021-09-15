@@ -91,7 +91,7 @@ const HomePage = () => {
                         <div className="stripe medium-stripe"></div>
                     ) : (
                         <div className="greeting-Alexander">
-                            Greetings, {user.name.split(' ')[0]}
+                            Greetings, {user.name?.split(' ')[0]}
                         </div>
                     )}
                     <InsetBoxIcon>
