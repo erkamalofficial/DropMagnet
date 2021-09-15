@@ -9,15 +9,13 @@ import {
     FormAlert,
     FormSuccess
 } from "./FormComponents";
-import CircularProgress from '@material-ui/core/CircularProgress';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { checkUsername, createNewUserProfile, getUserProfile } from '../../DropMagnetAPI';
 import VFMessage from './VFMessage';
 
 const SignupVerify = (props) => {
 
-    const { isSignInWithEmailLink, signInWithEmailLink, logout } = useAuth()
+    const { isSignInWithEmailLink, signInWithEmailLink } = useAuth()
     const [verifying, setVerifying] = useState(false)
     const [error, seterror] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -55,24 +53,19 @@ const SignupVerify = (props) => {
             })
     }
 
-    const check = async () => {
+    const isPresent = async () => {
         let u = usernameRef.current.value
-        if (u !== '') {
-            setLoading(true)
-            checkUsername(u)
-                .then(res => {
-                    if (res.status > 200) {
-                        seterror("Username exists! Change username.")
-                        setLoading(false)
-                    }
-                    else if (res.status === 200) {
-                        seterror("")
-                        setLoading(false)
-                    }
-                })
+        let res = await checkUsername(u)
+            .then(res => res)
+        if (res.status === 200) {
+            seterror("")
+            return false
         }
+        seterror("Username exists! Change username.")
+        setVerifying(false)
+        setStart(false)
+        return true
     }
-
 
     const verifyEmail = async (e) => {
         e.preventDefault()
@@ -80,7 +73,9 @@ const SignupVerify = (props) => {
         setStart(true)
         setVerifying(true)
 
-        if (isSignInWithEmailLink(window.location.href)) {
+        let present = await isPresent()
+
+        if (isSignInWithEmailLink(window.location.href) && !present) {
             let email = localStorage.getItem('emailForSignUp');
             if (!email) {
                 alert("Error occurred!")
@@ -102,7 +97,6 @@ const SignupVerify = (props) => {
     const changeRoute = (e) => {
         e.preventDefault()
         if (!error && message) {
-            // props.history.push("/home")
             window.location.href = "/home"
         }
         else {
@@ -114,7 +108,7 @@ const SignupVerify = (props) => {
         <div className="verification-page">
             <div className="verification-pane">
                 <FormWrapper>
-                    <form className="formGrid" >
+                    <form className="formGrid"onSubmit={verifyEmail} >
                         <h2 className="text-center mb-4">Verification & Signup</h2>
                         {error && <FormAlert >{error}</FormAlert>}
                         {message && <FormSuccess >{message}</FormSuccess>}
@@ -128,23 +122,22 @@ const SignupVerify = (props) => {
                                 </GridItem>
                                 <GridItem id="username">
                                     <FormLabel>Username</FormLabel>
-                                    <FormInput type="text" ref={usernameRef} required
-                                        onBlur={check} />
+                                    <FormInput type="text" ref={usernameRef} required />
                                 </GridItem>
                             </div>
                         )}
 
                         {!verifying && !error && !message ? (
                             <FormBtn disabled={verifying || loading} className="w-100"
-                                onClick={verifyEmail}
+                                type="submit"
                                 style={{ marginTop: '20px' }}>
                                 <p style={{ margin: '0', marginTop: '3px' }}>Create Account</p>
                             </FormBtn>
                         ) : error ? (
                             <FormBtn disabled={verifying} className="w-100"
-                                onClick={changeRoute}
+                                type="submit"
                                 style={{ marginTop: '20px' }}>
-                                <p style={{ margin: '0', marginTop: '3px' }}>Signup Again</p>
+                                <p style={{ margin: '0', marginTop: '3px' }}>Create Account</p>
                             </FormBtn>
                         ) : message ? (
                             <FormBtn disabled={verifying} className="w-100"

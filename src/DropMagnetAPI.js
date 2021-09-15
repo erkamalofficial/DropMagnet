@@ -7,7 +7,7 @@ var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  host = 'http://localhost:8080/';
+  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
 } else {
   // pick up from .env
   host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
@@ -21,6 +21,7 @@ async function customAPICall(endpoint, data, method, access_token) {
     body: data === "" ? null : JSON.stringify(data),
     mode: 'cors', // no-cors, *cors, same-origin
     headers: {
+      'Access-Control-Origin': '*',
       'Content-Type': 'application/json',
       'Authorization': access_token !== '' ? `Bearer ${access_token}` : ''
     },
