@@ -7,7 +7,7 @@ var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
+  host = 'http://localhost:8080/';
 } else {
   // pick up from .env
   host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
@@ -30,6 +30,10 @@ async function customAPICall(endpoint, data, method, access_token) {
 
   if(res.status === 204){
     return null
+  }
+  else if(res.status >= 400){
+    console.log(res)
+    return res
   }
   return res.json()
 }
@@ -118,6 +122,11 @@ export function isUser(email) {
     email: email
   }
   return customAPICall(userProfileEndpoint, payload, "POST", "")
+}
+
+export function checkUsername(u) {
+  const usernameEndpoint = `profiles/username/check?u=${u}`
+  return normalAPICall(usernameEndpoint, "", "POST", "")
 }
 
 export function createNewUserProfile(name, username, email, token) {

@@ -73,6 +73,7 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     sendSignInLinkToEmail,
+    sendSignUpLinkToEmail,
     signInWithCustomToken,
     signInWithEmailLink,
     isSignInWithEmailLink,

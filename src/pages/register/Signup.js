@@ -97,15 +97,15 @@ export default function Signup(props) {
       setError("");
       setLoading(true);
       const email = emailRef.current.value
-      const name = nameRef.current.value
-      const username = usernameRef.current.value
+      // const name = nameRef.current.value
+      // const username = usernameRef.current.value
 
       let res = await DropMagnetAPI.isUser(email)
 
       if (!res.status) {
         sendSignUpLinkToEmail(email)
           .then(res => {
-            localStorage.setItem('emailForSignUp', JSON.stringify(email, name, username))
+            localStorage.setItem('emailForSignUp', email)
             setMessage("Email link sent. Please check email.")
             setLoading(false)
           })
@@ -152,14 +152,14 @@ export default function Signup(props) {
                   <FormLabel>Email</FormLabel>
                   <FormInput type="email" ref={emailRef} required />
                 </GridItem>
-                <GridItem id="name">
+                {/* <GridItem id="name">
                   <FormLabel>Name</FormLabel>
                   <FormInput type="text" ref={nameRef} required />
                 </GridItem>
                 <GridItem id="username">
                   <FormLabel>Username</FormLabel>
                   <FormInput type="text" ref={usernameRef} required />
-                </GridItem>
+                </GridItem> */}
                 <FormBtn disabled={loading} type="submit">
                   Sign Up
                 </FormBtn>

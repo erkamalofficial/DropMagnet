@@ -161,7 +161,7 @@ function App() {
 
       getUserProfile(currentUser.uid, idToken).then(function (response) {
         // console.log('user profile response', response)
-        if (response.status === "error") {
+        if (!response) {
           // setLoginError(response.message);
         } else {
           localStorage.setItem('userDetails', JSON.stringify(response));
