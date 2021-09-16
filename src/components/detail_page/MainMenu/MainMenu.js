@@ -62,7 +62,6 @@ export default function MainMenu(props) {
   }
 
   const h = useHistory()
-  let pageName = h.location.pathname.split('/')[1].toLowerCase()
 
   useEffect(() => {
     checkIfVerified()
@@ -116,31 +115,27 @@ export default function MainMenu(props) {
               <p1 style={{ fontWeight: "bold" }}>{props.userDetails.name}</p1>
               <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
             </div>
-            {loading ? (
-              <div className="stripe token-sec-stripe"></div>
-            ) : (
-              <GlossyButton
-                label={`${tokens} Drop Tokens Earned`}
-                btnStyle={{
-                  padding: '12px 14px 10px 14px',
-                  borderRadius: '27px',
-                  fontSize: '12px',
-                  fontWeight: '500'
-                }}
-                borderStyle={{
-                  pos: '-1px',
-                  borderRadius: '27px',
-                  border: '1px',
-                  grd1: '#181818',
-                  grd2: '#181818',
-                  grd3: '#6C00FF',
-                  grd4: '#FF00C7'
-                }}
-                lableStyle={{
-                  marginBottom: '-2px'
-                }}
-              ></GlossyButton>
-            )}
+            <GlossyButton
+              label={`${tokens} Drop Tokens Earned`}
+              btnStyle={{
+                padding: '12px 14px 10px 14px',
+                borderRadius: '27px',
+                fontSize: '12px',
+                fontWeight: '500'
+              }}
+              borderStyle={{
+                pos: '-1px',
+                borderRadius: '27px',
+                border: '1px',
+                grd1: '#181818',
+                grd2: '#181818',
+                grd3: '#6C00FF',
+                grd4: '#FF00C7'
+              }}
+              lableStyle={{
+                marginBottom: '-2px'
+              }}
+            ></GlossyButton>
           </div>
         ) : (
           <></>

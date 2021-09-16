@@ -188,8 +188,8 @@ const EditName = styled.div`
     label{
         color: #ffffff;
         font-size: 16px;
-        font-weight: 500;
-        font-style: normal;
+        font-weight: 400;
+        font-style: italic;
         letter-spacing: normal;
         line-height: normal;
         text-align: center;
@@ -217,11 +217,11 @@ const EditName = styled.div`
 `;
 const Privacy = styled.div`
     p{
-        margin: 0 0 9px 0;
+        margin: 0 0 8px 0;
         color: #ffffff;
         font-size: 16px;
-        font-weight: 500;
-        font-style: normal;
+        font-weight: 400;
+        font-style: italic;
         letter-spacing: normal;
         line-height: normal;
         text-align: center;
@@ -310,14 +310,14 @@ const Remove = styled.div`
 
 const Card = (props) => {
 
-    const { metaurl, image, id } = props;
+    const { metaurl, image, id, setMetaURLs } = props;
     const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
     const { currentUser } = useAuth()
 
     const [isOpen, setIsOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [walletEdit, setWalletEdit] = useState(false);
-    const [activeTab, setActiveTab] = useState("public");
+    const [activeTab, setActiveTab] = useState(metaurl.privacy);
     const [linkCopied, setLinkCopied] = useState(false);
 
     const [loading, setLoading] = useState(false)
@@ -333,6 +333,8 @@ const Card = (props) => {
     const [end, setEnd] = useState(3)
     const [page, setPage] = useState(0)
     const [tfaCode, setTfaCode] = useState('')
+    const [password, setPassword] = useState(metaurl.password)
+    const [sAddress, setSAddress] = useState(metaurl.specificAddress)
 
     const tabs = [
         { id: "public" },
@@ -346,8 +348,42 @@ const Card = (props) => {
         setWalletEdit(false);
         setLinkCopied(false);
     };
+
     const handleChangeTab = useCallback((id) => setActiveTab(id), [])
 
+    const saveEditChanges = () => {
+        setLoading(true)
+        let data = { privacy: activeTab }
+
+        switch (activeTab) {
+            case 'private':
+                data = { ...data, password: password }
+                break;
+            case 'smart':
+                data = { ...data, address: sAddress }
+                break;
+            default:
+                break;
+        }
+
+        currentUser.getIdToken().then((idToken) => {
+            DropMagnetAPI.editMetaURLPrivacy(data, id, idToken)
+                .then(res => {
+                    currentUser.getIdToken().then((idToken) => {
+                        DropMagnetAPI.getUserMetaURLs(idToken)
+                            .then(res => {
+                                setTimeout(() => {
+                                    setMetaURLs(res)
+                                    setLoading(false)
+                                    setActiveTab(activeTab)
+                                    setIsOpen(true);
+                                    setIsEdit(false);
+                                }, 600);
+                            })
+                    })
+                })
+        })
+    }
 
     const inc = () => {
         let pages = Math.floor(metaurl.addresses.length / 3)
@@ -409,9 +445,18 @@ const Card = (props) => {
                         src={qrImg} alt="/" />
                     Scan code with your authenticator
                     <p>or</p>
-                    <button onClick={() => {
+                    <button onClick={async() => {
                         setConfirmation(false)
-                        window.location.reload()
+                        setLoading(true)
+                        currentUser.getIdToken().then((idToken) => {
+                            DropMagnetAPI.getUserMetaURLs(idToken)
+                                .then(res => {
+                                    setTimeout(() => {
+                                        setMetaURLs(res)
+                                        setLoading(false)
+                                    }, 600);
+                                })
+                        })
                     }}>
                         Keep pay button deactivated
                     </button>
@@ -524,12 +569,20 @@ const Card = (props) => {
         currentUser.getIdToken().then((idToken) => {
             DropMagnetAPI.removeWalletFromMetaURL(data, id, idToken)
                 .then(res => {
-                    setLoading(false)
                     if (res.status === 204) {
+                        setLoading(false)
                         alert("This wallet doesn't exist.")
                     }
                     else {
-                        window.location.reload()
+                        currentUser.getIdToken().then((idToken) => {
+                            DropMagnetAPI.getUserMetaURLs(idToken)
+                                .then(res => {
+                                    setTimeout(() => {
+                                        setMetaURLs(res)
+                                        setLoading(false)
+                                    }, 600);
+                                })
+                        })
                     }
                 })
         })
@@ -543,8 +596,15 @@ const Card = (props) => {
         currentUser.getIdToken().then((idToken) => {
             DropMagnetAPI.selectWalletForMetaURL(data, id, idToken)
                 .then(res => {
-                    setLoading(false)
-                    window.location.reload()
+                    currentUser.getIdToken().then((idToken) => {
+                        DropMagnetAPI.getUserMetaURLs(idToken)
+                            .then(res => {
+                                setTimeout(() => {
+                                    setMetaURLs(res)
+                                    setLoading(false)
+                                }, 600);
+                            })
+                    })
                 })
         })
     }
@@ -554,7 +614,7 @@ const Card = (props) => {
         const data = { address: ad }
 
         currentUser.getIdToken().then((idToken) => {
-            DropMagnetAPI.veridyWalletForMetaURL(data, id, idToken)
+            DropMagnetAPI.verifyWalletForMetaURL(data, id, idToken)
                 .then(res => {
                     selectAddress(ad)
                 })
@@ -597,8 +657,7 @@ const Card = (props) => {
             return (
                 <EditModal>
                     <Save onClick={() => {
-                        setIsOpen(true);
-                        setIsEdit(false)
+                        saveEditChanges()
                     }}>
                         <img src={check} alt="check" />
                     </Save>
@@ -609,13 +668,13 @@ const Card = (props) => {
                         <p>Edit</p>
                     </Title>
                     <Form>
-                        <EditName>
+                        <EditName className="metaurl edit-metadata">
                             <label htmlFor="name">Name</label>
                             <input id="name" type="text" value={metaurl.name} readOnly={true} />
                         </EditName>
                     </Form>
-                    <Privacy>
-                        <p>Privacy</p>
+                    <Privacy style={{ marginTop: '16px' }}>
+                        <p style={{ fontStyle: 'italic' }}>Privacy</p>
                         <div className='edit-tabs'>
                             {
                                 tabs.map((tab, i) => {
@@ -633,6 +692,32 @@ const Card = (props) => {
                             }
                             <span className="glider" />
                         </div>
+                        {activeTab === 'private' && (
+                            <div className="metaurl enter-extras">
+                                <EditName>
+                                    <input id="password" type="text" value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Add password (optional)" />
+                                </EditName>
+                            </div>
+                        )}
+                        {activeTab === 'smart' && (
+                            <div className="metaurl enter-extras" style={{ marginTop: '16px' }}>
+                                <EditName>
+                                    <input id="password" type="text"
+                                        // value={password}
+                                        style={{ width: '80%' }}
+                                        // onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Paste NFT ID here" />
+                                </EditName>
+
+                                <EditName style={{ marginTop: '10px' }}>
+                                    <input id="password" type="text" value={sAddress}
+                                        onChange={(e) => setSAddress(e.target.value)}
+                                        placeholder="Paste NFT Contract Address" />
+                                </EditName>
+                            </div>
+                        )}
                     </Privacy>
                 </EditModal>
             )

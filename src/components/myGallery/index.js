@@ -95,7 +95,8 @@ const MyGallery = () => {
                             <Card key={m.id}
                                 id={m.id}
                                 metaurl={m}
-                                image={image1} />
+                                image={image1}
+                                setMetaURLs={setMetaURLs} />
                         ))}
                     </>
                 )

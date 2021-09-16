@@ -330,7 +330,7 @@ export function selectWalletForMetaURL(data, id, idToken) {
   return normalAPICall(endPoint, payload, "PUT", idToken);
 }
 
-export function veridyWalletForMetaURL(data, id, idToken) {
+export function verifyWalletForMetaURL(data, id, idToken) {
   const endPoint = `metaurls/verify/${id}`;
   const payload = {
     address: data.address
@@ -338,6 +338,11 @@ export function veridyWalletForMetaURL(data, id, idToken) {
   return normalAPICall(endPoint, payload, "PUT", idToken);
 }
 
+export function editMetaURLPrivacy(data, id, idToken) {
+  const endPoint = `metaurls/privacy/${id}`;
+  const payload = data
+  return normalAPICall(endPoint, payload, "PUT", idToken);
+}
 
 export function generateQR(address) {
   const endPoint = `metaurls/address/getqr`;
