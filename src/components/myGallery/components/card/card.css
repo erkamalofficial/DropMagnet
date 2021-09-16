@@ -92,13 +92,15 @@
 
 /* Lazy Loading */
 
-.url, .circular, .nft{
+.lazy-card .url, 
+.lazy-card .circular, 
+.lazy-card .nft{
     background-color: #242424;
     height: 38px;
     border-radius: 5px;
 }
 
-.url{
+.lazy-card .url{
     max-width: 228px;
     position: absolute;
     left:0;
@@ -107,7 +109,7 @@
     margin: auto;
 }
 
-.circular{
+.lazy-card .circular{
     width: 38px;
     border-radius: 50%;
     position:absolute;
@@ -115,7 +117,7 @@
     left: 8px;
 }
 
-.nft{
+.lazy-card .nft{
     width: 100px;
     position:absolute;
     top:8px;
