@@ -382,12 +382,39 @@ export default function Profile(props) {
 
   const updateDetails = (field, value) => {
     setUpdating(true)
+    const user_id = currentUser.uid
     currentUser.getIdToken(false).then(function (idToken) {
       DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) => {
-        setTimeout(() => {
-          alert("Successfully updated.")
-          window.location.reload()
-        }, 400)
+        DropMagnetAPI.getUserProfile(user_id, idToken).then(function (
+          response
+        ) {
+          if (response.status === "error") {
+          } else {
+            setFirstName(response.name);
+            setHandle(response.username);
+            setBio(response.bio);
+            setInstaHandle(response.insta_url.split("/").pop());
+            setTwitterHandle(response.twitter_url.split("/").pop());
+            setUserImage(response.avatar_url || "");
+            setUser(response);
+            const p = {
+              ...response,
+              name: response.username,
+              usernmae: response.username,
+              bio: response.bio,
+              insta_url: response.insta_url,
+              twitter_url: response.twitter_url,
+              avatar_url: response.avatar_url
+            }
+            sessionStorage.setItem('profileDetails', JSON.stringify(p))
+            setTimeout(() => {
+              alert("Successfully updated.")
+              setUpdating(false)
+              // window.location.reload()
+            }, 400)
+          }
+        });
+
       });
     });
   };
