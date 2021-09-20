@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import edit from "../../assets/edit.svg";
 import link from "../../assets/link.svg";
@@ -12,6 +12,8 @@ import QRCode from 'qrcode'
 import * as DropMagnetAPI from "../../../../DropMagnetAPI"
 import { useAuth } from "../../../../contexts/FirebaseAuthContext"
 import LoadingModal from "../../../elements/LoadingModal/LoadingModal.js"
+import Spinner from "../../../blocks/spinner";
+import {Link} from 'react-router-dom'
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -311,7 +313,6 @@ const Remove = styled.div`
 const Card = (props) => {
 
     const { metaurl, image, id, setMetaURLs } = props;
-    const cntWallets = JSON.parse(localStorage.getItem('cntWallets'))
     const { currentUser } = useAuth()
 
     const [isOpen, setIsOpen] = useState(false);
@@ -341,6 +342,7 @@ const Card = (props) => {
         { id: "private" },
         { id: "smart" }
     ];
+
     const handleMenu = e => {
         e.preventDefault();
         setIsOpen(prevState => !prevState);
@@ -445,7 +447,7 @@ const Card = (props) => {
                         src={qrImg} alt="/" />
                     Scan code with your authenticator
                     <p>or</p>
-                    <button onClick={async() => {
+                    <button onClick={async () => {
                         setConfirmation(false)
                         setLoading(true)
                         currentUser.getIdToken().then((idToken) => {
@@ -798,7 +800,9 @@ const Card = (props) => {
                 <img src={image} alt="back" />
                 <MoreBtn handleClick={handleMenu} isOpen={isOpen} />
                 <NFT>{metaurl.nfts} NFTs</NFT>
-                <Artist>{metaurl.url}</Artist>
+                <Link to={"/drop-magnet/artgallery.link/verticaly/"+id} >
+                    <Artist>{metaurl.url}</Artist>
+                </Link>
                 {memoizedShowModals}
             </CardSize>
         </CardWrapper>

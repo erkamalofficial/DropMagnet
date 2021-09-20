@@ -7,10 +7,10 @@ import CreateURL from "./components/createurl/CreateURL";
 import { useAuth } from "../../contexts/FirebaseAuthContext"
 import * as DropMagnetAPI from "../../DropMagnetAPI"
 import LazyCards from "./components/card/LazyCards";
-
+import { useMoralis } from "react-moralis";
 
 const MyGallery = () => {
-
+    const { isInitialized, Moralis } = useMoralis()
     const [metaURLs, setMetaURLs] = useState(null)
     const [loading, setLoading] = useState(false)
 
@@ -66,9 +66,9 @@ const MyGallery = () => {
         }
     }, [cntWallets])
 
-    useEffect(() => {
-        fetchNFTs()
-    }, [])
+    // useEffect(() => {
+    //     fetchNFTs()
+    // }, [])
 
     useEffect(() => {
         setLoading(true)
@@ -96,13 +96,15 @@ const MyGallery = () => {
                                 id={m.id}
                                 metaurl={m}
                                 image={image1}
-                                setMetaURLs={setMetaURLs} />
+                                setMetaURLs={setMetaURLs}
+                                moralis={Moralis}
+                                initialized={isInitialized} />
                         ))}
                     </>
                 )
                 }
                 {metaURLs && metaURLs.length === 0 && (
-                    <p style={{textAlign: 'center'}}>No MetaURL</p>
+                    <p style={{ textAlign: 'center' }}>No MetaURL</p>
                 )}
             </div>
             <CreateURL />

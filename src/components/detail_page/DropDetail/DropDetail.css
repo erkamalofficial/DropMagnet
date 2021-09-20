@@ -44,7 +44,7 @@
   font-weight: 500;
 }
 
-.dropped{
+.pieces-and-date .dropped{
   font-size: 14px;
   font-weight: 500;
   background: -webkit-linear-gradient(180deg, #32C5FF, #B620E0, #B100F7);

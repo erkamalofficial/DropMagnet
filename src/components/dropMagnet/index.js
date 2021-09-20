@@ -46,7 +46,7 @@ const DropMagnet = () => {
 			{/*	<VericalySlidedPage/>*/}
 			{/*</Route>*/}
 
-			<Route path="/drop-magnet/artgallery.link/verticaly">
+			<Route path="/drop-magnet/artgallery.link/verticaly/:id" exact>
 				<HeaderTop>
 					<FileMenu changeSlide={changeSlide} darkTheme={darkTheme}/>
 				</HeaderTop>

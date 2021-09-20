@@ -55,7 +55,7 @@ function HeaderBar(props) {
   function openItem(e) {
   }
 
-  if (h.location.pathname === '/drop-magnet/artgallery.link/verticaly') {
+  if (h.location.pathname.includes('/drop-magnet/artgallery.link/verticaly') ) {
     return null
   }
 

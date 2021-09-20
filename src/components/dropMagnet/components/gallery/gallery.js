@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import { Controlled as ControlledZoom } from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import styled from "styled-components";
@@ -100,7 +100,7 @@ const GalleryButtonWrapper = styled.div`
 `
 
 const Gallery = (props) => {
-    const {iOS} = props;
+    const { iOS, nft } = props;
     const [isZoomed, setIsZoomed] = useState(false);
     const [margin, setMargin] = useState(70);
     const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +111,7 @@ const Gallery = (props) => {
 
 
     window.addEventListener("resize", () => {
-        if(document.body.clientWidth <= 500){
+        if (document.body.clientWidth <= 500) {
             setMargin(20)
         }
     })
@@ -128,6 +128,13 @@ const Gallery = (props) => {
         setIsOpen(true)
     }
 
+    const getCorrectUrl = (url) => {
+        if (url && url.startsWith("ipfs")) {
+            return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://").slice(-1)[0]
+        }
+        return url
+    }
+
     return (
         <>
             <GalleryWrapper >
@@ -139,7 +146,7 @@ const Gallery = (props) => {
                         zoomMargin={margin}
                     >
                         <ImgWrapper>
-                            <img src={props.imgUrl} alt="gallery"/>
+                            <img src={getCorrectUrl(nft?.image ? nft.image : nft?.image_url) || props.imgUrl} alt="gallery" />
                         </ImgWrapper>
 
                     </ControlledZoom>
@@ -150,17 +157,20 @@ const Gallery = (props) => {
                         {/*</button>*/}
 
                         <div>
-                            <LikeButton galleryStyle='gallery-style'/>
+                            <LikeButton galleryStyle='gallery-style' />
                         </div>
 
                         <div onClick={openModal} className='button'>
-                            <img src={dots} alt="dots"/>
+                            <img src={dots} alt="dots" />
                         </div>
                     </GalleryButtonWrapper>
 
                 </GalleryContent>
             </GalleryWrapper>
-            <GalleryModal isOpen={isOpen} closeModal={closeModal}/>
+            <GalleryModal
+                nft={nft}
+                isOpen={isOpen}
+                closeModal={closeModal} />
         </>
     );
 };

@@ -358,12 +358,12 @@ const Tab = styled.div`
     justify-content: center;
 `;
 
-const GalleryModal = ({isOpen, closeModal}) => {
+const GalleryModal = ({nft, isOpen, closeModal}) => {
     const tabsInfo = [
         {
             id: 1,
             tab: "Description",
-            content: "This artwork is a beautiful mix of hand drawn illustration, AI neural compositing, trained from hours of custom artist-made iterations, projected on a mesh of a whale."
+            content: nft?.description ? nft.description : ""
         },
         {
             id: 2,
@@ -376,6 +376,7 @@ const GalleryModal = ({isOpen, closeModal}) => {
     const handleChange = (value) => {
 
     }
+    console.log(activeTab)
     //
     // const scrollToCover = () => {
     //     props.coverPageRef.current.scrollIntoView();
@@ -397,7 +398,7 @@ const GalleryModal = ({isOpen, closeModal}) => {
                     <Header>
                         <HeaderContent>
                             <Close onClick={closeModal}><img src={close} alt="close"/></Close>
-                            <HeaderTitle>[Title] by [Artist name]</HeaderTitle>
+                            <HeaderTitle>{nft?.name} by [Artist name]</HeaderTitle>
                         </HeaderContent>
                         <TabsHeader>
                             <div className="edit-tabs">
@@ -422,7 +423,9 @@ const GalleryModal = ({isOpen, closeModal}) => {
                     </Header>
                     <Tabs>
                         <TabContent>
-                            <textarea style={{minHeight: activeTab !== 1 ? '235px' : '176px'}} name="text" value={tabsInfo[activeTab-1].content} className={`${activeTab === 2 ? 'active' : ''}`} onChange={(e) => handleChange(e.target.value)}/>
+                            <textarea style={{minHeight: activeTab !== 1 ? '235px' : '176px'}} name="text" value={tabsInfo[activeTab-1].content} 
+                            className={`${activeTab === 2 ? 'active' : ''}`} 
+                            onChange={(e) => handleChange(e.target.value)}/>
 
                             {activeTab === 1
                                 ? <TabsWrapper>
