@@ -36,19 +36,19 @@ export default function MainMenu(props) {
     }
   }, [open])
 
-  useEffect(() => {
-    if (props.open) {
-      setLoading(true)
-      currentUser.getIdToken().then((idToken) => {
-        getTokens(user.id, idToken).then(res => {
-          setTokens(res.tokens)
-          setTimeout(() => {
-            setLoading(false)
-          }, 500);
-        })
-      })
-    }
-  }, [props.open])
+  // useEffect(() => {
+  //   if (props.open) {
+  //     setLoading(true)
+  //     currentUser.getIdToken().then((idToken) => {
+  //       getTokens(user.id, idToken).then(res => {
+  //         setTokens(res.tokens)
+  //         setTimeout(() => {
+  //           setLoading(false)
+  //         }, 500);
+  //       })
+  //     })
+  //   }
+  // }, [props.open])
 
   const checkIfVerified = async () => {
     try {
@@ -116,7 +116,7 @@ export default function MainMenu(props) {
               <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
             </div>
             <GlossyButton
-              label={`${tokens} Drop Tokens Earned`}
+              label={`${user?.tokens} Drop Tokens Earned`}
               btnStyle={{
                 padding: '12px 14px 10px 14px',
                 borderRadius: '27px',

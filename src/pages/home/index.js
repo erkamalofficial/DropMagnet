@@ -18,7 +18,7 @@ import Swiper from "./swiper";
 import "./index.css";
 import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
+import { saveDrop, unsaveDrop, updateTokens } from "../../DropMagnetAPI";
 import LazyCard from "./LazyCard";
 import LazyTab from "./LazyTab";
 import { getCategoryFromTab, tabList } from "../../constants";
@@ -207,11 +207,13 @@ const Home = (props) => {
       if (dir === "right") {
         // setInternalLoader(true);
         saveDrop(idToken, drop_id)
-          .then(() => {})
+          .then(() => { })
           .catch(() => { })
           .finally(() => {
             // setInternalLoader(false);
             console.log("Ritgh")
+            updateTokens(drop.artist.id, dir)
+              .then(res => { })
           });
       } else if (dir === "left") {
         unsaveDrop(idToken, drop_id)
@@ -220,7 +222,8 @@ const Home = (props) => {
 
           })
           .finally(() => {
-
+            updateTokens(drop.artist.id, dir)
+              .then(res => { })
           })
       }
 
