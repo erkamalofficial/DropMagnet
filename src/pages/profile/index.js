@@ -407,11 +407,8 @@ export default function Profile(props) {
               avatar_url: response.avatar_url
             }
             sessionStorage.setItem('profileDetails', JSON.stringify(p))
-            setTimeout(() => {
-              alert("Successfully updated.")
-              setUpdating(false)
-              // window.location.reload()
-            }, 400)
+            alert("Successfully updated.")
+            setUpdating(false)
           }
         });
 

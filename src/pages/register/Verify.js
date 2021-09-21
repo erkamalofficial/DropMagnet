@@ -28,7 +28,7 @@ const Verify = (props) => {
                     localStorage.removeItem('emailForSignIn');
                 })
                 .catch(function (error) {
-                    seterror(error)
+                    seterror(error.message)
                     setVerifying(false)
                 });
         }
