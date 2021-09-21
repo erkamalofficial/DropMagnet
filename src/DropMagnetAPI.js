@@ -163,8 +163,8 @@ export function updateUserDetails(field, value, access_token) {
   return normalAPICall(updateEndpoint, {}, "PUT", access_token)
 }
 
-export function updateTokens(artistId, dir) {
-  const updateEndpoint = `profiles/artist/${artistId}?s=${dir}`
+export function updateTokens(artistId) {
+  const updateEndpoint = `profiles/artist/${artistId}`
   return normalAPICall(updateEndpoint, {}, "POST", '')
 }
 

@@ -212,7 +212,7 @@ const Home = (props) => {
           .finally(() => {
             // setInternalLoader(false);
             console.log("Ritgh")
-            updateTokens(drop.artist.id, dir)
+            updateTokens(drop.artist.id)
               .then(res => { })
           });
       } else if (dir === "left") {
@@ -222,8 +222,6 @@ const Home = (props) => {
 
           })
           .finally(() => {
-            updateTokens(drop.artist.id, dir)
-              .then(res => { })
           })
       }
 
