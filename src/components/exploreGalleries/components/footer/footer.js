@@ -37,9 +37,9 @@ const Footer = () => {
     return (
             <Row className="items-center justify-center flex-wrap">
                 <FooterLinkWrapper>
-                    <FooterLink to="/drop-magnet">Terms & Conditions</FooterLink>
-                    <FooterLink to="/drop-magnet">Privacy Policy</FooterLink>
-                    <FooterLink to="/drop-magnet">© Drop Magnet 2021</FooterLink>
+                    <FooterLink to="/metaurl">Terms & Conditions</FooterLink>
+                    <FooterLink to="/metaurl">Privacy Policy</FooterLink>
+                    <FooterLink to="/metaurl">© Drop Magnet 2021</FooterLink>
                 </FooterLinkWrapper>
             </Row>
     )

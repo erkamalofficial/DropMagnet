@@ -32,8 +32,8 @@ const DropMagnet = () => {
 
 	return (
 		<div>
-			<Route exact path="/drop-magnet" render={()=> <Redirect to="/drop-magnet/artgallery.link" />}/>
-			<Route exact path="/drop-magnet/artgallery.link">
+			<Route exact path="/metaurl" render={()=> <Redirect to="/metaurl/artgallery.link" />}/>
+			<Route exact path="/metaurl/artgallery.link">
 				{/* <Navbar path={'/drop-magnet/artgallery.link'} text={'ArtGallery.Link'}/> */}
 				<SliderPage/>
 			</Route>
@@ -46,7 +46,7 @@ const DropMagnet = () => {
 			{/*	<VericalySlidedPage/>*/}
 			{/*</Route>*/}
 
-			<Route path="/drop-magnet/artgallery.link/verticaly/:id" exact>
+			<Route path="/metaurl/:link/:user/:id">
 				<HeaderTop>
 					<FileMenu changeSlide={changeSlide} darkTheme={darkTheme}/>
 				</HeaderTop>

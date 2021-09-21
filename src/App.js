@@ -444,7 +444,7 @@ function App() {
               reload={reload}
               setReload={setReload}
             />
-            <PrivateRoute path="/drop-magnet" component={DropMagnet} />
+            <PrivateRoute path="/metaurl" component={DropMagnet} />
             <PrivateRoute path="/my-gallery" component={MyGallery} />
             <Route path="/politician" component={Politician} />
             <Route path="/movie-farm" render={() => <MovieFarm />} />

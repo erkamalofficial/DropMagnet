@@ -19,7 +19,7 @@ import Spinner from "../../../blocks/spinner";
 const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
 
     const { isInitialized, Moralis } = useMoralis()
-    const { id } = useParams()
+    const {link, user, id} = useParams()
     const { currentUser } = useAuth()
 
     const [metaURL, setmetaURL] = useState(null)
@@ -62,7 +62,7 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
     }
 
     const fetchNFTs = async (metaurl) => {
-        for(const wa of metaurl.addresses) {
+        for (const wa of metaurl.addresses) {
             const options = {
                 chain: "polygon",
                 address: wa.address,
@@ -79,19 +79,17 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
     }
 
     const getMetaURL = () => {
-        currentUser.getIdToken().then((idToken) => {
-            DropMagnetAPI.getMetaURLById(id, idToken)
-                .then(async res => {
-                    if (res.status === 409) {
-                        alert("This wallet already exists.")
-                    }
-                    else {
-                        setmetaURL(res)
-                        setLoading(true)
-                        await fetchNFTs(res)
-                    }
-                })
-        })
+        DropMagnetAPI.getMetaURLById(id)
+            .then(async res => {
+                if (res.status === 409) {
+                    alert("This wallet already exists.")
+                }
+                else {
+                    setmetaURL(res)
+                    setLoading(true)
+                    await fetchNFTs(res)
+                }
+            })
     }
 
     useEffect(() => {
@@ -99,8 +97,6 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
             getMetaURL()
         }
     }, [id])
-
-    console.log(nfts, loading)
 
     const slideItems = useMemo(() => [
         {
@@ -132,7 +128,7 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
         //     content: <section><Landscape /></section>
         // }
     ], [darkTheme, changeSlide, firstSlide, iOS]);
-    
+
     useEffect(() => {
         const sortOrder = data.map(e => +e.id);
         const sortedArr = [];
@@ -158,12 +154,12 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                     )
                 })
             }
-            {(nfts.length === 0 && loading) ? (<section ref={galleryRef}><Spinner /></section>) : 
-            nfts.map(n => (
-                <section ref={galleryRef}>
-                    <Gallery {...firstSlide} iOS={iOS} nft={n} />
-                </section>
-            ))}
+            {(nfts.length === 0 && loading) ? (<section ref={galleryRef}><Spinner /></section>) :
+                nfts.map(n => (
+                    <section ref={galleryRef}>
+                        <Gallery {...firstSlide} iOS={iOS} nft={n} />
+                    </section>
+                ))}
             {/* props={props}*/}
             <PageLiksComponent darkTheme={darkTheme} galleryRef={galleryRef} coverPageRef={coverPageRef} userComponentStyles='user-component-styles' />
         </article>

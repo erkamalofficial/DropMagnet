@@ -106,7 +106,7 @@ const HomePage = () => {
                         <Link to="/my-gallery">
                             <Card title="Rooms" icon={'🥳'} />
                         </Link>
-                        <Link to="/drop-magnet/artgallery.link/verticaly">
+                        <Link to="/metaurl/artgallery.link/verticaly">
                             <Card title="Explore" icon={'🚀'} />
                         </Link>
                         <Link to="/my-gallery">

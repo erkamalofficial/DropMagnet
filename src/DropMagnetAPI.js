@@ -305,9 +305,9 @@ export function getUserMetaURLs(idToken) {
   return customAPICall(endPoint, '', "GET", idToken);
 }
 
-export function getMetaURLById(id, idToken) {
+export function getMetaURLById(id) {
   const endPoint = `metaurls/${id}`;
-  return customAPICall(endPoint, '', "GET", idToken);
+  return customAPICall(endPoint, '', "GET", "");
 }
 
 export function connectWalletToMetaURL(data, id, idToken) {

@@ -800,7 +800,7 @@ const Card = (props) => {
                 <img src={image} alt="back" />
                 <MoreBtn handleClick={handleMenu} isOpen={isOpen} />
                 <NFT>{metaurl.nfts} NFTs</NFT>
-                <Link to={"/drop-magnet/artgallery.link/verticaly/"+id} >
+                <Link to={`/metaurl/${metaurl.url.toLowerCase()}/${id}`} >
                     <Artist>{metaurl.url}</Artist>
                 </Link>
                 {memoizedShowModals}

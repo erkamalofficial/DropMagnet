@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory, withRouter } from 'react-router-dom'
+import { Link, useHistory, withRouter, matchPath } from 'react-router-dom'
 import "./HeaderBar.css"
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
 import DatePicker from 'react-datepicker'
@@ -22,6 +22,12 @@ function HeaderBar(props) {
   userDetails = userDetails ? userDetails : curUser
 
   const h = useHistory()
+  console.log(h)
+  const match = matchPath(h.location.pathname, {
+    path: '/metaurl/:link/:user/:id',
+    exact: true,
+    strict: false
+  })
   let pageName = h.location.pathname.split('/')[1].toLowerCase()
   pageName = pageName === '' ? 'Landing Page' : pageName
 
@@ -55,7 +61,7 @@ function HeaderBar(props) {
   function openItem(e) {
   }
 
-  if (h.location.pathname.includes('/drop-magnet/artgallery.link/verticaly') ) {
+  if (match?.isExact) {
     return null
   }
 
