@@ -72,7 +72,7 @@ const ImgWrapper = styled.div`
     top: 0;
     width:100%;
     height:100%;
-    object-fit: cover;
+    object-fit: contain;
     }
 `;
 const GalleryButtonWrapper = styled.div`
@@ -104,6 +104,7 @@ const Gallery = (props) => {
     const [isZoomed, setIsZoomed] = useState(false);
     const [margin, setMargin] = useState(70);
     const [isOpen, setIsOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false)
 
     const handleZoomChange = useCallback(shouldZoom => {
         setIsZoomed(shouldZoom)
@@ -111,8 +112,12 @@ const Gallery = (props) => {
 
 
     window.addEventListener("resize", () => {
-        if (document.body.clientWidth <= 500) {
+        if (document.body.clientWidth <= 576) {
             setMargin(20)
+            setIsMobile(true)
+        }
+        else{
+            setIsMobile(false)
         }
     })
 
@@ -146,7 +151,10 @@ const Gallery = (props) => {
                         zoomMargin={margin}
                     >
                         <ImgWrapper>
-                            <img src={getCorrectUrl(nft?.image ? nft.image : nft?.image_url) || props.imgUrl} alt="gallery" />
+                            <img 
+                            style={{objectFit: `${isZoomed && isMobile ? 'contain' : isMobile ? 'cover' : 'contain'}`}}
+                            src={getCorrectUrl(nft?.image ? nft.image : nft?.image_url) || props.imgUrl} 
+                            alt="gallery" />
                         </ImgWrapper>
 
                     </ControlledZoom>
