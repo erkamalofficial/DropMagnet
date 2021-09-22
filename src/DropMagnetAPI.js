@@ -365,3 +365,8 @@ export function verifyCode(secret, token) {
   }
   return customAPICall(endPoint, payload, "POST", "");
 }
+
+export function verifyPassword(id, password) {
+  const endPoint = `metaurls/password/verify/${id}?p=${password}`;
+  return normalAPICall(endPoint, {}, "POST", "");
+}

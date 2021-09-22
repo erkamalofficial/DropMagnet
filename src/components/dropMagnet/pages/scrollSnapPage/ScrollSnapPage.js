@@ -15,16 +15,20 @@ import * as DropMagnetAPI from "../../../../DropMagnetAPI"
 import { useMoralis } from "react-moralis";
 import { result } from "lodash";
 import Spinner from "../../../blocks/spinner";
+import LoadingModal from "../../../elements/LoadingModal/LoadingModal";
 
 const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
 
     const { isInitialized, Moralis } = useMoralis()
-    const {link, user, id} = useParams()
+    const { link, user, id } = useParams()
     const { currentUser } = useAuth()
 
     const [metaURL, setmetaURL] = useState(null)
     const [nfts, setNfts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [pdModal, setpdModal] = useState(false)
+    const [loadingModal, setLoadingModal] = useState(false)
+    const [password, setPassword] = useState('')
 
     const galleryRef = useRef(null);
     const coverPageRef = useRef(null);
@@ -78,7 +82,51 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
         setLoading(false)
     }
 
+    const verifyPD = () => {
+        if (password !== '') {
+            DropMagnetAPI.verifyPassword(id, password)
+                .then(async res => {
+                    if(res.status === 200){
+                        alert("Verified!")
+                        setpdModal(false)
+                        setLoading(true)
+                        await fetchNFTs(metaURL)
+                    }
+                    else {
+                        alert("Wrong password!!")
+                    }
+                })
+        }
+        else{
+            alert("Enter password.")
+        }
+
+    }
+
+    const showPDModal = () => {
+        return (
+            <div className="cnf-modal">
+                <div className="content">
+                    <div className="modal-title">
+                        This MetaURL Is Private!
+                    </div>
+                    <p>
+                        To view this page, you have to enter password.
+                    </p>
+
+                    <input placeholder="Enter password here"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)} />
+                    <button onClick={verifyPD}>
+                        View Page
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
     const getMetaURL = () => {
+        setLoadingModal(true)
         DropMagnetAPI.getMetaURLById(id)
             .then(async res => {
                 if (res.status === 409) {
@@ -86,8 +134,18 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                 }
                 else {
                     setmetaURL(res)
-                    setLoading(true)
-                    await fetchNFTs(res)
+                    if (res.privacy === 'private') {
+                        setLoadingModal(false)
+                        setpdModal(true)
+                    }
+                    else if (res.privacy === 'smart') {
+                        setLoadingModal(false)
+                    }
+                    else {
+                        setLoadingModal(false)
+                        setLoading(true)
+                        await fetchNFTs(res)
+                    }
                 }
             })
     }
@@ -143,25 +201,34 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
         // console.log(sortedArr);
 
     }, [data, slideItems])
+
+
     return (
         <article className="scroller">
-            {
-                filteredData.map((item) => {
-                    return (
-                        <React.Fragment key={item.id}>
-                            {item.content}
-                        </React.Fragment>
-                    )
-                })
-            }
-            {(nfts.length === 0 && loading) ? (<section ref={galleryRef}><Spinner /></section>) :
-                nfts.map(n => (
-                    <section ref={galleryRef}>
-                        <Gallery {...firstSlide} iOS={iOS} nft={n} />
-                    </section>
-                ))}
-            {/* props={props}*/}
-            <PageLiksComponent darkTheme={darkTheme} galleryRef={galleryRef} coverPageRef={coverPageRef} userComponentStyles='user-component-styles' />
+            {loadingModal && <LoadingModal label="Loading data...." />}
+            {pdModal ? (
+                showPDModal()
+            ) : (
+                <>
+                    {
+                        filteredData.map((item) => {
+                            return (
+                                <React.Fragment key={item.id}>
+                                    {item.content}
+                                </React.Fragment>
+                            )
+                        })
+                    }
+                    {(nfts.length === 0 && loading) ? (<section ref={galleryRef}><Spinner /></section>) :
+                        nfts.map(n => (
+                            <section ref={galleryRef}>
+                                <Gallery {...firstSlide} iOS={iOS} nft={n} />
+                            </section>
+                        ))}
+                    {/* props={props}*/}
+                    <PageLiksComponent darkTheme={darkTheme} galleryRef={galleryRef} coverPageRef={coverPageRef} userComponentStyles='user-component-styles' />
+                </>
+            )}
         </article>
     )
 }

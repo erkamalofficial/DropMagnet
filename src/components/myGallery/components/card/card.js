@@ -13,7 +13,7 @@ import * as DropMagnetAPI from "../../../../DropMagnetAPI"
 import { useAuth } from "../../../../contexts/FirebaseAuthContext"
 import LoadingModal from "../../../elements/LoadingModal/LoadingModal.js"
 import Spinner from "../../../blocks/spinner";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const CardWrapper = styled.div`
     padding: 8px 16px;
@@ -217,6 +217,26 @@ const EditName = styled.div`
         text-overflow: ellipsis;
     }
 `;
+
+const ResetButton = styled.button`
+    width: 50%;
+    height: fit-content;
+    border-radius: 11px;
+    background-color: rgba(0, 0, 0, 0.31);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    text-align: center;
+    padding: 16px 10px;
+    border:none;
+    outline: none !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
 const Privacy = styled.div`
     p{
         margin: 0 0 8px 0;
@@ -334,8 +354,9 @@ const Card = (props) => {
     const [end, setEnd] = useState(3)
     const [page, setPage] = useState(0)
     const [tfaCode, setTfaCode] = useState('')
-    const [password, setPassword] = useState(metaurl.password)
+    const [password, setPassword] = useState("")
     const [sAddress, setSAddress] = useState(metaurl.specificAddress)
+    const [reset, setReset] = useState(false)
 
     const tabs = [
         { id: "public" },
@@ -354,7 +375,11 @@ const Card = (props) => {
     const handleChangeTab = useCallback((id) => setActiveTab(id), [])
 
     const saveEditChanges = () => {
-        setLoading(true)
+
+        const hasPassword = metaurl.password!==''
+        const isEmpty = password === ''
+        const isPrivate = activeTab === 'private'
+
         let data = { privacy: activeTab }
 
         switch (activeTab) {
@@ -367,6 +392,13 @@ const Card = (props) => {
             default:
                 break;
         }
+
+        if(isPrivate && (!hasPassword || reset) && isEmpty){
+            alert("Enter password.")
+            return;
+        }
+
+        setLoading(true)
 
         currentUser.getIdToken().then((idToken) => {
             DropMagnetAPI.editMetaURLPrivacy(data, id, idToken)
@@ -696,11 +728,15 @@ const Card = (props) => {
                         </div>
                         {activeTab === 'private' && (
                             <div className="metaurl enter-extras">
-                                <EditName>
-                                    <input id="password" type="text" value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="Add password (optional)" />
-                                </EditName>
+                                {(metaurl.password === '' || reset) ? (
+                                    <EditName>
+                                        <input id="password" type="text" value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            placeholder="Add password (optional)" />
+                                    </EditName>
+                                ) : (
+                                    <ResetButton onClick={() => setReset(true)}>Reset Password</ResetButton>
+                                )}
                             </div>
                         )}
                         {activeTab === 'smart' && (
