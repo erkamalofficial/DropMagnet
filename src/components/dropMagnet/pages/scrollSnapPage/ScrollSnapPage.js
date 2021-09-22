@@ -29,6 +29,7 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
     const [pdModal, setpdModal] = useState(false)
     const [loadingModal, setLoadingModal] = useState(false)
     const [password, setPassword] = useState('')
+    const [spAddress, setSpAddress] = useState('')
 
     const galleryRef = useRef(null);
     const coverPageRef = useRef(null);
@@ -82,11 +83,27 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
         setLoading(false)
     }
 
+    const fetchFromSA = async (metaurl, address) => {
+        const options = {
+            chain: "polygon",
+            address: address,
+        };
+        let response = await Moralis.Web3.getNFTs(options)
+            .then(async res => {
+                let results = await fetchNFTsUtils(res)
+                return results
+            })
+        let newNfts = nfts.concat(response)
+        setNfts(newNfts)
+
+        setLoading(false)
+    }
+
     const verifyPD = () => {
         if (password !== '') {
             DropMagnetAPI.verifyPassword(id, password)
                 .then(async res => {
-                    if(res.status === 200){
+                    if (res.status === 200) {
                         alert("Verified!")
                         setpdModal(false)
                         setLoading(true)
@@ -97,7 +114,7 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                     }
                 })
         }
-        else{
+        else {
             alert("Enter password.")
         }
 
@@ -140,6 +157,9 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                     }
                     else if (res.privacy === 'smart') {
                         setLoadingModal(false)
+                        setSpAddress(res.specificAddress)
+                        setLoading(true)
+                        await fetchFromSA(res, res.specificAddress)
                     }
                     else {
                         setLoadingModal(false)
