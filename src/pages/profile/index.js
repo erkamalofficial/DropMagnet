@@ -218,7 +218,7 @@ export default function Profile(props) {
               setUser(response);
               const p = {
                 ...response,
-                name: response.username,
+                name: response.name,
                 usernmae: response.username,
                 bio: response.bio,
                 insta_url: response.insta_url,
@@ -417,7 +417,7 @@ export default function Profile(props) {
             setUser(response);
             const p = {
               ...response,
-              name: response.username,
+              name: response.name,
               usernmae: response.username,
               bio: response.bio,
               insta_url: response.insta_url,
