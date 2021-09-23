@@ -383,6 +383,23 @@ export default function Profile(props) {
   const updateDetails = (field, value) => {
     setUpdating(true)
     const user_id = currentUser.uid
+
+    if(field === 'username'){
+      if(value.split(' ').length > 1){
+        alert("Username cannot have space.")
+        setUpdating(false)
+        setHandle(user.username)
+        return
+      }
+    }
+
+    if(value === user[field]){
+      alert(`It is same as previous ${field}. Try new one.`)
+      setUpdating(false)
+      
+      return;
+    }
+
     currentUser.getIdToken(false).then(function (idToken) {
       DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) => {
 
