@@ -385,6 +385,7 @@ export default function Profile(props) {
     const user_id = currentUser.uid
     currentUser.getIdToken(false).then(function (idToken) {
       DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) => {
+
         DropMagnetAPI.getUserProfile(user_id, idToken).then(function (
           response
         ) {
@@ -407,11 +408,17 @@ export default function Profile(props) {
               avatar_url: response.avatar_url
             }
             sessionStorage.setItem('profileDetails', JSON.stringify(p))
-            alert("Successfully updated.")
-            setUpdating(false)
+
           }
         });
-
+        if (res.status === 200) {
+          alert("Successfully updated.")
+          setUpdating(false)
+        }
+        else {
+          alert("Username already exists. Try different username.")
+          setUpdating(false)
+        }
       });
     });
   };

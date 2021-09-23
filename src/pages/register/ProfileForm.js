@@ -37,15 +37,16 @@ const ProfileForm = () => {
 
             if (!username.split(' ')[1]) {
                 DropMagnetAPI.createWalletUser(username, name, address).then(async function (response) {
-                    if (response.status === "error") {
-                        console.log('error', response)
+                    if (response.status === 409) {
+                        alert("Username exists! Try another username.")
+                        setLoading(false)
                     }
                     else {
                         await signInWithCustomToken(response.token)
                             .then(cred => {
-                                setLoading(false)
                                 sessionStorage.removeItem('headerLoad')
                                 window.location.href = "/home"
+                                setLoading(false)
 
                             })
                     }
