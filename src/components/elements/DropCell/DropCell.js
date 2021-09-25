@@ -37,7 +37,7 @@ export default function DropCell(props) {
 
   const openUser = (e) => {
     const user_id = currentUser.uid;
-    if(user_id !== user?.id){
+    if (user_id !== user?.id) {
       history.push(`/profile/${user?.id}`)
     }
   }
@@ -46,7 +46,7 @@ export default function DropCell(props) {
     return <div key={props.drop.id} className="landing-cell" onClick={props.onClick}>
       <div className="drop-inner" onClick={() => {
         props.setCurDrop(props.drop)
-        if(!props.swiping){
+        if (!props.swiping) {
           props.setDetailView(true);
         }
       }
@@ -55,11 +55,11 @@ export default function DropCell(props) {
           <div className="drop-header" >
             <Avatar initial={getInitials(artist_name)}
               userImage={artist_image} view_only small
-              userId={user?.id}/>
+              userId={user?.id} />
             {/* <img className="drop-artist-image" src={artist_image} /> */}
             {artist_name !== '' &&
-              <div className="drop-header-title" 
-              onClick={openUser}>
+              <div className="drop-header-title"
+                onClick={openUser}>
                 {artist_name}
               </div>}
           </div>
@@ -72,6 +72,7 @@ export default function DropCell(props) {
           </div>
         </div>
         <img className="drop-image" src={props.drop.media[0].url} alt="/" />
+
       </div>
     </div>
   }
