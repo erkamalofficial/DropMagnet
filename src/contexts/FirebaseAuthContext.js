@@ -3,13 +3,26 @@ import { auth } from "../firebase";
 
 const AuthContext = React.createContext({currentUser: {}});
 
+let VERIFICATION_URL_SIGNIN = ""
+let VERIFICATION_URL_SIGNUP = ""
+
+if(process.env.NODE_ENV === 'development'){
+  VERIFICATION_URL_SIGNIN = "http://localhost:3000/verify/signin"
+  VERIFICATION_URL_SIGNUP = "http://localhost:3000/verify/signup"
+}
+else{
+  VERIFICATION_URL_SIGNIN = "https://dropmagnet-develop.web.app/verify/signin"
+  VERIFICATION_URL_SIGNUP = "https://dropmagnet-develop.web.app/verify/signup"
+}
+
+
 var signinSettings = {
-  url: "http://localhost:3000/verify/signin",
+  url: VERIFICATION_URL_SIGNIN,
   handleCodeInApp: true
 };
 
 var signupSettings = {
-  url: "http://localhost:3000/verify/signup",
+  url: VERIFICATION_URL_SIGNUP,
   handleCodeInApp: true
 };
 
