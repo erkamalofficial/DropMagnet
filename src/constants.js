@@ -1,7 +1,7 @@
 export const tabNames = {
     ARTS: 'art',
     MUSIC: 'music',
-    COLLECTIBLES: 'collectibles',
+    COLLECTIBLES: 'collectible',
     FASHION: 'fashion'
 }
 
