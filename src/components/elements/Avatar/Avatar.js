@@ -48,7 +48,6 @@ function Avatar({
   userId
 }) {
 
-
   const [img, setImg] = useState(null)
   const cont_style = style ? style : {};
 
@@ -57,7 +56,7 @@ function Avatar({
 
   const openUser = (e) => {
     const user_id = currentUser.uid;
-    if (user_id !== userId) {
+    if (userId && user_id !== userId) {
       history.push(`/profile/${userId}`)
     }
   }
