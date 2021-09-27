@@ -106,7 +106,7 @@ const HomePage = () => {
                         <Link to="/my-gallery">
                             <Card title="Rooms" icon={'🥳'} />
                         </Link>
-                        <Link to="/metaurl/artgallery.link/verticaly">
+                        <Link to="/my-gallery">
                             <Card title="Explore" icon={'🚀'} />
                         </Link>
                         <Link to="/my-gallery">
