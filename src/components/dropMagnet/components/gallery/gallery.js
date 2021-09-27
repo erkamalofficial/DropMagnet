@@ -136,7 +136,8 @@ const Gallery = (props) => {
 
     const getCorrectUrl = (url) => {
         if (url && url.startsWith("ipfs")) {
-            return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://").slice(-1)[0]
+            url = url.split("ipfs://").slice(-1)[0]
+            return `https://ipfs.moralis.io:2053/${url.startsWith("ipfs") ? url : `ipfs/${url}`}`
         }
         return url
     }

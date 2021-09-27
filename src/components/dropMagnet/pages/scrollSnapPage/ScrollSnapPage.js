@@ -24,8 +24,11 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
     const { currentUser } = useAuth()
 
     const [metaURL, setmetaURL] = useState(null)
-    const [nfts, setNfts] = useState([])
+    const [polygonNfts, setPolygonNfts] = useState([])
+    const [ethNfts, setEthNfts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [ethLoading, setEthLoading] = useState(false)
+    const [polygonLoading, setPolygonLoading] = useState(false)
     const [pdModal, setpdModal] = useState(false)
     const [loadingModal, setLoadingModal] = useState(false)
     const [password, setPassword] = useState('')
@@ -68,40 +71,43 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
         return results
     }
 
-    const fetchNFTs = async (metaurl) => {
+    const fetchNFTs = async (metaurl, chain) => {
         if (isInitialized) {
             for (const wa of metaurl.addresses) {
 
-                let response = await Moralis.Web3API.account.getNFTs({chain: "eth", address: wa.address})
+                let response = await Moralis.Web3API.account.getNFTs({ chain: chain, address: wa.address, limit: 100 })
                     .then(async res => {
-                        console.log(res)
                         let results = await fetchNFTsUtils(res.result)
                         return results
                     })
                     .catch(err => console.log(err))
-                    
-                let newNfts = nfts.concat(response)
-                setNfts(newNfts)
+
+                let newNfts = polygonNfts.concat(response)
+                if (chain === 'eth') setEthNfts(newNfts)
+                else if (chain === 'polygon') setPolygonNfts(newNfts)
             }
-            setLoading(false)
+            if (chain === 'eth') setEthLoading(false)
+            else if (chain === 'polygon') setPolygonLoading(false)
         }
 
     }
 
-    const fetchFromSA = async (metaurl, address) => {
+    const fetchFromSA = async (metaurl, address, chain) => {
         const options = {
-            chain: "polygon",
+            chain: chain,
             address: address,
         };
-        let response = await Moralis.Web3.getNFTs(options)
+        let response = await Moralis.Web3API.account.getNFTs(options)
             .then(async res => {
                 let results = await fetchNFTsUtils(res)
                 return results
             })
-        let newNfts = nfts.concat(response)
-        setNfts(newNfts)
+        let newNfts = polygonNfts.concat(response)
+        if (chain === 'eth') setEthNfts(newNfts)
+        else if (chain === 'polygon') setPolygonNfts(newNfts)
 
-        setLoading(false)
+        if (chain === 'eth') setEthLoading(false)
+        else if (chain === 'polygon') setPolygonLoading(false)
     }
 
     const verifyPD = () => {
@@ -111,8 +117,10 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                     if (res.status === 200) {
                         alert("Verified!")
                         setpdModal(false)
-                        setLoading(true)
-                        await fetchNFTs(metaURL)
+                        setEthLoading(true)
+                        setPolygonLoading(true)
+                        await fetchNFTs(metaURL, "polygon")
+                        await fetchNFTs(metaURL, "eth")
                     }
                     else {
                         alert("Wrong password!!")
@@ -162,12 +170,16 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                     }
                     else if (res.privacy === 'smart') {
                         setSpAddress(res.specificAddress)
-                        setLoading(true)
-                        await fetchFromSA(res, res.specificAddress)
+                        setEthLoading(true)
+                        setPolygonLoading(true)
+                        await fetchFromSA(res, res.specificAddress, "polygon")
+                        await fetchFromSA(res, res.specificAddress, "eth")
                     }
                     else {
-                        setLoading(true)
-                        await fetchNFTs(res)
+                        setEthLoading(true)
+                        setPolygonLoading(true)
+                        await fetchNFTs(res, "polygon")
+                        await fetchNFTs(res, "eth")
                     }
                 }
             })
@@ -242,8 +254,14 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                             )
                         })
                     }
-                    {(nfts.length === 0 && loading) ? (<section ref={galleryRef}><Spinner /></section>) :
-                        nfts.map(n => (
+                    {(polygonNfts.length === 0 && polygonLoading) ? (<section ref={galleryRef}><Spinner /></section>) :
+                        polygonNfts.map(n => (
+                            <section ref={galleryRef}>
+                                <Gallery {...firstSlide} iOS={iOS} nft={n} />
+                            </section>
+                        ))}
+                    {(ethNfts.length === 0 && ethLoading) ? (<section ref={galleryRef}><Spinner /></section>) :
+                        ethNfts.map(n => (
                             <section ref={galleryRef}>
                                 <Gallery {...firstSlide} iOS={iOS} nft={n} />
                             </section>
