@@ -5,6 +5,7 @@ import styled from "styled-components";
 import GalleryModal from "../galleryModal";
 import dots from "../../assets/dots.svg";
 import LikeButton from "../newUserContent/styled-components/likeButton";
+import { get } from "lodash";
 // import ShareModal from "../sharingIconsModal";
 // import share from "../../assets/share.svg"
 
@@ -116,7 +117,7 @@ const Gallery = (props) => {
             setMargin(20)
             setIsMobile(true)
         }
-        else{
+        else {
             setIsMobile(false)
         }
     })
@@ -140,6 +141,18 @@ const Gallery = (props) => {
         return url
     }
 
+    const getImage = () => {
+        if (nft.image) return getCorrectUrl(nft.image)
+        else if (nft.image_url) return getCorrectUrl(nft.image_url)
+        else if (nft.image_data) {
+            let svg = nft.image_data;
+            let blob = new Blob([svg], { type: 'image/svg+xml' });
+            let url = URL.createObjectURL(blob);
+            return url
+        }
+        return null
+    }
+
     return (
         <>
             <GalleryWrapper >
@@ -151,10 +164,10 @@ const Gallery = (props) => {
                         zoomMargin={margin}
                     >
                         <ImgWrapper>
-                            <img 
-                            style={{objectFit: `${isZoomed && isMobile ? 'contain' : isMobile ? 'cover' : 'contain'}`}}
-                            src={getCorrectUrl(nft?.image ? nft.image : nft?.image_url) || props.imgUrl} 
-                            alt="gallery" />
+                            <img
+                                style={{ objectFit: `${isZoomed && isMobile ? 'contain' : isMobile ? 'cover' : 'contain'}` }}
+                                src={getImage()}
+                                alt="gallery" />
                         </ImgWrapper>
 
                     </ControlledZoom>

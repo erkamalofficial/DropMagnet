@@ -53,34 +53,39 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
     const fetchNFTsUtils = async (data) => {
         let results = []
         for (const d of data) {
-            let url = fixUrl(d.token_uri)
-            try {
-                let res = await fetch(url)
-                    .then(res => res.json())
-                    .catch(err => null)
-                if (res && (res.name || res.image || res.id || res.description)) {
-                    results.push(res)
-                }
-            } catch (error) { }
+            if (d.token_uri) {
+                let url = fixUrl(d.token_uri)
+                try {
+                    let res = await fetch(url)
+                        .then(res => res.json())
+                        .catch(err => null)
+                    if (res && (res.name || res.image || res.id || res.description)) {
+                        results.push(res)
+                    }
+                } catch (error) { }
+            }
         }
         return results
     }
 
     const fetchNFTs = async (metaurl) => {
-        for (const wa of metaurl.addresses) {
-            const options = {
-                chain: "polygon",
-                address: wa.address,
-            };
-            let response = await Moralis.Web3.getNFTs(options)
-                .then(async res => {
-                    let results = await fetchNFTsUtils(res)
-                    return results
-                })
-            let newNfts = nfts.concat(response)
-            setNfts(newNfts)
+        if (isInitialized) {
+            for (const wa of metaurl.addresses) {
+
+                let response = await Moralis.Web3API.account.getNFTs({chain: "eth", address: wa.address})
+                    .then(async res => {
+                        console.log(res)
+                        let results = await fetchNFTsUtils(res.result)
+                        return results
+                    })
+                    .catch(err => console.log(err))
+                    
+                let newNfts = nfts.concat(response)
+                setNfts(newNfts)
+            }
+            setLoading(false)
         }
-        setLoading(false)
+
     }
 
     const fetchFromSA = async (metaurl, address) => {
@@ -151,18 +156,16 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
                 }
                 else {
                     setmetaURL(res)
+                    setLoadingModal(false)
                     if (res.privacy === 'private') {
-                        setLoadingModal(false)
                         setpdModal(true)
                     }
                     else if (res.privacy === 'smart') {
-                        setLoadingModal(false)
                         setSpAddress(res.specificAddress)
                         setLoading(true)
                         await fetchFromSA(res, res.specificAddress)
                     }
                     else {
-                        setLoadingModal(false)
                         setLoading(true)
                         await fetchNFTs(res)
                     }
