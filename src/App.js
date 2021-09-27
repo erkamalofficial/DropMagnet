@@ -175,8 +175,8 @@ function App() {
   }, [idToken, currentUser]);
 
   return (
-    <MoralisProvider appId="mO8mDTeQISbBkrzQ24VPTNwhaWuK00S1Z7evWsj5" 
-    serverUrl="https://sztokzqqh01r.grandmoralis.com:2053/server">
+    <MoralisProvider appId="OU0t6bcDBOdttZz6GQwOQwL1FR5gldTGV0IRnBukSFyzrWeFvXnKNpKjXhXa3OVh" 
+    serverUrl="https://vzaksd4g1d0t.grandmoralis.com:2053/server">
       <GlobalContext.Provider value={{ date, setDate, setCurUser, curUser }}>
         <Router>
           <div className="fixed-container"
