@@ -339,7 +339,9 @@ const TabsWrapper = styled.div`
     .content {
       display: flex;
       justify-content: space-between;
-      max-width: 322px;
+      width: fit-content;
+      max-width: 100%;
+      overflow-x: scroll;
       margin: 0 auto;    
     }
 `;
@@ -351,11 +353,14 @@ const Tab = styled.div`
     font-weight: 500;
     background-image: linear-gradient(180deg, rgba(24,24,24,0.83) 0%, rgba(19,19,19, 0.83) 100%);
     border: 0.75px solid #000000;
-    width: calc(100% / 4 - 4px);
+    width: fit-content;
+    white-space: nowrap;
+    margin: 0 12px;
     height: 31px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2px 4px
 `;
 
 const GalleryModal = ({nft, isOpen, closeModal}) => {
@@ -377,6 +382,8 @@ const GalleryModal = ({nft, isOpen, closeModal}) => {
 
     }
     console.log(activeTab)
+
+    const attributes = nft.attributes
     //
     // const scrollToCover = () => {
     //     props.coverPageRef.current.scrollIntoView();
@@ -398,7 +405,7 @@ const GalleryModal = ({nft, isOpen, closeModal}) => {
                     <Header>
                         <HeaderContent>
                             <Close onClick={closeModal}><img src={close} alt="close"/></Close>
-                            <HeaderTitle>{nft?.name} by [Artist name]</HeaderTitle>
+                            <HeaderTitle>{nft?.name}</HeaderTitle>
                         </HeaderContent>
                         <TabsHeader>
                             <div className="edit-tabs">
@@ -430,10 +437,9 @@ const GalleryModal = ({nft, isOpen, closeModal}) => {
                             {activeTab === 1
                                 ? <TabsWrapper>
                                     <div className='content'>
-                                        <Tab>Trait 1</Tab>
-                                        <Tab>Trait 2</Tab>
-                                        <Tab>Trait 3</Tab>
-                                        <Tab>Trait 4</Tab>
+                                        {attributes && attributes.length ? attributes.map(t => (
+                                            <Tab>{t.trait_type}</Tab>
+                                        )): null}
                                     </div>
                                 </TabsWrapper>
 
