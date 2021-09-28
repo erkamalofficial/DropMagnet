@@ -16,6 +16,7 @@ import { useMoralis } from "react-moralis";
 import { result } from "lodash";
 import Spinner from "../../../blocks/spinner";
 import LoadingModal from "../../../elements/LoadingModal/LoadingModal";
+import axios from 'axios'
 
 const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
 
@@ -53,21 +54,20 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
         return url + "?format=json"
     }
 
-    const fetchNFTsUtils = async (data) => {
+    const fetchNFTsUtils = async (address, data, chain) => {
         let results = []
-        for (const d of data) {
-            if (d.token_uri) {
-                let url = fixUrl(d.token_uri)
-                try {
-                    let res = await fetch(url)
-                        .then(res => res.json())
-                        .catch(err => null)
-                    if (res && (res.name || res.image || res.id || res.description)) {
-                        results.push(res)
-                    }
-                } catch (error) { }
+        results = data.map(async d => {
+            if (d.token_id && d.token_uri) {
+                let res = await fetch(fixUrl(d.token_uri))
+                    .then(res => res.json())
+                    .catch(err => null)
+                const options = { address: address, token_id: d.token_id, chain: chain };
+                const tokenIdMetadata = await Moralis.Web3API.token.getTokenIdMetadata(options);
+                console.log(res, tokenIdMetadata)
+                if (res && (res.name || res.image || res.id || res.description)) return res
+                else return null
             }
-        }
+        })
         return results
     }
 
@@ -75,39 +75,67 @@ const ScrollSnapPage = ({ darkTheme, changeSlide, data }) => {
         if (isInitialized) {
             for (const wa of metaurl.addresses) {
 
-                let response = await Moralis.Web3API.account.getNFTs({ chain: chain, address: wa.address, limit: 100 })
-                    .then(async res => {
-                        let results = await fetchNFTsUtils(res.result)
-                        return results
-                    })
-                    .catch(err => console.log(err))
+                let response = await Moralis.Web3API.account.getNFTs(
+                    { chain: chain, address: wa.address, limit: 100 }
+                )
+                let nfts = []
+                response.result.forEach(async (d) => {
+                    if (d.metadata) {
+                        nfts.push(JSON.parse(d.metadata))
+                    }
+                    else if (d.token_uri) {
+                        let res = await fetch(fixUrl(d.token_uri))
+                            .then(res => res.json())
+                        if (res && (res.name || res.image || res.id || res.description))
+                            nfts.push(res)
+                    }
+                })
 
-                let newNfts = polygonNfts.concat(response)
-                if (chain === 'eth') setEthNfts(newNfts)
-                else if (chain === 'polygon') setPolygonNfts(newNfts)
+                if (chain === 'eth') {
+                    nfts = ethNfts.concat(nfts)
+                    setEthNfts(nfts)
+                }
+                else if (chain === 'polygon') {
+                    nfts = polygonNfts.concat(nfts)
+                    setPolygonNfts(nfts)
+                }
             }
-            if (chain === 'eth') setEthLoading(false)
-            else if (chain === 'polygon') setPolygonLoading(false)
+            if (chain === 'eth') setTimeout(() => {setEthLoading(false)}, 1000);
+            else if (chain === 'polygon') setTimeout(() => {setPolygonLoading(false)}, 1000);
         }
 
     }
 
     const fetchFromSA = async (metaurl, address, chain) => {
-        const options = {
-            chain: chain,
-            address: address,
-        };
-        let response = await Moralis.Web3API.account.getNFTs(options)
-            .then(async res => {
-                let results = await fetchNFTsUtils(res)
-                return results
+        if (isInitialized) {
+            let response = await Moralis.Web3API.account.getNFTs(
+                { chain: chain, address: address }
+            )
+            let nfts = []
+            response.result.forEach(async (d) => {
+                if (d.metadata) {
+                    nfts.push(JSON.parse(d.metadata))
+                }
+                else if (d.token_uri) {
+                    let res = await fetch(fixUrl(d.token_uri))
+                        .then(res => res.json())
+                    if (res && (res.name || res.image || res.id || res.description))
+                        nfts.push(res)
+                }
             })
-        let newNfts = polygonNfts.concat(response)
-        if (chain === 'eth') setEthNfts(newNfts)
-        else if (chain === 'polygon') setPolygonNfts(newNfts)
 
-        if (chain === 'eth') setEthLoading(false)
-        else if (chain === 'polygon') setPolygonLoading(false)
+            if (chain === 'eth') {
+                nfts = ethNfts.concat(nfts)
+                setEthNfts(nfts)
+            }
+            else if (chain === 'polygon') {
+                nfts = polygonNfts.concat(nfts)
+                setPolygonNfts(nfts)
+            }
+
+            if (chain === 'eth') setEthLoading(false)
+            else if (chain === 'polygon') setPolygonLoading(false)
+        }
     }
 
     const verifyPD = () => {
