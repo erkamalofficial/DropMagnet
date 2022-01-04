@@ -119,7 +119,7 @@ const Home = (props) => {
 
   useEffect(() => {
     // jsx upgrade, re-render after intervals of 6 hours
-    let dropRefreshTimer = setTimeout(() => {
+    let dropRefreshTimer = setInterval(() => {
       DROP_SERVICE.getAllDropTabs().then((res) => {
         console.log(res.data)
         setCategoryTabs(res.data.categories)
