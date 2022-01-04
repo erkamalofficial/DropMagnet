@@ -26,6 +26,9 @@ import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
 import FadeIn from 'react-fade-in';
 import { GlobalContext } from "../../utils/GlobalContext";
+// jsx upgrade
+import * as DROP_SERVICE from '../../services/drop-services';
+
 
 const HomeContainer = styled.div`
   display: flex;
@@ -78,6 +81,10 @@ const Home = (props) => {
 
   console.log(date)
 
+  //jsx upgrade
+  const [categoryTabs, setCategoryTabs] = useState(null)
+  const [externalCreatorTabs, setExternalCreatorTabs] = useState(null)
+  
   useEffect(() => {
     setSelectedDropdownDate(date)
   }, [date])
@@ -96,6 +103,18 @@ const Home = (props) => {
     setTimeout(() => {
       props.setReload(false)
     }, 500);
+  }, [])
+
+  useEffect(() => {
+    // jsx upgrade, on first render 
+    DROP_SERVICE.getAllDropTabs().then((res) => {
+      console.log(res.data)
+      setCategoryTabs(res.data.categories)
+      setExternalCreatorTabs(res.data.external_creators)
+      console.log('%c successful GET drop collection ','background: #444; color: #bada55; padding: 2px; border-radius:2px')
+    }).catch((err) => {
+      console.log(err, 'There has been an error getting drop collections')
+    });
   }, [])
 
   useEffect(() => {
