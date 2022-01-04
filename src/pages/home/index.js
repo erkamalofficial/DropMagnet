@@ -118,6 +118,20 @@ const Home = (props) => {
   }, [])
 
   useEffect(() => {
+    // jsx upgrade, re-render after intervals of 6 hours
+    let dropRefreshTimer = setTimeout(() => {
+      DROP_SERVICE.getAllDropTabs().then((res) => {
+        console.log(res.data)
+        setCategoryTabs(res.data.categories)
+        setExternalCreatorTabs(res.data.external_creators)
+        console.log('%c successful TIMEIN ','background: #444; color: #ff3d00; padding: 2px; border-radius:2px')
+      }).catch((err) => {
+        console.log(err, '%c successful TIMEOUT ', 'background: #444; color: #ff3d00; padding: 2px; border-radius:2px')
+      })
+    }, 21600000);
+  }, [setCategoryTabs, setExternalCreatorTabs])
+
+  useEffect(() => {
 
     let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
