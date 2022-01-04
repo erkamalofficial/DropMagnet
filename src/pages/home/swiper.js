@@ -56,7 +56,7 @@ function Swiper(props) {
 
   const childRefs = useMemo(
     () =>
-      Array(allCards.length)
+      allCards.length > 0 && Array(allCards.length)
         .fill(0)
         .map((i) => React.createRef()),
     [allCards.length]
