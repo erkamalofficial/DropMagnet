@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "dropmagnet-develop",
+    "site": "drop-testnet",
     "public": "build",
     "ignore": [
       "firebase.json",
