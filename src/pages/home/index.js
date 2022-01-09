@@ -12,6 +12,11 @@ import {
   fetchColletibles,
   fetchFashion,
   fetchReswipeBuckets,
+  fetchCategory,
+  fetchCloneX,
+  fetchDW,
+  fetchSR,
+  fetchExternalCreators
 } from "./actions";
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
@@ -78,19 +83,39 @@ const Home = (props) => {
   );
   const nextIndex = useSelector((state) => state.category.nextIndex);
   const fetchMore = useSelector((state) => state.category.fetchMore);
-
+  const allCategories = useSelector(state => state.category.allCategories)
   console.log(date)
 
   //jsx upgrade
   const [categoryTabs, setCategoryTabs] = useState(null)
   const [externalCreatorTabs, setExternalCreatorTabs] = useState(null)
-  
+  const [AllCategories, setAllCategories] = useState([])
+
   useEffect(() => {
     setSelectedDropdownDate(date)
   }, [date])
 
+  
+
+  // useEffect(() => { 
+  //   console.log(allCategories)
+  //   if(allCategories) setAllCategories(allCategories.categories)
+  // }, [allCategories])
+
+  useEffect(() => {
+    let extras = {
+      token: idToken,
+      userID: "",
+      random: true
+    }
+    dispatch(fetchCategory())
+    dispatch(fetchExternalCreators({extras}))
+  }, [ ])
+
   useEffect(() => {
     // First rendering
+
+
     if (props.reload) {
       sessionStorage.setItem('headerLoad', 'true')
     }
@@ -131,6 +156,7 @@ const Home = (props) => {
     }, 21600000);
   }, [setCategoryTabs, setExternalCreatorTabs])
 
+
   useEffect(() => {
 
     let curTime = new Date(selectedDropdownDate).getTime()
@@ -149,9 +175,20 @@ const Home = (props) => {
     else if (activeTabIndex === 2) {
       dispatch(fetchColletibles({ activeTabIndex: 2, extras: { ...extras, token: idToken } }));
     }
-    else {
+    else if (activeTabIndex == 3) {
       dispatch(fetchFashion({ activeTabIndex: 3, extras: { ...extras, token: idToken } }));
     }
+    else if (activeTabIndex == 4) {
+      console.log(allCategories.external_creators[0].id)
+      dispatch(fetchCloneX({ activeTabIndex: 4, id : allCategories.external_creators[0].id , extras: { ...extras, token: idToken  } }));
+    }
+    else if (activeTabIndex == 5) {
+      dispatch(fetchDW({ activeTabIndex: 5 , id : allCategories.external_creators[1].id , extras: { ...extras, token: idToken} }));
+    }
+    else if (activeTabIndex == 6) {
+      dispatch(fetchSR({ activeTabIndex: 6 , id : allCategories.external_creators[2].id , extras: { ...extras, token: idToken} }));
+    }
+    
 
   }, [selectedDropdownDate]);
 
@@ -180,8 +217,17 @@ const Home = (props) => {
       else if (activeTabIndex === 2) {
         dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
       }
-      else {
+      else if  (activeTabIndex === 3)  {
         dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
+      }
+      else if (activeTabIndex === 4) {
+        dispatch(fetchCloneX({ activeTabIndex: 4, id : allCategories.external_creators[0].id , token: idToken, extras: extras  }));
+      }
+      else if (activeTabIndex === 5) {
+        dispatch(fetchDW({ activeTabIndex: 5, id : allCategories.external_creators[1].id , token: idToken, extras: extras  }));
+      }
+      else if (activeTabIndex === 6) {
+        dispatch(fetchSR({ activeTabIndex: 6, id : allCategories.external_creators[2].id , token: idToken, extras: extras }));
       }
       setLoadMore(false)
 
@@ -193,8 +239,9 @@ const Home = (props) => {
     const curDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
     return curDate
   }
-  const currentTabId = getCategoryFromTab(tabList[activeTabIndex]);;
+  const currentTabId = getCategoryFromTab(tabList[activeTabIndex]);
   const { activeBucket } = useSelector((state) => {
+    console.log('here : ' , state.category[currentTabId]);
     return state.category[currentTabId];
   });
 
@@ -212,26 +259,35 @@ const Home = (props) => {
 
   const handleActiveTabIndex = (index) => {
 
-    const activeTab = getCategoryFromTab(tabList[index]);
+    // const activeTab = getCategoryFromTab(tabList[index]);
 
+    console.log(index);
     let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
       token: idToken,
       curTime: curTime,
       userID: "",
     }
-
-    if (activeTab === "music") {
+    if (index === 1) {
       dispatch(fetchMusic({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
-    if (activeTab === "art") {
+    if (index === 0) {
       dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
-    if (activeTab === "collectible") {
+    if (index === 2) {
       dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
     }
-    if (activeTab === "fashion") {
+    if (index === 3) {
       dispatch(fetchFashion({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
+    }
+    if (index === 4) {
+      dispatch(fetchCloneX({ activeTabIndex: index, id : allCategories.external_creators[0].id , extras: { ...extras, token: idToken } }));
+    }
+    if (index === 5) {
+      dispatch(fetchDW({ activeTabIndex: index, id : allCategories.external_creators[1].id , extras: { ...extras, token: idToken } }));
+    }
+    if (index === 6) {
+      dispatch(fetchSR({ activeTabIndex: index, id : allCategories.external_creators[2].id , extras: { ...extras, token: idToken } }));
     }
   };
 
@@ -245,7 +301,7 @@ const Home = (props) => {
           .finally(() => {
             // setInternalLoader(false);
             console.log("Ritgh")
-            updateTokens(drop.artist.id)
+            updateTokens(drop.artist && drop.artist.id)
               .then(res => { })
           });
       } else if (dir === "left") {
@@ -315,6 +371,7 @@ const Home = (props) => {
                 onSwipe={handleSwipe}
                 handleActiveTabIndex={handleActiveTabIndex}
                 tabList={tabList}
+                tabList2={AllCategories}
                 setDetailView={setDetailView}
                 nextIndex={nextIndex}
               />

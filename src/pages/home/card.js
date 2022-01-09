@@ -7,6 +7,7 @@ import Avatar from "../../components/elements/Avatar/Avatar.js";
 import { getInitials } from "../../utils/index.js";
 import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../contexts/FirebaseAuthContext";
+import { useSelector } from "react-redux";
 
 const SwipeCard = styled.div`
   cursor: pointer;
@@ -130,11 +131,22 @@ const HeaderBarMenuIcon = styled.div`
 
 const Card = (props) => {
 
+
+  const EC = useSelector(state => state.category.EC)
+
+  const alternate = {}
+
+  if(props.user_id === EC[0].id ){ alternate.artist = EC[0].profile  }
+  if(props.user_id === EC[1].id ){ alternate.artist = EC[1].profile  }
+  if(props.user_id === EC[2].id ){ alternate.artist = EC[2].profile  }
+
   const { artist } = props
   const history = useHistory()
   const { currentUser } = useAuth();
 
-  let artistImg = artist.avatar_url !== '' ? artist.avatar_url : UserIcon
+  console.log('cards',props);
+  console.log('alternate',alternate);
+  let artistImg = artist && artist.avatar_url !== '' ?  artist.avatar_url : alternate.artist && alternate.artist.avatar_url && alternate.artist.avatar_url !== '' ?  alternate.artist.avatar_url   : UserIcon
 
   const openUser = (e) => {
     const user_id = currentUser.uid;
@@ -146,6 +158,8 @@ const Card = (props) => {
     }
   }
 
+
+
   return (
     <SwipeCard data-key="card-bdr"
     className="swiper-card"
@@ -154,7 +168,7 @@ const Card = (props) => {
         <HeaderSection key={1}>
           <Avatar
             userImage={artistImg}
-            initial={getInitials(artist.name)}
+            initial={getInitials(artist ? artist.username : alternate.artist.username )}
             view_only small
             userId={props.user_id} />
           {/* <UserAvatar src={artistImg} /> */}
@@ -162,7 +176,7 @@ const Card = (props) => {
             style={{ cursor: 'pointer' }}
             onClick={openUser}
           >
-            {artist.username}
+            { artist ? artist.username : alternate.artist.username }
             {/* - {props.id} */}
           </div>
           <div className="empty">......</div>

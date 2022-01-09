@@ -36,8 +36,17 @@ const getProcessedCollection = (state, action, type) => {
   let goBack = action.payload.curIndex <= new Date().setUTCHours(0, 0, 0, 0)
     && action.payload.count !== 0 && !action.payload.random
 
-  console.log(action.payload.curIndex <= new Date().setUTCHours(0, 0, 0, 0),!action.payload.random, action.payload.count !== 0)
-  const bucket = !goBack ? action.payload.data : action.payload.data.reverse()
+  // console.log(action.payload.curIndex <= new Date().setUTCHours(0, 0, 0, 0),!action.payload.random, action.payload.count !== 0)
+
+  var bucket = []
+  if(action.payload && action.payload.drops ){
+    bucket = !goBack ? action.payload.drops : action.payload.drops.reverse()
+  }
+  else{
+    bucket = !goBack ? action.payload.data : action.payload.data.reverse()
+  }
+
+  
 
   let pastIndex = null
 
@@ -53,6 +62,8 @@ const getProcessedCollection = (state, action, type) => {
     ...state[type],
     activeBucket: bucket
   };
+  console.log(bucket);
+
   return {
     ...state,
     [type]: collection,
@@ -64,7 +75,8 @@ const getProcessedCollection = (state, action, type) => {
 
 
 const categoryReducer = (state = initialState, action) => {
-  const tabList = ["art", "music", "collectible", "fashion"];
+  const tabList = ["art", "music", "collectible", "fashion","cloneX","TWV","SUPR"];
+  // const tabList = ["art"];
 
   switch (action.type) {
     case "general": {
@@ -74,6 +86,15 @@ const categoryReducer = (state = initialState, action) => {
       };
       return { ...state, general };
     }
+
+    case "FETCH_CATEGORY_REQUEST" : {
+      return { ...state , loading: true };
+    }
+    case "FETCH_CATEGORY_SUCCESS" : {
+      console.log(action.payload);
+      return {...state , loading: false, allCategories : action.payload };
+    }
+
     case "CHANGE_CUR_INDEX": {
       return { ...state, curIndex: action.payload }
     }
@@ -101,6 +122,57 @@ const categoryReducer = (state = initialState, action) => {
       const artsCollection = getProcessedCollection(state, action, "art");
       return artsCollection;
     }
+
+
+    case "FETCH_CloneX_REQUEST": {
+      const general = {
+        ...state.general,
+        activeTabIndex: action.payload.activeTabIndex,
+        isLoading: true,
+      };
+      console.log(action.payload.activeTabIndex)
+      return { ...state, general };
+    }
+    case "FETCH_CloneX_SUCCESS": {
+      const cloneXCollection = getProcessedCollection(state, action, "cloneX");
+      console.log(cloneXCollection);
+      return cloneXCollection;
+    }
+
+    case "FETCH_DWolves_REQUEST": {
+      const general = {
+        ...state.general,
+        activeTabIndex: action.payload.activeTabIndex,
+        isLoading: true,
+      };
+      console.log(action.payload.activeTabIndex)
+      return { ...state, general };
+    }
+    case "FETCH_DWolves_SUCCESS": {
+      const cloneXCollection = getProcessedCollection(state, action, "TWV");
+      return cloneXCollection;
+    }
+
+    case "FETCH_SuperRare_REQUEST": {
+      const general = {
+        ...state.general,
+        activeTabIndex: action.payload.activeTabIndex,
+        isLoading: true,
+      };
+      console.log(action.payload.activeTabIndex)
+      return { ...state, general };
+    }
+    case "FETCH_SuperRare_SUCCESS": {
+      const cloneXCollection = getProcessedCollection(state, action, "SUPR");
+      return cloneXCollection;
+    }
+
+    case "FETCH_EC_SUCCESS": {
+      console.log('ec fetch success',action.payload)
+      return {...state , EC : action.payload};
+    }
+
+
     case "FETCH_COLLECTIBLES_REQUEST": {
       const general = {
         ...state.general,
@@ -157,7 +229,11 @@ const categoryReducer = (state = initialState, action) => {
     // }
     case "ADD_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
+      console.log(currentTab , state.general.activeTabIndex);
       const activeTabContent = state[currentTab];
+      console.log('bucket',currentTab)
+      console.log('bucket',state[currentTab]);
+      if(!activeTabContent) return {...state} ;
       const { reswipedDrops, activeBucket } = activeTabContent;
       const { drop_id, dropIndex } = action.payload;
       if (!state.general.reswipeModeActive) {
@@ -183,6 +259,8 @@ const categoryReducer = (state = initialState, action) => {
     case "REMOVE_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
+      console.log('active t c',activeTabContent)
+      if(!activeTabContent) return {...state} ;
       const { reswipedDrops } = activeTabContent;
 
       const { drop_id } = action.payload;
@@ -242,7 +320,10 @@ const categoryReducer = (state = initialState, action) => {
         "art": {},
         "music": {},
         "fashion": {},
-        "collectible": {}
+        "collectible": {},
+        "cloneX":{},
+        "TWV":{},
+        "SUPR":{},
       };
       newBucket.map((d) => {
         switch (d.category) {
@@ -263,6 +344,18 @@ const categoryReducer = (state = initialState, action) => {
             reswipedDrops["collectible"][d.id] = d;
             break;
           }
+          case 'cloneX': {
+            reswipedDrops["cloneX"][d.id] = d;
+            break;
+          }
+          case 'TWV': {
+            reswipedDrops["TWV"][d.id] = d;
+            break;
+          }
+          case 'SUPR': {
+            reswipedDrops["SUPR"][d.id] = d;
+            break;
+          }
           default: ;
         }
 
@@ -278,7 +371,10 @@ const categoryReducer = (state = initialState, action) => {
         "art": { ...state.art, reswipedDrops: reswipedDrops["art"] },
         "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
-        "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
+        "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] },
+        "cloneX": { ...state.fashion, reswipedDrops: reswipedDrops["cloneX"] },
+        "TWV": { ...state.fashion, reswipedDrops: reswipedDrops["TWV"] },
+        "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
       }
     }
 
@@ -289,7 +385,10 @@ const categoryReducer = (state = initialState, action) => {
         "art": {},
         "music": {},
         "fashion": {},
-        "collectible": {}
+        "collectible": {},
+        "cloneX":{},
+        "TWV":{},
+        "SUPR":{},
       };
       savedDrops.map((d) => {
         switch (d.category) {
@@ -310,6 +409,18 @@ const categoryReducer = (state = initialState, action) => {
             reswipedDrops["collectible"][d.id] = d;
             break;
           }
+          case 'cloneX': {
+            reswipedDrops["cloneX"][d.id] = d;
+            break;
+          }
+          case 'TWV': {
+            reswipedDrops["TWV"][d.id] = d;
+            break;
+          }
+          case 'SUPR': {
+            reswipedDrops["SUPR"][d.id] = d;
+            break;
+          }
           default: ;
         }
 
@@ -323,13 +434,17 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         reswipeModeActive
       }
+      console.log('here to check array');
       return {
         ...state,
         general,
         "art": { ...state.art, reswipedDrops: reswipedDrops["art"] },
         "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
-        "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] }
+        "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] },
+        "cloneX": { ...state.fashion, reswipedDrops: reswipedDrops["cloneX"] },
+        "TWV": { ...state.fashion, reswipedDrops: reswipedDrops["TWV"] },
+        "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
       }
     }
     case 'FETCH_MORE_FEEDS': {

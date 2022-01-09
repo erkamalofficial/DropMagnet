@@ -1,5 +1,6 @@
 import { memo } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 const TabsWrapper = styled.ul`
   display: flex;
@@ -57,18 +58,34 @@ const TabItem = styled.li`
   margin-right: 18px;
   margin-left: 18px
 `;
-const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList }) => {
+
+
+const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
+
+  const allCategories = useSelector(state => state.category.allCategories)
+
   return (
     <TabsWrapper>
-      {tabList.map((title, index) => (
+      {allCategories && allCategories.external_creators.map((x) => (
         <TabItem
-          key={index}
-          onClick={() => handleActiveTabIndex(index)}
-          className={activeTabIndex === index ? "tab-selected" : ""}
-        >
-          {title}
-        </TabItem>
+        key={x.position}
+        onClick={() => handleActiveTabIndex(x.position)}
+        className={activeTabIndex === x.position ? "tab-selected" : ""}
+      >
+        {x.name}
+      </TabItem>
       ))}
+      {allCategories && allCategories.categories.map((x) => (
+        <TabItem
+        key={x.position}
+        onClick={() => handleActiveTabIndex(x.position)}
+        className={activeTabIndex === x.position ? "tab-selected" : ""}
+      >
+        {x.name}
+      </TabItem>
+      ))}
+
+      
     </TabsWrapper>
   );
 };

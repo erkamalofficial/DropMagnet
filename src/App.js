@@ -86,7 +86,7 @@ const CreateDropPage = (props) => (
   <Suspense fallback={<div>Loading...</div>}>
     <CreateDropComponent
       {...props}
-      userDetails={JSON.parse(localStorage.getItem('userDetails'))}
+      userDetails={localStorage.getItem('userDetails')}
       userLoggedIn={
         localStorage.getItem('userDetails') !== null ? true
           : false}
@@ -142,7 +142,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    let reloading = JSON.parse(sessionStorage.getItem('reloading'))
+    let reloading = sessionStorage.getItem('reloading')
     if (reloading) {
       setReload(true)
       removeFlag()

@@ -9,6 +9,7 @@ import MinusBtn from "../../components/blocks/minus-btn";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
 import Tabs from "./tabs";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
+import { useSelector } from "react-redux";
 
 const ActionSection = styled.div`
   display: flex;
@@ -28,7 +29,7 @@ const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
 
-  const { db, reswipeModeActive, setDetailView, nextIndex } = props
+  const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
 
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
@@ -37,9 +38,11 @@ function Swiper(props) {
   // const [lastDirection, setLastDirection] = useState();
   const [newLoading, setNewLoading] = useState(true);
   const [swiping, setSwiping] = useState(false)
+  const EC = useSelector(state => state.category.EC)
 
   const history = useHistory()
   console.log(history)
+
 
   const dispatch = useDispatch();
 
@@ -56,7 +59,7 @@ function Swiper(props) {
 
   const childRefs = useMemo(
     () =>
-      allCards.length > 0 && Array(allCards.length)
+      allCards && allCards.length > 0 && Array(allCards.length)
         .fill(0)
         .map((i) => React.createRef()),
     [allCards.length]
@@ -128,11 +131,12 @@ function Swiper(props) {
 
   return (
     <>
-      {!openView && !reswipeModeActive && (
+      {!openView && !reswipeModeActive &&(
         <Tabs
           activeTabIndex={props.activeTabIndex}
           handleActiveTabIndex={props.handleActiveTabIndex}
           tabList={props.tabList}
+          tabList2={tabList2}
         />
 
       )}

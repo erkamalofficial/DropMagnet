@@ -23,13 +23,14 @@ async function customAPICall(endpoint, data, method, access_token) {
     headers: {
       'Access-Control-Origin': '*',
       'Content-Type': 'application/json',
-      'Authorization': access_token !== '' ? `Bearer ${access_token}` : ''
+      'authorization': access_token !== '' ? `Bearer ${access_token}` : ''
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   })
 
   if(res.status === 204){
+    console.log(res)
     return null
   }
   else if(res.status >= 400){
@@ -105,7 +106,7 @@ async function customAPICallUpdateAvatar(endpoint, data, method, access_token) {
     body: data === "" ? null : formData,
     mode: 'cors', // no-cors, *cors, same-origin
     headers: {
-      'Authorization': `Bearer ${access_token}`
+      'authorization': `Bearer ${access_token}`
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -234,6 +235,18 @@ export function createDropImage(image) {
 
 export function getFeeds(category, extras, past) {
   const feedDropsEndpoint = `drops/feed?index=${extras.curTime}&category=${category}&past=${past}`
+  // const feedDropsEndpoint = `external_creators`
+  return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
+}
+
+//  https://drop-backend-rnd454q4pa-ew.a.run.app/external_creators/PUT_CREATOR_UID/drops?index=PUT_INDEX_HERE
+export function getFeeds2(id, extras) {
+  const feedDropsEndpoint = `external_creators/${id}/drops?index=${extras.curTime}`
+  return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
+}
+
+export function getEC(extras) {
+  const feedDropsEndpoint = `external_creators`
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 
