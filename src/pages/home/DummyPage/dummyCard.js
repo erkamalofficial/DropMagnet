@@ -145,7 +145,7 @@ const DummyCard = (props) => {
 
   const videoRef = useRef(null)
 
-  const cats = props.categories
+  const cats = JSON.parse(props.categories)
 
   return (
     <SwipeCard data-key="card-bdr"
