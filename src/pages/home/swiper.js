@@ -165,7 +165,7 @@ function Swiper(props) {
               onCardLeftScreen={() => outOfFrame(id)}
               overlayLabels={true}
             >
-              <Card {...cardDetails} />
+              {cardDetails.title.length < 30 && <Card {...cardDetails} />}
             </TinderCard>
           );
         }) : <h4 style={{ textAlign: 'center', width: '100%', fontFamily: 'Azo Sans' }}>No Drops Available</h4>}
