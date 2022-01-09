@@ -51,7 +51,7 @@ function DummySwiper(props) {
       .then(res => {
         setLoading(false)
         setAllCards([res])
-        setCards([res])
+        // setCards([res])
       })
   }, [])
 
