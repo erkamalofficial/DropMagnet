@@ -6,17 +6,18 @@ const TabsWrapper = styled.ul`
 display: flex;
 flex-direction: row;
 width: var(--card-container-width);
-height: 37px;
+height: 65px;
 color: #ebeae8;
 padding: 6px 10px;
 margin: 0;
-margin-bottom: 16px;
+margin-bottom: 20px;
 background-image: linear-gradient(
   #181818,
   #131313 83%,
 );
-border: 0.75px solid black;
-border-radius: 22px;
+border-top: 0.75px solid black;
+border-bottom: 0.75px solid black;
+white-space: nowrap;
 justify-content: space-evenly;
 align-items: center;
 background-clip: text;
@@ -28,6 +29,30 @@ text-transform: capitalize;
   position:relative;
 }
 .first-position::before {
+  content:"";
+  position: absolute;
+  width: 150%;
+  top:-5px;
+  left: -14px;
+  right: 19px;
+  bottom: -4px;
+  border-radius:50px;
+  border: 0.75px solid transparent; 
+  background:linear-gradient(135deg,
+    #ff00c7,
+    #6c00ff
+    ) border-box;
+  -webkit-mask:
+   linear-gradient(#fff 0 0) padding-box, 
+   linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+.first-position-selected {
+  color: transparent;
+  position:relative;
+}
+.first-position-selected::before {
   content:"";
   position: absolute;
   width: 150%;
@@ -64,7 +89,7 @@ text-transform: capitalize;
   -moz-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  border-bottom: 1px solid #252525;
+  border-bottom: 2px solid #252525;
   padding 3px 0 2px 0;
 }
 `;
