@@ -8,7 +8,9 @@ flex-direction: row;
 width: var(--card-container-width);
 height: 65px;
 color: #ebeae8;
-padding: 6px 10px;
+padding: 6px 10px 6px 360px;
+overflow:hidden;
+overflow-x: scroll;
 margin: 0;
 margin-bottom: 20px;
 background-image: linear-gradient(
