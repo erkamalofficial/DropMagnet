@@ -75,7 +75,7 @@ const getProcessedCollection = (state, action, type) => {
 
 
 const categoryReducer = (state = initialState, action) => {
-  const tabList = ["art", "music", "collectible", "fashion","cloneX","TWV","SUPR"];
+  const tabList = ["art", "music", "collectible", "fashion","CloneX","TWV","SUPR"];
   // const tabList = ["art"];
 
   switch (action.type) {
@@ -134,7 +134,7 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, general };
     }
     case "FETCH_CloneX_SUCCESS": {
-      const cloneXCollection = getProcessedCollection(state, action, "cloneX");
+      const cloneXCollection = getProcessedCollection(state, action, "CloneX");
       console.log(cloneXCollection);
       return cloneXCollection;
     }
@@ -321,7 +321,7 @@ const categoryReducer = (state = initialState, action) => {
         "music": {},
         "fashion": {},
         "collectible": {},
-        "cloneX":{},
+        "CloneX":{},
         "TWV":{},
         "SUPR":{},
       };
@@ -344,8 +344,8 @@ const categoryReducer = (state = initialState, action) => {
             reswipedDrops["collectible"][d.id] = d;
             break;
           }
-          case 'cloneX': {
-            reswipedDrops["cloneX"][d.id] = d;
+          case 'CloneX': {
+            reswipedDrops["CloneX"][d.id] = d;
             break;
           }
           case 'TWV': {
@@ -372,7 +372,7 @@ const categoryReducer = (state = initialState, action) => {
         "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] },
-        "cloneX": { ...state.fashion, reswipedDrops: reswipedDrops["cloneX"] },
+        "CloneX": { ...state.fashion, reswipedDrops: reswipedDrops["CloneX"] },
         "TWV": { ...state.fashion, reswipedDrops: reswipedDrops["TWV"] },
         "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
       }
@@ -386,7 +386,7 @@ const categoryReducer = (state = initialState, action) => {
         "music": {},
         "fashion": {},
         "collectible": {},
-        "cloneX":{},
+        "CloneX":{},
         "TWV":{},
         "SUPR":{},
       };
@@ -409,8 +409,8 @@ const categoryReducer = (state = initialState, action) => {
             reswipedDrops["collectible"][d.id] = d;
             break;
           }
-          case 'cloneX': {
-            reswipedDrops["cloneX"][d.id] = d;
+          case 'CloneX': {
+            reswipedDrops["CloneX"][d.id] = d;
             break;
           }
           case 'TWV': {
@@ -442,7 +442,7 @@ const categoryReducer = (state = initialState, action) => {
         "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] },
-        "cloneX": { ...state.fashion, reswipedDrops: reswipedDrops["cloneX"] },
+        "CloneX": { ...state.fashion, reswipedDrops: reswipedDrops["CloneX"] },
         "TWV": { ...state.fashion, reswipedDrops: reswipedDrops["TWV"] },
         "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
       }

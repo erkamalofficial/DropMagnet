@@ -241,6 +241,7 @@ const Home = (props) => {
   }
   const currentTabId = getCategoryFromTab(tabList[activeTabIndex]);
   const { activeBucket } = useSelector((state) => {
+    console.log(currentTabId)
     console.log('here : ' , state.category[currentTabId]);
     return state.category[currentTabId];
   });
@@ -301,6 +302,7 @@ const Home = (props) => {
           .finally(() => {
             // setInternalLoader(false);
             console.log("Ritgh")
+            console.log(drop.artist)
             updateTokens(drop.artist && drop.artist.id)
               .then(res => { })
           });

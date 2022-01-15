@@ -3,7 +3,7 @@ export const tabNames = {
     MUSIC: 'music',
     COLLECTIBLES: 'collectible',
     FASHION: 'fashion',
-    CLONEX:'cloneX',
+    CLONEX:'CloneX',
     DEVINEWOLVES:'TWV',
     SUPERRARE:'SUPR',
 }
@@ -13,7 +13,7 @@ const BACKEND_TAB = {
     [tabNames.MUSIC]: 'music',
     [tabNames.COLLECTIBLES]: 'collectible',
     [tabNames.FASHION]: 'fashion',
-    [tabNames.CLONEX]: 'cloneX',
+    [tabNames.CLONEX]: 'CloneX',
     [tabNames.DEVINEWOLVES]: 'TWV',
     [tabNames.SUPERRARE]: 'SUPR',
 }
