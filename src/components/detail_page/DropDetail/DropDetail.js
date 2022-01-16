@@ -109,6 +109,8 @@ export default function DropDetail(props) {
 
       {imgModal &&
         <ImgModal
+          
+          style={{height:'auto'}}
           medias={props.drop.media}
           setImgModal={setImgModal}
           source={srcIndex} />
