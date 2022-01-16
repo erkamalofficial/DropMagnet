@@ -110,7 +110,8 @@ const TabItem = styled.li`
   margin-bottom: -3px;
   font-weight: 400;
   margin-right: 18px;
-  margin-left: 18px
+  margin-left: 18px;
+  
 `;
 
 
@@ -119,12 +120,12 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
   const allCategories = useSelector(state => state.category.allCategories)
 
   return (
-    <TabsWrapper>
-      {allCategories && allCategories.external_creators.map((x) => (
+    <TabsWrapper >
+      {allCategories && allCategories.external_creators.map((x,i) => (
         <TabItem
         key={x.position}
-        onClick={() => handleActiveTabIndex(x.position)}
-        className={ `${activeTabIndex === (x.position) ? "tab-selected" : x.position === 4 ? "first-position" : "" }`}
+        onClick={() => handleActiveTabIndex(i+4)}
+        className={ `${activeTabIndex === (i+4) ? "first-position"  : "" }`}
       >
         {x.name}
       </TabItem>
@@ -133,7 +134,7 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
         <TabItem
         key={x.position}
         onClick={() => handleActiveTabIndex(x.position)}
-        className={activeTabIndex === x.position ? "tab-selected" : ""}
+        className={activeTabIndex === x.position ? "first-position" : ""}
       >
         {x.name}
       </TabItem>

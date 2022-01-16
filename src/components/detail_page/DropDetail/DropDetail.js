@@ -140,8 +140,8 @@ export default function DropDetail(props) {
             {
               props.drop.media.map((img, index) => {
                 return (
-                  <div className="img-cnt">
-                    <div className="bg-img"
+                  <div className="img-cnt" style={{width:'100%',height:'400px'}}>
+                  <div className="bg-img" style={{width:'100%',height:'400px'}}
                       style={{ backgroundImage: `url(${img.url})` }}
                       onClick={() => handleOpenImg(index)}>
                     </div>
@@ -152,8 +152,8 @@ export default function DropDetail(props) {
           </Slider>
         </div>
         :
-        <div className={'drop-detail-image-single'}>
-          <div className="bg-img"
+        <div className={'drop-detail-image-single'}  style={{width:'100%',height:'400px'}}>
+          <div className="bg-img"  style={{width:'100%',height:'400px'}}
             style={{ backgroundImage: `url(${props.drop.media[0].url})` }}
             onClick={() => handleOpenImg(0)}>
           </div>
@@ -197,21 +197,25 @@ export default function DropDetail(props) {
         )}
       </div>
       
+      <p style={{textAlign:'center'}} >Project Bio</p>
       <div className="drop-description-holder">
         <p1 className="drop-detail-description-text">
           {props.drop.desc}
         </p1>
       </div>
-      <div className="bottom-button-holder">
-        <div className="dismiss-button-unselected">
-          <div style={{ margin: '0px auto 0 auto' }}>
-            <img width={32} src="./discard-icon.png" className={'clickable'} />
-          </div>
-        </div>
-        <div className="add-button-unselected">
-          <img style={{ margin: '0 auto' }} width={32} height={32} className={'clickable'} src="./add-icon.png" />
-        </div>
-      </div>
+
+      <p style={{textAlign:'center'}} >Properties</p>
+
+      <div style={{display:'grid',textAlign:'center',gridTemplateColumns:'auto auto'}} >
+        {props.drop.attributes && props.drop.attributes.map(x=><div style={{padding:'10px',margin:'4px',borderRadius:'6px',background:'#0B0B0B'}}>
+        <p style={{fontSize:'12px'}}>{x.name}</p>
+        <p style={{fontSize:'16px'}} >{x.value}</p>
+        <p style={{color:'#A2A2A2',fontSize:'12px'}} >{'Some % have this trait'}</p>
+      </div>)}
+      </div><br/>
+      <p style={{textAlign:'center'}} >We love artists.</p>
+      <br/><br/>
+      
     </div>
   );
 }

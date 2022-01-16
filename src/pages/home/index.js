@@ -16,7 +16,7 @@ import {
   fetchCloneX,
   fetchDW,
   fetchSR,
-  fetchExternalCreators
+  fetchExternalCreators , fetchDoodle , fetchBAYC
 } from "./actions";
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
@@ -188,6 +188,13 @@ const Home = (props) => {
     else if (activeTabIndex == 6) {
       dispatch(fetchSR({ activeTabIndex: 6 , id : allCategories.external_creators[2].id , extras: { ...extras, token: idToken} }));
     }
+    else if (activeTabIndex == 7) {
+      dispatch(fetchDoodle({ activeTabIndex: 7 , id : allCategories.external_creators[3].id , extras: { ...extras, token: idToken} }));
+    }
+    else if (activeTabIndex == 8) {
+      dispatch(fetchBAYC({ activeTabIndex: 8 , id : allCategories.external_creators[4].id , extras: { ...extras, token: idToken} }));
+    }
+    
     
 
   }, [selectedDropdownDate]);
@@ -229,6 +236,13 @@ const Home = (props) => {
       else if (activeTabIndex === 6) {
         dispatch(fetchSR({ activeTabIndex: 6, id : allCategories.external_creators[2].id , token: idToken, extras: extras }));
       }
+      
+    else if (activeTabIndex == 7) {
+      dispatch(fetchDoodle({ activeTabIndex: 7 , id : allCategories.external_creators[3].id , token: idToken, extras: extras }));
+    }
+    else if (activeTabIndex == 8) {
+      dispatch(fetchBAYC({ activeTabIndex: 8 , id : allCategories.external_creators[4].id , token: idToken, extras: extras }));
+    }
       setLoadMore(false)
 
     }
@@ -290,6 +304,13 @@ const Home = (props) => {
     if (index === 6) {
       dispatch(fetchSR({ activeTabIndex: index, id : allCategories.external_creators[2].id , extras: { ...extras, token: idToken } }));
     }
+      
+     if (index == 7) {
+      dispatch(fetchDoodle({ activeTabIndex: index , id : allCategories.external_creators[3].id , extras: { ...extras, token: idToken } }));
+    }
+     if (index == 8) {
+      dispatch(fetchBAYC({ activeTabIndex: index , id : allCategories.external_creators[4].id , extras: { ...extras, token: idToken } }));
+    }
   };
 
   const handleSwipe = (dir, drop_id, drop) => {
@@ -340,11 +361,13 @@ const Home = (props) => {
           (
             <>
               <FadeIn delay={600}>
+                <div  >
                 <Tabs
                   activeTabIndex={activeTabIndex}
                   handleActiveTabIndex={handleActiveTabIndex}
                   tabList={tabList}
                 />
+                </div>
               </FadeIn>
               <FadeIn delay={1000}>
                 <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>

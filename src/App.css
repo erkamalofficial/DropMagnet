@@ -46,6 +46,7 @@
     --swipe-card-art-height: 354px;
     --swipe-card-art-margin: 0 0 16px;
     --card-container-width: 426px;
+    --tab-container-width: 100%;
     --card-container-height: 512px;
     --card-elem-pos: static;
     --card-device-container-pos: static;

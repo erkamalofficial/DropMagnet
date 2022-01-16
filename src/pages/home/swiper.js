@@ -132,7 +132,7 @@ function Swiper(props) {
   return (
     <>
       {!openView && !reswipeModeActive &&(
-        <Tabs
+        <Tabs style={{width:'100% !important'}}
           activeTabIndex={props.activeTabIndex}
           handleActiveTabIndex={props.handleActiveTabIndex}
           tabList={props.tabList}
@@ -170,22 +170,6 @@ function Swiper(props) {
           );
         }) : <h4 style={{ textAlign: 'center', width: '100%', fontFamily: 'Azo Sans' }}>No Drops Available</h4>}
       </CardContainer>
-      <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
-        <MinusBtn onClick={() => {
-          const u = JSON.parse(localStorage.getItem('userDetails'));
-          if (u) { swipe("left") }
-          else { history.push("/login") }
-        }}>
-          <img src="./minus.svg" alt="minus" />
-        </MinusBtn>
-        <PlusBtn onClick={() => {
-          const u = JSON.parse(localStorage.getItem('userDetails'));
-          if (u) { swipe("right") }
-          else { history.push("/login") }
-        }}>
-          <img src="./plus.svg" alt="plus" />
-        </PlusBtn>
-      </ActionSection>
     </>
   )
 }

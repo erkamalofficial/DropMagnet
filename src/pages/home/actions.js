@@ -145,7 +145,35 @@ export const fetchCloneX =
           },
         });
         
-        getDataFromDb2(dispatch, "cloneX", "FETCH_CloneX_SUCCESS", extras , id);
+        getDataFromDb2(dispatch, "CloneX", "FETCH_CloneX_SUCCESS", extras , id);
+};
+
+export const fetchDoodle =
+    ({ activeTabIndex, extras , id }) =>
+      async (dispatch, getState) => {
+        //works fine til here
+        dispatch({
+          type: "FETCH_DOODLE_REQUEST",
+          payload: {
+            activeTabIndex,
+          },
+        });
+        
+        getDataFromDb2(dispatch, "DOODLE", "FETCH_DOODLE_SUCCESS", extras , id);
+};
+
+export const fetchBAYC =
+    ({ activeTabIndex, extras , id }) =>
+      async (dispatch, getState) => {
+        //works fine til here
+        dispatch({
+          type: "FETCH_BAYC_REQUEST",
+          payload: {
+            activeTabIndex,
+          },
+        });
+        
+        getDataFromDb2(dispatch, "BAYC", "FETCH_BAYC_SUCCESS", extras , id);
 };
 
 export const fetchDW =
