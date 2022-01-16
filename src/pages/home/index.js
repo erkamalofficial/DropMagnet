@@ -130,6 +130,8 @@ const Home = (props) => {
     }, 500);
   }, [])
 
+  useEffect(() => {console.log('ati',activeTabIndex)}, [activeTabIndex])
+
   useEffect(() => {
     // jsx upgrade, on first render 
     DROP_SERVICE.getAllDropTabs().then((res) => {
@@ -177,7 +179,7 @@ const Home = (props) => {
     }
     else if (activeTabIndex == 3) {
       dispatch(fetchFashion({ activeTabIndex: 3, extras: { ...extras, token: idToken } }));
-    }
+    } 
     else if (activeTabIndex == 4) {
       console.log(allCategories.external_creators[0].id)
       dispatch(fetchCloneX({ activeTabIndex: 4, id : allCategories.external_creators[0].id , extras: { ...extras, token: idToken  } }));
@@ -256,6 +258,7 @@ const Home = (props) => {
   const currentTabId = getCategoryFromTab(tabList[activeTabIndex]);
   const { activeBucket } = useSelector((state) => {
     console.log(currentTabId)
+    console.log(state.category)
     console.log('here : ' , state.category[currentTabId]);
     return state.category[currentTabId];
   });
@@ -356,20 +359,26 @@ const Home = (props) => {
   return (
     <HomeContainer>
 
+
+
+
       <div className="rel">
+
+      <FadeIn delay={600}>
+      <div  >
+      <Tabs
+        activeTabIndex={activeTabIndex}
+        handleActiveTabIndex={handleActiveTabIndex}
+        tabList={tabList}
+      />
+      </div>
+      </FadeIn>
+
         {isLoading ?
           (
             <>
+              
               <FadeIn delay={600}>
-                <div  >
-                <Tabs
-                  activeTabIndex={activeTabIndex}
-                  handleActiveTabIndex={handleActiveTabIndex}
-                  tabList={tabList}
-                />
-                </div>
-              </FadeIn>
-              <FadeIn delay={1000}>
                 <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
                   <LazyCard />
                 </CardContainer>
@@ -387,7 +396,7 @@ const Home = (props) => {
             </>
           )
           : (
-            <FadeIn delay={600}>
+            <>
               <Swiper
                 reswipeModeActive={false}
                 key={uniqueId}
@@ -400,7 +409,7 @@ const Home = (props) => {
                 setDetailView={setDetailView}
                 nextIndex={nextIndex}
               />
-            </FadeIn>
+            </>
           )
 
         }

@@ -28,8 +28,7 @@ const CardContainer = styled.div`
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
-
-  const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
+const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
 
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
@@ -131,15 +130,7 @@ function Swiper(props) {
 
   return (
     <>
-      {!openView && !reswipeModeActive &&(
-        <Tabs style={{width:'100% !important'}}
-          activeTabIndex={props.activeTabIndex}
-          handleActiveTabIndex={props.handleActiveTabIndex}
-          tabList={props.tabList}
-          tabList2={tabList2}
-        />
-
-      )}
+      
       <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>
@@ -170,6 +161,22 @@ function Swiper(props) {
           );
         }) : <h4 style={{ textAlign: 'center', width: '100%', fontFamily: 'Azo Sans' }}>No Drops Available</h4>}
       </CardContainer>
+      <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
+      <MinusBtn onClick={() => {
+        const u = JSON.parse(localStorage.getItem('userDetails'));
+        if (u) { swipe("left") }
+        else { history.push("/login") }
+      }}>
+        <img src="./minus.svg" alt="minus" />
+      </MinusBtn>
+      <PlusBtn onClick={() => {
+        const u = JSON.parse(localStorage.getItem('userDetails'));
+        if (u) { swipe("right") }
+        else { history.push("/login") }
+      }}>
+        <img src="./plus.svg" alt="plus" />
+      </PlusBtn>
+      </ActionSection>
     </>
   )
 }

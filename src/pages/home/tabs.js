@@ -1,4 +1,3 @@
-import { memo } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -6,7 +5,7 @@ const TabsWrapper = styled.ul`
 display: flex;
 flex-direction: row;
 width: var(--card-container-width);
-height: 65px;
+height: 2.4rem;
 color: #ebeae8;
 padding: 6px 10px 6px 360px;
 overflow:hidden;
@@ -91,8 +90,8 @@ text-transform: capitalize;
   -moz-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  border-bottom: 2px solid #252525;
-  padding 3px 0 2px 0;
+  border-bottom: 1px solid #a8f5a8;
+  padding: 7px 0 6px 0;
 }
 `;
 const TabItem = styled.li`
@@ -125,7 +124,7 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
         <TabItem
         key={x.position}
         onClick={() => handleActiveTabIndex(i+4)}
-        className={ `${activeTabIndex === (i+4) ? "first-position"  : "" }`}
+        className={ `${activeTabIndex === (i+4) ? "tab-selected" : "" }`}
       >
         {x.name}
       </TabItem>
@@ -134,7 +133,7 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
         <TabItem
         key={x.position}
         onClick={() => handleActiveTabIndex(x.position)}
-        className={activeTabIndex === x.position ? "first-position" : ""}
+        className={activeTabIndex === x.position ? "tab-selected" : ""}
       >
         {x.name}
       </TabItem>
@@ -145,4 +144,4 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
   );
 };
 
-export default memo(Tabs);
+export default Tabs;
