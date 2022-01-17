@@ -374,7 +374,7 @@ const Home = (props) => {
       </div>
       </FadeIn>
 
-        {isLoading ?
+        {isLoading || !activeBucket ?
           (
             <>
               

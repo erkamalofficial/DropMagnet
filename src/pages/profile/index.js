@@ -102,8 +102,8 @@ export default function Profile(props) {
   const { currentUser } = useAuth();
 
   let history = useHistory();
-
-  const currentTabName = getCategoryFromTab(tabList[activeTabIndex]);
+  const seprateTL =['art','music','collectible','fashion','CloneX','SUPR','DOODLE','BAYC']
+  const currentTabName = getCategoryFromTab(seprateTL[activeTabIndex]);
 
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
   const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
