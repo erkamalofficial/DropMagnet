@@ -95,7 +95,11 @@ const Home = (props) => {
     setSelectedDropdownDate(date)
   }, [date])
 
-  
+  useEffect(() => {
+    setSelectedDropdownDate(date)
+  }, [date])
+
+  useEffect(() => console.log('isloading1',isLoading , activeTabIndex ), [isLoading])
 
   // useEffect(() => { 
   //   console.log(allCategories)
@@ -364,7 +368,7 @@ const Home = (props) => {
 
       <div className="rel">
 
-      <FadeIn delay={600}>
+      <FadeIn delay={200}>
       <div  >
       <Tabs
         activeTabIndex={activeTabIndex}
@@ -378,12 +382,12 @@ const Home = (props) => {
           (
             <>
               
-              <FadeIn delay={600}>
+              <FadeIn delay={200}>
                 <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
                   <LazyCard />
                 </CardContainer>
               </FadeIn>
-              <FadeIn delay={1000}>
+              <FadeIn delay={700}>
                 <ActionSection key="footer" style={{ display: 'flex' }}>
                   <MinusBtn>
                     <img src="./minus.svg" alt="minus" />

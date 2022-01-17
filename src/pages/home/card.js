@@ -182,7 +182,7 @@ const Card = (props) => {
           key={2}
         // style={{ backgroundImage: `url(${props.media[0].url})` }}
         >
-          <img src={props.media[0].url} width='600' height='600' alt={'CoverImage'} />
+          <img src={props.media[0].url+'?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'} width='600' height='600' alt={'CoverImage'} />
         </SwipeImage>
 
         <FooterSection key={3}>

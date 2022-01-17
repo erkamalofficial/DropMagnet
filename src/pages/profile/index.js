@@ -24,6 +24,7 @@ import LazyDropCells from "./LazyDropCells";
 import InstaIcon from "../../assets/insta-icon.png"
 import TwitterIcon from "../../assets/twitter-icon.png"
 import LoadingModal from "../../components/elements/LoadingModal/LoadingModal";
+import {fetchCategory} from "./../home/actions";
 
 const FooterContainer = styled.div`
   margin-top: 16px;
@@ -50,6 +51,8 @@ const TabContainer = styled.div`
     margin-bottom: 0;
   }
 `;
+
+
 
 export default function Profile(props) {
 
@@ -107,6 +110,11 @@ export default function Profile(props) {
 
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
   const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
+
+
+  useEffect(() => {
+    dispatch(fetchCategory())
+  }, [ ])
 
   let collectibleArts = [
     {
@@ -702,7 +710,7 @@ export default function Profile(props) {
                           type: "START_RESWIPE",
                           payload: { newBucket: savedPosts },
                         });
-                        history.push(`/reswipe?tabs=${tabList[activeTabIndex]}`);
+                        history.push(`/reswipe?tabs=${seprateTL[activeTabIndex]}`);
                       }}
                     >
                       <h1 style={{ textAlign: "center", width: "100%" }}>
@@ -896,7 +904,7 @@ export default function Profile(props) {
                           type: "START_RESWIPE",
                           payload: { newBucket: savedPosts },
                         });
-                        history.push(`/reswipe?tabs=${tabList[activeTabIndex]}`);
+                        history.push(`/reswipe?tabs=${seprateTL[activeTabIndex]}`);
                       }}
                     >
                       <h1 style={{ textAlign: "center", width: "100%" }}>

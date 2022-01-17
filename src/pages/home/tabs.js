@@ -90,7 +90,7 @@ text-transform: capitalize;
   -moz-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  border-bottom: 1px solid #a8f5a8;
+  border-bottom: 1px solid white;
   padding: 7px 0 6px 0;
 }
 `;
