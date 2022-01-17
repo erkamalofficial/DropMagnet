@@ -105,7 +105,7 @@ export default function Profile(props) {
   const { currentUser } = useAuth();
 
   let history = useHistory();
-  const seprateTL =['art','music','collectible','fashion','CloneX','SUPR','DOODLE','BAYC']
+  const seprateTL =['art','music','collectible','fashion','CloneX','SUPR','DOODLE','BAYC','WOW']
   const currentTabName = getCategoryFromTab(seprateTL[activeTabIndex]);
 
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);

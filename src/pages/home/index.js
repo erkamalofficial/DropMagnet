@@ -16,7 +16,7 @@ import {
   fetchCloneX,
   fetchDW,
   fetchSR,
-  fetchExternalCreators , fetchDoodle , fetchBAYC
+  fetchExternalCreators , fetchDoodle , fetchBAYC , fetchWOW
 } from "./actions";
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
@@ -200,6 +200,9 @@ const Home = (props) => {
     else if (activeTabIndex == 8) {
       dispatch(fetchBAYC({ activeTabIndex: 8 , id : allCategories.external_creators[4].id , extras: { ...extras, token: idToken} }));
     }
+    else if (activeTabIndex == 9) {
+      dispatch(fetchWOW({ activeTabIndex: 9 , id : allCategories.external_creators[5].id , extras: { ...extras, token: idToken} }));
+    }
     
     
 
@@ -248,6 +251,9 @@ const Home = (props) => {
     }
     else if (activeTabIndex == 8) {
       dispatch(fetchBAYC({ activeTabIndex: 8 , id : allCategories.external_creators[4].id , token: idToken, extras: extras }));
+    }
+    else if (activeTabIndex == 9) {
+      dispatch(fetchWOW({ activeTabIndex: 9 , id : allCategories.external_creators[5].id , token: idToken, extras: extras }));
     }
       setLoadMore(false)
 
@@ -317,6 +323,9 @@ const Home = (props) => {
     }
      if (index == 8) {
       dispatch(fetchBAYC({ activeTabIndex: index , id : allCategories.external_creators[4].id , extras: { ...extras, token: idToken } }));
+    }
+    if (index == 9) {
+      dispatch(fetchWOW({ activeTabIndex: index , id : allCategories.external_creators[5].id , extras: { ...extras, token: idToken } }));
     }
   };
 

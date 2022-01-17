@@ -147,6 +147,19 @@ export const fetchCloneX =
         
         getDataFromDb2(dispatch, "CloneX", "FETCH_CloneX_SUCCESS", extras , id);
 };
+export const fetchWOW =
+    ({ activeTabIndex, extras , id }) =>
+      async (dispatch, getState) => {
+        //works fine til here
+        dispatch({
+          type: "FETCH_WOW_REQUEST",
+          payload: {
+            activeTabIndex,
+          },
+        });
+        
+        getDataFromDb2(dispatch, "WOW", "FETCH_WOW_SUCCESS", extras , id);
+};
 
 export const fetchDoodle =
     ({ activeTabIndex, extras , id }) =>

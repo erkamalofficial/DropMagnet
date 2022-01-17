@@ -75,7 +75,7 @@ const getProcessedCollection = (state, action, type) => {
 
 
 const categoryReducer = (state = initialState, action) => {
-  const tabList = ["art", "music", "collectible", "fashion","CloneX","TWV","SUPR","DOODLE","BAYC"];
+  const tabList = ["art", "music", "collectible", "fashion","CloneX","TWV","SUPR","DOODLE","BAYC","WOW"];
   // const tabList = ["art"];
 
   switch (action.type) {
@@ -135,6 +135,21 @@ const categoryReducer = (state = initialState, action) => {
     }
     case "FETCH_CloneX_SUCCESS": {
       const cloneXCollection = getProcessedCollection(state, action, "CloneX");
+      console.log(cloneXCollection);
+      return cloneXCollection;
+    }
+
+    case "FETCH_WOW_REQUEST": {
+      const general = {
+        ...state.general,
+        activeTabIndex: action.payload.activeTabIndex,
+        isLoading: true,
+      };
+      console.log(action.payload.activeTabIndex)
+      return { ...state, general };
+    }
+    case "FETCH_WOW_SUCCESS": {
+      const cloneXCollection = getProcessedCollection(state, action, "WOW");
       console.log(cloneXCollection);
       return cloneXCollection;
     }
@@ -355,7 +370,8 @@ const categoryReducer = (state = initialState, action) => {
         "TWV":{},
         "SUPR":{},
         "DOODLE":{},
-        "BAYC":{}
+        "BAYC":{},
+        "WOW":{}
       };
       newBucket.map((d) => {
         switch (d.category) {
@@ -396,6 +412,10 @@ const categoryReducer = (state = initialState, action) => {
             reswipedDrops["BAYC"][d.id] = d;
             break;
           }
+          case 'WOW': {
+            reswipedDrops["WOW"][d.id] = d;
+            break;
+          }
           default: ;
         }
 
@@ -417,6 +437,7 @@ const categoryReducer = (state = initialState, action) => {
         "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
         "DOODLE": { ...state.fashion, reswipedDrops: reswipedDrops["DOODLE"] },
         "BAYC": { ...state.fashion, reswipedDrops: reswipedDrops["BAYC"] },
+        "WOW": { ...state.fashion, reswipedDrops: reswipedDrops["WOW"] },
       }
     }
 
@@ -433,6 +454,7 @@ const categoryReducer = (state = initialState, action) => {
         "SUPR":{},
         "DOODLE":{},
         "BAYC":{},
+        "WOW":{}
       };
       savedDrops.map((d) => {
         switch (d.category) {
@@ -474,6 +496,10 @@ const categoryReducer = (state = initialState, action) => {
             reswipedDrops["BAYC"][d.id] = d;
             break;
           }
+          case 'WOW': {
+            reswipedDrops["WOW"][d.id] = d;
+            break;
+          }
           default: ;
         }
 
@@ -500,6 +526,7 @@ const categoryReducer = (state = initialState, action) => {
         "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
         "DOODLE": { ...state.fashion, reswipedDrops: reswipedDrops["DOODLE"] },
         "BAYC": { ...state.fashion, reswipedDrops: reswipedDrops["BAYC"] },
+        "WOW": { ...state.fashion, reswipedDrops: reswipedDrops["WOW"] },
       }
     }
     case 'FETCH_MORE_FEEDS': {
