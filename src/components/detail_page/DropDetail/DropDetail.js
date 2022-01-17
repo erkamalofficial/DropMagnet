@@ -143,7 +143,7 @@ export default function DropDetail(props) {
               props.drop.media.map((img, index) => {
                 return (
                   <div className="img-cnt" style={{width:'100%',height:'400px'}}>
-                  <div className="bg-img" style={{width:'100%',height:'400px'}}
+                  <div className="bg-img" style={{width:'100%',height:'auto'}}
                       style={{ backgroundImage: `url(${img.url})` }}
                       onClick={() => handleOpenImg(index)}>
                     </div>
@@ -154,11 +154,8 @@ export default function DropDetail(props) {
           </Slider>
         </div>
         :
-        <div className={'drop-detail-image-single'}  style={{width:'100%',height:'400px'}}>
-          <div className="bg-img"  style={{width:'100%',height:'400px'}}
-            style={{ backgroundImage: `url(${props.drop.media[0].url})` }}
-            onClick={() => handleOpenImg(0)}>
-          </div>
+        <div className={'drop-detail-image-single'}  style={{width:'100%'}}>
+        <img style={{width:'100%',height:'auto'}} src={props.drop.media[0].url} onClick={() => handleOpenImg(0)}/>
         </div>
       }
       {gmtDate >= curDropDate && props.drop.link!=='' ? (
