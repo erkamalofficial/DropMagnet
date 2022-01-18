@@ -13,7 +13,7 @@ import Avatar from "../../components/elements/Avatar/Avatar";
 import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDropDetail";
 import Spinner from "../../components/blocks/spinner";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import Tabs from "../home/tabs";
 import { getCategoryFromTab, tabList } from "../../constants";
 import { getInitials } from "../../utils";
@@ -101,11 +101,13 @@ export default function Profile(props) {
   const [cropModal, setCropModal] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [updating, setUpdating] = useState(false)
+  const [seprateTL, setseprateTL] = useState(['art','music','collectible','fashion'])
+  const allCategories = useSelector(state => state.category.allCategories)
 
   const { currentUser } = useAuth();
 
   let history = useHistory();
-  const seprateTL =['art','music','collectible','fashion','CloneX','SUPR','DOODLE','BAYC','WOW']
+  // const seprateTL =['art','music','collectible','fashion','CloneX','SUPR','DOODLE','BAYC','WOW']
   const currentTabName = getCategoryFromTab(seprateTL[activeTabIndex]);
 
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
@@ -115,6 +117,13 @@ export default function Profile(props) {
   useEffect(() => {
     dispatch(fetchCategory())
   }, [ ])
+
+  useEffect(() => {
+    if(allCategories) {const en = []
+    for (let i = 0; i < allCategories.external_creators.length; i++) { en.push(allCategories.external_creators[i].symbol)}
+    setseprateTL(['art','music','collectible','fashion' , ...en ])
+    console.log('now',seprateTL)}
+  }, [allCategories])
 
   let collectibleArts = [
     {
