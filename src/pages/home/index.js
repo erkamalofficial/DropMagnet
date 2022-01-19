@@ -42,6 +42,7 @@ const HomeContainer = styled.div`
     position: relative;
     user-select: none;
     padding-top: var(--main-header-margin-top);
+    padding-bottom: 68px;
     margin-top: 68px;
     z-index: 9999;
     @media (max-width: 500px) {
@@ -63,7 +64,7 @@ const HomeContainer = styled.div`
 `;
 
 const CardContainer = styled.div`
-  width: var(--card-container-width);
+  width: 382px;
   height: var(--card-container-height);
   margin-bottom: var(--gap-bottom);
 `;
