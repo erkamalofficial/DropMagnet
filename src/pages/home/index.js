@@ -50,10 +50,15 @@ const HomeContainer = styled.div`
 
     div.tabs-container {
       margin-bottom: 60px;
+      @media (max-width: 500px) {
+        margin-bottom: 16px;
+      }
     }
   }
   div.card-section {
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 

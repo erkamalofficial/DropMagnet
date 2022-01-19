@@ -10,6 +10,7 @@ import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
 import Tabs from "./tabs";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { useSelector } from "react-redux";
+import './swiper.css';
 
 const ActionSection = styled.div`
   display: flex;
@@ -131,7 +132,7 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
   return (
     <>
       
-      <div className="view-container home-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
+      <div className="view-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>
       <CardContainer key="cardContainer" className={'fix-minor-bug-swipe swiper-card-container'} style={{ display: `${openView ? 'none' : 'flex'}` }}>

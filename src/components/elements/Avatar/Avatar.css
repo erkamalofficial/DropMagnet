@@ -11,8 +11,8 @@
 }
 
 .avatar-container.small-avatar{
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     box-shadow: none;
     padding: 0;
     cursor: pointer;
@@ -20,8 +20,8 @@
 
 .avatar-container.small-avatar>label{
     display: flex;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     overflow: hidden;
 }
 

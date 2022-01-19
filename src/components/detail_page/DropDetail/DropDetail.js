@@ -132,89 +132,91 @@ export default function DropDetail(props) {
         </h1>
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>
-      {props.drop.media.length > 1 ?
-        <div
-          className="drop-detail-image"
-          onClick={() => props.handleClick()}>
-          {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
-          {props.drop.type === "music" ? renderPlayButton() : <></>}
-          <Slider {...settings}>
-            {
-              props.drop.media.map((img, index) => {
-                return (
-                  <div className="img-cnt" style={{width:'100%',height:'400px'}}>
-                  <div className="bg-img" style={{width:'100%',height:'auto'}}
-                      style={{ backgroundImage: `url(${img.url})` }}
-                      onClick={() => handleOpenImg(index)}>
+
+      <div className="detail-view-container">      
+        {props.drop.media.length > 1 ?
+          <div
+            className="drop-detail-image"
+            onClick={() => props.handleClick()}>
+            {props.drop.type === "music" ? renderMusicSideDetails() : <></>}
+            {props.drop.type === "music" ? renderPlayButton() : <></>}
+            <Slider {...settings}>
+              {
+                props.drop.media.map((img, index) => {
+                  return (
+                    <div className="img-cnt" style={{width:'100%',height:'400px'}}>
+                    <div className="bg-img" style={{width:'100%',height:'auto'}}
+                        style={{ backgroundImage: `url(${img.url})` }}
+                        onClick={() => handleOpenImg(index)}>
+                      </div>
                     </div>
-                  </div>
-                )
-              })
-            }
-          </Slider>
-        </div>
-        :
-        <div className={'drop-detail-image-single'}  style={{width:'100%'}}>
-        <img style={{width:'100%',height:'auto'}} src={props.drop.media[0].url} onClick={() => handleOpenImg(0)}/>
-        </div>
-      }
-      {gmtDate >= curDropDate && props.drop.link!=='' ? (
-        <a className="drop-detail-title exp-view"
-        style={{color: '#EEEEEE'}}
-         href={props.drop.link}>{props.drop.title}</a>
-      ) : (
-        <h1 className="drop-detail-title exp-view">{props.drop.title}</h1>
-      )}
-      
-      <div style={{ height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px' }} />
-      <div className="drop-detail-holder" style={{ marginTop: '12px' }}>
-        <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
-        <p2 className="drop-category-title">{props.drop.category}</p2>
-        <p2 className="drop-price"><span>Ξ</span>
-          {props.drop.price !== '0' && props.drop.price !== undefined ? props.drop.price
-            : props.drop.auction_price !== '0' && props.drop.auction_price !== undefined ? props.drop.auction_price
-              : 0}
-        </p2>
-        {props.show && (
-          <p2 className="drop-link"
-            onClick={copyURL}>
-            <img src={Link} alt="" />
-          </p2>
-        )}
-      </div>
-      {/* <div className="drop-detail-holder" style={{ marginTop: '0px' }}>
-        {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
-        <p className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p>
-      </div> */}
-
-      <div className="pieces-and-date">
-        <p>{props.drop.pieces} Pieces</p>
+                  )
+                })
+              }
+            </Slider>
+          </div>
+          :
+          <div className={'drop-detail-image-single'}  style={{width:'100%'}}>
+          <img alt="" src={props.drop.media[0].url} onClick={() => handleOpenImg(0)}/>
+          </div>
+        }
         {gmtDate >= curDropDate && props.drop.link!=='' ? (
-          <p className="dropped">Dropped</p>
+          <a className="drop-detail-title exp-view"
+          style={{color: '#EEEEEE'}}
+          href={props.drop.link}>{props.drop.title}</a>
         ) : (
-          <p>{date}</p>
+          <h1 className="drop-detail-title exp-view">{props.drop.title}</h1>
         )}
-      </div>
-      
-      <p style={{textAlign:'center'}} >Project Bio</p>
-      <div className="drop-description-holder">
-        <p1 className="drop-detail-description-text">
-          {props.drop.desc}
-        </p1>
-      </div>
+        
+        <div style={{ height: '1px', background: '#2F2F2F', margin: '12px 50px 0 50px' }} />
+        <div className="drop-detail-holder">
+          <p2 className="drop-marketplace-title">{props.drop.marketplace}</p2>
+          <p2 className="drop-category-title">{props.drop.category}</p2>
+          <p2 className="drop-price"><span>Ξ</span>
+            {props.drop.price !== '0' && props.drop.price !== undefined ? props.drop.price
+              : props.drop.auction_price !== '0' && props.drop.auction_price !== undefined ? props.drop.auction_price
+                : 0}
+          </p2>
+          {props.show && (
+            <p2 className="drop-link"
+              onClick={copyURL}>
+              <img src={Link} alt="" />
+            </p2>
+          )}
+        </div>
+        {/* <div className="drop-detail-holder" style={{ marginTop: '0px' }}>
+          {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
+          <p className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p>
+        </div> */}
 
-      <p style={{textAlign:'center'}} >Properties</p>
+        <div className="pieces-and-date">
+          <p>{props.drop.pieces} Pieces</p>
+          {gmtDate >= curDropDate && props.drop.link!=='' ? (
+            <p className="dropped">Dropped</p>
+          ) : (
+            <p>{date}</p>
+          )}
+        </div>
+        
+        <p className="center-title" style={{textAlign:'center'}} >Project Bio</p>
+        <div className="drop-description-holder">
+          <p1 className="drop-detail-description-text">
+            {props.drop.desc}
+          </p1>
+        </div>
 
-      <div style={{display:'grid',textAlign:'center',gridTemplateColumns:'auto auto'}} >
-        {props.drop.attributes && props.drop.attributes.map(x=><div style={{padding:'10px',margin:'4px',borderRadius:'6px',background:'#0B0B0B'}}>
-        <p style={{fontSize:'12px'}}>{x.name}</p>
-        <p style={{fontSize:'16px'}} >{x.value}</p>
-        <p style={{color:'#A2A2A2',fontSize:'12px'}} >{'Some % have this trait'}</p>
-      </div>)}
-      </div><br/>
-      <p style={{textAlign:'center'}} >We love artists.</p>
-      <br/><br/>
-      
+        <p className="center-title" style={{textAlign:'center'}} >Properties</p>
+
+        <div style={{display:'grid',textAlign:'center',gridTemplateColumns:'auto auto'}} >
+          {props.drop.attributes && props.drop.attributes.map(x=><div style={{padding:'10px',margin:'4px',borderRadius:'6px',background:'#0B0B0B'}}>
+          <p style={{fontSize:'12px'}}>{x.name}</p>
+          <p style={{fontSize:'16px'}} >{x.value}</p>
+          <p style={{color:'#A2A2A2',fontSize:'12px'}} >{'Some % have this trait'}</p>
+        </div>)}
+        </div><br/>
+        <p className="center-title" style={{textAlign:'center'}} >We love artists.</p>
+        <br/><br/>
+      </div>
     </div>
   );
 }
