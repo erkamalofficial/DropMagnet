@@ -136,11 +136,11 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
         {x.name}
       </TabItem>
       ))}
-      {allCategories && allCategories.categories.map((x) => (
+      {allCategories && allCategories.categories.map((x, id) => (
         <TabItem
-        key={x.position}
-        onClick={() => handleActiveTabIndex(x.position)}
-        className={activeTabIndex === x.position ? "tab-selected" : ""}
+        key={id}
+        onClick={() => handleActiveTabIndex(id)}
+        className={activeTabIndex === id ? "tab-selected" : ""}
       >
         {x.name}
       </TabItem>

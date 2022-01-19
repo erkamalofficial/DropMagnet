@@ -89,13 +89,14 @@ const Home = (props) => {
     return state.category.general.activeTabIndex;
   });
   const isLoading = useSelector((state) => state.category.general.isLoading);
+  const loadingIndexList = useSelector((state) => state.category.general.loadingIndexList);
   const reswipeModeActive = useSelector(
     (state) => state.category.general.reswipeModeActive
   );
   const nextIndex = useSelector((state) => state.category.nextIndex);
   const fetchMore = useSelector((state) => state.category.fetchMore);
   const allCategories = useSelector(state => state.category.allCategories)
-  console.log(date)
+  // console.log(date)
 
   //jsx upgrade
   const [categoryTabs, setCategoryTabs] = useState(null)
@@ -145,15 +146,15 @@ const Home = (props) => {
     }, 500);
   }, [])
 
-  useEffect(() => {console.log('ati',activeTabIndex)}, [activeTabIndex])
+  // useEffect(() => {console.log('ati',activeTabIndex)}, [activeTabIndex])
 
   useEffect(() => {
     // jsx upgrade, on first render 
     DROP_SERVICE.getAllDropTabs().then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setCategoryTabs(res.data.categories)
       setExternalCreatorTabs(res.data.external_creators)
-      console.log('%c successful GET drop collection ','background: #444; color: #bada55; padding: 2px; border-radius:2px')
+      // console.log('%c successful GET drop collection ','background: #444; color: #bada55; padding: 2px; border-radius:2px')
     }).catch((err) => {
       console.log(err, 'There has been an error getting drop collections')
     });
@@ -163,10 +164,10 @@ const Home = (props) => {
     // jsx upgrade, re-render after intervals of 6 hours
     let dropRefreshTimer = setInterval(() => {
       DROP_SERVICE.getAllDropTabs().then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         setCategoryTabs(res.data.categories)
         setExternalCreatorTabs(res.data.external_creators)
-        console.log('%c successful TIMEIN ','background: #444; color: #ff3d00; padding: 2px; border-radius:2px')
+        // console.log('%c successful TIMEIN ','background: #444; color: #ff3d00; padding: 2px; border-radius:2px')
       }).catch((err) => {
         console.log(err, '%c successful TIMEOUT ', 'background: #444; color: #ff3d00; padding: 2px; border-radius:2px')
       })
@@ -196,7 +197,7 @@ const Home = (props) => {
       dispatch(fetchFashion({ activeTabIndex: 3, extras: { ...extras, token: idToken } }));
     } 
     else if (activeTabIndex == 4) {
-      console.log(allCategories.external_creators[0].id)
+      // console.log(allCategories.external_creators[0].id)
       dispatch(fetchCloneX({ activeTabIndex: 4, id : allCategories.external_creators[0].id , extras: { ...extras, token: idToken  } }));
     }
     else if (activeTabIndex == 5) {
@@ -278,9 +279,9 @@ const Home = (props) => {
   }
   const currentTabId = getCategoryFromTab(tabList[activeTabIndex]);
   const { activeBucket } = useSelector((state) => {
-    console.log(currentTabId)
-    console.log(state.category)
-    console.log('here : ' , state.category[currentTabId]);
+    // console.log(currentTabId)
+    // console.log(state.category)
+    // console.log('here : ' , state.category[currentTabId]);
     return state.category[currentTabId];
   });
 
@@ -300,7 +301,7 @@ const Home = (props) => {
 
     // const activeTab = getCategoryFromTab(tabList[index]);
 
-    console.log(index);
+    // console.log(index);
     let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
       token: idToken,
@@ -349,8 +350,8 @@ const Home = (props) => {
           .catch(() => { })
           .finally(() => {
             // setInternalLoader(false);
-            console.log("Ritgh")
-            console.log(drop.artist)
+            // console.log("Ritgh")
+            // console.log(drop.artist)
             updateTokens(drop.artist && drop.artist.id)
               .then(res => { })
           });
@@ -394,7 +395,7 @@ const Home = (props) => {
         </FadeIn>
 
         <div className="card-section">
-          {isLoading || !activeBucket ?
+          {loadingIndexList.length > 0 || isLoading || !activeBucket ?
             (
               <>
                 

@@ -2,7 +2,7 @@ import { db } from "../../firebase";
 import * as DropMagnetAPI from '../../DropMagnetAPI'
 import { getAllDropTabs } from "../../services/drop-services";
 
-const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
+const getDataFromDb = async (dispatch, categoryType, actionType, activeTabIndex, extras) => {
 
   const querySnapshot = await db
     .collection("drops_v1")
@@ -32,7 +32,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
 
       response['curIndex'] = d.getTime()
       response['random'] = extras.random
-      dispatch({ type: actionType, payload: response });
+      dispatch({ type: actionType, payload: { ...response, activeTabIndex } });
       error = false
     }
 
@@ -62,7 +62,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, extras) => {
 
 };
 
-const getDataFromDb2 = async (dispatch, categoryType, actionType, extras , id) => {
+const getDataFromDb2 = async (dispatch, categoryType, actionType, activeTabIndex, extras , id) => {
 
   const querySnapshot = await db
     .collection("drops_v1")
@@ -92,7 +92,7 @@ const getDataFromDb2 = async (dispatch, categoryType, actionType, extras , id) =
 
       response['curIndex'] = d.getTime()
       response['random'] = extras.random
-      dispatch({ type: actionType, payload: response });
+      dispatch({ type: actionType, payload: { ...response, activeTabIndex } });
       error = false
     }
 
@@ -131,7 +131,7 @@ export const fetchArt =
           activeTabIndex,
         },
       });
-      getDataFromDb(dispatch, "Art", "FETCH_ARTS_SUCCESS", extras);
+      getDataFromDb(dispatch, "Art", "FETCH_ARTS_SUCCESS", activeTabIndex, extras);
     };
 
 export const fetchCloneX =
@@ -145,7 +145,7 @@ export const fetchCloneX =
           },
         });
         
-        getDataFromDb2(dispatch, "CloneX", "FETCH_CloneX_SUCCESS", extras , id);
+        getDataFromDb2(dispatch, "CloneX", "FETCH_CloneX_SUCCESS", activeTabIndex, extras , id);
 };
 export const fetchWOW =
     ({ activeTabIndex, extras , id }) =>
@@ -158,7 +158,7 @@ export const fetchWOW =
           },
         });
         
-        getDataFromDb2(dispatch, "WOW", "FETCH_WOW_SUCCESS", extras , id);
+        getDataFromDb2(dispatch, "WOW", "FETCH_WOW_SUCCESS", activeTabIndex, extras, id);
 };
 
 export const fetchDoodle =
@@ -172,7 +172,7 @@ export const fetchDoodle =
           },
         });
         
-        getDataFromDb2(dispatch, "DOODLE", "FETCH_DOODLE_SUCCESS", extras , id);
+        getDataFromDb2(dispatch, "DOODLE", "FETCH_DOODLE_SUCCESS", activeTabIndex, extras, id);
 };
 
 export const fetchBAYC =
@@ -186,7 +186,7 @@ export const fetchBAYC =
           },
         });
         
-        getDataFromDb2(dispatch, "BAYC", "FETCH_BAYC_SUCCESS", extras , id);
+        getDataFromDb2(dispatch, "BAYC", "FETCH_BAYC_SUCCESS", activeTabIndex, extras, id);
 };
 
 export const fetchDW =
@@ -200,7 +200,7 @@ export const fetchDW =
           },
         });
         
-        getDataFromDb2(dispatch, "TWV", "FETCH_DWolves_SUCCESS", extras, id);
+        getDataFromDb2(dispatch, "TWV", "FETCH_DWolves_SUCCESS", activeTabIndex, extras, id);
 };
 
 export const fetchSR=
@@ -214,7 +214,7 @@ export const fetchSR=
           },
         });
         
-        getDataFromDb2(dispatch, "SUPR", "FETCH_SuperRare_SUCCESS", extras, id);
+        getDataFromDb2(dispatch, "SUPR", "FETCH_SuperRare_SUCCESS", activeTabIndex, extras, id);
 };
 
 export const fetchMusic =
@@ -226,7 +226,7 @@ export const fetchMusic =
           activeTabIndex,
         },
       });
-      getDataFromDb(dispatch, "Music", "FETCH_MUSIC_SUCCESS", extras);
+      getDataFromDb(dispatch, "Music", "FETCH_MUSIC_SUCCESS", activeTabIndex, extras);
     };
 export const fetchColletibles =
   ({ activeTabIndex, extras }) =>
@@ -237,7 +237,7 @@ export const fetchColletibles =
           activeTabIndex,
         },
       });
-      getDataFromDb(dispatch, "Collectible", "FETCH_COLLECTIBLES_SUCCESS", extras);
+      getDataFromDb(dispatch, "Collectible", "FETCH_COLLECTIBLES_SUCCESS", activeTabIndex, extras);
     };
 export const fetchFashion =
   ({ activeTabIndex, extras }) =>
@@ -248,7 +248,7 @@ export const fetchFashion =
           activeTabIndex,
         },
       });
-      getDataFromDb(dispatch, "Fashion", "FETCH_FASHION_SUCCESS", extras);
+      getDataFromDb(dispatch, "Fashion", "FETCH_FASHION_SUCCESS", activeTabIndex, extras);
     };
 
 export const fetchReswipeBuckets = (idToken) => {
@@ -271,7 +271,7 @@ export const fetchReswipeList = (tabIndex) => async (dispatch, getState) => {
 
 export const fetchCategory = ( ) => async (dispatch, getState) => {
   try {
-    console.log('fetch catt action called');
+    // console.log('fetch catt action called');
     const { data } = await getAllDropTabs() 
     dispatch({ type: "FETCH_CATEGORY_SUCCESS" , payload : data });
 } 

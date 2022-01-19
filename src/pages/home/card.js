@@ -141,7 +141,7 @@ const Card = (props) => {
   const history = useHistory()
   const { currentUser } = useAuth();
 
-  console.log('cards',props);
+  // console.log('cards',props);
   let artistImg = artist && artist.avatar_url !== '' ?  artist.avatar_url : UserIcon
 
   const openUser = (e) => {
