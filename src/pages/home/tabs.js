@@ -4,14 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 const TabsWrapper = styled.ul`
 display: flex;
 flex-direction: row;
-width: var(--card-container-width);
-height: 2.4rem;
+width: var(--tab-container-width);
+height: 64px;
 color: #ebeae8;
-padding: 6px 10px 6px 360px;
+padding: 6px 10px 6px 28px;
 overflow:hidden;
 overflow-x: scroll;
 margin: 0;
-margin-bottom: 20px;
 background-image: linear-gradient(
   #181818,
   #131313 83%,

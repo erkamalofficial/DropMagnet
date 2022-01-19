@@ -38,7 +38,6 @@ import * as DROP_SERVICE from '../../services/drop-services';
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   div.rel {
     position: relative;
     user-select: none;
@@ -48,6 +47,13 @@ const HomeContainer = styled.div`
     @media (max-width: 500px) {
       padding-top: 2px
     }
+
+    div.tabs-container {
+      margin-bottom: 60px;
+    }
+  }
+  div.card-section {
+    
   }
 `;
 
@@ -371,61 +377,57 @@ const Home = (props) => {
 
   return (
     <HomeContainer>
-
-
-
-
       <div className="rel">
+        <FadeIn delay={200}>
+          <div className="tabs-container">
+            <Tabs
+              activeTabIndex={activeTabIndex}
+              handleActiveTabIndex={handleActiveTabIndex}
+              tabList={tabList}
+            />
+          </div>
+        </FadeIn>
 
-      <FadeIn delay={200}>
-      <div  >
-      <Tabs
-        activeTabIndex={activeTabIndex}
-        handleActiveTabIndex={handleActiveTabIndex}
-        tabList={tabList}
-      />
-      </div>
-      </FadeIn>
-
-        {isLoading || !activeBucket ?
-          (
-            <>
-              
-              <FadeIn delay={200}>
-                <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
-                  <LazyCard />
-                </CardContainer>
-              </FadeIn>
-              <FadeIn delay={700}>
-                <ActionSection key="footer" style={{ display: 'flex' }}>
-                  <MinusBtn>
-                    <img src="./minus.svg" alt="minus" />
-                  </MinusBtn>
-                  <PlusBtn>
-                    <img src="./plus.svg" alt="plus" />
-                  </PlusBtn>
-                </ActionSection>
-              </FadeIn>
-            </>
-          )
-          : (
-            <>
-              <Swiper
-                reswipeModeActive={false}
-                key={uniqueId}
-                db={activeBucket}
-                activeTabIndex={activeTabIndex}
-                onSwipe={handleSwipe}
-                handleActiveTabIndex={handleActiveTabIndex}
-                tabList={tabList}
-                tabList2={AllCategories}
-                setDetailView={setDetailView}
-                nextIndex={nextIndex}
-              />
-            </>
-          )
-
-        }
+        <div className="card-section">
+          {isLoading || !activeBucket ?
+            (
+              <>
+                
+                <FadeIn delay={200}>
+                  <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
+                    <LazyCard />
+                  </CardContainer>
+                </FadeIn>
+                <FadeIn delay={700}>
+                  <ActionSection key="footer" style={{ display: 'flex' }}>
+                    <MinusBtn>
+                      <img src="./minus.svg" alt="minus" />
+                    </MinusBtn>
+                    <PlusBtn>
+                      <img src="./plus.svg" alt="plus" />
+                    </PlusBtn>
+                  </ActionSection>
+                </FadeIn>
+              </>
+            )
+            : (
+              <>
+                <Swiper
+                  reswipeModeActive={false}
+                  key={uniqueId}
+                  db={activeBucket}
+                  activeTabIndex={activeTabIndex}
+                  onSwipe={handleSwipe}
+                  handleActiveTabIndex={handleActiveTabIndex}
+                  tabList={tabList}
+                  tabList2={AllCategories}
+                  setDetailView={setDetailView}
+                  nextIndex={nextIndex}
+                />
+              </>
+            )
+          }
+        </div>
 
         {/* </div> */}
       </div>
