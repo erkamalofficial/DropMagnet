@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const TabsWrapper = styled.ul`
 @media (max-width: 500px) {
-  height: 56px;
+  height: 36px;
 }
 background: #000;
 display: flex;
@@ -107,7 +107,7 @@ const TabItem = styled.li`
   font-weight: 400;
   margin-right: 18px;
   margin-left: 18px;
-  height: 93%;
+  height: 96%;
   display: flex;
   align-items: center;
 `;

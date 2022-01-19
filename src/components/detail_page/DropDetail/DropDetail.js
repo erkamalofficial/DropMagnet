@@ -122,7 +122,7 @@ export default function DropDetail(props) {
           initial={getInitials(props.drop?.artist?.name || 'Test User')}
           view_only
           small
-          style={{ margin: 'auto 10px' }}
+          style={{ margin: 'auto 12px' }}
           userId={props.drop.user_id} />
         {/* <img className="detail-view-header-image" src={artist_image} /> */}
         <h1 className="drop-detail-title exp-view"

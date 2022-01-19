@@ -141,6 +141,14 @@
   position: relative;
 }
 
+@media(max-width: 500px) {
+  .drop-detail-image-single {
+    margin: 0;
+    padding: 4px;
+    margin-bottom: 12px;
+  }
+}
+
 .drop-detail-video-single{
   margin: 12px auto;
   width: 195px;
@@ -355,7 +363,13 @@
 }
 
 .detail-view-container {
-  width: 600px;
+  width: 540px;
   display: flex;
   flex-direction: column;
+}
+
+@media(max-width: 500px) {
+  .detail-view-container {
+    width: 100%;
+  }  
 }
