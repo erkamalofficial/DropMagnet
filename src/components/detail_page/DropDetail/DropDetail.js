@@ -132,6 +132,8 @@ export default function DropDetail(props) {
         </h1>
         <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
       </div>
+
+      <div className="detail-view-container">
       {props.drop.media.length > 1 ?
         <div
           className="drop-detail-image"
@@ -214,6 +216,8 @@ export default function DropDetail(props) {
       </div><br/>
       <p style={{textAlign:'center'}} >We love artists.</p>
       <br/><br/>
+
+    </div>
       
     </div>
   );
