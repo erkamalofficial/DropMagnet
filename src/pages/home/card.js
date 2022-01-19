@@ -23,7 +23,10 @@ const SwipeCard = styled.div`
   flex-direction: column;
   will-change: transform;
   height: auto;
-  padding: 0 14px;
+  padding: 0 22px;
+  @media (max-width: 500px) {
+    margin: 0 16px;
+  }
 `;
 const SwipeCardDeviceContainer = styled.div`
   position: var(--card-device-container-pos);

@@ -20,7 +20,9 @@ const CardContainer = styled.div`
   width: var(--card-container-width);
   height: var(--card-container-height);
   margin-bottom: 26px;
-  @media(max-width: 576px){
+  justify-content: center;
+  @media(max-width: 500px){
+    width: 100%;
     margin-bottom: 18px;
   }
   

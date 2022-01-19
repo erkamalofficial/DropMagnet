@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const TabsWrapper = styled.ul`
 @media (max-width: 500px) {
-  height: 56px;
+  height: 36px;
 }
 background: #000;
 display: flex;
@@ -87,15 +87,7 @@ text-transform: capitalize;
   -moz-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  border-bottom: 1px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    135deg,
-    #239bae,
-    #6d8ad7 41%,
-    #9d6dd7 72%,
-    #d76db2
-  );
+  border-bottom: 1px solid white;
   padding: 0;
 }
 `;
@@ -115,7 +107,7 @@ const TabItem = styled.li`
   font-weight: 400;
   margin-right: 18px;
   margin-left: 18px;
-  height: 93%;
+  height: 96%;
   display: flex;
   align-items: center;
 `;
