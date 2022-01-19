@@ -463,7 +463,7 @@ h2 {
 
 .swipe {
   position: absolute;
-  width: var(--card-container-width);
+  width: 382px;
   z-index: 2;
 }
 

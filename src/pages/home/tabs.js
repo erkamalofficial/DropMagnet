@@ -87,15 +87,7 @@ text-transform: capitalize;
   -moz-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  border-bottom: 1px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    135deg,
-    #239bae,
-    #6d8ad7 41%,
-    #9d6dd7 72%,
-    #d76db2
-  );
+  border-bottom: 1px solid white;
   padding: 0;
 }
 `;
