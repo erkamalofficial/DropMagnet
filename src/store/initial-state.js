@@ -15,6 +15,7 @@ const initialState = {
     price: 0,
     galleryName: localStorage.getItem("galleryName") || "",
     selectedLinksIds: [],
+    loadingIndexList: []
   },
   art: JSON.parse(JSON.stringify(buckets)),
   music: JSON.parse(JSON.stringify(buckets)),

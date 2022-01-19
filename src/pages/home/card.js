@@ -141,7 +141,7 @@ const Card = (props) => {
   const history = useHistory()
   const { currentUser } = useAuth();
 
-  console.log('cards',props);
+  // console.log('cards',props);
   let artistImg = artist && artist.avatar_url !== '' ?  artist.avatar_url : UserIcon
 
   const openUser = (e) => {
@@ -182,7 +182,7 @@ const Card = (props) => {
           key={2}
         // style={{ backgroundImage: `url(${props.media[0].url})` }}
         >
-          <img src={props.media[0].url} width='600' height='600' alt={'CoverImage'} />
+          <img style={{ borderRadius: '4px' }} src={props.media[0].url} width='600' height='600' alt={'CoverImage'} />
         </SwipeImage>
 
         <FooterSection key={3}>

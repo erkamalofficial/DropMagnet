@@ -2,27 +2,24 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
 const TabsWrapper = styled.ul`
+@media (max-width: 500px) {
+  height: 56px;
+}
+background: #000;
 display: flex;
 flex-direction: row;
-width: var(--card-container-width);
-height: 2.4rem;
+width: var(--tab-container-width);
+height: 64px;
 color: #ebeae8;
-padding: 6px 10px 6px 360px;
+padding: 0px 10px 0px 28px;
 overflow:hidden;
 overflow-x: scroll;
 margin: 0;
-margin-bottom: 20px;
-background-image: linear-gradient(
-  #181818,
-  #131313 83%,
-);
 border-top: 0.75px solid black;
 border-bottom: 0.75px solid black;
 white-space: nowrap;
 justify-content: space-evenly;
 align-items: center;
-background-clip: text;
--webkit-background-clip: text;
 list-style: none;
 text-transform: capitalize;
 .first-position {
@@ -90,8 +87,16 @@ text-transform: capitalize;
   -moz-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  border-bottom: 1px solid white;
-  padding: 7px 0 6px 0;
+  border-bottom: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    135deg,
+    #239bae,
+    #6d8ad7 41%,
+    #9d6dd7 72%,
+    #d76db2
+  );
+  padding: 0;
 }
 `;
 const TabItem = styled.li`
@@ -110,7 +115,9 @@ const TabItem = styled.li`
   font-weight: 400;
   margin-right: 18px;
   margin-left: 18px;
-  
+  height: 93%;
+  display: flex;
+  align-items: center;
 `;
 
 
@@ -129,11 +136,11 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
         {x.name}
       </TabItem>
       ))}
-      {allCategories && allCategories.categories.map((x) => (
+      {allCategories && allCategories.categories.map((x, id) => (
         <TabItem
-        key={x.position}
-        onClick={() => handleActiveTabIndex(x.position)}
-        className={activeTabIndex === x.position ? "tab-selected" : ""}
+        key={id}
+        onClick={() => handleActiveTabIndex(id)}
+        className={activeTabIndex === id ? "tab-selected" : ""}
       >
         {x.name}
       </TabItem>

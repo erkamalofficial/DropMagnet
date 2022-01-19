@@ -31,7 +31,8 @@ const getGroupedLinks = (linkList) => {
 
 
 const getProcessedCollection = (state, action, type) => {
-  const general = { ...state.general, isLoading: false };
+  const loadingIndexList = state.general.loadingIndexList.filter(it => it !== action.payload?.activeTabIndex);
+  const general = { ...state.general, isLoading: false, loadingIndexList };
 
   let goBack = action.payload.curIndex <= new Date().setUTCHours(0, 0, 0, 0)
     && action.payload.count !== 0 && !action.payload.random
@@ -55,14 +56,14 @@ const getProcessedCollection = (state, action, type) => {
     let pastDate = new Date(pastIndex)
     pastDate.setDate(pastDate.getDate() - 1)
     pastIndex = pastDate.getTime()
-    console.log(`Current card fetched from : ${pastDate.getDate()}-${pastDate.getMonth() + 1}-${pastDate.getFullYear()}`)
+    // console.log(`Current card fetched from : ${pastDate.getDate()}-${pastDate.getMonth() + 1}-${pastDate.getFullYear()}`)
   }
 
   const collection = {
     ...state[type],
     activeBucket: bucket
   };
-  console.log(bucket);
+  // console.log(bucket);
 
   return {
     ...state,
@@ -77,12 +78,18 @@ const getProcessedCollection = (state, action, type) => {
 const categoryReducer = (state = initialState, action) => {
   const tabList = ["art", "music", "collectible", "fashion","CloneX","TWV","SUPR","DOODLE","BAYC","WOW"];
   // const tabList = ["art"];
+  const loadingIndexList = [...state.general.loadingIndexList];
+  if (action.payload?.activeTabIndex) {
+    loadingIndexList.push(action.payload.activeTabIndex);
+  }
+  
 
   switch (action.type) {
     case "general": {
       const general = {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
+        loadingIndexList: loadingIndexList
       };
       return { ...state, general };
     }
@@ -91,7 +98,7 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state , loading: true };
     }
     case "FETCH_CATEGORY_SUCCESS" : {
-      console.log(action.payload);
+      // console.log(action.payload);
       return {...state , loading: false, allCategories : action.payload };
     }
 
@@ -103,6 +110,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
       return { ...state, general };
     }
@@ -115,6 +123,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
       return { ...state, general };
     }
@@ -129,13 +138,14 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
-      console.log(action.payload.activeTabIndex)
+      // console.log(action.payload.activeTabIndex)
       return { ...state, general };
     }
     case "FETCH_CloneX_SUCCESS": {
       const cloneXCollection = getProcessedCollection(state, action, "CloneX");
-      console.log(cloneXCollection);
+      // console.log(cloneXCollection);
       return cloneXCollection;
     }
 
@@ -144,13 +154,14 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
-      console.log(action.payload.activeTabIndex)
+      // console.log(action.payload.activeTabIndex)
       return { ...state, general };
     }
     case "FETCH_WOW_SUCCESS": {
       const cloneXCollection = getProcessedCollection(state, action, "WOW");
-      console.log(cloneXCollection);
+      // console.log(cloneXCollection);
       return cloneXCollection;
     }
 
@@ -159,13 +170,14 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
-      console.log(action.payload.activeTabIndex)
+      // console.log(action.payload.activeTabIndex)
       return { ...state, general };
     }
     case "FETCH_DOODLE_SUCCESS": {
       const cloneXCollection = getProcessedCollection(state, action, "DOODLE");
-      console.log(cloneXCollection);
+      // console.log(cloneXCollection);
       return cloneXCollection;
     }
 
@@ -174,13 +186,14 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
-      console.log(action.payload.activeTabIndex)
+      // console.log(action.payload.activeTabIndex)
       return { ...state, general };
     }
     case "FETCH_BAYC_SUCCESS": {
       const cloneXCollection = getProcessedCollection(state, action, "BAYC");
-      console.log(cloneXCollection);
+      // console.log(cloneXCollection);
       return cloneXCollection;
     }
 
@@ -189,8 +202,9 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
-      console.log(action.payload.activeTabIndex)
+      // console.log(action.payload.activeTabIndex)
       return { ...state, general };
     }
     case "FETCH_DWolves_SUCCESS": {
@@ -203,8 +217,9 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
-      console.log(action.payload.activeTabIndex)
+      // console.log(action.payload.activeTabIndex)
       return { ...state, general };
     }
     case "FETCH_SuperRare_SUCCESS": {
@@ -213,7 +228,7 @@ const categoryReducer = (state = initialState, action) => {
     }
 
     case "FETCH_EC_SUCCESS": {
-      console.log('ec fetch success',action.payload)
+      // console.log('ec fetch success',action.payload)
       return {...state , EC : action.payload};
     }
 
@@ -223,6 +238,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
       return { ...state, general };
     }
@@ -240,6 +256,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         activeTabIndex: action.payload.activeTabIndex,
         isLoading: true,
+        loadingIndexList: loadingIndexList
       };
       return { ...state, general };
     }
@@ -274,10 +291,10 @@ const categoryReducer = (state = initialState, action) => {
     // }
     case "ADD_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
-      console.log(currentTab , state.general.activeTabIndex);
+      // console.log(currentTab , state.general.activeTabIndex);
       const activeTabContent = state[currentTab];
-      console.log('bucket',currentTab)
-      console.log('bucket',state[currentTab]);
+      // console.log('bucket',currentTab)
+      // console.log('bucket',state[currentTab]);
       if(!activeTabContent) return {...state} ;
       const { reswipedDrops, activeBucket } = activeTabContent;
       const { drop_id, dropIndex } = action.payload;
@@ -304,14 +321,14 @@ const categoryReducer = (state = initialState, action) => {
     case "REMOVE_USER_DATA": {
       const currentTab = tabList[state.general.activeTabIndex];
       const activeTabContent = state[currentTab];
-      console.log('active t c',activeTabContent)
+      // console.log('active t c',activeTabContent)
       if(!activeTabContent) return {...state} ;
       const { reswipedDrops } = activeTabContent;
 
       const { drop_id } = action.payload;
 
       delete reswipedDrops[drop_id];
-      console.log()
+      // console.log()
       const general = {
         ...state.general,
         selectionCount: state.general.selectionCount - 1,
@@ -329,7 +346,7 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, general };
     }
     case "FETCH_LINKS_SUCCESS": {
-      console.log(action.payload)
+      // console.log(action.payload)
       const general = { ...state.general, isLoading: false };
       return {
         ...state,
@@ -513,7 +530,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state.general,
         reswipeModeActive
       }
-      console.log('here to check array');
+      // console.log('here to check array');
       return {
         ...state,
         general,

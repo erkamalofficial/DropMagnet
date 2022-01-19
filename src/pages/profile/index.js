@@ -689,11 +689,9 @@ export default function Profile(props) {
                 </div>
               </div>
 
-
               <div
                 style={{
                   margin: "0 auto",
-                  maxWidth: "600px",
                   display: `${detailView ? "none" : "block"}`,
                 }}
               >
@@ -706,7 +704,15 @@ export default function Profile(props) {
                     tabList={tabList}
                   />
                 </TabContainer>
-                {/* )} */}
+              </div>
+
+              <div
+                style={{
+                  margin: "0 auto",
+                  maxWidth: "600px",
+                  display: `${detailView ? "none" : "block"}`,
+                }}
+              >
                 <FooterContainer>
                   {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
                     <button
@@ -883,11 +889,9 @@ export default function Profile(props) {
                 </div>
               </div>
 
-
               <div
                 style={{
                   margin: "0 auto",
-                  maxWidth: "600px",
                   display: `${detailView ? "none" : "block"}`,
                 }}
               >
@@ -900,7 +904,15 @@ export default function Profile(props) {
                     tabList={tabList}
                   />
                 </TabContainer>
-                {/* )} */}
+              </div>
+
+              <div
+                style={{
+                  margin: "0 auto",
+                  maxWidth: "600px",
+                  display: `${detailView ? "none" : "block"}`,
+                }}
+              >
                 <FooterContainer>
                   {selectedProfileList === "saved" && currSavedPosts.length !== 0 && (
                     <button
