@@ -120,7 +120,7 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
 
   function renderDetail() {
     return (
-      <div>
+      <div className="drop-detail-container">
         <DropDetail
           show={true}
           drop={curDrop}
