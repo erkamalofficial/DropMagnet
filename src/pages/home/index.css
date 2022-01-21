@@ -47,6 +47,9 @@
     color: white;
     padding-bottom: 10px;
 }
+.swiper-card-container {
+    z-index: 3;
+}
 
 .swiper-card-container .swiper-card{
     box-shadow: 0 2px 4px #0000001A;

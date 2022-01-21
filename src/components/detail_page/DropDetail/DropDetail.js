@@ -208,15 +208,15 @@ export default function DropDetail(props) {
       <p style={{textAlign:'center'}} >Properties</p>
 
       <div style={{display:'grid',textAlign:'center',gridTemplateColumns:'auto auto'}} >
-        {props.drop.attributes && props.drop.attributes.map(x=><div style={{padding:'10px',margin:'4px',borderRadius:'6px',background:'#0B0B0B'}}>
-        <p style={{fontSize:'12px'}}>{x.name}</p>
-        <p style={{fontSize:'16px'}} >{x.value}</p>
-        <p style={{color:'#A2A2A2',fontSize:'12px'}} >{'Some % have this trait'}</p>
-      </div>)}
-      </div><br/>
-      <p style={{textAlign:'center'}} >We love artists.</p>
-      <br/><br/>
-
+        {props.drop.attributes && props.drop.attributes.map((x, i) => (
+          <div key={i} className="drop-detail-attribute">
+            <p style={{fontSize:'12px'}}>{x.name} {x.name} {x.name}</p>
+            <p style={{fontSize:'16px'}} >{x.value}</p>
+            <p style={{color:'#A2A2A2',fontSize:'12px'}} >{'Some % have this trait'}</p>
+          </div>
+        ))}
+      </div>
+      <p className="drop-love-title">We love artists.</p>
     </div>
       
     </div>

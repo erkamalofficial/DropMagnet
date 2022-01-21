@@ -5,20 +5,20 @@ const TabsWrapper = styled.ul`
 @media (max-width: 500px) {
   height: 36px;
 }
-background: #000;
+background: linear-gradient(180deg, #181818 0%, #131313 83%);
 display: flex;
 flex-direction: row;
 width: var(--tab-container-width);
 height: 64px;
 color: #ebeae8;
-padding: 0px 10px 0px 28px;
+padding: 0 28px;
 overflow:hidden;
 overflow-x: scroll;
 margin: 0;
 border-top: 0.75px solid black;
 border-bottom: 0.75px solid black;
 white-space: nowrap;
-justify-content: space-evenly;
+justify-content: space-between;
 align-items: center;
 list-style: none;
 text-transform: capitalize;
@@ -72,11 +72,10 @@ text-transform: capitalize;
 }
 .tab-underline {
   border-bottom: 0.75px solid #ebeae8;;
-  border-color: 
 }
 .tab-selected {
-  background: linear-gradient(
-    135deg,
+  background: -webkit-linear-gradient(
+    90deg,
     #239bae,
     #6d8ad7 41%,
     #9d6dd7 72%,
@@ -87,7 +86,7 @@ text-transform: capitalize;
   -moz-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #999;
   padding: 0;
 }
 `;
