@@ -9,18 +9,16 @@
 }
 
 .detail-view {
-  width: 60%;
-  max-width: 480px;
-  z-index: 4;
-  position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   background-color: #262626;
-  margin: 100px auto;
+  margin: auto;
   height: 90%;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  box-sizing: inherit !important;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -365,10 +363,9 @@
 }
 
 .detail-view-container {
-  width: 100%;
+  width: 540px;
   display: flex;
   flex-direction: column;
-  padding: 32px;
 }
 
 @media(max-width: 500px) {

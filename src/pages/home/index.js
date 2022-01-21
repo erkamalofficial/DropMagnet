@@ -43,31 +43,23 @@ const HomeContainer = styled.div`
     user-select: none;
     padding-top: var(--main-header-margin-top);
     padding-bottom: 68px;
+    margin-top: 68px;
+    z-index: 9999;
     @media (max-width: 500px) {
-      padding-top: 12px;
+      padding-top: 2px
     }
 
     div.tabs-container {
-      width: 100%;
-      z-index: 3;
-      position: fixed;
-      padding: 68px 0 17px;
-      background-color: var(--coreBlack);
-      margin-top: -24px;
+      margin-bottom: 60px;
       @media (max-width: 500px) {
         margin-bottom: 16px;
-        margin-top: -12px;
       }
     }
   }
   div.card-section {
-    padding-top: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    @media (max-width: 500px) {
-      padding-top: 120px;
-    }
   }
 `;
 
@@ -185,6 +177,7 @@ const Home = (props) => {
 
 
   useEffect(() => {
+
     let curTime = new Date(selectedDropdownDate).getTime()
     let extras = {
       token: idToken,
