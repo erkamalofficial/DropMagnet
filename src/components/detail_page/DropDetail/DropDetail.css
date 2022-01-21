@@ -118,13 +118,14 @@
 .drop-detail-attribute {
   max-width: 200px;
   min-width: 135px;
-  padding: 10px;
   margin: 4px;
+  padding: 14px 36px;
   border-radius: 6px;
   background: #0B0B0B;
 }
 
 .drop-detail-attribute p {
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -155,14 +156,16 @@
 }
 
 .drop-detail-image-single{
-  margin: 12px auto;
+  margin: 0 auto 32px;
   position: relative;
+}
+
+.drop-detail-image-single img {
+  border-radius: 6px;
 }
 
 @media(max-width: 500px) {
   .drop-detail-image-single {
-    margin: 0;
-    padding: 4px;
     margin-bottom: 12px;
   }
 }

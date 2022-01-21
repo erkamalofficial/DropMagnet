@@ -7,14 +7,18 @@
     margin: 0;
 }
 .drop-detail-container {
-    top: 20px;
+    top: 42px;
     position: relative;
-    z-index: 3;
+    z-index: 9999;
     backdrop-filter: blur(6px);
 }
 
 @media(max-width: 500px) {
     .view-container {
         margin: 0 8px;
+    }
+
+    .drop-detail-container {
+        top: 20px;
     }
 }
