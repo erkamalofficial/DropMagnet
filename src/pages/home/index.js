@@ -53,9 +53,10 @@ const HomeContainer = styled.div`
       position: fixed;
       padding: 68px 0 17px;
       background-color: var(--coreBlack);
-      margin-top: -12px;
+      margin-top: -24px;
       @media (max-width: 500px) {
         margin-bottom: 16px;
+        margin-top: -12px;
       }
     }
   }
