@@ -19,7 +19,7 @@
   width: 100%;
   z-index: 9998;
   backdrop-filter: blur(50px);
-  background-color: var(--coreBlack);
+  background-color: #1a1a1a66;
 }
 
 
