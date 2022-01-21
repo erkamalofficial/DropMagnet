@@ -43,16 +43,15 @@ const HomeContainer = styled.div`
     user-select: none;
     padding-top: var(--main-header-margin-top);
     padding-bottom: 68px;
+    z-index: 9999;
     @media (max-width: 500px) {
       padding-top: 12px;
     }
 
     div.tabs-container {
       width: 100%;
-      z-index: 3;
       position: fixed;
       padding: 68px 0 17px;
-      background-color: var(--coreBlack);
       margin-top: -24px;
       @media (max-width: 500px) {
         margin-bottom: 16px;

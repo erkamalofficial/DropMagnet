@@ -74,7 +74,7 @@ text-transform: capitalize;
   border-bottom: 0.75px solid #ebeae8;;
 }
 .tab-selected {
-  background: linear-gradient(
+  background: -webkit-linear-gradient(
     90deg,
     #239bae,
     #6d8ad7 41%,

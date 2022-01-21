@@ -213,10 +213,8 @@ export default function DropDetail(props) {
         <p style={{fontSize:'16px'}} >{x.value}</p>
         <p style={{color:'#A2A2A2',fontSize:'12px'}} >{'Some % have this trait'}</p>
       </div>)}
-      </div><br/>
-      <p style={{textAlign:'center'}} >We love artists.</p>
-      <br/><br/>
-
+      </div>
+      <p className="drop-love-title">We love artists.</p>
     </div>
       
     </div>
