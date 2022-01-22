@@ -10,6 +10,7 @@ import { useAuth } from "../../contexts/FirebaseAuthContext";
 import TextView from "../../components/elements/TextView/TextView";
 import Avatar from "../../components/elements/Avatar/Avatar";
 import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDropDetail";
+import DropDetail from "../../components/detail_page/DropDetail/DropDetail"
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Tabs from "../home/tabs";
@@ -200,7 +201,7 @@ export default function ProfilePage(props) {
   function renderDetail() {
     return (
       <div>
-        <ProfileDropDetail
+        <DropDetail
           isSaved={selectedProfileList === "saved"}
           show={true}
           drop={curDrop}
@@ -216,7 +217,7 @@ export default function ProfilePage(props) {
     return (
       <div>
         <div>
-          <LazyProfile />
+          <LazyProfile hasTabs={false} />
         </div>
       </div>
     );

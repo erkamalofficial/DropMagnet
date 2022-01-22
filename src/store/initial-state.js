@@ -7,7 +7,7 @@ const buckets = {
 const initialState = {
   general: {
     isLoading: true,
-    activeTabIndex: 0,
+    activeTabIndex: 4, // First external tab position
     enableReswipeMode: false,
     reswipeModeActive: false,
     selectionCount: 0,

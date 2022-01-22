@@ -449,12 +449,12 @@ const categoryReducer = (state = initialState, action) => {
         "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
         "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
         "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] },
-        "CloneX": { ...state.fashion, reswipedDrops: reswipedDrops["CloneX"] },
-        "TWV": { ...state.fashion, reswipedDrops: reswipedDrops["TWV"] },
-        "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
-        "DOODLE": { ...state.fashion, reswipedDrops: reswipedDrops["DOODLE"] },
-        "BAYC": { ...state.fashion, reswipedDrops: reswipedDrops["BAYC"] },
-        "WOW": { ...state.fashion, reswipedDrops: reswipedDrops["WOW"] },
+        "CloneX": { ...state.CloneX, reswipedDrops: reswipedDrops["CloneX"] },
+        "TWV": { ...state.TWV, reswipedDrops: reswipedDrops["TWV"] },
+        "SUPR": { ...state.SUPR, reswipedDrops: reswipedDrops["SUPR"] },
+        "DOODLE": { ...state.DOODLE, reswipedDrops: reswipedDrops["DOODLE"] },
+        "BAYC": { ...state.BAYC, reswipedDrops: reswipedDrops["BAYC"] },
+        "WOW": { ...state.WOW, reswipedDrops: reswipedDrops["WOW"] },
       }
     }
 
@@ -534,16 +534,16 @@ const categoryReducer = (state = initialState, action) => {
       return {
         ...state,
         general,
-        "art": { ...state.art, reswipedDrops: reswipedDrops["art"] },
-        "collectible": { ...state.collectible, reswipedDrops: reswipedDrops["collectible"] },
-        "music": { ...state.music, reswipedDrops: reswipedDrops["music"] },
-        "fashion": { ...state.fashion, reswipedDrops: reswipedDrops["fashion"] },
-        "CloneX": { ...state.fashion, reswipedDrops: reswipedDrops["CloneX"] },
-        "TWV": { ...state.fashion, reswipedDrops: reswipedDrops["TWV"] },
-        "SUPR": { ...state.fashion, reswipedDrops: reswipedDrops["SUPR"] },
-        "DOODLE": { ...state.fashion, reswipedDrops: reswipedDrops["DOODLE"] },
-        "BAYC": { ...state.fashion, reswipedDrops: reswipedDrops["BAYC"] },
-        "WOW": { ...state.fashion, reswipedDrops: reswipedDrops["WOW"] },
+        "art": {...state.art, reswipedDrops: reswipedDrops["art"]},
+        "collectible": {...state.collectible, reswipedDrops: reswipedDrops["collectible"]},
+        "music": {...state.music, reswipedDrops: reswipedDrops["music"]},
+        "fashion": {...state.fashion, reswipedDrops: reswipedDrops["fashion"]},
+        "CloneX": {...state.CloneX, reswipedDrops: reswipedDrops["CloneX"]},
+        "TWV": {...state.TWV, reswipedDrops: reswipedDrops["TWV"]},
+        "SUPR": {...state.SUPR, reswipedDrops: reswipedDrops["SUPR"]},
+        "DOODLE": {...state.DOODLE, reswipedDrops: reswipedDrops["DOODLE"]},
+        "BAYC": {...state.BAYC, reswipedDrops: reswipedDrops["BAYC"]},
+        "WOW": {...state.WOW, reswipedDrops: reswipedDrops["WOW"]},
       }
     }
     case 'FETCH_MORE_FEEDS': {

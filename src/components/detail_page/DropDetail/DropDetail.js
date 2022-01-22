@@ -157,7 +157,13 @@ export default function DropDetail(props) {
         </div>
         :
         <div className={'drop-detail-image-single'}  style={{width:'100%'}}>
-        <img style={{width:'100%',height:'auto'}} src={props.drop.media[0].url} onClick={() => handleOpenImg(0)}/>
+          {props.drop.media[0].type === 'video' ? (
+            <video width="100%" height="100%" controls autoPlay loop>
+              <source src={props.drop.media[0].url} type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+          ) : <img style={{width:'100%',height:'auto'}} src={props.drop.media[0].url} onClick={() => handleOpenImg(0)}/>
+          }
         </div>
       }
       {gmtDate >= curDropDate && props.drop.link!=='' ? (

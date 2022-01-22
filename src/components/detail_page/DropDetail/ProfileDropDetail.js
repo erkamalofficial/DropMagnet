@@ -151,13 +151,13 @@ export default function ProfileDropDetail(props) {
         </div>
         :
         <div className={'drop-detail-image-single'}>
-          <div className="bg-img"
-            style={{ backgroundImage: `url(${props.drop.media[0].url})` }}
-            onClick={() => handleOpenImg(0)}>
-          </div>
-          {/* <img style={{ height: '100%', width: '100%', borderRadius: '6px', cursor: 'pointer' }}
-            src={props.drop.media[0].url} alt={'Cover' + 1 + 'Photo'}
-            onClick={() => handleOpenImg(0)} /> */}
+          {props.drop.media[0].type === 'video' ? (
+            <video width="100%" height="100%" controls autoPlay>
+              <source src={props.drop.media[0].url} type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+          ) : <img style={{width:'100%',height:'auto'}} src={props.drop.media[0].url} onClick={() => handleOpenImg(0)}/>
+          }
         </div>
       }
 
