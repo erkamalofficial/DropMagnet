@@ -74,27 +74,18 @@ text-transform: capitalize;
   border-bottom: 0.75px solid #ebeae8;;
 }
 .tab-selected {
-  background: linear-gradient(
+  background: -webkit-linear-gradient(
     135deg,
     #239bae,
     #6d8ad7 41%,
     #9d6dd7 72%,
     #d76db2
   );
-  background-clip: text;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+  display: -webkit-box;
   border-bottom: 1px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    135deg,
-    #239bae,
-    #6d8ad7 41%,
-    #9d6dd7 72%,
-    #d76db2
-  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
   padding: 0;
 }
 `;
