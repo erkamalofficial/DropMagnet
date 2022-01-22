@@ -15,7 +15,3 @@ code {
 .clickable{
   cursor: pointer;
 }
-
-.container-reswipe .swipe{
-  max-width: var(--card-container-width);
-}

@@ -7,8 +7,10 @@
     margin: 0;
 }
 .drop-detail-container {
-    top: 42px;
-    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
     z-index: 9999;
     backdrop-filter: blur(6px);
 }
@@ -17,8 +19,7 @@
     .view-container {
         margin: 0 8px;
     }
-
     .drop-detail-container {
-        top: 20px;
+        backdrop-filter: unset;
     }
 }
