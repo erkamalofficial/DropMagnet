@@ -80,7 +80,7 @@ function HeaderBar(props) {
             }
           }} className="header-left-image clickable" src={Logo} />
 
-        {headerLoad && headerLoad === 'true' ? (
+        {props.datePickerVisible && headerLoad && headerLoad === 'true' ? (
           <Row className="items-center">
             <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
               style={{ textTransform: 'capitalize' }}>
@@ -97,8 +97,7 @@ function HeaderBar(props) {
               </>
             </HeaderLink>
           </Row>
-        ) : (
-
+        ) : (props.datePickerVisible && (
           <Row className="items-center">
             <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
               style={{ textTransform: 'capitalize' }}>
@@ -113,7 +112,7 @@ function HeaderBar(props) {
               )}
             </HeaderLink>
           </Row>
-        )}
+        ))}
       </div>
 
       {

@@ -2,7 +2,7 @@ import "./App.css";
 // import Home from "./pages/home/index";
 import { Switch, BrowserRouter as Router, Route, Redirect, useHistory } from "react-router-dom";
 import PrivateRoute from "./components/wrappers/PrivateRoute";
-import React, { Suspense } from "react";
+import React, { Suspense, useMemo, useState, useEffect }  from "react";
 import TermsAndConditions from "./pages/terms";
 import DropCreation from "./pages/create_drop";
 import Signup from "./pages/register/Signup";
@@ -21,7 +21,6 @@ import ConnectedWallets from "./pages/wallet/connected-wallets";
 import PersonalLinksPayment from "./pages/wallet/personal-links-payments";
 // import SelectLinks from "./pages/wallet/select-links";
 // import TinderCards from './pages/react-tinder-card/DemoSwiper';
-import { useState, useEffect } from "react";
 import { useAuth } from "../src/contexts/FirebaseAuthContext";
 import About from "./pages/about";
 import AboutDrop from "./pages/aboutDrop";
@@ -114,6 +113,9 @@ function App() {
   // Global functions
 
   const curIndex = useSelector((state) => state.category.curIndex);
+  const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
+
+  const isInternalCreator = useMemo(() => activeTabIndex < 4, [activeTabIndex])
 
   const [date, setDate] = useState(new Date(curIndex))
 
@@ -190,7 +192,7 @@ function App() {
                   curIndex={curIndex}
                   selectedDropdownDate={date}
                   setSelectedDropdownDate={setDate}
-                  datePickerVisible={true}
+                  datePickerVisible={isInternalCreator}
                   userLoggedIn={true}
                   userImageVisible={true}
                   reload={reload}
@@ -204,7 +206,7 @@ function App() {
                 curIndex={curIndex}
                 selectedDropdownDate={date}
                 setSelectedDropdownDate={setDate}
-                datePickerVisible={true}
+                datePickerVisible={isInternalCreator}
                 userLoggedIn={true}
                 userImageVisible={true}
                 reload={reload}

@@ -32,6 +32,7 @@ const FooterContainer = styled.div`
 `;
 
 export default function LazyProfile(props) {
+    const { hasTabs = true } = props;
 
     return (
         <>
@@ -66,7 +67,8 @@ export default function LazyProfile(props) {
                     </FadeIn>
                 </div>
 
-                <div
+                {hasTabs && (
+                  <div
                     style={{
                         margin: "0 auto",
                         maxWidth: "600px",
@@ -90,7 +92,7 @@ export default function LazyProfile(props) {
                     </FadeIn>
 
                 </div>
-
+                )}
             </div>
         </>
     );

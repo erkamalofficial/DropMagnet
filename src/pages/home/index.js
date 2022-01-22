@@ -65,7 +65,7 @@ const HomeContainer = styled.div`
     flex-direction: column;
     align-items: center;
     @media (max-width: 500px) {
-      padding-top: 120px;
+      padding-top: 106px;
     }
   }
 `;
@@ -191,6 +191,9 @@ const Home = (props) => {
       userID: "",
       random: true
     }
+
+    if (!allCategories) return;
+
     if (activeTabIndex === 1) {
       dispatch(fetchMusic({ activeTabIndex: 1, extras: { ...extras, token: idToken } }));
     }
@@ -222,10 +225,7 @@ const Home = (props) => {
     else if (activeTabIndex == 9) {
       dispatch(fetchWOW({ activeTabIndex: 9 , id : allCategories.external_creators[5].id , extras: { ...extras, token: idToken} }));
     }
-    
-    
-
-  }, [selectedDropdownDate]);
+  }, [selectedDropdownDate, allCategories]);
 
   useEffect(() => {
     currentUser && currentUser.getIdToken().then((idToken) => {
@@ -305,7 +305,6 @@ const Home = (props) => {
   const uniqueId = Date.now();
 
   const handleActiveTabIndex = (index) => {
-
     // const activeTab = getCategoryFromTab(tabList[index]);
 
     // console.log(index);
