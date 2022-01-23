@@ -1,9 +1,9 @@
-const buckets = {
+export const buckets = {
   apiData: [],
   reswipedDrops: {},
   activeBucket: []
-  
 };
+
 const initialState = {
   general: {
     isLoading: true,
