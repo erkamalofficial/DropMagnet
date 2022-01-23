@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import * as DropMagnetAPI from "../../DropMagnetAPI";
 import DropList from "../../components/elements/DropList/DropList";
@@ -108,8 +108,24 @@ export default function Profile(props) {
   const { currentUser } = useAuth();
 
   let history = useHistory();
-  // const seprateTL =['art','music','collectible','fashion','CloneX','SUPR','DOODLE','BAYC','WOW']
-  const currentTabName = getCategoryFromTab(seprateTL[activeTabIndex]);
+
+  // TODO: should be in reusable utils
+  const getCategorySymbolByPosition = useCallback((position) => {
+    if (position < 4) return;
+
+    return allCategories.external_creators.find(category => category.position === position).symbol;
+  }, [allCategories])
+
+  // TODO: check for simplifying
+  const currentTabName = useMemo(() => {
+    let name = getCategoryFromTab(seprateTL[activeTabIndex]);
+
+    if (!name) {
+      return getCategorySymbolByPosition(activeTabIndex);
+    }
+
+    return name;
+  }, [seprateTL, activeTabIndex]);
 
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
   const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);

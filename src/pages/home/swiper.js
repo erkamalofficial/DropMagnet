@@ -43,8 +43,6 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
   const EC = useSelector(state => state.category.EC)
 
   const history = useHistory()
-  console.log(history)
-
 
   const dispatch = useDispatch();
 
@@ -159,7 +157,8 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
               onCardLeftScreen={() => outOfFrame(id)}
               overlayLabels={true}
             >
-              {cardDetails.title.length < 30 && <Card {...cardDetails} />}
+              {/* TODO: Truncate is not working */}
+              <Card {...cardDetails} title={cardDetails.title.slice(0, 25)} />
             </TinderCard>
           );
         }) : <h4 style={{ textAlign: 'center', width: '100%', fontFamily: 'Azo Sans' }}>No Drops Available</h4>}

@@ -157,7 +157,11 @@ const Card = (props) => {
     }
   }
 
-
+  const handleImageError = (image, src) => {
+    image.onerror = "";
+    image.src = src;
+    return true;
+  }
 
   return (
     <SwipeCard data-key="card-bdr"
@@ -187,7 +191,14 @@ const Card = (props) => {
               <source src={props.media[0].url} type="video/mp4"/>
               Your browser does not support the video tag.
             </video>
-            ) : <img style={{borderRadius: '4px'}} src={props.media[0].url} width='600' height='600' alt={'CoverImage'} />
+            ) : <img
+              style={{borderRadius: '4px'}}
+              src={props.media[0].url}
+              width='600'
+              height='600'
+              alt={'CoverImage'}
+              onError={(e) => handleImageError(e, props.media[0].url)}
+          />
           }
         </SwipeImage>
 

@@ -16,7 +16,11 @@ import {
   fetchCloneX,
   fetchDW,
   fetchSR,
-  fetchExternalCreators , fetchDoodle , fetchBAYC , fetchWOW
+  fetchExternalCreators,
+  fetchDoodle,
+  fetchBAYC,
+  fetchWOW,
+  fetchCategoryDrops
 } from "./actions";
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
@@ -34,6 +38,18 @@ import { GlobalContext } from "../../utils/GlobalContext";
 // jsx upgrade
 import * as DROP_SERVICE from '../../services/drop-services';
 
+const actionMatcher = {
+  0: fetchArt,
+  1: fetchMusic,
+  2: fetchColletibles,
+  3: fetchFashion,
+  4: fetchCloneX,
+  5: fetchDW,
+  6: fetchSR,
+  7: fetchDoodle,
+  8: fetchBAYC,
+  9: fetchWOW
+};
 
 const HomeContainer = styled.div`
   display: flex;
@@ -110,6 +126,18 @@ const Home = (props) => {
   const [categoryTabs, setCategoryTabs] = useState(null)
   const [externalCreatorTabs, setExternalCreatorTabs] = useState(null)
   const [AllCategories, setAllCategories] = useState([])
+
+  const getCategoryIdByPosition = useCallback((position) => {
+    if (position < 4) return;
+
+    return allCategories.external_creators.find(category => category.position === position).id;
+  }, [allCategories])
+
+  const getCategorySymbolByPosition = useCallback((position) => {
+    if (position < 4) return;
+
+    return allCategories.external_creators.find(category => category.position === position).symbol;
+  }, [allCategories])
 
   useEffect(() => {
     setSelectedDropdownDate(date)
@@ -194,37 +222,19 @@ const Home = (props) => {
 
     if (!allCategories) return;
 
-    if (activeTabIndex === 1) {
-      dispatch(fetchMusic({ activeTabIndex: 1, extras: { ...extras, token: idToken } }));
+    if (activeTabIndex > 9) {
+      dispatch(fetchCategoryDrops({
+        activeTabIndex,
+        id: getCategoryIdByPosition(activeTabIndex),
+        categorySymbol: getCategorySymbolByPosition(activeTabIndex),
+        extras
+      }));
+
+      return;
     }
-    else if (activeTabIndex === 0) {
-      dispatch(fetchArt({ activeTabIndex: 0, extras: { ...extras, token: idToken } }));
-    }
-    else if (activeTabIndex === 2) {
-      dispatch(fetchColletibles({ activeTabIndex: 2, extras: { ...extras, token: idToken } }));
-    }
-    else if (activeTabIndex == 3) {
-      dispatch(fetchFashion({ activeTabIndex: 3, extras: { ...extras, token: idToken } }));
-    } 
-    else if (activeTabIndex == 4) {
-      // console.log(allCategories.external_creators[0].id)
-      dispatch(fetchCloneX({ activeTabIndex: 4, id : allCategories.external_creators[0].id , extras: { ...extras, token: idToken  } }));
-    }
-    else if (activeTabIndex == 5) {
-      dispatch(fetchDW({ activeTabIndex: 5 , id : allCategories.external_creators[1].id , extras: { ...extras, token: idToken} }));
-    }
-    else if (activeTabIndex == 6) {
-      dispatch(fetchSR({ activeTabIndex: 6 , id : allCategories.external_creators[2].id , extras: { ...extras, token: idToken} }));
-    }
-    else if (activeTabIndex == 7) {
-      dispatch(fetchDoodle({ activeTabIndex: 7 , id : allCategories.external_creators[3].id , extras: { ...extras, token: idToken} }));
-    }
-    else if (activeTabIndex == 8) {
-      dispatch(fetchBAYC({ activeTabIndex: 8 , id : allCategories.external_creators[4].id , extras: { ...extras, token: idToken} }));
-    }
-    else if (activeTabIndex == 9) {
-      dispatch(fetchWOW({ activeTabIndex: 9 , id : allCategories.external_creators[5].id , extras: { ...extras, token: idToken} }));
-    }
+
+    const actionCreator = actionMatcher[activeTabIndex];
+    dispatch(actionCreator({ activeTabIndex, id: getCategoryIdByPosition(activeTabIndex), extras }));
   }, [selectedDropdownDate, allCategories]);
 
   useEffect(() => {
@@ -243,52 +253,30 @@ const Home = (props) => {
         random: false
       }
 
-      if (activeTabIndex === 0) {
-        dispatch(fetchArt({ activeTabIndex: 0, token: idToken, extras: extras }));
-      }
-      else if (activeTabIndex === 1) {
-        dispatch(fetchMusic({ activeTabIndex: 1, token: idToken, extras: extras }));
-      }
-      else if (activeTabIndex === 2) {
-        dispatch(fetchColletibles({ activeTabIndex: 2, token: idToken, extras: extras }));
-      }
-      else if  (activeTabIndex === 3)  {
-        dispatch(fetchFashion({ activeTabIndex: 3, token: idToken, extras: extras }));
-      }
-      else if (activeTabIndex === 4) {
-        dispatch(fetchCloneX({ activeTabIndex: 4, id : allCategories.external_creators[0].id , token: idToken, extras: extras  }));
-      }
-      else if (activeTabIndex === 5) {
-        dispatch(fetchDW({ activeTabIndex: 5, id : allCategories.external_creators[1].id , token: idToken, extras: extras  }));
-      }
-      else if (activeTabIndex === 6) {
-        dispatch(fetchSR({ activeTabIndex: 6, id : allCategories.external_creators[2].id , token: idToken, extras: extras }));
-      }
-      
-    else if (activeTabIndex == 7) {
-      dispatch(fetchDoodle({ activeTabIndex: 7 , id : allCategories.external_creators[3].id , token: idToken, extras: extras }));
-    }
-    else if (activeTabIndex == 8) {
-      dispatch(fetchBAYC({ activeTabIndex: 8 , id : allCategories.external_creators[4].id , token: idToken, extras: extras }));
-    }
-    else if (activeTabIndex == 9) {
-      dispatch(fetchWOW({ activeTabIndex: 9 , id : allCategories.external_creators[5].id , token: idToken, extras: extras }));
-    }
-      setLoadMore(false)
+      if (activeTabIndex > 9) {
+        dispatch(fetchCategoryDrops({
+          activeTabIndex,
+          id: getCategoryIdByPosition(activeTabIndex),
+          categorySymbol: getCategorySymbolByPosition(activeTabIndex),
+          extras
+        }));
 
+        return;
+      }
+
+      const actionCreator = actionMatcher[activeTabIndex];
+      dispatch(actionCreator({ activeTabIndex, id: getCategoryIdByPosition(activeTabIndex), extras }));
+
+      setLoadMore(false)
     }
   }, [fetchMore])
 
-  const getCurrentDate = (date) => {
-    let d = new Date(date)
-    const curDate = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
-    return curDate
-  }
-  const currentTabId = getCategoryFromTab(tabList[activeTabIndex]);
-  const { activeBucket } = useSelector((state) => {
-    // console.log(currentTabId)
-    // console.log(state.category)
-    // console.log('here : ' , state.category[currentTabId]);
+  const currentTabId = tabList[activeTabIndex] ? getCategoryFromTab(tabList[activeTabIndex]) : getCategorySymbolByPosition(activeTabIndex);
+  const { activeBucket = [] } = useSelector((state) => {
+    if (!currentTabId || !state.category[currentTabId]) {
+      return {};
+    }
+
     return state.category[currentTabId];
   });
 
@@ -304,7 +292,7 @@ const Home = (props) => {
   }, [reswipeModeActive, currentTabId, history]);
   const uniqueId = Date.now();
 
-  const handleActiveTabIndex = (index) => {
+  const handleActiveTabIndex = (activeTabIndex) => {
     // const activeTab = getCategoryFromTab(tabList[index]);
 
     // console.log(index);
@@ -314,37 +302,20 @@ const Home = (props) => {
       curTime: curTime,
       userID: "",
     }
-    if (index === 1) {
-      dispatch(fetchMusic({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
+
+    if (activeTabIndex > 9) {
+      dispatch(fetchCategoryDrops({
+        activeTabIndex,
+        id: getCategoryIdByPosition(activeTabIndex),
+        categorySymbol: getCategorySymbolByPosition(activeTabIndex),
+        extras
+      }));
+
+      return;
     }
-    if (index === 0) {
-      dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-    }
-    if (index === 2) {
-      dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-    }
-    if (index === 3) {
-      dispatch(fetchFashion({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-    }
-    if (index === 4) {
-      dispatch(fetchCloneX({ activeTabIndex: index, id : allCategories.external_creators[0].id , extras: { ...extras, token: idToken } }));
-    }
-    if (index === 5) {
-      dispatch(fetchDW({ activeTabIndex: index, id : allCategories.external_creators[1].id , extras: { ...extras, token: idToken } }));
-    }
-    if (index === 6) {
-      dispatch(fetchSR({ activeTabIndex: index, id : allCategories.external_creators[2].id , extras: { ...extras, token: idToken } }));
-    }
-      
-     if (index == 7) {
-      dispatch(fetchDoodle({ activeTabIndex: index , id : allCategories.external_creators[3].id , extras: { ...extras, token: idToken } }));
-    }
-     if (index == 8) {
-      dispatch(fetchBAYC({ activeTabIndex: index , id : allCategories.external_creators[4].id , extras: { ...extras, token: idToken } }));
-    }
-    if (index == 9) {
-      dispatch(fetchWOW({ activeTabIndex: index , id : allCategories.external_creators[5].id , extras: { ...extras, token: idToken } }));
-    }
+
+    const actionCreator = actionMatcher[activeTabIndex];
+    dispatch(actionCreator({ activeTabIndex, id: getCategoryIdByPosition(activeTabIndex), extras }));
   };
 
   const handleSwipe = (dir, drop_id, drop) => {

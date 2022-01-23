@@ -1,4 +1,4 @@
-import initialState from "./initial-state";
+import initialState, { buckets } from "./initial-state";
 import { forEach, map, union, values } from "lodash";
 import emojis from "./emojiicons";
 const MAX_BUCKET_SIZE = 10;
@@ -59,8 +59,10 @@ const getProcessedCollection = (state, action, type) => {
     // console.log(`Current card fetched from : ${pastDate.getDate()}-${pastDate.getMonth() + 1}-${pastDate.getFullYear()}`)
   }
 
+  const currentCollectionState = state[type] ? state[type] : buckets;
+
   const collection = {
-    ...state[type],
+    ...currentCollectionState,
     activeBucket: bucket
   };
   // console.log(bucket);
@@ -522,6 +524,7 @@ const categoryReducer = (state = initialState, action) => {
 
       })
 
+      console.log('reswipeModeActive 1', reswipedDrops, currentTab, MAX_BUCKET_SIZE, Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE)
       let reswipeModeActive = false;
       if (Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE) {
         reswipeModeActive = true;
@@ -548,6 +551,21 @@ const categoryReducer = (state = initialState, action) => {
     }
     case 'FETCH_MORE_FEEDS': {
       return { ...state, fetchMore: action.payload };
+    }
+    case 'FETCH_CATEGORY_DROPS': {
+      const general = {
+        ...state.general,
+        activeTabIndex: action.payload.activeTabIndex,
+        isLoading: true,
+        loadingIndexList
+      };
+      return { ...state, general };
+    }
+
+    case 'FETCH_CATEGORY_DROPS_SUCCESS': {
+      const updatedState = getProcessedCollection(state, action, action.payload.categorySymbol);
+
+      return { ...updatedState };
     }
     default:
       return state;

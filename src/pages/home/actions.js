@@ -62,12 +62,11 @@ const getDataFromDb = async (dispatch, categoryType, actionType, activeTabIndex,
 
 };
 
-const getDataFromDb2 = async (dispatch, categoryType, actionType, activeTabIndex, extras , id) => {
-
-  const querySnapshot = await db
-    .collection("drops_v1")
-    .where("category", "==", categoryType)
-    .get();
+const getDataFromDb2 = async (dispatch, categorySymbol, actionType, activeTabIndex, extras , id) => {
+  // const querySnapshot = await db
+  //   .collection("drops_v1")
+  //   .where("category", "==", categorySymbol)
+  //   .get();
 
   let response = {}
   let timeIndex = extras.curTime
@@ -92,7 +91,7 @@ const getDataFromDb2 = async (dispatch, categoryType, actionType, activeTabIndex
 
       response['curIndex'] = d.getTime()
       response['random'] = extras.random
-      dispatch({ type: actionType, payload: { ...response, activeTabIndex } });
+      dispatch({ type: actionType, payload: { ...response, activeTabIndex, categorySymbol } });
       error = false
     }
 
@@ -296,4 +295,18 @@ export const fetchExternalCreators =
   };
 
 
+// ACTION FOR DYNAMIC DROPS LOAD
+export const fetchCategoryDrops =
+  ({ activeTabIndex, extras, id, categorySymbol }) =>
+    async (dispatch) => {
+      dispatch({
+        type: "FETCH_CATEGORY_DROPS",
+        payload: {
+          categorySymbol,
+          categoryId: id,
+          activeTabIndex,
+        },
+      });
 
+      getDataFromDb2(dispatch, categorySymbol, "FETCH_CATEGORY_DROPS_SUCCESS", activeTabIndex, extras, id);
+};

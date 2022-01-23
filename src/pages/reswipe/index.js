@@ -67,14 +67,19 @@ function Reswipe(props) {
 
   const tabList = ["art", "music", "collectible", "fashion"];
 
-  const { reswipedDrops } = useSelector((state) => {
+  const { reswipedDrops = [] } = useSelector((state) => {
+    if (!state.category[curTab]) {
+      return {}
+    }
+
     return state.category[curTab];
   });
 
   const { reswipeModeActive } = useSelector((state) => state.category.general);
   if (!reswipeModeActive) {
+    // TODO: for what???
     sessionStorage.removeItem('headerLoad')
-    history.push("/home");
+    // history.push("/home");
   }
 
   const { currentUser } = useAuth();
