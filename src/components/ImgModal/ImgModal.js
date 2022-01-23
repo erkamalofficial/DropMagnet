@@ -46,8 +46,7 @@ const ImgModal = ({ sourceIdx, setImgModal, medias }) => {
                                                 </div> */}
                           <TransformComponent>
                             <div className="img-el">
-                              <img src={img.url} alt="/"
-                                   onClick={() => setImgModal(false)}/>
+                              <img src={img.url} alt="/" onClick={() => setImgModal(false)}/>
                             </div>
                           </TransformComponent>
                         </div>

@@ -171,10 +171,7 @@ const Card = (props) => {
             view_only small
             userId={props.user_id} />
           {/* <UserAvatar src={artistImg} /> */}
-          <div className="card-title"
-            style={{ cursor: 'pointer' }}
-            onClick={openUser}
-          >
+          <div className="card-title">
             {artist.username}
             {/* - {props.id} */}
           </div>
@@ -186,7 +183,7 @@ const Card = (props) => {
         // style={{ backgroundImage: `url(${props.media[0].url})` }}
         >
           {props.media[0].type === 'video' ? (
-            <video width="100%" height="100%" controls autoPlay loop>
+            <video width="100%" height="100%" loop muted>
               <source src={props.media[0].url} type="video/mp4"/>
               Your browser does not support the video tag.
             </video>
