@@ -130,7 +130,7 @@ export default function DropDetail(props) {
           onClick={openUser}
         >{artist_name}
         </h1>
-        <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="./close-icon.png" />
+        <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="/close-icon.png" />
       </div>
 
       <div className="detail-view-container">

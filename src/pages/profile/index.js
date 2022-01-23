@@ -11,6 +11,7 @@ import Modal from "../../components/elements/Modal/Modal";
 import TextView from "../../components/elements/TextView/TextView";
 import Avatar from "../../components/elements/Avatar/Avatar";
 import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDropDetail";
+import DropDetail from '../../components/detail_page/DropDetail/DropDetail';
 import Spinner from "../../components/blocks/spinner";
 import styled from "styled-components";
 import { useDispatch , useSelector } from "react-redux";
@@ -507,7 +508,7 @@ export default function Profile(props) {
 
     return (
       <div>
-        <ProfileDropDetail
+        <DropDetail
           isSaved={selectedProfileList === "saved"}
           show={true}
           drop={curDrop}
