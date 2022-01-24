@@ -524,7 +524,6 @@ const categoryReducer = (state = initialState, action) => {
 
       })
 
-      console.log('reswipeModeActive 1', reswipedDrops, currentTab, MAX_BUCKET_SIZE, Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE)
       let reswipeModeActive = false;
       if (Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE) {
         reswipeModeActive = true;

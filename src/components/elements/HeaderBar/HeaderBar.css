@@ -37,6 +37,12 @@
   margin-top: 2px;
 }
 
+.header-right-image {
+  width: 60%;
+  padding-top: 5px;
+  padding-left: 15px;
+}
+
 .header-left-holder {
   display: flex;
   flex-direction: row;
