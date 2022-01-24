@@ -97,7 +97,7 @@ function HeaderBar(props) {
               </>
             </HeaderLink>
           </Row>
-        ) : (props.datePickerVisible && (
+        ) : (props.datePickerVisible ? (
           <Row className="items-center">
             <HeaderLink to={pageName !== 'swiper' ? "/" : '/swiper'}
               style={{ textTransform: 'capitalize' }}>
@@ -112,7 +112,7 @@ function HeaderBar(props) {
               )}
             </HeaderLink>
           </Row>
-        ))}
+        ) : <img className="header-right-image" src="/DropMagnetlogo.svg" />)}
       </div>
 
       {

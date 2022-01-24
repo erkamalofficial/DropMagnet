@@ -77,9 +77,7 @@ function Reswipe(props) {
 
   const { reswipeModeActive } = useSelector((state) => state.category.general);
   if (!reswipeModeActive) {
-    // TODO: for what???
     sessionStorage.removeItem('headerLoad')
-    // history.push("/home");
   }
 
   const { currentUser } = useAuth();
