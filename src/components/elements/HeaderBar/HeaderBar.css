@@ -38,9 +38,10 @@
 }
 
 .header-right-image {
-  width: 60%;
-  padding-top: 5px;
+  width: 70%;
+  padding-top: 10px;
   padding-left: 15px;
+  user-select: none;
 }
 
 .header-left-holder {

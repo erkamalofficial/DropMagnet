@@ -194,15 +194,6 @@ export default function DropDetail(props) {
         {props.drop.drop_pieces !== undefined && <p2 className="drop-detail-piece-no">{props.drop.drop_pieces} Pieces</p2>}
         <p className="drop-detail-date">{formatDate(props.drop.drop_date, true)}</p>
       </div> */}
-
-      <div className="pieces-and-date">
-        <p>{props.drop.pieces} Pieces</p>
-        {gmtDate >= curDropDate && props.drop.link!=='' ? (
-          <p className="dropped">Dropped</p>
-        ) : (
-          <p>{date}</p>
-        )}
-      </div>
       
       <p style={{textAlign:'center'}} >Project Bio</p>
       <div className="drop-description-holder">
