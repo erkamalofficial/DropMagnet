@@ -43,9 +43,9 @@
 }
 
 .header-right-image {
-  width: 70%;
-  padding-top: 10px;
-  padding-left: 15px;
+  width: 100%;
+  padding-top: 2px;
+  padding-left: 12px;
   user-select: none;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
