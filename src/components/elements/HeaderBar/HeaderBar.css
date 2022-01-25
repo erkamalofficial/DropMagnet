@@ -35,6 +35,11 @@
   height: 32px;
   width: 31px;
   margin-top: 2px;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
 .header-right-image {
@@ -42,6 +47,11 @@
   padding-top: 10px;
   padding-left: 15px;
   user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
 .header-left-holder {
