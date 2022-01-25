@@ -112,7 +112,7 @@ function HeaderBar(props) {
               )}
             </HeaderLink>
           </Row>
-        ) : <img className="header-right-image" src="/DropMagnetlogo.svg" />)}
+        ) : <object type="image/svg+xml" className="header-right-image" data="/DropMagnetlogo.svg" />)}
       </div>
 
       {
