@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import { Link, useHistory, withRouter, matchPath } from 'react-router-dom'
 import "./HeaderBar.css"
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
@@ -8,12 +8,11 @@ import Avatar from '../Avatar/Avatar';
 import { getInitials } from '../../../utils';
 import { Row } from "../../exploreGalleries/styled-components/Row";
 import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
-import FadeIn from 'react-fade-in'
-import Logo from "../../dropMagnet/assets/logo.svg"
-import { GlobalContext } from '../../../utils/GlobalContext'
+import Logo from "../../dropMagnet/assets/logo.svg";
+import DropMagnetLogo from "../../dropMagnet/assets/dropMagnetlogo.svg";
+import { GlobalContext } from '../../../utils/GlobalContext';
 
 function HeaderBar(props) {
-
   const headerLoad = sessionStorage.getItem('headerLoad')
   const { curUser } = useContext(GlobalContext)
 
@@ -112,7 +111,7 @@ function HeaderBar(props) {
               )}
             </HeaderLink>
           </Row>
-        ) : <object type="image/svg+xml" className="header-right-image" data="/DropMagnetlogo.svg" />)}
+        ) : <img className="header-right-image" src={DropMagnetLogo} />)}
       </div>
 
       {
@@ -126,9 +125,9 @@ function HeaderBar(props) {
             {userDetails ? (
               <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="header-bar-menu-icon"
                 style={{ zIndex: 999999999999 }}>
-                <div class={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>
-                  <div class="leftright"></div>
-                  <div class="rightleft"></div>
+                <div className={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>
+                  <div className="leftright" />
+                  <div className="rightleft" />
                 </div>
                 {/* <img height={10} width={20}
               style={{ margin: 'auto' }}
