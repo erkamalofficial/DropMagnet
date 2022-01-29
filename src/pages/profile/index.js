@@ -25,7 +25,6 @@ import LazyDropCells from "./LazyDropCells";
 import InstaIcon from "../../assets/insta-icon.png"
 import TwitterIcon from "../../assets/twitter-icon.png"
 import LoadingModal from "../../components/elements/LoadingModal/LoadingModal";
-import {fetchCategory} from "./../home/actions";
 
 const FooterContainer = styled.div`
   margin-top: 16px;
@@ -74,7 +73,6 @@ export default function Profile(props) {
     sessionProfile ? sessionProfile.insta_url.split("/").pop() : ""
   );
   const [bio, setBio] = useState(sessionProfile ? sessionProfile.bio : "Bio");
-  const [categoryList, setCategoryList] = useState([]);
   const [selectedProfileList, setSelectedProfileList] = useState([]);
   const [scheduledPosts, setScheduledPosts] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
@@ -102,7 +100,7 @@ export default function Profile(props) {
   const [cropModal, setCropModal] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [updating, setUpdating] = useState(false)
-  const [seprateTL, setseprateTL] = useState(['art','music','collectible','fashion'])
+  const [seprateTL, setseprateTL] = useState([])
   const allCategories = useSelector(state => state.category.allCategories)
 
   const { currentUser } = useAuth();
@@ -130,83 +128,16 @@ export default function Profile(props) {
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
   const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
 
-
   useEffect(() => {
-    dispatch(fetchCategory())
-  }, [ ])
+    if(allCategories) {
+      const en = [];
 
-  useEffect(() => {
-    if(allCategories) {const en = []
-    for (let i = 0; i < allCategories.external_creators.length; i++) { en.push(allCategories.external_creators[i].symbol)}
-    setseprateTL(['art','music','collectible','fashion' , ...en ])
-    console.log('now',seprateTL)}
+      for (let i = 0; i < allCategories.categories.length; i++) { en.push(allCategories.categories[i].value)}
+      for (let i = 0; i < allCategories.external_creators.length; i++) { en.push(allCategories.external_creators[i].symbol)}
+
+      setseprateTL([...en]);
+    }
   }, [allCategories])
-
-  let collectibleArts = [
-    {
-      drop_id: 9,
-      title: "Best ever collectible you can get",
-      description: "My wonderful art was done by da Vinci",
-      artist: "Crypto Art Man",
-      artist_image:
-        "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      drop_image:
-        "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-      category: "Art",
-      drop_date: "22-03-2021",
-      marketplace: "Rarible",
-      marketplace_id: "https://rarible.com/iconow?tab=collectibles",
-      drop_pieces: 9,
-    },
-    {
-      drop_id: 10,
-      title: "Best ever collectible you can get",
-      description: "My wonderful art was done by da Vinci",
-      artist: "Crypto Art Man",
-      artist_image:
-        "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      drop_image:
-        "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-      category: "Art",
-      drop_date: "22-03-2021",
-      marketplace: "Rarible",
-      marketplace_id: "https://rarible.com/iconow?tab=collectibles",
-      drop_pieces: 9,
-    },
-  ];
-
-  let fashionArts = [
-    {
-      drop_id: 9,
-      title: "Bring those Guccis out",
-      description: "My wonderful art was done by da Vinci",
-      artist: "Crypto Art Man",
-      artist_image:
-        "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      drop_image:
-        "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-      category: "Art",
-      drop_date: "22-03-2021",
-      marketplace: "Rarible",
-      marketplace_id: "https://rarible.com/iconow?tab=collectibles",
-      drop_pieces: 9,
-    },
-    {
-      drop_id: 10,
-      title: "Bring those Guccis out",
-      description: "My wonderful art was done by da Vinci",
-      artist: "Crypto Art Man",
-      artist_image:
-        "https://pbs.twimg.com/profile_images/1378299017747165187/oKvJA363_400x400.jpg",
-      drop_image:
-        "https://lh3.googleusercontent.com/MCG6J-4dGfDxrLYFjEzKt_rEKhHuQxC3sxAR_CkHwnJ4lH5RtR1EveCkdskeRPoZFT2Ykvo1u2NcUxM618Jcgi0=s992",
-      category: "Art",
-      drop_date: "22-03-2021",
-      marketplace: "Rarible",
-      marketplace_id: "https://rarible.com/iconow?tab=collectibles",
-      drop_pieces: 9,
-    },
-  ];
 
   useEffect(() => {
     setTimeout(() => {
@@ -267,7 +198,6 @@ export default function Profile(props) {
   }, [])
 
   useEffect(() => {
-    setCategoryList(collectibleArts);
     if (!loading.drops) {
       setLoading({ ...loading, drops: true })
     }
@@ -980,7 +910,6 @@ export default function Profile(props) {
                       onClick={() => {
                         if (scheduledPosts.length > 0) {
                           setSelectedProfileList("scheduled");
-                          setCategoryList(collectibleArts);
                         }
                       }}
                     >
@@ -994,7 +923,6 @@ export default function Profile(props) {
                       }
                       onClick={() => {
                         setSelectedProfileList("saved");
-                        setCategoryList(fashionArts);
                       }}
                     >
                       Saved Drops ({savedPosts.length})
