@@ -8,12 +8,15 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store";
 import { AuthProvider } from "./contexts/FirebaseAuthContext";
+import { DropProvider } from "./contexts/DropContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
       <Provider store={store}>
-        <App />
+        <DropProvider>
+          <App />
+        </DropProvider>
       </Provider>
     </AuthProvider>
   </React.StrictMode>,

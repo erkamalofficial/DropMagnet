@@ -3,7 +3,6 @@ import * as DropMagnetAPI from '../../DropMagnetAPI'
 import { getAllDropTabs } from "../../services/drop-services";
 
 const getDataFromDb = async (dispatch, categoryType, actionType, activeTabIndex, extras) => {
-
   const querySnapshot = await db
     .collection("drops_v1")
     .where("category", "==", categoryType)
@@ -32,7 +31,7 @@ const getDataFromDb = async (dispatch, categoryType, actionType, activeTabIndex,
 
       response['curIndex'] = d.getTime()
       response['random'] = extras.random
-      dispatch({ type: actionType, payload: { ...response, activeTabIndex } });
+      dispatch({ type: actionType, payload: { ...response, activeTabIndex, categorySymbol: categoryType } });
       error = false
     }
 
@@ -54,7 +53,8 @@ const getDataFromDb = async (dispatch, categoryType, actionType, activeTabIndex,
         past = true
       }
       else {
-        dispatch({ type: actionType, payload: { data: [], count: 0, index: null } });
+        // in case if there is no data to reset category from loading list
+        dispatch({ type: actionType, payload: { data: [], count: 0, activeTabIndex, index: null, categorySymbol: categoryType } });
         error = false
       }
     }
@@ -93,9 +93,7 @@ const getDataFromDb2 = async (dispatch, categorySymbol, actionType, activeTabInd
       response['random'] = extras.random
       dispatch({ type: actionType, payload: { ...response, activeTabIndex, categorySymbol } });
       error = false
-    }
-
-    catch (err) {
+    } catch (err) {
       if (d.getTime() >= new Date().setUTCHours(0, 0, 0, 0)) {
         d = new Date();
         let curIdx = new Date()
@@ -113,142 +111,14 @@ const getDataFromDb2 = async (dispatch, categorySymbol, actionType, activeTabInd
         past = true
       }
       else {
-        dispatch({ type: actionType, payload: { data: [], count: 0, index: null } });
+        // in case if there is no data to reset category from loading list
+        dispatch({ type: actionType, payload: { data: [], count: 0, activeTabIndex, index: null, categorySymbol } });
         error = false
       }
     }
   }
 
 };
-
-export const fetchArt =
-  ({ activeTabIndex, extras }) =>
-    async (dispatch, getState) => {
-      dispatch({
-        type: "FETCH_ARTS_REQUEST",
-        payload: {
-          activeTabIndex,
-        },
-      });
-      getDataFromDb(dispatch, "Art", "FETCH_ARTS_SUCCESS", activeTabIndex, extras);
-    };
-
-export const fetchCloneX =
-    ({ activeTabIndex, extras , id }) =>
-      async (dispatch, getState) => {
-        //works fine til here
-        dispatch({
-          type: "FETCH_CloneX_REQUEST",
-          payload: {
-            activeTabIndex,
-          },
-        });
-        
-        getDataFromDb2(dispatch, "CloneX", "FETCH_CloneX_SUCCESS", activeTabIndex, extras , id);
-};
-export const fetchWOW =
-    ({ activeTabIndex, extras , id }) =>
-      async (dispatch, getState) => {
-        //works fine til here
-        dispatch({
-          type: "FETCH_WOW_REQUEST",
-          payload: {
-            activeTabIndex,
-          },
-        });
-        
-        getDataFromDb2(dispatch, "WOW", "FETCH_WOW_SUCCESS", activeTabIndex, extras, id);
-};
-
-export const fetchDoodle =
-    ({ activeTabIndex, extras , id }) =>
-      async (dispatch, getState) => {
-        //works fine til here
-        dispatch({
-          type: "FETCH_DOODLE_REQUEST",
-          payload: {
-            activeTabIndex,
-          },
-        });
-        
-        getDataFromDb2(dispatch, "DOODLE", "FETCH_DOODLE_SUCCESS", activeTabIndex, extras, id);
-};
-
-export const fetchBAYC =
-    ({ activeTabIndex, extras , id }) =>
-      async (dispatch, getState) => {
-        //works fine til here
-        dispatch({
-          type: "FETCH_BAYC_REQUEST",
-          payload: {
-            activeTabIndex,
-          },
-        });
-        
-        getDataFromDb2(dispatch, "BAYC", "FETCH_BAYC_SUCCESS", activeTabIndex, extras, id);
-};
-
-export const fetchDW =
-    ({ activeTabIndex, extras , id }) =>
-      async (dispatch, getState) => {
-        //works fine til here
-        dispatch({
-          type: "FETCH_DWolves_REQUEST",
-          payload: {
-            activeTabIndex,
-          },
-        });
-        
-        getDataFromDb2(dispatch, "TWV", "FETCH_DWolves_SUCCESS", activeTabIndex, extras, id);
-};
-
-export const fetchSR=
-    ({ activeTabIndex, extras , id }) =>
-      async (dispatch, getState) => {
-        //works fine til here
-        dispatch({
-          type: "FETCH_SuperRare_REQUEST",
-          payload: {
-            activeTabIndex,
-          },
-        });
-        
-        getDataFromDb2(dispatch, "SUPR", "FETCH_SuperRare_SUCCESS", activeTabIndex, extras, id);
-};
-
-export const fetchMusic =
-  ({ activeTabIndex, extras }) =>
-    async (dispatch, getState) => {
-      dispatch({
-        type: "FETCH_MUSIC_REQUEST",
-        payload: {
-          activeTabIndex,
-        },
-      });
-      getDataFromDb(dispatch, "Music", "FETCH_MUSIC_SUCCESS", activeTabIndex, extras);
-    };
-export const fetchColletibles =
-  ({ activeTabIndex, extras }) =>
-    async (dispatch, getState) => {
-      dispatch({
-        type: "FETCH_COLLECTIBLES_REQUEST",
-        payload: {
-          activeTabIndex,
-        },
-      });
-      getDataFromDb(dispatch, "Collectible", "FETCH_COLLECTIBLES_SUCCESS", activeTabIndex, extras);
-    };
-export const fetchFashion =
-  ({ activeTabIndex, extras }) =>
-    async (dispatch, getState) => {
-      dispatch({
-        type: "FETCH_FASHION_REQUEST",
-        payload: {
-          activeTabIndex,
-        },
-      });
-      getDataFromDb(dispatch, "Fashion", "FETCH_FASHION_SUCCESS", activeTabIndex, extras);
-    };
 
 export const fetchReswipeBuckets = (idToken) => {
   return dispatch => {
@@ -273,18 +143,15 @@ export const fetchCategory = ( ) => async (dispatch, getState) => {
     // console.log('fetch catt action called');
     const { data } = await getAllDropTabs() 
     dispatch({ type: "FETCH_CATEGORY_SUCCESS" , payload : data });
-} 
-
-catch (error) {
-  dispatch({
-          type: "FETCH_CATEGORY_ERROR",
-          payload:
-          error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-});
-}
-
+  } catch (error) {
+    dispatch({
+      type: "FETCH_CATEGORY_ERROR",
+      payload:
+        error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
 };
 
 export const fetchExternalCreators =
@@ -295,18 +162,21 @@ export const fetchExternalCreators =
   };
 
 
-// ACTION FOR DYNAMIC DROPS LOAD
 export const fetchCategoryDrops =
-  ({ activeTabIndex, extras, id, categorySymbol }) =>
+  ({ activeTabIndex, extras, id, categorySymbol, isExternalCategory }) =>
     async (dispatch) => {
       dispatch({
         type: "FETCH_CATEGORY_DROPS",
         payload: {
-          categorySymbol,
           categoryId: id,
+          categorySymbol,
           activeTabIndex,
         },
       });
 
+    if (isExternalCategory) {
       getDataFromDb2(dispatch, categorySymbol, "FETCH_CATEGORY_DROPS_SUCCESS", activeTabIndex, extras, id);
+    } else {
+      getDataFromDb(dispatch, categorySymbol, "FETCH_CATEGORY_DROPS_SUCCESS", activeTabIndex, extras);
+    }
 };

@@ -20,8 +20,7 @@ function HeaderBar(props) {
   let userDetails = JSON.parse(localStorage.getItem('userDetails'));
   userDetails = userDetails ? userDetails : curUser
 
-  const h = useHistory()
-  console.log(h)
+  const h = useHistory();
   const match = matchPath(h.location.pathname, {
     path: '/metaurl/:link/:user/:id',
     exact: true,

@@ -14,9 +14,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 async function customAPICall(endpoint, data, method, access_token) {
-
   const uri = host + endpoint
-  console.log(access_token)
+
   const res = await fetch(uri, {
     method: method,
     body: data === "" ? null : JSON.stringify(data),

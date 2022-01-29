@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const TabsWrapper = styled.ul`
 @media (max-width: 500px) {
@@ -92,7 +92,6 @@ text-transform: capitalize;
 const TabItem = styled.li`
   border: none;
   font-size: 16px;
-  font-weight: 700;
   font-style: normal;
   letter-spacing: normal;
   line-height: normal;
@@ -100,7 +99,7 @@ const TabItem = styled.li`
   cursor: pointer;
   background-clip: text;
   -webkit-background-clip: text;
-  font-family: 'Azo Sans';
+  font-family: 'Azo Sans', serif;
   margin-bottom: -3px;
   font-weight: 400;
   margin-right: 18px;
@@ -111,7 +110,7 @@ const TabItem = styled.li`
 `;
 
 
-const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
+const Tabs = ({ activeTabIndex, handleActiveTabIndex }) => {
 
   const allCategories = useSelector(state => state.category.allCategories)
 
@@ -120,8 +119,8 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex, tabList2 }) => {
       {allCategories && allCategories.external_creators.map((x,i) => (
         <TabItem
         key={x.position}
-        onClick={() => handleActiveTabIndex(i+4)}
-        className={ `${activeTabIndex === (i+4) ? "tab-selected" : "" }`}
+        onClick={() => handleActiveTabIndex(i + allCategories.categories.length)}
+        className={ `${activeTabIndex === (i + allCategories.categories.length) ? "tab-selected" : "" }`}
       >
         {x.name}
       </TabItem>
