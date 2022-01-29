@@ -51,7 +51,6 @@ function Reswipe(props) {
   }
 
   function setSelectedDate(date) {
-    console.log("selected date is", date);
     setSelectedDropdownDate(date.date);
   }
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
@@ -65,9 +64,7 @@ function Reswipe(props) {
   const [isFinal4Left, setIsFinal4Left] = useState(false);
   const { idToken } = useAuth();
 
-  const tabList = ["art", "music", "collectible", "fashion"];
-
-  const { reswipedDrops = [] } = useSelector((state) => {
+  const { reswipedDrops = {} } = useSelector((state) => {
     if (!state.category[curTab]) {
       return {}
     }
@@ -80,20 +77,13 @@ function Reswipe(props) {
     sessionStorage.removeItem('headerLoad')
   }
 
-  const { currentUser } = useAuth();
-
-  const [tempReswipeBucket, setTempReswipeBucket] = useState(
-    Object.keys(reswipedDrops).map((key) => reswipedDrops[key])
-  );
+  const [tempReswipeBucket, setTempReswipeBucket] = useState([]);
 
   const tempRef = useRef(tempReswipeBucket);
 
-  const [currentCounter, setCurrentCounter] = useState(
-    tempReswipeBucket.length
-  );
-
+  const [currentCounter, setCurrentCounter] = useState(0);
   const counterRef = useRef(currentCounter);
-  const [roundLength, setRoundLength] = useState(tempReswipeBucket.length);
+  const [roundLength, setRoundLength] = useState(0);
   const [reswipeComplete, setReswipeComplete] = useState(false);
   const [deletedFinalFour, setDeletedFinalFour] = useState([false,false,false,false]);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(null);
@@ -112,6 +102,15 @@ function Reswipe(props) {
   useEffect(()=>{
     tempRef.current  = [...tempReswipeBucket];
   },[tempReswipeBucket]);
+
+  useEffect(() => {
+    if (!Object.keys(reswipedDrops).length) return;
+
+    setTempReswipeBucket(Object.keys(reswipedDrops).map((key) => reswipedDrops[key]))
+    setCurrentCounter(Object.keys(reswipedDrops).length);
+    setRoundLength(Object.keys(reswipedDrops).length);
+    counterRef.current = Object.keys(reswipedDrops).length;
+  }, [reswipedDrops]);
 
   const openDateMenu = () => {
     setDateMenuOpen(true);
@@ -154,8 +153,6 @@ function Reswipe(props) {
       setCurrentCounter(counterRef.current - 1);
       counterRef.current = counterRef.current - 1;
     }
-
-
   };
 
   const onChangeFinalFourDelete = (isDeleted, index) => {
@@ -288,7 +285,7 @@ function Reswipe(props) {
           <div
             style={{ display: "flex", width: "100%", justifyContent: "center" }}
           >
-            {!isFinal4Left && !showRestartReSwipeMessage && !isReswipeStarted && (
+            {!!tempReswipeBucket.length && !isFinal4Left && !showRestartReSwipeMessage && !isReswipeStarted && (
               <button
                 className={"main-button-2 clickable"}
                 onClick={() => setIsReswipeStarted(true)}
