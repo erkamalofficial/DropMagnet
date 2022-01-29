@@ -4,10 +4,10 @@ import React, { useEffect, useMemo, useState, useCallback } from "react";
 import HeaderBar from "../../../components/elements/HeaderBar/HeaderBar";
 import { useSelector, useDispatch } from "react-redux";
 import {
-    fetchMusic,
-    fetchArt,
-    fetchColletibles,
-    fetchFashion,
+    // fetchMusic,
+    // fetchArt,
+    // fetchColletibles,
+    // fetchFashion,
     fetchReswipeBuckets,
 } from "../actions";
 import "../index.css";
@@ -136,18 +136,18 @@ const DummyHome = (props) => {
             userID: currentUser.uid,
         }
 
-        if (activeTab === "music") {
-            dispatch(fetchMusic({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-        }
-        if (activeTab === "arts") {
-            dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-        }
-        if (activeTab === "collectible") {
-            dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-        }
-        if (activeTab === "fashion") {
-            dispatch(fetchFashion({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
-        }
+        // if (activeTab === "music") {
+        //     dispatch(fetchMusic({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
+        // }
+        // if (activeTab === "arts") {
+        //     dispatch(fetchArt({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
+        // }
+        // if (activeTab === "collectible") {
+        //     dispatch(fetchColletibles({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
+        // }
+        // if (activeTab === "fashion") {
+        //     dispatch(fetchFashion({ activeTabIndex: index, extras: { ...extras, token: idToken } }));
+        // }
     };
 
     const handleSwipe = (dir, drop_id) => {
