@@ -6,22 +6,7 @@ import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
 import Tabs from "./tabs";
 import ProgressBar from "./progress-bar";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchMusic,
-  fetchArt,
-  fetchColletibles,
-  fetchFashion,
-  fetchReswipeBuckets,
-  fetchCategory,
-  fetchCloneX,
-  fetchDW,
-  fetchSR,
-  fetchExternalCreators,
-  fetchDoodle,
-  fetchBAYC,
-  fetchWOW,
-  fetchCategoryDrops
-} from "./actions";
+import { fetchCategoryDrops } from "./actions";
 import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
 import "./index.css";
@@ -35,21 +20,9 @@ import PlusBtn from "../../components/blocks/plus-btn";
 import MinusBtn from "../../components/blocks/minus-btn";
 import FadeIn from 'react-fade-in';
 import { GlobalContext } from "../../utils/GlobalContext";
+import { getCategorySymbolByPosition, getCategoryIdByPosition } from "../../utils/category";
 // jsx upgrade
 import * as DROP_SERVICE from '../../services/drop-services';
-
-const actionMatcher = {
-  0: fetchArt,
-  1: fetchMusic,
-  2: fetchColletibles,
-  3: fetchFashion,
-  4: fetchCloneX,
-  5: fetchDW,
-  6: fetchSR,
-  7: fetchDoodle,
-  8: fetchBAYC,
-  9: fetchWOW
-};
 
 const HomeContainer = styled.div`
   display: flex;
@@ -101,73 +74,52 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { setDate, date } = useContext(GlobalContext)
+  const { date } = useContext(GlobalContext)
 
   const { currentUser, idToken } = useAuth();
 
+  const uniqueId = Date.now();
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(date);
-  const [detailView, setDetailView] = useState(false);
-  const [dateMenuOpen, setDateMenuOpen] = useState(false);
   const [loadMore, setLoadMore] = useState(false)
-  const activeTabIndex = useSelector((state) => {
-    return state.category.general.activeTabIndex;
-  });
   const isLoading = useSelector((state) => state.category.general.isLoading);
   const loadingIndexList = useSelector((state) => state.category.general.loadingIndexList);
-  const reswipeModeActive = useSelector(
-    (state) => state.category.general.reswipeModeActive
-  );
+  const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
+  const reswipeModeActive = useSelector((state) => state.category.general.reswipeModeActive);
   const nextIndex = useSelector((state) => state.category.nextIndex);
   const fetchMore = useSelector((state) => state.category.fetchMore);
   const allCategories = useSelector(state => state.category.allCategories)
-  // console.log(date)
+
+  const isCategoriesListEmpty = useMemo(() => {
+    return !allCategories.categories.length && !allCategories.external_creators.length;
+  }, [allCategories])
 
   //jsx upgrade
   const [categoryTabs, setCategoryTabs] = useState(null)
   const [externalCreatorTabs, setExternalCreatorTabs] = useState(null)
-  const [AllCategories, setAllCategories] = useState([])
 
-  const getCategoryIdByPosition = useCallback((position) => {
-    if (position < 4) return;
-
-    return allCategories.external_creators.find(category => category.position === position).id;
-  }, [allCategories])
-
-  const getCategorySymbolByPosition = useCallback((position) => {
-    if (position < 4) return;
-
-    return allCategories.external_creators.find(category => category.position === position).symbol;
-  }, [allCategories])
-
-  useEffect(() => {
-    setSelectedDropdownDate(date)
-  }, [date])
-
-  useEffect(() => {
-    setSelectedDropdownDate(date)
-  }, [date])
-
-  useEffect(() => console.log('isloading1',isLoading , activeTabIndex ), [isLoading])
-
-  // useEffect(() => { 
-  //   console.log(allCategories)
-  //   if(allCategories) setAllCategories(allCategories.categories)
-  // }, [allCategories])
-
-  useEffect(() => {
+  const fetchCategory = (activeTabIndex, curTime, random) => {
     let extras = {
       token: idToken,
+      curTime,
       userID: "",
-      random: true
+      random
     }
-    dispatch(fetchCategory())
-    dispatch(fetchExternalCreators({extras}))
-  }, [ ])
+
+    dispatch(fetchCategoryDrops({
+      activeTabIndex,
+      id: getCategoryIdByPosition(activeTabIndex, allCategories),
+      categorySymbol: getCategorySymbolByPosition(activeTabIndex, allCategories),
+      isExternalCategory: activeTabIndex >= allCategories.categories.length,
+      extras
+    }));
+  }
+
+  useEffect(() => {
+    setSelectedDropdownDate(date)
+  }, [date]);
 
   useEffect(() => {
     // First rendering
-
-
     if (props.reload) {
       sessionStorage.setItem('headerLoad', 'true')
     }
@@ -182,15 +134,11 @@ const Home = (props) => {
     }, 500);
   }, [])
 
-  // useEffect(() => {console.log('ati',activeTabIndex)}, [activeTabIndex])
-
   useEffect(() => {
     // jsx upgrade, on first render 
     DROP_SERVICE.getAllDropTabs().then((res) => {
-      // console.log(res.data)
       setCategoryTabs(res.data.categories)
       setExternalCreatorTabs(res.data.external_creators)
-      // console.log('%c successful GET drop collection ','background: #444; color: #bada55; padding: 2px; border-radius:2px')
     }).catch((err) => {
       console.log(err, 'There has been an error getting drop collections')
     });
@@ -213,65 +161,21 @@ const Home = (props) => {
 
   useEffect(() => {
     let curTime = new Date(selectedDropdownDate).getTime()
-    let extras = {
-      token: idToken,
-      curTime: curTime,
-      userID: "",
-      random: true
-    }
 
-    if (!allCategories) return;
+    if (isCategoriesListEmpty) return;
 
-    if (activeTabIndex > 9) {
-      dispatch(fetchCategoryDrops({
-        activeTabIndex,
-        id: getCategoryIdByPosition(activeTabIndex),
-        categorySymbol: getCategorySymbolByPosition(activeTabIndex),
-        extras
-      }));
-
-      return;
-    }
-
-    const actionCreator = actionMatcher[activeTabIndex];
-    dispatch(actionCreator({ activeTabIndex, id: getCategoryIdByPosition(activeTabIndex), extras }));
-  }, [selectedDropdownDate, allCategories]);
-
-  useEffect(() => {
-    currentUser && currentUser.getIdToken().then((idToken) => {
-      dispatch(fetchReswipeBuckets(idToken));
-
-    })
-  }, [dispatch, currentUser]);
+    fetchCategory(activeTabIndex, curTime, true);
+  }, [selectedDropdownDate, isCategoriesListEmpty]);
 
   useEffect(() => {
     if (fetchMore) {
-      let extras = {
-        token: idToken,
-        curTime: nextIndex,
-        userID: "",
-        random: false
-      }
-
-      if (activeTabIndex > 9) {
-        dispatch(fetchCategoryDrops({
-          activeTabIndex,
-          id: getCategoryIdByPosition(activeTabIndex),
-          categorySymbol: getCategorySymbolByPosition(activeTabIndex),
-          extras
-        }));
-
-        return;
-      }
-
-      const actionCreator = actionMatcher[activeTabIndex];
-      dispatch(actionCreator({ activeTabIndex, id: getCategoryIdByPosition(activeTabIndex), extras }));
+      fetchCategory(activeTabIndex, nextIndex, false);
 
       setLoadMore(false)
     }
   }, [fetchMore])
 
-  const currentTabId = tabList[activeTabIndex] ? getCategoryFromTab(tabList[activeTabIndex]) : getCategorySymbolByPosition(activeTabIndex);
+  const currentTabId = !isCategoriesListEmpty && getCategorySymbolByPosition(activeTabIndex, allCategories);
   const { activeBucket = [] } = useSelector((state) => {
     if (!currentTabId || !state.category[currentTabId]) {
       return {};
@@ -280,7 +184,6 @@ const Home = (props) => {
     return state.category[currentTabId];
   });
 
-  // const {reswipeModeActive} = useSelector((state)=>state.category.general)
   useEffect(() => {
     if (reswipeModeActive) {
       if (window.confirm("Your Bucket Limit has reached its End ? \n 1. Press ok to 'Upgrade Your Subscription' \n 2. Press Cancel to 'Go To Reswipe'?")) {
@@ -290,32 +193,11 @@ const Home = (props) => {
       }
     }
   }, [reswipeModeActive, currentTabId, history]);
-  const uniqueId = Date.now();
 
   const handleActiveTabIndex = (activeTabIndex) => {
-    // const activeTab = getCategoryFromTab(tabList[index]);
-
-    // console.log(index);
     let curTime = new Date(selectedDropdownDate).getTime()
-    let extras = {
-      token: idToken,
-      curTime: curTime,
-      userID: "",
-    }
 
-    if (activeTabIndex > 9) {
-      dispatch(fetchCategoryDrops({
-        activeTabIndex,
-        id: getCategoryIdByPosition(activeTabIndex),
-        categorySymbol: getCategorySymbolByPosition(activeTabIndex),
-        extras
-      }));
-
-      return;
-    }
-
-    const actionCreator = actionMatcher[activeTabIndex];
-    dispatch(actionCreator({ activeTabIndex, id: getCategoryIdByPosition(activeTabIndex), extras }));
+    fetchCategory(activeTabIndex, curTime, true);
   };
 
   const handleSwipe = (dir, drop_id, drop) => {
@@ -326,11 +208,7 @@ const Home = (props) => {
           .then(() => { })
           .catch(() => { })
           .finally(() => {
-            // setInternalLoader(false);
-            // console.log("Ritgh")
-            // console.log(drop.artist)
-            updateTokens(drop.artist && drop.artist.id)
-              .then(res => { })
+            updateTokens(drop.artist && drop.artist.id).then(res => { })
           });
       } else if (dir === "left") {
         unsaveDrop(idToken, drop_id)
@@ -347,17 +225,6 @@ const Home = (props) => {
     })
   };
 
-  // useEffect(() => {
-  //   // First rendering
-  //   console.log("First rendering", props.reload)
-  //   if (props.reload) {
-  //     sessionStorage.setItem('headerLoad', 'true')
-  //   }
-  //   else if (!props.reload && sessionStorage.headerLoad) {
-  //     sessionStorage.removeItem('headerLoad')
-  //   }
-  // }, [])
-
   return (
     <HomeContainer>
       <div className="rel">
@@ -366,7 +233,6 @@ const Home = (props) => {
             <Tabs
               activeTabIndex={activeTabIndex}
               handleActiveTabIndex={handleActiveTabIndex}
-              tabList={tabList}
             />
           </div>
         </FadeIn>
@@ -375,7 +241,6 @@ const Home = (props) => {
           {loadingIndexList.length > 0 || isLoading || !activeBucket ?
             (
               <>
-                
                 <FadeIn delay={200}>
                   <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
                     <LazyCard />
@@ -392,27 +257,19 @@ const Home = (props) => {
                   </ActionSection>
                 </FadeIn>
               </>
-            )
-            : (
-              <>
-                <Swiper
-                  reswipeModeActive={false}
-                  key={uniqueId}
-                  db={activeBucket}
-                  activeTabIndex={activeTabIndex}
-                  onSwipe={handleSwipe}
-                  handleActiveTabIndex={handleActiveTabIndex}
-                  tabList={tabList}
-                  tabList2={AllCategories}
-                  setDetailView={setDetailView}
-                  nextIndex={nextIndex}
-                />
-              </>
+            ) : (
+              <Swiper
+                reswipeModeActive={false}
+                key={uniqueId}
+                db={activeBucket}
+                activeTabIndex={activeTabIndex}
+                onSwipe={handleSwipe}
+                handleActiveTabIndex={handleActiveTabIndex}
+                nextIndex={nextIndex}
+              />
             )
           }
         </div>
-
-        {/* </div> */}
       </div>
     </HomeContainer>
   );
