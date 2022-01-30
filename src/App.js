@@ -50,6 +50,7 @@ import FadeIn from "react-fade-in";
 import Verify from "./pages/register/Verify";
 import SignupVerify from "./pages/register/SignupVerify";
 import { MoralisProvider } from "react-moralis";
+import { getFirstExternalCategoryPosition } from "./utils/category";
 
 // import Nft from "./nft";
 // import firebase from "firebase/app";
@@ -114,8 +115,13 @@ function App() {
 
   const curIndex = useSelector((state) => state.category.curIndex);
   const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
+  const allCategories = useSelector((state) => state.category.allCategories);
 
-  const isInternalCreator = useMemo(() => activeTabIndex < 4, [activeTabIndex])
+  const isInternalCreator = useMemo(() => {
+    const position = getFirstExternalCategoryPosition(allCategories);
+
+    return position > activeTabIndex;
+  }, [activeTabIndex, allCategories]);
 
   const [date, setDate] = useState(new Date(curIndex))
 

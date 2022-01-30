@@ -1,7 +1,13 @@
 import React, {useContext, useState, useEffect, useMemo} from "react";
 import { useSelector, useDispatch } from "react-redux";
+import qs from "querystring";
 import { useAuth } from "./FirebaseAuthContext";
-import { fetchCategory, fetchExternalCreators, fetchReswipeBuckets } from "../pages/home/actions";
+import {
+  fetchCategory,
+  fetchCategorySavedDrops,
+  fetchExternalCreators,
+} from "../pages/home/actions";
+import { getCategorySymbolByPosition } from "../utils/category";
 
 const DropContext = React.createContext(null);
 
@@ -11,7 +17,14 @@ export function useDrop() {
 
 export function DropProvider({ children }) {
   const [idToken, setIdToken] = useState(null);
+  const activeTabIndex = useSelector(state => state.category.general.activeTabIndex);
   const allCategories = useSelector(state => state.category.allCategories);
+
+  let curTab;
+
+  if (window.location) {
+    curTab = qs.parse(window.location.search, "?").tabs;
+  }
 
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
@@ -39,7 +52,9 @@ export function DropProvider({ children }) {
   useEffect(() => {
     if (isCategoriesListEmpty) return;
 
-    dispatch(fetchReswipeBuckets(idToken));
+    const symbol = curTab || getCategorySymbolByPosition(activeTabIndex, allCategories);
+
+    dispatch(fetchCategorySavedDrops(idToken, symbol))
   }, [idToken, isCategoriesListEmpty])
 
   return (

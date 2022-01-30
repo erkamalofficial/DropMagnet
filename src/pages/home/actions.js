@@ -128,8 +128,18 @@ export const fetchReswipeBuckets = (idToken) => {
       console.log(e);
     })
   }
-
 }
+
+export const fetchCategorySavedDrops = (idToken, symbol, index) => {
+  return dispatch => {
+    DropMagnetAPI.getCategorySavedDrops(idToken, symbol, index).then((data) => {
+      dispatch({ type: 'CATEGORY_SAVED_BUCKET', payload: { newBucket: data.drops ? data.drops : [] } });
+    }).catch((e) => {
+      console.log(e);
+    })
+  }
+}
+
 export const fetchReswipeList = (tabIndex) => async (dispatch, getState) => {
   dispatch({
     type: "FETCH_RESWIPE_REQUEST",

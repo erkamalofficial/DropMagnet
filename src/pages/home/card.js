@@ -187,7 +187,7 @@ const Card = (props) => {
         // style={{ backgroundImage: `url(${props.media[0].url})` }}
         >
           {props.media[0].type === 'video' ? (
-            <video width="100%" height="100%" loop muted>
+            <video width="100%" height="100%" autoPlay loop muted>
               <source src={props.media[0].url} type="video/mp4"/>
               Your browser does not support the video tag.
             </video>
