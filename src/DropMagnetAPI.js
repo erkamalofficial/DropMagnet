@@ -271,6 +271,11 @@ export function getSaveDrops(token = '') {
   return customAPICall(getSaveDropEndPoint, "", "GET", token);
 }
 
+export function getCategorySavedDrops(token = '', symbol, index = Date.now()) {
+  const getSaveDropEndPoint = `drops/saved?index=${index}&symbol=${symbol}`;
+  return customAPICall(getSaveDropEndPoint, "", "GET", token);
+}
+
 export function unsaveDrop(token = '', dropid = '') {
   const unsaveDropEndPoint = `drops/${dropid}/unsave`;
   return customAPICall(unsaveDropEndPoint, "", "POST", token);
