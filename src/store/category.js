@@ -217,7 +217,9 @@ const categoryReducer = (state = initialState, action) => {
 
     }
 
-    case "START_RESWIPE": {
+    // Can be used for array with various categories or for specific one
+    case "START_RESWIPE":
+    case 'CATEGORY_SAVED_BUCKET': {
       const { newBucket } = action.payload;
 
       const reswipedDrops = {};

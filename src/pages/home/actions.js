@@ -133,7 +133,7 @@ export const fetchReswipeBuckets = (idToken) => {
 export const fetchCategorySavedDrops = (idToken, symbol, index) => {
   return dispatch => {
     DropMagnetAPI.getCategorySavedDrops(idToken, symbol, index).then((data) => {
-      dispatch({ type: 'CATEGORY_SAVED_BUCKETS', payload: { newBucket: data.drops ? data.drops : [] } });
+      dispatch({ type: 'CATEGORY_SAVED_BUCKET', payload: { newBucket: data.drops ? data.drops : [] } });
     }).catch((e) => {
       console.log(e);
     })
