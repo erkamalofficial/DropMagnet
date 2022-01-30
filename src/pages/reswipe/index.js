@@ -328,10 +328,12 @@ function Reswipe(props) {
                     if (tempReswipeBucket.length !== 4) {
                       setIsReswipeStarted(true);
                       setShowRestartReSwipeMessage(false);
+                      counterRef.current = tempReswipeBucket.length;
                     } else {
                       setIsFinal4Left(true);
                       setShowRestartReSwipeMessage(false);
                       setDeletedFinalFour(new Array(4).fill(false));
+                      counterRef.current = tempReswipeBucket.length;
                     }
                   }}
                 >
