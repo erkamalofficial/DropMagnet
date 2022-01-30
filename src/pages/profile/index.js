@@ -58,6 +58,8 @@ export default function Profile(props) {
 
   const sessionProfile = JSON.parse(sessionStorage.getItem('profileDetails'))
 
+  const { idToken } = useAuth();
+
   const profilePic = useRef(null)
 
   const [handle, setHandle] = useState(sessionProfile ? sessionProfile.username : "");
@@ -107,23 +109,7 @@ export default function Profile(props) {
 
   let history = useHistory();
 
-  // TODO: should be in reusable utils
-  const getCategorySymbolByPosition = useCallback((position) => {
-    if (position < 4) return;
-
-    return allCategories.external_creators.find(category => category.position === position).symbol;
-  }, [allCategories])
-
-  // TODO: check for simplifying
-  const currentTabName = useMemo(() => {
-    let name = getCategoryFromTab(seprateTL[activeTabIndex]);
-
-    if (!name) {
-      return getCategorySymbolByPosition(activeTabIndex);
-    }
-
-    return name;
-  }, [seprateTL, activeTabIndex]);
+  const currentTabName = useMemo(() => seprateTL[activeTabIndex], [seprateTL, activeTabIndex]);
 
   const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
   const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
@@ -206,18 +192,6 @@ export default function Profile(props) {
     currentUser
       .getIdToken(false)
       .then(function (idToken) {
-        // Send token to your backend via HTTPS
-        // ...
-
-        DropMagnetAPI.getSaveDrops(idToken).then((res) => {
-          if (res === null) {
-            setSavedPosts([]);
-          }
-          else {
-            setSavedPosts(res);
-          }
-        });
-
         DropMagnetAPI.getUserPosts(user_id, idToken)
           .then((res) => {
             if (res === null) {
@@ -241,6 +215,19 @@ export default function Profile(props) {
         setLoading({ profile: false, drops: false })
       });
   }, []);
+
+  useEffect(() => {
+    if (!currentTabName) return;
+
+    DropMagnetAPI.getCategorySavedDrops(idToken, currentTabName).then((res) => {
+      if (res === null) {
+        setSavedPosts([]);
+      }
+      else {
+        setSavedPosts(res.drops);
+      }
+    });
+  }, [idToken, currentTabName])
 
 
   function openDrop() { }
