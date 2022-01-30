@@ -271,8 +271,8 @@ export function getSaveDrops(token = '') {
   return customAPICall(getSaveDropEndPoint, "", "GET", token);
 }
 
-export function getCategorySavedDrops(token = '', symbol, index = Date.now()) {
-  const getSaveDropEndPoint = `drops/saved?index=${index}&symbol=${symbol}`;
+export function getCategorySavedDrops(token = '', symbol) {
+  const getSaveDropEndPoint = `drops/saved?symbol=${symbol}`;
   return customAPICall(getSaveDropEndPoint, "", "GET", token);
 }
 

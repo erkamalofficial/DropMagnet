@@ -224,7 +224,7 @@ export default function Profile(props) {
         setSavedPosts([]);
       }
       else {
-        setSavedPosts(res.drops);
+        setSavedPosts(res);
       }
     });
   }, [idToken, currentTabName])
