@@ -104,6 +104,10 @@ export default function DropDetail(props) {
   let curDropDate = props.drop.drop_date
   let gmtDate = new Date(calcTime(13)).getTime()
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className="detail-view">
 
