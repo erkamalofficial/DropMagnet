@@ -17,14 +17,22 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useAuth } from '../../../contexts/FirebaseAuthContext';
 import * as DropMagnetAPI from "../../../DropMagnetAPI"
 import LoadingModal from '../LoadingModal/LoadingModal';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function DropList(props) {
   const [listItems, setListItems] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [swiping, setSwiping] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [stage, setStage] = useState(20)
 
   const { currentUser } = useAuth()
+
+  const loadItems = () => {
+    const arr = props.drops.slice(0, stage)
+    setListItems(arr)
+    setStage(prev => prev + 20)
+  }
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -32,7 +40,8 @@ export default function DropList(props) {
   }, []);
 
   useEffect(() => {
-    setListItems(props.drops)
+    loadItems()
+    // setListItems(props.drops)
   }, [props.drops])
 
   useEffect(() => {
@@ -103,6 +112,13 @@ export default function DropList(props) {
         <SwipeableList
           type={ListType.IOS}
           scrollStartThreshold={0}>
+            <InfiniteScroll 
+            dataLength={listItems.length}
+            next={loadItems}
+            hasMore={true}
+            loader={<><h4>Loading...</h4></>}
+            endMessage={<></>}
+            >
           {
             listItems.map(drop => (
               <SwipeableListItem
@@ -124,8 +140,8 @@ export default function DropList(props) {
                   {renderDropCell(drop)}
                 </div>
               </SwipeableListItem>
-
             ))}
+            </InfiniteScroll>
         </SwipeableList>
       ) : (
         <>
