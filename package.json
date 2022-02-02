@@ -8,6 +8,7 @@
     "@magic-ext/oauth": "^0.8.0",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@metamask/detect-provider": "^1.2.0",
     "@openzeppelin/contracts": "^4.0.0",
     "@sandstreamdev/react-swipeable-list": "^1.0.1",
     "@testing-library/jest-dom": "^5.12.0",

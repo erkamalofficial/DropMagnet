@@ -29,6 +29,7 @@ const ProfileForm = () => {
         e.preventDefault()
         setLoading(true)
         const address = localStorage.getItem('publicAddress')
+        const token = localStorage.getItem("token")
         e.preventDefault()
         try {
             setError("");
@@ -36,19 +37,24 @@ const ProfileForm = () => {
             let username = usernameRef.current.value
 
             if (!username.split(' ')[1]) {
-                DropMagnetAPI.createWalletUser(username, name, address).then(async function (response) {
+                await DropMagnetAPI.createWalletUser(username, name, address, token).then(async function (response) {
+                // await DropMagnetAPI.createNewUserProfile(name, username, token)
+
                     if (response.status === 409) {
                         alert("Username exists! Try another username.")
                         setLoading(false)
                     }
                     else {
-                        await signInWithCustomToken(response.token)
-                            .then(cred => {
-                                sessionStorage.removeItem('headerLoad')
-                                window.location.href = "/home"
-                                setLoading(false)
+                        sessionStorage.removeItem('headerLoad')
+                        window.location.href = "/home"
+                        setLoading(false)
+                        // await signInWithCustomToken(response.token)
+                        //     .then(cred => {
+                        //         sessionStorage.removeItem('headerLoad')
+                        //         window.location.href = "/home"
+                        //         setLoading(false)
 
-                            })
+                        //     })
                     }
 
                 })

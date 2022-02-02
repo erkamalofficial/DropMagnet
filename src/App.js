@@ -52,6 +52,7 @@ import SignupVerify from "./pages/register/SignupVerify";
 import { MoralisProvider } from "react-moralis";
 import { getFirstExternalCategoryPosition } from "./utils/category";
 
+import { NFT } from "./nft"
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
