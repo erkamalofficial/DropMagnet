@@ -14,6 +14,7 @@ import Link from "../../../assets/linkIcon.svg"
 import Moment from 'moment';
 
 export default function DropDetail(props) {
+  const [reveal, setReveal] = useState(false)
 
   const history = useHistory()
   const { currentUser } = useAuth();
@@ -105,10 +106,14 @@ export default function DropDetail(props) {
   let gmtDate = new Date(calcTime(13)).getTime()
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    setTimeout(() => {
+      setReveal(true)
+    }, 10)
   }, [])
 
   return (
+    <>
+    {reveal && (
     <div className="detail-view">
 
       {imgModal &&
@@ -221,5 +226,7 @@ export default function DropDetail(props) {
     </div>
       
     </div>
+    )}
+    </>
   );
 }
