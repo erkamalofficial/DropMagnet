@@ -78,6 +78,8 @@ const Home = (props) => {
 
   const { currentUser, idToken } = useAuth();
 
+  const token = currentUser.getIdToken().then(res => res)
+
   const uniqueId = Date.now();
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(date);
   const [loadMore, setLoadMore] = useState(false)
