@@ -286,7 +286,8 @@ p1 .medium {
 .home-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 120px 0px 10px 0px;
+  /* padding: 120px 0px 10px 0px; */
+  padding: 0px 0px 10px 0px;
   overflow-y: hidden;
   overflow-x: hidden;
 }
