@@ -57,7 +57,7 @@ const getProcessedCollection = (state, action, type) => {
     // console.log(`Current card fetched from : ${pastDate.getDate()}-${pastDate.getMonth() + 1}-${pastDate.getFullYear()}`)
   }
 
-  const currentCollectionState = state[type] ? state[type] : { apiData: [], reswipedDrops: {} };
+  const currentCollectionState = state[type] ? state[type] : { apiData: [], reswipedDrops: {}, activeBucket: [] };
 
   const collection = {
     ...currentCollectionState,
