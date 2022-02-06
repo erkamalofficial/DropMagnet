@@ -68,6 +68,8 @@ const getDataFromDb2 = async (dispatch, categorySymbol, actionType, activeTabInd
   //   .where("category", "==", categorySymbol)
   //   .get();
 
+
+  console.log("extras: ", extras.token)
   let response = {}
   let timeIndex = extras.curTime
   var d = new Date(timeIndex);
