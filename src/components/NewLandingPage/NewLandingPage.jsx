@@ -55,92 +55,11 @@ export const NewLandingPage = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const { login, signInWithCustomToken, currentUser, sendSignInLinkToEmail } = useAuth();
-    const [error, setError] = useState("");
-    const [message, setMessage] = useState("")
   
     const [address, setAddress] = useState(pubAdd || '')
   
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-  
-    async function handleSubmit(e) {
-      e.preventDefault();
-      console.log("Entered submit here.....")
-  
-      try {
-        setError("");
-        setLoading(true);
-        const res = await login(
-          emailRef.current.value,
-          passwordRef.current.value
-        );
-  
-        let tk = await res.user.getIdToken()
-  
-        getUserProfile(res.user.uid, tk).then(function (response) {
-          console.log('user profile response', response)
-          if (response.status === "error") {
-            // setLoginError(response.message);
-            setLoading(false);
-          } else {
-            localStorage.setItem('userDetails', JSON.stringify(response));
-            if (res.user.emailVerified) {
-              if (id) {
-                history.push(`/drop/${id}`);
-              }
-              else {
-                sessionStorage.removeItem('headerLoad')
-                history.push("/home");
-              }
-            } else {
-              setError("Email not verified!! check your inbox and verifiy");
-              setLoading(false);
-            }
-          }
-        })
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    }
-  
-  
-    async function handleSubmitEmailLink(e) {
-      e.preventDefault();
-  
-      try {
-        setError("");
-        setLoading(true);
-        const email = emailRef.current.value
-  
-        let res = await DropMagnetAPI.isUser(email)
-  
-        console.log(res)
-  
-        if (res.status) {
-          sendSignInLinkToEmail(email)
-            .then(res => {
-              localStorage.setItem('emailForSignIn', email)
-              setMessage("Email link sent. Please check email.")
-              setLoading(false)
-            })
-            .catch(error => {
-              setError(error.message);
-              setLoading(false);
-            });
-        }
-  
-        else{
-          setError("This email is not registered.");
-          setLoading(false);
-        }
-  
-  
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    }
   
     const coinbase = getProviderInfoByName('Coinbase')
   
@@ -203,18 +122,14 @@ export const NewLandingPage = () => {
         }
         else {
         if (response?.status === "error") {
-          setLoading(false);
         } else {
-          setLoading(false)
           localStorage.setItem('userDetails', JSON.stringify(response));
           if (id) {
             history.push(`/drop/${id}`);
-            setLoading(false)
           }
           else {
             sessionStorage.removeItem('headerLoad')
             history.push("/home");
-            setLoading(false)
           }
         }
       }
@@ -242,52 +157,12 @@ export const NewLandingPage = () => {
         console.log(res.data.token)
         token = res.data.token
       })
-      .catch(err => {
-        if (err.message.includes("401")) {
-          // history.push("/getToken")
-          setError("No access")
-        }
-      })
-  
+
       localStorage.setItem('token', token)
       await userLogin(token)
     }
   
-    const signMessage = async (web3, accounts, nonce) => {
-      console.log(nonce.token)
-      let message = `You are signing in to DropMagnet: ${nonce.data}`
-      await web3.eth.personal.sign(message, accounts[0], async function (error, result) {
-        if (error) {
-          console.log(error)
-          alert("Error occurred!")
-          setLoading(false)
-        }
-        else {
-          const signingAddress = await web3.eth.accounts.recover(message,
-            result);
-          if (accounts[0] === signingAddress) {
-            setLoading(true)
-            localStorage.setItem('publicAddress', accounts[0])
-  
-            if (nonce.status === 0) {
-              setLoading(false)
-              history.push("/create")
-            }
-            else {
-              userLogin(nonce.token)
-            }
-          }
-          else {
-            setLoading(false)
-            alert("Signature not verified.")
-          }
-        }
-  
-      })
-  
-    }
-  
-  
+
     const connectWallet = async () => {
       const provider = await web3Modal.connect();
       const wb = new Web3(provider);
@@ -296,7 +171,6 @@ export const NewLandingPage = () => {
         .then(acc => acc)
       let nonce = await DropMagnetAPI.getNonce(accounts[0])
   
-      // await signMessage(wb, accounts, nonce);
       await signMessageV2(wb, accounts, nonce)
     }
 
