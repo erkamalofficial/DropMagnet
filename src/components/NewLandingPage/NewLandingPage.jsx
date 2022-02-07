@@ -58,6 +58,7 @@ export const NewLandingPage = () => {
     const { login, signInWithCustomToken, currentUser, sendSignInLinkToEmail } = useAuth();
   
     const [address, setAddress] = useState(pubAdd || '')
+    const [error, setError] = useState("")
   
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -158,6 +159,13 @@ export const NewLandingPage = () => {
         console.log(res.data.token)
         token = res.data.token
       })
+      .catch(err => {
+        console.log(err.message)
+        console.log(err.data)
+        if(err.message.includes("401")) {
+          setError("access denied")
+        }
+      })
 
       localStorage.setItem('token', token)
       await userLogin(token)
@@ -198,7 +206,10 @@ export const NewLandingPage = () => {
                         <h1 className="landing__main-content__logo__text">drop magnet</h1>
                     </div>
                     <h4>Discover NFTs from verified collections and build your web3 social page with DropSwipe.</h4>
-                    <button className="landing__main-content__button" onClick={connectWallet} >Connect Wallet</button>
+                    <div>
+                      <button className="landing__main-content__button" onClick={connectWallet} >Connect Wallet</button>
+                      <h4 className="landing__main-content__error">{error}</h4>
+                    </div>
                     <h4>Early access is available for collectors of Crypto Punks & Bored Apes.</h4>
                     <h4>Live collections:</h4>
                     <Marquee className="landing__main-content__slider" direction="right" gradient={false}>
