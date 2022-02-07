@@ -6,7 +6,7 @@
   border-radius: 19px;
   display: flex;
   justify-content: center;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 20px;
   font-weight: 600;
   color: white;
@@ -23,7 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 20px;
   font-weight: 600;
   color: white;

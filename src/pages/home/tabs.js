@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
+// overflow:hidden;
+// overflow-x: scroll;
 const TabsWrapper = styled.ul`
 @media (max-width: 500px) {
   height: 36px;
@@ -12,8 +14,8 @@ width: var(--tab-container-width);
 height: 64px;
 color: #ebeae8;
 padding: 0 28px;
-overflow:hidden;
-overflow-x: scroll;
+
+overflow: auto;
 margin: 0;
 border-top: 0.75px solid black;
 border-bottom: 0.75px solid black;
