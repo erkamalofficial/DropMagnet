@@ -41,7 +41,7 @@
   vertical-align: middle;
   line-height: 34px;   
   color: #eeeeee;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 18px;
   font-weight: 700;
   font-style: normal;
@@ -81,7 +81,7 @@
   vertical-align: middle;
   line-height: 22px;
   color: #eaeaea;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 14px;
   font-weight: 700;
   font-style: normal;   
@@ -99,7 +99,7 @@
   vertical-align: middle;
   line-height: 23px !important;
   color: #eaeaea;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 14px;
   font-weight: 700;
   font-style: normal;   
@@ -135,7 +135,7 @@
   vertical-align: middle;
   line-height: 22px;
   color: #eaeaea;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 14px;
   font-weight: 700;
   font-style: normal;   
@@ -156,7 +156,7 @@
   padding-top: 12px;
   padding-bottom: 8px;
   color: #eeeeee;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 18px;
   font-weight: 700;
   font-style: normal;
@@ -176,7 +176,7 @@
 .drop-date {
   padding-bottom: 12px;
   color: #7a7a7a;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 13px;
   font-weight: 700;
   font-style: normal;

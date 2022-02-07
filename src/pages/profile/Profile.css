@@ -43,7 +43,7 @@
 
 .profile-button-option {
   color: white;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 16px;
   font-weight: bold;
   padding: 16px 14px;
@@ -51,7 +51,7 @@
 }
 
 .profile-button-option-disabled{
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 16px;
   font-weight: bold;
   padding: 16px 14px;
@@ -66,7 +66,7 @@
 }
 
 .profile-button-option-selected {
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 16px;
   font-weight: bold;
   padding: 16px 14px;
@@ -81,7 +81,7 @@
 
 .profile-bio-description {
   color: white;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 16px;
   padding-bottom: 16px;
   padding-left: 3px;
@@ -98,7 +98,7 @@
 
 .profile-handle-title {
   color: white;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 16px;
   font-weight: 400;
   padding-bottom: 16px;
@@ -106,7 +106,7 @@
 
 .profile-large-title {
   color: #ffffff;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 25px;
   font-weight: 700;
   padding-top: 12px;
@@ -115,7 +115,7 @@
 
 .profile-medium-title {
   color: white;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 16px;
   font-weight: 600;
   padding-top: 2px;

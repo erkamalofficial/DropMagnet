@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import TinderCard from "./swipe-main";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Card from "./card";
 import PlusBtn from "../../components/blocks/plus-btn";
@@ -9,8 +9,9 @@ import MinusBtn from "../../components/blocks/minus-btn";
 import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
 import Tabs from "./tabs";
 import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { useSelector } from "react-redux";
 import './swiper.css';
+
+import { setOpen } from "../../store/OpenCard";
 
 const ActionSection = styled.div`
   display: flex;
@@ -116,7 +117,11 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
     setOpenView(true)
   }
 
+  const selector = useSelector(state => state.card)
+
   function renderDetail() {
+    // dispatch(setOpen({isOpen: !selector.isOpen, drop: curDrop}))
+    // console.log(selector.isOpen)
     return (
       <div className="drop-detail-container">
         <DropDetail
@@ -133,9 +138,19 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
     <>
       
       <div className="view-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
-        {openView && renderDetail()}
+        {openView && 
+        // (
+        //   <div className="drop-detail-container">
+        //     <DropDetail
+        //       show={true}
+        //       drop={curDrop}
+        //       closeDetailView={() => setOpenView(false)}
+        //       handleClick={() => console.log("Click")} />
+        //   </div>
+        // )} */}
+        renderDetail()}
       </div>
-      <CardContainer key="cardContainer" className={'fix-minor-bug-swipe swiper-card-container'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
+      <CardContainer onClick={renderDetail} key="cardContainer" className={'fix-minor-bug-swipe swiper-card-container'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
         {cards.length > 0 ? cards.map((cardDetails, index) => {
           const { id } = cardDetails;
 

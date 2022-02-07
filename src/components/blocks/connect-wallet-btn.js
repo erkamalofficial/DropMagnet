@@ -3,7 +3,7 @@ const ConnectWalletBtnWapper = styled.div`
   border-radius: 19px;
   background-color: var(--white);
   color: var(--lightBlack);
-  font-family: Quicksand;
+
   font-size: 26px;
   font-weight: 600;
   font-style: normal;
@@ -12,6 +12,7 @@ const ConnectWalletBtnWapper = styled.div`
   line-height: 40px;
   cursor: pointer;
 `;
+// font-family: Quicksand;
 const ConnectWalletBtn = (props) => <ConnectWalletBtnWapper {...props} />;
 
 export default ConnectWalletBtn;

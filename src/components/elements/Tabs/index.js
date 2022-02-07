@@ -21,11 +21,12 @@ const TabContainer = styled.div`
   overflow: hidden;
 `;
 
+// font-family: "Quicksand";
 const Tab = styled.button`
   width: ${WIDTH}px;
   text-align: center;
   color: #eaeaea;
-  font-family: "Quicksand";
+
   font-size: 16px;
   font-weight: 700;
   background: transparent;

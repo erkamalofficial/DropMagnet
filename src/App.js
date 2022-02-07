@@ -191,7 +191,7 @@ function App() {
         <Router>
           <div className="fixed-container"
             style={{ top: '0' }}>
-            {window.location.pathname !== "/new-landing" ?
+            {window.location.pathname !== "/" ?
             reload ? (
               <FadeIn delay={200}>
                 <HeaderBar
@@ -305,9 +305,7 @@ function App() {
             <Route
               exact
               path="/"
-              render={(props) => (
-                <Redirect to="/new-landing" />
-              )}
+              component={NewLandingPage}
             />
 
             <Route
