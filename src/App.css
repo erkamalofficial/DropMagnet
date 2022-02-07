@@ -411,7 +411,7 @@ p1 .medium {
 
 *{
   box-sizing: border-box;
-  font-family: "Azo Sans" !important;
+  /* font-family: "Azo Sans" !important; */
 }
 
 @font-face {

@@ -13,8 +13,9 @@ import KGF from "./imgs/KGF.gif"
 import SNBZ from "./imgs/SNBZ.gif"
 import VF from "./imgs/VF.png"
 import WOW from "./imgs/WOW.gif"
+import logo from "./imgs/logo.png"
 
-import logo from "../dropMagnet/assets/logo.svg"
+// import logo from "../dropMagnet/assets/logo.svg"
 
 import { getUserProfile } from "../../DropMagnetAPI"
 import Web3 from "web3";
@@ -129,7 +130,7 @@ export const NewLandingPage = () => {
           }
           else {
             sessionStorage.removeItem('headerLoad')
-            history.push("/home");
+            history.push("/swiper");
           }
         }
       }
@@ -177,7 +178,7 @@ export const NewLandingPage = () => {
     useEffect(() => {
         const user = localStorage.getItem("userDetails")
         if (user) {
-            history.push("/home")
+            history.push("/swiper")
         }
     }, [])
 
@@ -212,7 +213,7 @@ export const NewLandingPage = () => {
                     <h4><a href="/">Twitter</a> | <a href="/">Discord</a> | <a href="/">Mirror</a></h4>
                 </div>
                 <div className="landing__footer">
-                    <h5>DrowSwipe™ and ReSwipe™ are patent-pending.</h5>
+                    <h5>DropSwipe™ and ReSwipe™ are patent-pending.</h5>
                     <div className="landing__footer__links">
                         <h5><a href="/">Terms & Conditions</a></h5>
                         <h5><a href="/">Privacy Policy</a></h5>
