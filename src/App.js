@@ -52,6 +52,8 @@ import SignupVerify from "./pages/register/SignupVerify";
 import { MoralisProvider } from "react-moralis";
 import { getFirstExternalCategoryPosition } from "./utils/category";
 
+import { NewLandingPage } from "./components";
+
 // import Nft from "./nft";
 // import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
@@ -189,7 +191,8 @@ function App() {
         <Router>
           <div className="fixed-container"
             style={{ top: '0' }}>
-            {reload ? (
+            {window.location.pathname !== "/" ?
+            reload ? (
               <FadeIn delay={200}>
                 <HeaderBar
                   openHome={() => { }}
@@ -217,9 +220,14 @@ function App() {
                 userImageVisible={true}
                 reload={reload}
               />
-            )}
+            ) : null}
           </div>
           <Switch>
+            <Route 
+              exact
+              path="/new-landing"
+              component={NewLandingPage}
+            />
             <Route
               exact
               path="/home/dummy"
@@ -284,7 +292,7 @@ function App() {
               render={(props) => <UpgradeSub {...props} />}
             />
 
-            <Route
+            {/* <Route
               exact
               path="/"
               render={(props) => (
@@ -292,6 +300,12 @@ function App() {
                   reload={reload}
                   setReload={setReload} />
               )}
+            /> */}
+
+            <Route
+              exact
+              path="/"
+              component={NewLandingPage}
             />
 
             <Route

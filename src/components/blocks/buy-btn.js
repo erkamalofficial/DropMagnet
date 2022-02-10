@@ -8,13 +8,14 @@ const BuyBtnWrapper = styled.button`
   border-radius: 20px;
   border: 1px solid var(--grayWhite);
   background-color: rgba(0, 0, 0, 0.5);
-  font-family: Quicksand;
+
   font-size: 17px;
   font-weight: 700;
   color: var(--white);
   outline: none;
   order: 2;
 `;
+// font-family: Quicksand;
 const BuyBtn = () => {
   return <BuyBtnWrapper> Buy for 1Ξ </BuyBtnWrapper>;
 };

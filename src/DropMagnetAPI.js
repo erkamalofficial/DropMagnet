@@ -7,10 +7,12 @@ var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
+  // host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
+  host = 'https://drop-api-rnd454q4pa-ew.a.run.app/';
 } else {
   // pick up from .env
-  host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
+  // host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
+  host = 'https://drop-api-rnd454q4pa-ew.a.run.app/';
 }
 
 async function customAPICall(endpoint, data, method, access_token) {
@@ -131,12 +133,13 @@ export function checkUsername(u) {
   return normalAPICall(usernameEndpoint, "", "POST", "")
 }
 
-export function createNewUserProfile(name, username, email, token) {
+// export function createNewUserProfile(name, username, email, token) {
+export function createNewUserProfile(name, username, token) {
   const profilesEndpoint = 'profiles'
   const payload = {
     name,
     username,
-    email
+    // email
   }
   return customAPICall(profilesEndpoint, payload, "POST", token)
 }
@@ -286,7 +289,8 @@ export function unsaveDrop(token = '', dropid = '') {
 // Wallet Login
 
 export function getNonce(address) {
-  const nonceEndPoint = `profiles/user/nonce?address=${address}`;
+  // const nonceEndPoint = `profiles/user/nonce?address=${address}`;
+  const nonceEndPoint = `auth/creds?addr=${address}`
   return customAPICall(nonceEndPoint, "", "POST", '');
 }
 
@@ -295,14 +299,15 @@ export function getWalletUser(address) {
   return customAPICall(userEndPoint, "", "GET", '');
 }
 
-export function createWalletUser(username, name, address) {
-  const userEndPoint = `profiles/createUser`;
+export function createWalletUser(username, name, address, token) {
+  // const userEndPoint = `profiles/createUser`;
+  const userEndPoint = `profiles`;
   const payload = {
     username: username,
     name: name,
     address: address
   }
-  return customAPICall(userEndPoint, payload, "POST", "");
+  return customAPICall(userEndPoint, payload, "POST", token);
 }
 
 // MetaURLs API

@@ -71,7 +71,7 @@
   vertical-align: middle;
   line-height: 22px;
   color: #eeeeee;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 14px;
   font-weight: 700;
   font-style: normal;   
@@ -80,7 +80,7 @@
 
 .drop-swipe-detail-piece-no {
 	color: #aaaaaa;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 14px;
   font-weight: 700;
   font-style: normal;
@@ -93,7 +93,7 @@
 
 .drop-swipe-detail-date {
 	color: #aaaaaa;
-  font-family: Quicksand;
+  /* font-family: Quicksand; */
   font-size: 14px;
   font-weight: 700;
   font-style: normal;

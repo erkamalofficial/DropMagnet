@@ -134,7 +134,7 @@ function HeaderBar(props) {
               </div>
             ) : props.dropId !== undefined ? (
               <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>
-            ) : <Link to={`/login`} id="login-link">Log In</Link>}
+            ) : <Link to={`/`} id="login-link">Log In</Link>}
           </div>
         )
       }

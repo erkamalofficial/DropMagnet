@@ -79,7 +79,7 @@ export const NewLandingPage = () => {
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: "a789adc9c04146d88b3fb64732fbf206",
+          infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
         }
       },
   

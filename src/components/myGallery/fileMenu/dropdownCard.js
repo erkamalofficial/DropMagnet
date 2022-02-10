@@ -54,9 +54,10 @@ const TLDR = styled.p`
     margin-top: 0;
     display:block;
 `;
+// font-family: Quicksand;
 const Price = styled.p`
     color: #ffffff;
-    font-family: Quicksand;
+
     font-size: 16px;
     font-weight: 500;
     text-align: left;
@@ -64,9 +65,10 @@ const Price = styled.p`
     margin-top: 0;
     display:block;
 `;
+// font-family: Quicksand;
 const FileLink = styled.p`
     color: #ffffff;
-    font-family: Quicksand;
+
     font-size: 16px;
     font-weight: 500;
     text-align: left;

@@ -21,6 +21,9 @@ import Fortmatic from "fortmatic";
 import WalletLink from "walletlink"
 import * as DropMagnetAPI from "../../DropMagnetAPI"
 
+import axios from "axios"
+
+
 export default function Login() {
 
   let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
@@ -133,7 +136,8 @@ export default function Login() {
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
+        // infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
+        infuraId: "a789adc9c04146d88b3fb64732fbf206",
       }
     },
 
@@ -168,10 +172,16 @@ export default function Login() {
       .then(cred => cred)
 
     let tk = await res.user.getIdToken()
+    localStorage.setItem("token", tk)
 
-    getUserProfile(res.user.uid, tk).then(function (response) {
+    await getUserProfile(res.user.uid, tk)
+    .then((response) => {
       console.log('user profile response', response)
-      if (response.status === "error") {
+      if(response === null) {
+        history.push("/create")
+      }
+      else {
+      if (response?.status === "error") {
         setLoading(false);
       } else {
         setLoading(false)
@@ -186,10 +196,44 @@ export default function Login() {
           setLoading(false)
         }
       }
+    }
     })
   }
 
+  const signMessageV2 = async (web3, accounts, nonce) => {
+    let _signature, token
+
+    await web3.eth.personal.sign(
+      web3.utils.fromUtf8(`Sign In to DropMagnet: ${nonce.nonce}`),
+      accounts[0],
+      (err, signature) => {
+        if (err) console.log(err)
+        _signature = signature
+        console.log("signature: ", signature, _signature)
+      }
+    )
+
+    await axios.post("https://drop-api-rnd454q4pa-ew.a.run.app/auth", {
+      addr: accounts[0], 
+      sig: _signature,
+    })
+    .then(res => {
+      console.log(res.data.token)
+      token = res.data.token
+    })
+    .catch(err => {
+      if (err.message.includes("401")) {
+        // history.push("/getToken")
+        setError("No access")
+      }
+    })
+
+    localStorage.setItem('token', token)
+    await userLogin(token)
+  }
+
   const signMessage = async (web3, accounts, nonce) => {
+    console.log(nonce.token)
     let message = `You are signing in to DropMagnet: ${nonce.data}`
     await web3.eth.personal.sign(message, accounts[0], async function (error, result) {
       if (error) {
@@ -225,14 +269,16 @@ export default function Login() {
 
   const connectWallet = async () => {
     const provider = await web3Modal.connect();
-    console.log(provider)
     const wb = new Web3(provider);
     setLoading(true)
     let accounts = await wb.eth.getAccounts()
+    // let accounts = await provider.eth.getAccounts()
       .then(acc => acc)
     let nonce = await DropMagnetAPI.getNonce(accounts[0])
 
-    signMessage(wb, accounts, nonce);
+    // await signMessage(wb, accounts, nonce);
+    await signMessageV2(wb, accounts, nonce)
+    // await signMessageV2(provider, accounts, nonce)
   }
 
   return (

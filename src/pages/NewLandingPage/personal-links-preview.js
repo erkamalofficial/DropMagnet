@@ -21,11 +21,12 @@ const PLSectionThree = styled.div`
   }
 `;
 
+// font-family: "Quicksand";
 const PLSectionUserinput = styled.input`
   font-weight: normal;
   border: 1px solid var(--purple500);
   color: #ffffff;
-  font-family: "Quicksand";
+
   font-size: 18px;
   font-weight: 700;
   font-style: normal;

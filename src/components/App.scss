@@ -1,7 +1,8 @@
 @import "../fonts/fonts";
+@import "./NewLandingPage/_newLandingPage";
 *{
   box-sizing: border-box;
-  font-family: "Azo Sans";
+  // font-family: "Azo Sans";
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
@@ -9,6 +10,7 @@ body{
   margin: 0;
   padding: 0;
   background: #1a1a1a;
+  font-family: "Azo Sans";
 }
 .navbar{
   width: 100%;

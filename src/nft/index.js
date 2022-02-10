@@ -1,12 +1,12 @@
 
 
 // wallet connect and reading NFT's packages.
-import { FetchWrapper } from "use-nft";
+import { FetchWrapper, useNft } from "use-nft";
 import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 
- const Nft = function () {
+ export const Nft = () => {
     let web3 = null;
     const ethereum = window.ethereum;
 
@@ -23,7 +23,7 @@ import axios from "axios";
             // rinkeby testnet
             //let url = 'https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address='   + accounts[0]  +  '&startblock=0&endblock=99999999&sort=asc&apikey=4UXJPJNUIQ5BI9HGTP8WPB6S7GP65EY2H1'
             let url =
-              "https://api-rinkeby.etherscan.io/api?module=account&action=tokennfttx&address=" +
+              "https://api-ropsten.etherscan.io/api?module=account&action=tokennfttx&address=" +
               accounts[0] +
               "&startblock=0&endblock=999999999&sort=asc&apikey=4UXJPJNUIQ5BI9HGTP8WPB6S7GP65EY2H1";
 

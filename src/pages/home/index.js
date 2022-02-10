@@ -23,6 +23,11 @@ import { GlobalContext } from "../../utils/GlobalContext";
 import { getCategorySymbolByPosition, getCategoryIdByPosition } from "../../utils/category";
 // jsx upgrade
 import * as DROP_SERVICE from '../../services/drop-services';
+import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
+import store from "../../store";
+import { setOpen } from "../../store/OpenCard";
+
+import "../../components/detail_page/DropDetail/DropDetail.css";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -77,6 +82,8 @@ const Home = (props) => {
   const { date } = useContext(GlobalContext)
 
   const { currentUser, idToken } = useAuth();
+
+  const token = currentUser.getIdToken().then(res => res)
 
   const uniqueId = Date.now();
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(date);
@@ -225,6 +232,17 @@ const Home = (props) => {
     })
   };
 
+  // const [selector, setSelector] = useState({isOpen: false, drop: {}});
+  // store.subscribe(() => {
+  //   setSelector(store.getState().card)
+  // })
+
+  // useEffect(() => {
+  //   console.log(selector)
+  // }, [selector])
+
+  // const selector = useSelector(state => state.card)
+
   return (
     <HomeContainer>
       <div className="rel">
@@ -271,6 +289,7 @@ const Home = (props) => {
           }
         </div>
       </div>
+      {/* {selector.isOpen && (<DropDetail show={selector.isOpen} drop={selector.drop} />)} */}
     </HomeContainer>
   );
 };

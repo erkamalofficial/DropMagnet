@@ -13,14 +13,14 @@
 }
 .main {
   color: var(--coreBlack);
-  font-family: "Quicksand", Helvetica;
+  /* font-family: "Quicksand", Helvetica; */
   width: inherit;
   max-width: inherit;
   margin-top: 68px;
 }
 .mag_main {
   color: var(--coreBlack);
-  font-family: "Quicksand", Helvetica;
+  /* font-family: "Quicksand", Helvetica; */
   width: inherit;
   max-width: inherit;
 }

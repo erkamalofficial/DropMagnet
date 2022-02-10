@@ -232,7 +232,8 @@ export default function DropCreation(props) {
       <Dropdown setSelected={setMarketplace} title={"Marketplace"} items={["OpenSea", "Mintable", "Rarible", "Other"]} />
       <TextField setInputValue={setMarketplaceId} title={"Your Profile Link on The Marketplace"} placeholder={"Enter your profile link"} />
       <PriceTextField setInputValue={setDropPieces} value={dropPieces} title={"Drop Piece"} placeholder={"Enter Drop Piece"} isPositiveOnly isCounterRequired />
-      <div style={{ fontFamily: 'Quicksand', fontSize: '14px', fontWeight: '500', color: 'white', textAlign: 'center', padding: '24px 0' }}>You Can Add The item Link When You Mint The NFTs with *name of marketplace* forthis drop on *date user entered on previous page*</div>
+      <div style={{ fontSize: '14px', fontWeight: '500', color: 'white', textAlign: 'center', padding: '24px 0' }}>You Can Add The item Link When You Mint The NFTs with *name of marketplace* forthis drop on *date user entered on previous page*</div>
+      {/* fontFamily: 'Quicksand', */}
     </div>
   }
 
