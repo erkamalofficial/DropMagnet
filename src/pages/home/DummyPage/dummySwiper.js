@@ -75,9 +75,11 @@ function DummySwiper(props) {
     } else {
       props.onSwipe && props.onSwipe(direction, drop_id);
       if (direction === "right") {
+        console.log(direction)
         dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index } });
       }
       if (direction === "left") {
+        console.log(direction)
         dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
       }
     }

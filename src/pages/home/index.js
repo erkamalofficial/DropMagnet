@@ -12,7 +12,7 @@ import Swiper from "./swiper";
 import "./index.css";
 import { useHistory } from 'react-router-dom';
 import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { saveDrop, unsaveDrop, updateTokens } from "../../DropMagnetAPI";
+import { getCategorySavedDrops, saveDrop, unsaveDrop, updateTokens } from "../../DropMagnetAPI";
 import LazyCard from "./LazyCard";
 import LazyTab from "./LazyTab";
 import { getCategoryFromTab, tabList } from "../../constants";
@@ -103,6 +103,9 @@ const Home = (props) => {
   //jsx upgrade
   const [categoryTabs, setCategoryTabs] = useState(null)
   const [externalCreatorTabs, setExternalCreatorTabs] = useState(null)
+
+  // const allCategories = useSelector(state => state.category.allCategories)
+  // const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
 
   const fetchCategory = (activeTabIndex, curTime, random) => {
     let extras = {
@@ -211,12 +214,19 @@ const Home = (props) => {
     currentUser.getIdToken().then((idToken) => {
       if (dir === "right") {
         // setInternalLoader(true);
-        saveDrop(idToken, drop_id)
-          .then(() => { })
-          .catch(() => { })
-          .finally(() => {
-            updateTokens(drop.artist && drop.artist.id).then(res => { })
-          });
+        const isFull = async () => {
+          const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories)
+          const length = await getCategorySavedDrops(idToken, currentTab)
+          if(length === null || length === undefined || length.length < 10) {
+          saveDrop(idToken, drop_id)
+            .then(() => { })
+            .catch(() => { })
+            .finally(() => {
+              updateTokens(drop.artist && drop.artist.id).then(res => { })
+            });
+          }
+        }
+        isFull()
       } else if (dir === "left") {
         unsaveDrop(idToken, drop_id)
           .then(() => { })

@@ -2,6 +2,7 @@ import initialState, { buckets } from "./initial-state";
 import { forEach, map, union, values } from "lodash";
 import emojis from "./emojiicons";
 import { getCategorySymbolByPosition, getFirstExternalCategoryPosition } from "../utils/category";
+import { getCategorySavedDrops } from "../DropMagnetAPI";
 
 const MAX_BUCKET_SIZE = 10;
 const getAvailableLinks = (allLinks, availableLinks) => {
@@ -135,31 +136,33 @@ const categoryReducer = (state = initialState, action) => {
     //   return { ...state, general, [currentTab]: selectedTabContent };
     // }
     case "ADD_USER_DATA": {
-      const currentTab = getCategorySymbolByPosition(state.general.activeTabIndex, state.allCategories);
-
+      const currentTab = action.payload.currentTab
       const activeTabContent = state[currentTab];
 
-      if(!activeTabContent) return {...state} ;
       const { reswipedDrops, activeBucket } = activeTabContent;
       const { drop_id, dropIndex } = action.payload;
-      if (!state.general.reswipeModeActive) {
+
+      const general = {
+        ...state.general,
+        reswipeModeActive: state.general.reswipeModeActive,
+      };
+      console.log("length:", action.payload.length)
+      if(action.payload.length >= MAX_BUCKET_SIZE) { // - 1
+        console.log("overflow")
+        general.reswipeModeActive = true;
+        return { ...state, general: general };
+      }
+      else {
+        if(!activeTabContent) {
+          console.log("activeTabContent")
+          return {...state};
+        }
+        
+        console.log("state reswipeMode: ", state.general.reswipeModeActive)
         reswipedDrops[activeBucket[dropIndex].id] = activeBucket[dropIndex];
 
         Object.assign(activeTabContent, { reswipedDrops });
-        let reswipeModeActive = false;
-        if (Object.keys(reswipedDrops).length >= MAX_BUCKET_SIZE) {
-          reswipeModeActive = true;
-        }
-
-        const general = {
-          ...state.general,
-          reswipeModeActive: reswipeModeActive,
-        };
-
-        return { ...state, [currentTab]: activeTabContent, general };
-
-      } else {
-        return state;
+        return { ...state, general: general, [currentTab]: activeTabContent };
       }
     }
     case "REMOVE_USER_DATA": {
@@ -257,6 +260,11 @@ const categoryReducer = (state = initialState, action) => {
       const currentTab = getCategorySymbolByPosition(state.general.activeTabIndex, state.allCategories);
       const reswipedDrops = {};
 
+      let reswipeModeActive = false;
+      if (Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE) {
+        reswipeModeActive = true;
+      }
+
       savedDrops.forEach((d) => {
         if (!reswipedDrops[d.category]) {
           reswipedDrops[d.category] = {};
@@ -265,10 +273,10 @@ const categoryReducer = (state = initialState, action) => {
         reswipedDrops[d.category][d.id] = d;
       });
 
-      let reswipeModeActive = false;
-      if (Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE) {
-        reswipeModeActive = true;
-      }
+      // let reswipeModeActive = false;
+      // if (Object.keys(reswipedDrops[currentTab]).length >= MAX_BUCKET_SIZE) {
+      //   reswipeModeActive = true;
+      // }
       const general = {
         ...state.general,
         reswipeModeActive

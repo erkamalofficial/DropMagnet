@@ -13,6 +13,14 @@ import './swiper.css';
 
 import { setOpen } from "../../store/OpenCard";
 
+import * as DropMagnetAPI from "../../DropMagnetAPI";
+
+import initialState from "../../store/initial-state";
+
+import { getCategorySymbolByPosition } from "../../utils/category";
+import { getCategorySavedDrops } from "../../DropMagnetAPI";
+import axios from "axios";
+
 const ActionSection = styled.div`
   display: flex;
   justify-content: center;
@@ -34,6 +42,9 @@ const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
 const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
 
+  const { currentUser, idToken } = useAuth();
+  
+
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
   const [openView, setOpenView] = useState(false)
@@ -42,6 +53,11 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
   const [newLoading, setNewLoading] = useState(true);
   const [swiping, setSwiping] = useState(false)
   const EC = useSelector(state => state.category.EC)
+
+  const allCategories = useSelector(state => state.category.allCategories)
+  const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
+
+  console.log(allCategories, activeTabIndex)
 
   const history = useHistory()
 
@@ -67,17 +83,34 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
   );
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
-  const swiped = (direction, drop_id, index, drop) => {
+  const swiped = async (direction, drop_id, index, drop) => {
+    const user_id = currentUser.uid;
+    let id_token = ""
+    currentUser
+      .getIdToken(false)
+      .then(function (idToken) {
+        id_token = idToken
+        DropMagnetAPI.getUserPosts(user_id, idToken)
+          .then((res) => {
+            console.log("posts")
+            // console.log(res.data)
+          })})
+
+          // getCategorySavedDrops(idToken,)
+
     // console.log("direction:KKK " + direction);
     if (reswipeModeActive) {
       props.onReswipe(direction, drop_id, index);
     } else {
       props.onSwipe && props.onSwipe(direction, drop_id, drop);
       if (direction === "right") {
-        dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index } });
+        const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories);
+        const length = await getCategorySavedDrops(idToken, currentTab)
+        // console.log("prevLength: ", length?.length)
+        await dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index, token: idToken, length: length === null ? 0 : length.length, currentTab: currentTab } });
       }
       if (direction === "left") {
-        dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
+        await dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
       }
     }
 
@@ -138,17 +171,7 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
     <>
       
       <div className="view-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
-        {openView && 
-        // (
-        //   <div className="drop-detail-container">
-        //     <DropDetail
-        //       show={true}
-        //       drop={curDrop}
-        //       closeDetailView={() => setOpenView(false)}
-        //       handleClick={() => console.log("Click")} />
-        //   </div>
-        // )} */}
-        renderDetail()}
+        {openView && renderDetail()}
       </div>
       <CardContainer onClick={renderDetail} key="cardContainer" className={'fix-minor-bug-swipe swiper-card-container'} style={{ display: `${openView ? 'none' : 'flex'}` }}>
         {cards.length > 0 ? cards.map((cardDetails, index) => {
