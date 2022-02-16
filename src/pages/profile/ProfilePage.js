@@ -143,6 +143,15 @@ export default function ProfilePage(props) {
         // ...
         console.log("id token is", idToken);
         console.log(currentUser);
+          const interval = setInterval(() => {
+            DropMagnetAPI.getFeeds2(user_id, {curTime: Date.now(), token: idToken}).then((res) => {
+              console.log(res)
+            })
+          }, 10000)
+
+          setTimeout(() => {
+            clearInterval(interval)
+          }, 100000)
         DropMagnetAPI.getUserProfile(user_id, idToken).then(function (
           response
         ) {

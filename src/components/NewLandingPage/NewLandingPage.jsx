@@ -112,7 +112,7 @@ export const NewLandingPage = () => {
     const userLogin = async (token) => { // This one is for wallet
       const res = await signInWithCustomToken(token)
         .then(cred => cred)
-  
+        console.log("3")
       let tk = await res.user.getIdToken()
       localStorage.setItem("token", tk)
   
@@ -139,13 +139,19 @@ export const NewLandingPage = () => {
     }
   
     const signMessageV2 = async (web3, accounts, nonce) => {
+      let message = `Sign In to DropMagnet: ${nonce.nonce}`
       let _signature, token
-  
+      console.log("2")
       await web3.eth.personal.sign(
-        web3.utils.fromUtf8(`Sign In to DropMagnet: ${nonce.nonce}`),
+        // web3.utils.fromUtf8(`Sign In to DropMagnet: ${nonce.nonce}`),
+        message,
         accounts[0],
-        (err, signature) => {
-          if (err) console.log(err)
+        async (err, signature) => {
+          console.log("4")
+          if (err) {
+            console.log("5")
+            console.log(err)
+          }
           _signature = signature
           console.log("signature: ", signature, _signature)
         }
@@ -179,6 +185,7 @@ export const NewLandingPage = () => {
       let accounts = await wb.eth.getAccounts()
         .then(acc => acc)
       let nonce = await DropMagnetAPI.getNonce(accounts[0])
+      console.log("1")
   
       await signMessageV2(wb, accounts, nonce)
     }
