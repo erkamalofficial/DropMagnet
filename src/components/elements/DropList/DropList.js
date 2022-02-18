@@ -25,14 +25,58 @@ export default function DropList(props) {
   const [swiping, setSwiping] = useState(false)
   const [loading, setLoading] = useState(false)
   const [stage, setStage] = useState(20)
+  const [index, setIndex] = useState(0)
 
   const { currentUser } = useAuth()
 
   const loadItems = () => {
-    const arr = props.drops.slice(0, stage)
-    setListItems(arr)
-    setStage(prev => prev + 20)
+    if (window.location.pathname === "/profile") {
+      const arr = props.drops.slice(0, stage)
+      setListItems(arr)
+      setStage(prev => prev + 20)
+    }
+    else {
+      if(index > 0) {
+      currentUser
+      .getIdToken(false)
+      .then(function (idToken) {
+        DropMagnetAPI.getFeeds2(props.user_id, {curTime: index, token: idToken}).then((res) => {
+          const drops = listItems
+          for(let i = 0; i < res.drops.length; i++) {
+            drops.push(res.drops[i])
+          }
+          setIndex(res.index)
+          setListItems(drops)
+          setStage(prev => prev + 20)
+        })
+      })
+    }
   }
+  }
+
+  // useEffect(() => {
+  //   currentUser
+  //     .getIdToken(false)
+  //     .then(function (idToken) {
+  //       DropMagnetAPI.getFeeds2(props.user_id, {curTime: index > 0 ? index : Date.now(), token: idToken}).then((res) => {
+  //         setIndex(res.index)
+  //         setListItems(res.drops)
+  //         setStage(prev => prev + 20)
+  //       })
+  //     })
+  // }, [index])
+
+  useEffect(() => {
+    currentUser
+      .getIdToken(false)
+      .then(function (idToken) {
+        DropMagnetAPI.getFeeds2(props.user_id, {curTime: Date.now(), token: idToken}).then((res) => {
+          setIndex(res.index)
+          setListItems(res.drops)
+          setStage(prev => prev + 20)
+        })
+      })
+  }, [])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -46,7 +90,8 @@ export default function DropList(props) {
 
   useEffect(() => {
     if (!isFetching) return;
-    fetchMoreListItems();
+    // fetchMoreListItems();
+    loadItems()
   }, [isFetching]);
 
   function handleScroll() {
@@ -120,7 +165,7 @@ export default function DropList(props) {
             endMessage={<></>}
             >
           {
-            listItems.map(drop => (
+            listItems.length > 0 && listItems.map(drop => (
               <SwipeableListItem
                 swipeStartThreshold={0}
                 // leadingActions={leadingActions()}

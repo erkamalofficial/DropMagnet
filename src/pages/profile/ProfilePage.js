@@ -51,6 +51,7 @@ export default function ProfilePage(props) {
   const [scheduledPosts, setScheduledPosts] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
   const [user, setUser] = useState(null);
+  const [dropsNumber, setDropsNumber] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -143,15 +144,15 @@ export default function ProfilePage(props) {
         // ...
         console.log("id token is", idToken);
         console.log(currentUser);
-          const interval = setInterval(() => {
-            DropMagnetAPI.getFeeds2(user_id, {curTime: Date.now(), token: idToken}).then((res) => {
-              console.log(res)
-            })
-          }, 10000)
+          // const interval = setInterval(() => {
+          //   DropMagnetAPI.getFeeds2(user_id, {curTime: Date.now(), token: idToken}).then((res) => {
+          //     console.log(res)
+          //   })
+          // }, 10000)
 
-          setTimeout(() => {
-            clearInterval(interval)
-          }, 100000)
+          // setTimeout(() => {
+          //   clearInterval(interval)
+          // }, 100000)
         DropMagnetAPI.getUserProfile(user_id, idToken).then(function (
           response
         ) {
@@ -166,6 +167,7 @@ export default function ProfilePage(props) {
             setTwitterHandle(response.twitter_url.split("/").pop());
             setUserImage(response.avatar_url || "");
             setUser(response);
+            setDropsNumber(response.drop_count)
           }
         });
 
@@ -173,15 +175,22 @@ export default function ProfilePage(props) {
         //   console.log(res);
         //   setSavedPosts(res);
         // });
-
-        DropMagnetAPI.getUserPosts(user_id, idToken)
-          .then((res) => {
-            setScheduledPosts(res);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setLoading(false);
-          });
+        DropMagnetAPI.getFeeds2(user_id, {curTime: Date.now(), token: idToken}).then((res) => {
+          console.log(res)
+          setScheduledPosts(res)
+          setLoading(false)
+        })
+        .catch((err) => {
+          setLoading(false)
+        })
+        // DropMagnetAPI.getUserPosts(user_id, idToken)
+        //   .then((res) => {
+        //     setScheduledPosts(res);
+        //     setLoading(false);
+        //   })
+        //   .catch((err) => {
+        //     setLoading(false);
+        //   });
       })
       .catch(function (error) {
         // Handle error
@@ -203,6 +212,7 @@ export default function ProfilePage(props) {
         onClick={openDrop}
         setDetailView={setDetailView}
         setCurDrop={setCurDrop}
+        user_id={id}
       />
     );
   }
@@ -335,7 +345,8 @@ export default function ProfilePage(props) {
             }}
           >
             <div className="profile-button-option-holder">
-              {scheduledPosts.length > 0 ? (
+              {dropsNumber > 0 ? (
+              // scheduledPosts.length > 0 ? (
                 <div
                   className={
                     selectedProfileList === "scheduled"
@@ -347,7 +358,9 @@ export default function ProfilePage(props) {
                     setCategoryList(collectibleArts);
                   }}
                 >
-                  {firstName.split(' ')[0]}'s Drops ({scheduledPosts.length})
+                  {firstName.split(' ')[0]}'s Drops ({dropsNumber}
+                    {/* {scheduledPosts.length} */}
+                    )
                 </div>
               ) : (
                 <></>
