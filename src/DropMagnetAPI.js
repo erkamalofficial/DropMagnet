@@ -253,6 +253,11 @@ export function getEC(extras) {
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 
+export function getOneEC(id, extras) {
+  const feedDropsEndpoint = `external_creators/${id}`
+  return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
+}
+
 export function getDrop(id, token) {
   const dropEndpoint = `drops/${id}`
   return customAPICall(dropEndpoint, "", "GET", '')
