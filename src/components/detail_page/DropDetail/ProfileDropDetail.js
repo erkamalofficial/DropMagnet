@@ -152,7 +152,7 @@ export default function ProfileDropDetail(props) {
         :
         <div className={'drop-detail-image-single'}>
           {props.drop.media[0].type === 'video' ? (
-            <video width="100%" height="100%" controls autoPlay>
+            <video width="100%" height="100%" controls autoPlay playsInline>
               <source src={props.drop.media[0].url} type="video/mp4"/>
               Your browser does not support the video tag.
             </video>

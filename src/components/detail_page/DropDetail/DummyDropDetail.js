@@ -59,7 +59,7 @@ export default function DummyDropDetail(props) {
 
             <div className={'drop-detail-video-single'}>
                 <VideoHolder className={'video-playback'}>
-                    <video width="195" height="100%" controls>
+                    <video width="195" height="100%" controls playsInline>
                         <source src={props.drop.video_url} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
