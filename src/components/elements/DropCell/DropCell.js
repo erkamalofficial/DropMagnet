@@ -72,7 +72,7 @@ export default function DropCell(props) {
           </div>
         </div>
         {props.drop.media[0].type === "video" ? (
-          <video className="drop-image" width="100%" height="100%" autoPlay loop playsInline>
+          <video className="drop-image" width="100%" height="100%" autoPlay loop playsInline controls={false}>
           <source src={props.drop.media[0].url} type="video/mp4"/>
           Your browser does not support the video tag.
         </video>
