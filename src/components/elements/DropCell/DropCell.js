@@ -71,8 +71,14 @@ export default function DropCell(props) {
             {price !== '' && <p2 className="drop-price"><span>Ξ</span> {price}</p2>}
           </div>
         </div>
+        {props.drop.media[0].type === "video" ? (
+          <video className="drop-image" width="100%" height="100%" autoPlay loop muted playsInline>
+          <source src={props.drop.media[0].url} type="video/mp4"/>
+          Your browser does not support the video tag.
+        </video>
+        ) : (
         <img className="drop-image" src={props.drop.media[0].url} alt="/" />
-
+        )}
       </div>
     </div>
   }
