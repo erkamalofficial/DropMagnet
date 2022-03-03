@@ -2,7 +2,7 @@
   "name": "dropmagnet-app",
   "version": "0.1.0",
   "private": false,
-  "proxy": "https://drop-backend-rnd454q4pa-ew.a.run.app",
+  "proxy": "https://drop-api-rnd454q4pa-ew.a.run.app",
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.19",
     "@magic-ext/oauth": "^0.8.0",

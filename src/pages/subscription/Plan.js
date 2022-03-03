@@ -13,7 +13,7 @@ const Plan = (props) => {
     const { currentUser } = useAuth()
 
     const onToken = async (token, address) => {
-        const res = await axios.post('https://drop-backend-rnd454q4pa-ew.a.run.app/payments', {
+        const res = await axios.post('https://drop-api-rnd454q4pa-ew.a.run.app/payments', {
             token,
             amount: Math.round(priceVal * 100)
         })

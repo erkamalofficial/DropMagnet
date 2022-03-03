@@ -7,11 +7,9 @@ var host;
 
 if (process.env.NODE_ENV === "development") {
   // local dev
-  // host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
   host = 'https://drop-api-rnd454q4pa-ew.a.run.app/';
 } else {
   // pick up from .env
-  // host = 'https://drop-backend-rnd454q4pa-ew.a.run.app/';
   host = 'https://drop-api-rnd454q4pa-ew.a.run.app/';
 }
 
@@ -242,9 +240,8 @@ export function getFeeds(category, extras, past) {
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 
-//  https://drop-backend-rnd454q4pa-ew.a.run.app/external_creators/PUT_CREATOR_UID/drops?index=PUT_INDEX_HERE
 export function getFeeds2(id, extras) {
-  const feedDropsEndpoint = `external_creators/${id}/drops?index=${extras.curTime}`
+  const feedDropsEndpoint = `drops?user_id=${id}&index=${extras.curTime}`
   return customAPICall(feedDropsEndpoint, "", "GET", extras.token)
 }
 

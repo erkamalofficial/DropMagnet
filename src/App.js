@@ -4,15 +4,12 @@ import { Switch, BrowserRouter as Router, Route, Redirect, useHistory } from "re
 import PrivateRoute from "./components/wrappers/PrivateRoute";
 import React, { Suspense, useMemo, useState, useEffect }  from "react";
 import TermsAndConditions from "./pages/terms";
-import DropCreation from "./pages/create_drop";
 import Signup from "./pages/register/Signup";
 import Signup2 from "./pages/signup/index2";
 import Login from "./pages/register/Login";
 import MagicLogin from "./pages/magiclogin/MagicLogin";
 import ForgotPassword from "./pages/register/ForgotPassword";
 import Profile from "./pages/profile";
-import SquareGallery from "./pages/galleries/square-gallery";
-import MagGallery from "./pages/galleries/mag-gallery";
 import WalletLinks from "./pages/wallet/wallet-links";
 import BuyLinks from "./pages/wallet/buy-links";
 import PersonalLinksHome from "./pages/wallet/personal-links-home";
@@ -308,26 +305,7 @@ function App() {
               component={NewLandingPage}
             />
 
-            <Route
-              path="/square_gallery"
-              render={(props) => (
-                <SquareGallery
-                  {...props}
-                  userDetails={userDetails}
-                  userLoggedIn={true}
-                />
-              )}
-            />
-            <Route
-              path="/mag_gallery"
-              render={(props) => (
-                <MagGallery
-                  {...props}
-                  userDetails={userDetails}
-                  userLoggedIn={true}
-                />
-              )}
-            />
+
             <PrivateRoute
               path="/create_drop"
               component={CreateDropPage}
