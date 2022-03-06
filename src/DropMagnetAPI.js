@@ -1,17 +1,6 @@
-import { ContactlessOutlined } from "@material-ui/icons";
-import firebase from "firebase/app"
 import "firebase/auth"
-import { useAuth } from "../src/contexts/FirebaseAuthContext"
 
-var host;
-
-if (process.env.NODE_ENV === "development") {
-  // local dev
-  host = 'https://drop-api-rnd454q4pa-ew.a.run.app/';
-} else {
-  // pick up from .env
-  host = 'https://drop-api-rnd454q4pa-ew.a.run.app/';
-}
+var host = 'https://drop-api-rnd454q4pa-ew.a.run.app/';
 
 async function customAPICall(endpoint, data, method, access_token) {
   const uri = host + endpoint
@@ -60,35 +49,31 @@ async function normalAPICall(endpoint, data, method, access_token) {
 
 
 
-async function customAPICallAddDrop(endpoint, data, method, access_token) {
+// async function customAPICallAddDrop(endpoint, data, method, access_token) {
+//   const formData = new FormData()
 
-  const uri = host + endpoint
-  // Firebase Auth Token
+//   for (const name in data) {
+//     if (name === 'content') {
+//       data[name].map((image) => {
+//         formData.append('content', image);
+//       })
+//     } else {
+//       formData.append(name, data[name]);
+//     }
+//   }
 
-  const formData = new FormData()
-
-  for (const name in data) {
-    if (name === 'content') {
-      data[name].map((image) => {
-        formData.append('content', image);
-      })
-    } else {
-      formData.append(name, data[name]);
-    }
-  }
-
-  const res = await fetch(uri, {
-    method: method,
-    body: data === "" ? null : formData,
-    mode: 'cors', // no-cors, *cors, same-origin
-    headers: {
-      'Authorization': `Bearer ${access_token}`
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  })
-  return res.json()
-}
+//   const res = await fetch(host + endpoint, {
+//     method: method,
+//     body: data === "" ? null : formData,
+//     mode: 'cors', // no-cors, *cors, same-origin
+//     headers: {
+//       'Authorization': `Bearer ${access_token}`
+//     },
+//     redirect: 'follow', // manual, *follow, error
+//     referrerPolicy: 'no-referrer' // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//   })
+//   return res.json()
+// }
 
 async function customAPICallUpdateAvatar(endpoint, data, method, access_token) {
 
@@ -143,7 +128,7 @@ export function createNewUserProfile(name, username, token) {
 }
 
 export function getUserProfile(profile_id, token) {
-  const userProfileEndpoint = 'profiles' + '/' + profile_id
+  const userProfileEndpoint = 'profiles/' + profile_id
   return customAPICall(userProfileEndpoint, "", "GET", token)
 }
 
@@ -194,24 +179,24 @@ export function getTokens(artistId, idToken) {
 // Drop creation
 
 
-export function createDrop(title, desc, category, drop_date, marketplace, link, pieces, price, auction_price, files, access_token) {
-  const createDropEndpoint = 'drops'
-  const content = files;
+// export function createDrop(title, desc, category, drop_date, marketplace, link, pieces, price, auction_price, files, access_token) {
+//   const createDropEndpoint = 'drops'
+//   const content = files;
 
-  const payload = {
-    title,
-    desc,
-    category,
-    drop_date,
-    marketplace,
-    link,
-    pieces,
-    price,
-    auction_price,
-    content
-  }
-  return customAPICallAddDrop(createDropEndpoint, payload, "POST", access_token)
-}
+//   const payload = {
+//     title,
+//     desc,
+//     category,
+//     drop_date,
+//     marketplace,
+//     link,
+//     pieces,
+//     price,
+//     auction_price,
+//     content
+//   }
+//   return customAPICallAddDrop(createDropEndpoint, payload, "POST", access_token)
+// }
 
 export function deleteDrop(dropId, token){
   const deleteDropEndPoint = `drops/delete/${dropId}`

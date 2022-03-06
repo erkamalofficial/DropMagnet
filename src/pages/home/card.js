@@ -205,7 +205,7 @@ const Card = (props) => {
         <FooterSection key={3}>
           <FooterTitle>{props.title} </FooterTitle>
           <FooterButtons>
-            <p2 className="drop-marketplace-title market">{props.marketplace.toUpperCase()}</p2>
+            <p2 className="drop-marketplace-title market"></p2>
             <p2 className="drop-category-title type">{props.category.toUpperCase()}</p2>
             <p2 className="drop-price price"><span>Ξ</span>
               {props.price !== '0' && props.price !== undefined ? props.price

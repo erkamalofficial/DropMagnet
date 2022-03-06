@@ -1,6 +1,5 @@
 import "./App.css";
-// import Home from "./pages/home/index";
-import { Switch, BrowserRouter as Router, Route, Redirect, useHistory } from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "./components/wrappers/PrivateRoute";
 import React, { Suspense, useMemo, useState, useEffect }  from "react";
 import TermsAndConditions from "./pages/terms";
@@ -16,8 +15,6 @@ import PersonalLinksHome from "./pages/wallet/personal-links-home";
 import NftDisplay from "./pages/wallet/nft-display";
 import ConnectedWallets from "./pages/wallet/connected-wallets";
 import PersonalLinksPayment from "./pages/wallet/personal-links-payments";
-// import SelectLinks from "./pages/wallet/select-links";
-// import TinderCards from './pages/react-tinder-card/DemoSwiper';
 import { useAuth } from "../src/contexts/FirebaseAuthContext";
 import About from "./pages/about";
 import AboutDrop from "./pages/aboutDrop";
@@ -27,8 +24,6 @@ import UpgradeSub from "./pages/upgradeSub";
 import Reswipe from "./pages/reswipe";
 import { getUserProfile } from './DropMagnetAPI';
 import { useSelector } from "react-redux";
-import styled from "styled-components";
-import LandingPage from "./pages/NewLandingPage";
 import DropPage from "./pages/home/DropPage";
 import ProfileForm from "./pages/register/ProfileForm";
 import ProfilePage from "./pages/profile/ProfilePage";
@@ -51,8 +46,6 @@ import { getFirstExternalCategoryPosition } from "./utils/category";
 
 import { NewLandingPage } from "./components";
 
-// import Nft from "./nft";
-// import firebase from "firebase/app";
 const HomeComponent = React.lazy(() => import("./pages/home/index"));
 const DummyHomeComponent = React.lazy(() => import("./pages/home/DummyPage/dummyIndex"));
 const CreateDropComponent = React.lazy(() => import("./pages/create_drop"));
@@ -127,8 +120,6 @@ function App() {
   const [reload, setReload] = useState(true)
   const [curUser, setCurUser] = useState(null)
 
-  const headerLoad = sessionStorage.headerLoad
-
   const addFlag = () => {
     if (!sessionStorage.reloading) {
       sessionStorage.setItem("reloading", "true");
@@ -158,13 +149,11 @@ function App() {
   }, []);
 
 
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails] = useState({});
 
   const { logout, currentUser, idToken } = useAuth();
 
   useEffect(() => {
-    // Send token to your backend via HTTPS
-    // ...
     if (currentUser && currentUser.uid && idToken) {
 
       getUserProfile(currentUser.uid, idToken).then(function (response) {
@@ -182,8 +171,8 @@ function App() {
   }, [idToken, currentUser]);
 
   return (
-    <MoralisProvider appId="OU0t6bcDBOdttZz6GQwOQwL1FR5gldTGV0IRnBukSFyzrWeFvXnKNpKjXhXa3OVh" 
-    serverUrl="https://vzaksd4g1d0t.grandmoralis.com:2053/server">
+    <MoralisProvider appId="S4zhh8L6vdPN81PtccZlGdgzRgHHaWIkByAH3U83" 
+    serverUrl="https://bpd31kujx9nz.usemoralis.com:2053/server">
       <GlobalContext.Provider value={{ date, setDate, setCurUser, curUser }}>
         <Router>
           <div className="fixed-container"

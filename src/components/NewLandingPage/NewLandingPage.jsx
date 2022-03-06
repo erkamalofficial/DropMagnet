@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from "react"
+import React, {useState, useEffect} from "react"
 import Marquee from "react-fast-marquee"
 import BAYC from "./imgs/BAYC.png"
 import BB from "./imgs/BB.jpg"
@@ -28,7 +28,7 @@ import * as DropMagnetAPI from "../../DropMagnetAPI"
 import axios from "axios"
 
 import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { Link, useHistory, useParams } from "react-router-dom";
+import {useHistory, useParams } from "react-router-dom";
 
 
 export const NewLandingPage = () => {
@@ -49,18 +49,14 @@ export const NewLandingPage = () => {
         {name: "Boss Beauties", link: BB},
     ]
 
-    let pubAdd = JSON.stringify(localStorage.getItem('publicAddress'))
     const { id } = useParams()
     console.log(id)
   
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const { login, signInWithCustomToken, currentUser, sendSignInLinkToEmail } = useAuth();
+    const {signInWithCustomToken} = useAuth();
   
-    const [address, setAddress] = useState(pubAdd || '')
     const [error, setError] = useState("")
   
-    const [loading, setLoading] = useState(false);
+    const [setLoading] = useState(false);
     const history = useHistory();
   
     const coinbase = getProviderInfoByName('Coinbase')

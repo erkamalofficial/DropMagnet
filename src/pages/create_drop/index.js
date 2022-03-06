@@ -92,32 +92,32 @@ export default function DropCreation(props) {
 
 
   function createDrop() {
-    currentUser.getIdToken(false).then(function (idToken) {
-      let drop_date = new Date(launchDate).getTime()
-      DropMagnetAPI.createDrop(
-        title,
-        description,
-        category.toLowerCase(),
-        drop_date,
-        marketplace,
-        link,
-        Number(dropPieces),
-        Number(price),
-        Number(auction_price),
-        files,
-        idToken)
-        .then(function (response) {
-          if (response.status === "error") {
-            // setLoginError(response.message);
-          } else {
-            alert("Your drop successfully created.")
-            history.push("/profile")
-            // setLoginError('');
-            // props.saveCredentials(idToken, idToken);
-            // history.push("/home");
-          }
-        });
-    })
+    // currentUser.getIdToken(false).then(function (idToken) {
+    //   let drop_date = new Date(launchDate).getTime()
+    //   DropMagnetAPI.createDrop(
+    //     title,
+    //     description,
+    //     category.toLowerCase(),
+    //     drop_date,
+    //     marketplace,
+    //     link,
+    //     Number(dropPieces),
+    //     Number(price),
+    //     Number(auction_price),
+    //     files,
+    //     idToken)
+    //     .then(function (response) {
+    //       if (response.status === "error") {
+    //         // setLoginError(response.message);
+    //       } else {
+    //         alert("Your drop successfully created.")
+    //         history.push("/profile")
+    //         // setLoginError('');
+    //         // props.saveCredentials(idToken, idToken);
+    //         // history.push("/home");
+    //       }
+    //     });
+    // })
   }
 
   function getTitle() {

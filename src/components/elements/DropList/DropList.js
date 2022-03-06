@@ -67,7 +67,6 @@ export default function DropList(props) {
   // }, [index])
 
   useEffect(() => {
-    console.log(props)
     if(props.isSaved !== true) {
     currentUser
       .getIdToken(false)
