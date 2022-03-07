@@ -60,7 +60,7 @@ const AddWallet = (props) => {
     })
 
     const ethereum = walletLink.makeWeb3Provider(
-        "https://ropsten.infura.io/v3/a789adc9c04146d88b3fb64732fbf206", 1
+        "https://ropsten.infura.io/v3/dc1c5b7b227d4885a03cf5eeb5e3224c", 1
     )
 
     const providerOptions = {
@@ -77,7 +77,7 @@ const AddWallet = (props) => {
         walletconnect: {
             package: WalletConnectProvider,
             options: {
-                infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
+                infuraId: "dc1c5b7b227d4885a03cf5eeb5e3224c",
             }
         },
 
