@@ -56,7 +56,7 @@ export const NewLandingPage = () => {
   
     const [error, setError] = useState("")
   
-    const [setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
   
     const coinbase = getProviderInfoByName('Coinbase')
