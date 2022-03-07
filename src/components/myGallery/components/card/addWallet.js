@@ -77,7 +77,7 @@ const AddWallet = (props) => {
         walletconnect: {
             package: WalletConnectProvider,
             options: {
-                infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
+                infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
             }
         },
 
@@ -149,7 +149,7 @@ const AddWallet = (props) => {
                 },
                 {
                     walletName: "walletConnect",
-                    infuraKey: "8043bb2cf99347b1bfadfb233c5325c0"
+                    infuraKey: "27e484dcd9e3efcfd25a83a78777cdf1"
                 },
             ]
         },
