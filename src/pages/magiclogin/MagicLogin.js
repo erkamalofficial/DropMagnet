@@ -30,14 +30,14 @@ const MagicLogin = () => {
     })
 
     const ethereum = walletLink.makeWeb3Provider(
-        "https://ropsten.infura.io/v3/a789adc9c04146d88b3fb64732fbf206", 1
+        "https://ropsten.infura.io/v3/dc1c5b7b227d4885a03cf5eeb5e3224c", 1
     )
 
     const providerOptions = {
         walletconnect: {
             package: WalletConnectProvider,
             options: {
-                infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
+                infuraId: "dc1c5b7b227d4885a03cf5eeb5e3224c",
             }
         },
 
