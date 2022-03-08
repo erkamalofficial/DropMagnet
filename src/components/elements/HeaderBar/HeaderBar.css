@@ -68,6 +68,7 @@
   flex-direction: row;
   height: 36px;
   padding-right: 16px;
+  align-items: center;
 }
 
 .header-bar-menu-icon {

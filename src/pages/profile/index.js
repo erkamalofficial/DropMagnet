@@ -14,7 +14,7 @@ import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDr
 import DropDetail from '../../components/detail_page/DropDetail/DropDetail';
 import Spinner from "../../components/blocks/spinner";
 import styled from "styled-components";
-import { useDispatch , useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Tabs from "../home/tabs";
 import { getCategoryFromTab, tabList } from "../../constants";
 import { getInitials } from "../../utils";
@@ -111,15 +111,15 @@ export default function Profile(props) {
 
   const currentTabName = useMemo(() => seprateTL[activeTabIndex], [seprateTL, activeTabIndex]);
 
-  const currSavedPosts = savedPosts.filter((value) => value.category === currentTabName);
+  const currSavedPosts = savedPosts && savedPosts.filter((value) => value.category === currentTabName);
   const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
 
   useEffect(() => {
-    if(allCategories) {
+    if (allCategories) {
       const en = [];
 
-      for (let i = 0; i < allCategories.categories.length; i++) { en.push(allCategories.categories[i].value)}
-      for (let i = 0; i < allCategories.external_creators.length; i++) { en.push(allCategories.external_creators[i].symbol)}
+      for (let i = 0; i < allCategories.categories.length; i++) { en.push(allCategories.categories[i].value) }
+      for (let i = 0; i < allCategories.external_creators.length; i++) { en.push(allCategories.external_creators[i].symbol) }
 
       setseprateTL([...en]);
     }
@@ -148,38 +148,35 @@ export default function Profile(props) {
   useEffect(() => {
     if (!sessionProfile) {
       const user_id = currentUser.uid;
-      currentUser
-        .getIdToken(false)
-        .then(function (idToken) {
-          // Send token to your backend via HTTPS
-          // ...
-          DropMagnetAPI.getUserProfile(user_id, idToken).then(function (
-            response
-          ) {
-            if (response.status === "error") {
-              setLoading({ ...loading, profile: false })
-            } else {
-              setLoading({ ...loading, profile: false })
-              setFirstName(response.name);
-              setHandle(response.username);
-              setBio(response.bio);
-              setInstaHandle(response.insta_url.split("/").pop());
-              setTwitterHandle(response.twitter_url.split("/").pop());
-              setUserImage(response.avatar_url || "");
-              setUser(response);
-              const p = {
-                ...response,
-                name: response.name,
-                usernmae: response.username,
-                bio: response.bio,
-                insta_url: response.insta_url,
-                twitter_url: response.twitter_url,
-                avatar_url: response.avatar_url
-              }
-              sessionStorage.setItem('profileDetails', JSON.stringify(p))
+      currentUser.getIdToken(false).then(function (idToken) {
+        // Send token to your backend via HTTPS
+        // ...
+        DropMagnetAPI.getUserProfile(user_id, idToken).then(function (response) {
+          if (response.status === "error") {
+            setLoading({ ...loading, profile: false })
+          }
+          else {
+            setLoading({ ...loading, profile: false })
+            setFirstName(response.name);
+            setHandle(response.username);
+            setBio(response.bio);
+            setInstaHandle(response.insta_url.split("/").pop());
+            setTwitterHandle(response.twitter_url.split("/").pop());
+            setUserImage(response.avatar_url || "");
+            setUser(response);
+            const p = {
+              ...response,
+              name: response.name,
+              usernmae: response.username,
+              bio: response.bio,
+              insta_url: response.insta_url,
+              twitter_url: response.twitter_url,
+              avatar_url: response.avatar_url
             }
-          });
-        })
+            sessionStorage.setItem('profileDetails', JSON.stringify(p))
+          }
+        });
+      })
     }
   }, [])
 
@@ -335,8 +332,8 @@ export default function Profile(props) {
     setUpdating(true)
     const user_id = currentUser.uid
 
-    if(field === 'username'){
-      if(value.split(' ').length > 1){
+    if (field === 'username') {
+      if (value.split(' ').length > 1) {
         alert("Username cannot have space.")
         setUpdating(false)
         setHandle(user.username)
@@ -344,19 +341,16 @@ export default function Profile(props) {
       }
     }
 
-    if(value === user[field]){
+    if (value === user[field]) {
       alert(`It is same as previous ${field}. Try new one.`)
       setUpdating(false)
-      
+
       return;
     }
 
     currentUser.getIdToken(false).then(function (idToken) {
       DropMagnetAPI.updateUserDetails(field, value, idToken).then((res) => {
-
-        DropMagnetAPI.getUserProfile(user_id, idToken).then(function (
-          response
-        ) {
+        DropMagnetAPI.getUserProfile(user_id, idToken).then(function (response) {
           if (response.status === "error") {
           } else {
             setFirstName(response.name);
@@ -927,22 +921,13 @@ export default function Profile(props) {
                     true
                   )
                 ) : currSavedPosts.length === 0 ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      marginTop: "20px",
-                    }}
-                    className="profile-bio-description"
-                  >
-                    <p className="redirect-link">
-                      You don't have any drops saved yet. Go to the{" "}
+                  <div style={{  display: "flex",  flexDirection: "column",  alignItems: "center",  marginTop: "20px",  height: 50}}
+                    className="profile-bio-description">
+                    <p className="redirect-link"> You don't have any drops saved yet. Go to the{" "}
                       <span onClick={() => {
                         sessionStorage.removeItem('headerLoad')
                         props.history.push("/swiper")
-                      }}>
-                        swiper page
+                      }}> swiper page
                       </span>{" "}
                       to explore or change category.
                     </p>

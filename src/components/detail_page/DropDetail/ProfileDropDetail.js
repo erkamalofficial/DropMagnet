@@ -122,8 +122,7 @@ export default function ProfileDropDetail(props) {
           onClick={openUser}
         >{artist_name}
         </h1>
-        <img className="close-detail-button close-button view-close-btn"
-          style={{ width: '39px', height: '39px', cursor: 'pointer' }}
+        <img style={{ width: '39px', height: '39px', cursor: 'pointer', padding: 6, marginRight: 10 }}
           onClick={() => closeDetail()} src="./close-icon.png"
           alt="/" />
       </div>

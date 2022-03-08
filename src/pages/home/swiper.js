@@ -40,10 +40,10 @@ const CardContainer = styled.div`
 const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
-const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
+  const { db, reswipeModeActive, setDetailView, nextIndex, tabList2 } = props
 
   const { currentUser, idToken } = useAuth();
-  
+
 
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
@@ -86,31 +86,29 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
   const swiped = async (direction, drop_id, index, drop) => {
     const user_id = currentUser.uid;
     let id_token = ""
-    currentUser
-      .getIdToken(false)
-      .then(function (idToken) {
+    currentUser.getIdToken(false).then(function (idToken) {
         id_token = idToken
-        DropMagnetAPI.getUserPosts(user_id, idToken)
-          .then((res) => {
-            console.log("posts")
-            // console.log(res.data)
-          })})
+        // DropMagnetAPI.getUserPosts(user_id, idToken)
+        //   .then((res) => {
+        //     console.log("posts")
+        //     // console.log(res.data)
+        //     console.log('DropMagnetAPI.getUserPosts', res)
+        //   })
+        //   console.log('currentUser.getIdToken', idToken)
+      })
 
-          // getCategorySavedDrops(idToken,)
-
-    // console.log("direction:KKK " + direction);
     if (reswipeModeActive) {
       props.onReswipe(direction, drop_id, index);
     } else {
-      props.onSwipe && props.onSwipe(direction, drop_id, drop);
+      props.onSwipe && await props.onSwipe(direction, drop_id, drop);
       if (direction === "right") {
         const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories);
         const length = await getCategorySavedDrops(idToken, currentTab)
         // console.log("prevLength: ", length?.length)
-        await dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index, token: idToken, length: length === null ? 0 : length.length, currentTab: currentTab } });
+        dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index, token: idToken, length: length === null ? 0 : length.length, currentTab: currentTab } });
       }
       if (direction === "left") {
-        await dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
+        dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
       }
     }
 
@@ -169,7 +167,7 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
 
   return (
     <>
-      
+
       <div className="view-container" id="detCnt" style={{ display: `${!openView ? 'none' : 'block'}` }} >
         {openView && renderDetail()}
       </div>
@@ -202,20 +200,20 @@ const { db, reswipeModeActive, setDetailView, nextIndex , tabList2 } = props
         }) : <h4 style={{ textAlign: 'center', width: '100%', fontFamily: 'Azo Sans' }}>No Drops Available</h4>}
       </CardContainer>
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
-      <MinusBtn onClick={() => {
-        const u = JSON.parse(localStorage.getItem('userDetails'));
-        if (u) { swipe("left") }
-        else { history.push("/login") }
-      }}>
-        <img src="./minus.svg" alt="minus" />
-      </MinusBtn>
-      <PlusBtn onClick={() => {
-        const u = JSON.parse(localStorage.getItem('userDetails'));
-        if (u) { swipe("right") }
-        else { history.push("/login") }
-      }}>
-        <img src="./plus.svg" alt="plus" />
-      </PlusBtn>
+        <MinusBtn onClick={() => {
+          const u = JSON.parse(localStorage.getItem('userDetails'));
+          if (u) { swipe("left") }
+          else { history.push("/login") }
+        }}>
+          <img src="./minus.svg" alt="minus" />
+        </MinusBtn>
+        <PlusBtn onClick={() => {
+          const u = JSON.parse(localStorage.getItem('userDetails'));
+          if (u) { swipe("right") }
+          else { history.push("/login") }
+        }}>
+          <img src="./plus.svg" alt="plus" />
+        </PlusBtn>
       </ActionSection>
     </>
   )

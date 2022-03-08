@@ -56,7 +56,7 @@ export const NewLandingPage = () => {
   
     const [error, setError] = useState("")
   
-    const [setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
   
     const coinbase = getProviderInfoByName('Coinbase')
@@ -177,7 +177,6 @@ export const NewLandingPage = () => {
     const connectWallet = async () => {
       const provider = await web3Modal.connect();
       const wb = new Web3(provider);
-      setLoading(true)
       let accounts = await wb.eth.getAccounts()
         .then(acc => acc)
       let nonce = await DropMagnetAPI.getNonce(accounts[0])
