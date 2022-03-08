@@ -139,7 +139,7 @@ export default function DropDetail(props) {
           onClick={openUser}
         >{artist_name}
         </h1>
-        <img className="close-detail-button close-button view-close-btn" style={{ width: '39px', height: '39px', cursor: 'pointer' }} onClick={() => closeDetail()} src="/close-icon.png" />
+        <img  style={{ width: '39px', height: '39px', cursor: 'pointer', padding: 6, marginRight: 10 }} onClick={() => closeDetail()} src="/close-icon.png" />
       </div>
 
       <div className="detail-view-container">
@@ -154,8 +154,7 @@ export default function DropDetail(props) {
               props.drop.media.map((img, index) => {
                 return (
                   <div className="img-cnt" style={{width:'100%',height:'400px'}}>
-                  <div className="bg-img" style={{width:'100%',height:'auto'}}
-                      style={{ backgroundImage: `url(${img.url})` }}
+                  <div className="bg-img" style={{width:'100%',height:'auto' , backgroundImage: `url(${img.url})`}}
                       onClick={() => handleOpenImg(index)}>
                     </div>
                   </div>

@@ -177,7 +177,6 @@ export const NewLandingPage = () => {
     const connectWallet = async () => {
       const provider = await web3Modal.connect();
       const wb = new Web3(provider);
-      setLoading(true)
       let accounts = await wb.eth.getAccounts()
         .then(acc => acc)
       let nonce = await DropMagnetAPI.getNonce(accounts[0])

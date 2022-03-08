@@ -194,12 +194,21 @@ const Home = (props) => {
     return state.category[currentTabId];
   });
 
-  useEffect(() => {
+  useEffect(async () => {
     if (reswipeModeActive) {
       if (window.confirm("Your Bucket Limit has reached its End ? \n 1. Press ok to 'Upgrade Your Subscription' \n 2. Press Cancel to 'Go To Reswipe'?")) {
         history.push('/upgradeSub');
       } else {
-        history.push(`/reswipe?tabs=${currentTabId}`);
+        const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories)
+        // DropMagnetAPI.getCategorySavedDrops
+        await getCategorySavedDrops(idToken, currentTab).then((savedPosts) => {
+          dispatch({
+            type: "START_RESWIPE",
+            payload: { newBucket: savedPosts },
+          });
+          history.push(`/reswipe?tabs=${currentTabId}`);
+        });
+        // history.push(`/reswipe?tabs=${currentTabId}`);
       }
     }
   }, [reswipeModeActive, currentTabId, history]);
@@ -214,19 +223,19 @@ const Home = (props) => {
     currentUser.getIdToken().then((idToken) => {
       if (dir === "right") {
         // setInternalLoader(true);
-        const isFull = async () => {
+        (async () => {
           const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories)
           const length = await getCategorySavedDrops(idToken, currentTab)
-          if(length === null || length === undefined || length.length < 10) {
-          saveDrop(idToken, drop_id)
-            .then(() => { })
-            .catch(() => { })
-            .finally(() => {
-              updateTokens(drop.artist && drop.artist.id).then(res => { })
-            });
+          if (length !== null && length !== undefined && length.length < 10) {
+            await saveDrop(idToken, drop_id)
+              .then(() => { })
+              .catch(() => { })
+              .finally(() => {
+                // updateTokens(drop.artist && drop.artist.id).then(res => { })
+              });
           }
-        }
-        isFull()
+        })()
+
       } else if (dir === "left") {
         unsaveDrop(idToken, drop_id)
           .then(() => { })

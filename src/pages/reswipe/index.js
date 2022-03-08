@@ -72,6 +72,8 @@ function Reswipe(props) {
     return state.category[curTab];
   });
 
+  console.log('reswipedDrops',reswipedDrops)
+
   const { reswipeModeActive } = useSelector((state) => state.category.general);
   if (!reswipeModeActive) {
     sessionStorage.removeItem('headerLoad')
