@@ -201,14 +201,10 @@ const Home = (props) => {
       } else {
         const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories)
         // DropMagnetAPI.getCategorySavedDrops
-        await getCategorySavedDrops(idToken, currentTab).then((savedPosts) => {
-          dispatch({
-            type: "START_RESWIPE",
-            payload: { newBucket: savedPosts },
-          });
+        getCategorySavedDrops(idToken, currentTab).then((savedPosts) => {
+          dispatch({ type: "START_RESWIPE",  payload: { newBucket: savedPosts }, });
           history.push(`/reswipe?tabs=${currentTabId}`);
         });
-        // history.push(`/reswipe?tabs=${currentTabId}`);
       }
     }
   }, [reswipeModeActive, currentTabId, history]);
@@ -226,12 +222,12 @@ const Home = (props) => {
         (async () => {
           const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories)
           const length = await getCategorySavedDrops(idToken, currentTab)
-          if (length !== null && length !== undefined && length.length < 10) {
-            await saveDrop(idToken, drop_id)
+          if (length === null || length === undefined || length.length < 10) {
+            saveDrop(idToken, drop_id)
               .then(() => { })
               .catch(() => { })
               .finally(() => {
-                // updateTokens(drop.artist && drop.artist.id).then(res => { })
+                updateTokens(drop.artist && drop.artist.id).then(res => { })
               });
           }
         })()
