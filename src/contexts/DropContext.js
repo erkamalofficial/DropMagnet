@@ -17,8 +17,8 @@ export function useDrop() {
 
 export function DropProvider({ children }) {
   const [idToken, setIdToken] = useState(null);
-  const activeTabIndex = useSelector(state => state.category.general.activeTabIndex);
-  const allCategories = useSelector(state => state.category.allCategories);
+  // const activeTabIndex = useSelector(state => state.category.general.activeTabIndex);
+  const allCategories = useSelector(state => state.category);
 
   let curTab;
 
@@ -52,7 +52,7 @@ export function DropProvider({ children }) {
   useEffect(() => {
     if (isCategoriesListEmpty) return;
 
-    const symbol = curTab || getCategorySymbolByPosition(activeTabIndex, allCategories);
+    const symbol = curTab || getCategorySymbolByPosition(0, allCategories);
 
     dispatch(fetchCategorySavedDrops(idToken, symbol))
   }, [idToken, isCategoriesListEmpty])

@@ -28,6 +28,8 @@ import store from "../../store";
 import { setOpen } from "../../store/OpenCard";
 
 import "../../components/detail_page/DropDetail/DropDetail.css";
+import { useFetchCategoryDropsQuery, useFetchUserSavedDropsQuery, useGetCategoriesQuery, useSaveSwipedDropMutation, useUnSaveSwipedDropMutation } from "../../store/api/DropApi";
+import { categorySavedBuckets } from "../../store/reducers/CategoryReducer";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -76,28 +78,29 @@ const ActionSection = styled.div`
 `;
 
 const Home = (props) => {
+  const { token, userId } = useSelector((state) => state.auth);
+  const { data: categoryList, isLoading } = useGetCategoriesQuery();
   const dispatch = useDispatch();
   const history = useHistory();
+  const date = props.date
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  // const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
 
-  const { date } = useContext(GlobalContext)
-
-  const { currentUser, idToken } = useAuth();
-
-  const token = currentUser.getIdToken().then(res => res)
+  // const token = currentUser.getIdToken().then(res => res)
 
   const uniqueId = Date.now();
   const [selectedDropdownDate, setSelectedDropdownDate] = useState(date);
   const [loadMore, setLoadMore] = useState(false)
-  const isLoading = useSelector((state) => state.category.general.isLoading);
+  // const isLoading = useSelector((state) => state.category.general.isLoading);
   const loadingIndexList = useSelector((state) => state.category.general.loadingIndexList);
-  const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
+
   const reswipeModeActive = useSelector((state) => state.category.general.reswipeModeActive);
   const nextIndex = useSelector((state) => state.category.nextIndex);
   const fetchMore = useSelector((state) => state.category.fetchMore);
-  const allCategories = useSelector(state => state.category.allCategories)
-
+  const allCategories = categoryList //useSelector(state => state.category)
+  const [categoryWiseDrops, setCategoryWiseDrops] = useState([]);
   const isCategoriesListEmpty = useMemo(() => {
-    return !allCategories.categories.length && !allCategories.external_creators.length;
+    return !allCategories || !allCategories.categories.length && !allCategories.external_creators.length;
   }, [allCategories])
 
   //jsx upgrade
@@ -107,14 +110,34 @@ const Home = (props) => {
   // const allCategories = useSelector(state => state.category.allCategories)
   // const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
 
+  const getRequestParams = () => {
+
+    if (isCategoriesListEmpty) return;
+    let curTime = new Date(selectedDropdownDate).getTime()
+
+    const id = getCategoryIdByPosition(activeTabIndex, allCategories)
+    // const categorySymbol = getCategorySymbolByPosition(activeTabIndex, allCategories)
+    // const isExternalCategory = activeTabIndex >= allCategories.categories.length
+
+    return { token: token, userId: id, time: curTime }
+  }
+
+  const { data: categoryDrops } = useFetchCategoryDropsQuery(getRequestParams());
+  useEffect(() => {
+    if (!categoryDrops) {
+      setCategoryWiseDrops([]);
+      return
+    };
+    setCategoryWiseDrops(categoryDrops.drops);
+  }, [categoryDrops])
+
   const fetchCategory = (activeTabIndex, curTime, random) => {
     let extras = {
-      token: idToken,
+      token: token,
       curTime,
       userID: "",
       random
     }
-
     dispatch(fetchCategoryDrops({
       activeTabIndex,
       id: getCategoryIdByPosition(activeTabIndex, allCategories),
@@ -144,6 +167,7 @@ const Home = (props) => {
     }, 500);
   }, [])
 
+  
   useEffect(() => {
     // jsx upgrade, on first render 
     DROP_SERVICE.getAllDropTabs().then((res) => {
@@ -169,30 +193,28 @@ const Home = (props) => {
   }, [setCategoryTabs, setExternalCreatorTabs])
 
 
-  useEffect(() => {
-    let curTime = new Date(selectedDropdownDate).getTime()
+  // useEffect(() => {
+  //   let curTime = new Date(selectedDropdownDate).getTime()
+  //   if (isCategoriesListEmpty) return;
 
-    if (isCategoriesListEmpty) return;
-
-    fetchCategory(activeTabIndex, curTime, true);
-  }, [selectedDropdownDate, isCategoriesListEmpty]);
+  //   fetchCategory(activeTabIndex, curTime, true);
+  // }, [selectedDropdownDate, isCategoriesListEmpty]);
 
   useEffect(() => {
     if (fetchMore) {
       fetchCategory(activeTabIndex, nextIndex, false);
-
       setLoadMore(false)
     }
   }, [fetchMore])
 
   const currentTabId = !isCategoriesListEmpty && getCategorySymbolByPosition(activeTabIndex, allCategories);
-  const { activeBucket = [] } = useSelector((state) => {
-    if (!currentTabId || !state.category[currentTabId]) {
-      return {};
-    }
+  // const { activeBucket = [] } = useSelector((state) => {
+  //   if (!currentTabId || !state.category[currentTabId]) {
+  //     return {};
+  //   }
 
-    return state.category[currentTabId];
-  });
+  //   return state.category[currentTabId];
+  // });
 
   useEffect(async () => {
     if (reswipeModeActive) {
@@ -200,9 +222,8 @@ const Home = (props) => {
         history.push('/upgradeSub');
       } else {
         const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories)
-        // DropMagnetAPI.getCategorySavedDrops
-        getCategorySavedDrops(idToken, currentTab).then((savedPosts) => {
-          dispatch({ type: "START_RESWIPE",  payload: { newBucket: savedPosts }, });
+        await getCategorySavedDrops(token, currentTab).then((savedPosts) => {
+          dispatch(categorySavedBuckets({ newBucket: savedPosts }));
           history.push(`/reswipe?tabs=${currentTabId}`);
         });
       }
@@ -211,40 +232,45 @@ const Home = (props) => {
 
   const handleActiveTabIndex = (activeTabIndex) => {
     let curTime = new Date(selectedDropdownDate).getTime()
-
     fetchCategory(activeTabIndex, curTime, true);
+    setActiveTabIndex(activeTabIndex)
   };
 
+  
+  const [saveCategoryDrop] = useSaveSwipedDropMutation({ fixedCacheKey: 'shared-update-post'});
+  const [unSaveCategoryDrop] = useUnSaveSwipedDropMutation({ fixedCacheKey: 'shared-update-post'});
+  const { data: userSavedPosts, isSuccess, refetch } = useFetchUserSavedDropsQuery({ token: token, symbol: currentTabId })
   const handleSwipe = (dir, drop_id, drop) => {
-    currentUser.getIdToken().then((idToken) => {
+    if (token && isSuccess) {
+      console.log({drop, currentTabId, len: userSavedPosts ? userSavedPosts.length : 0})
       if (dir === "right") {
-        // setInternalLoader(true);
         (async () => {
-          const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories)
-          const length = await getCategorySavedDrops(idToken, currentTab)
-          if (length === null || length === undefined || length.length < 10) {
-            saveDrop(idToken, drop_id)
-              .then(() => { })
-              .catch(() => { })
-              .finally(() => {
-                updateTokens(drop.artist && drop.artist.id).then(res => { })
-              });
+          const length = userSavedPosts ? userSavedPosts.length : 0
+          if (length < 10) {
+            saveCategoryDrop({token, dropId: drop_id})
+
+            // saveDrop(token, drop_id)
+            //   .then(() => { })
+            //   .catch(() => { })
+            //   .finally(() => {
+            //      updateTokens(drop.artist && drop.artist.id).then(res => { })
+            //   });
           }
         })()
 
       } else if (dir === "left") {
-        unsaveDrop(idToken, drop_id)
-          .then(() => { })
-          .catch(() => {
+        unSaveCategoryDrop({token, dropId: drop_id})
+        // unsaveDrop(token, drop_id)
+        //   .then(() => { })
+        //   .catch(() => {
 
-          })
-          .finally(() => {
-          })
+        //   })
+        //   .finally(() => {
+        //   })
       }
-
-    }).catch(() => {
-      console.log('Error While Getting token');
-    })
+    } else {
+      console.log('Token Not Found');
+    }
   };
 
   // const [selector, setSelector] = useState({isOpen: false, drop: {}});
@@ -271,7 +297,7 @@ const Home = (props) => {
         </FadeIn>
 
         <div className="card-section">
-          {loadingIndexList.length > 0 || isLoading || !activeBucket ?
+          {loadingIndexList.length > 0 || !categoryWiseDrops ?
             (
               <>
                 <FadeIn delay={200}>
@@ -294,7 +320,7 @@ const Home = (props) => {
               <Swiper
                 reswipeModeActive={false}
                 key={uniqueId}
-                db={activeBucket}
+                db={categoryWiseDrops}
                 activeTabIndex={activeTabIndex}
                 onSwipe={handleSwipe}
                 handleActiveTabIndex={handleActiveTabIndex}

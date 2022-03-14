@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, useEffect } from 'react';
 import { Link, useHistory, withRouter, matchPath } from 'react-router-dom'
 import "./HeaderBar.css"
 import MainMenu from '../../detail_page/MainMenu/MainMenu'
@@ -11,14 +11,20 @@ import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Lin
 import Logo from "../../dropMagnet/assets/logo.svg";
 import DropMagnetLogo from "../../dropMagnet/assets/dropMagnetlogo.svg";
 import { GlobalContext } from '../../../utils/GlobalContext';
+import { useSelector } from 'react-redux';
+import { useFetchUserProfileQuery } from '../../../store/api/DropApi';
 
 function HeaderBar(props) {
+  const { token, userId } = useSelector((state) => state.auth);
+  const { data: userDetails, isSuccess: isProfileFetched } = useFetchUserProfileQuery({ token, userId })
   const headerLoad = sessionStorage.getItem('headerLoad')
-  const { curUser } = useContext(GlobalContext)
+  const [userProfile, setUserProfile] = useState(null)
+
+  // const { curUser } = useContext(GlobalContext)
 
   const [mainMenuOpen, setMainMenuOpen] = useState(false)
-  let userDetails = JSON.parse(localStorage.getItem('userDetails'));
-  userDetails = userDetails ? userDetails : curUser
+  // let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+  // userDetails = userDetails ? userDetails : curUser
 
   const h = useHistory();
   const match = matchPath(h.location.pathname, {
@@ -30,23 +36,26 @@ function HeaderBar(props) {
   pageName = pageName === '' ? 'Landing Page' : pageName
 
   function showUserAction() {
-    if (props && props.userLoggedIn && userDetails && h.location.pathname !== '/profile') {
+    if (props && props.userLoggedIn && userProfile && h.location.pathname !== '/profile') {
       return <Link to={'/profile'} style={{ textDecoration: 'none' }}>
         <div className="header-profile-img-holder">
-          <Avatar userImage={userDetails.avatar_url}
-            initial={getInitials(userDetails.name)}
+          <Avatar userImage={userProfile.avatar_url}
+            initial={getInitials(userProfile.name)}
             view_only
             small />
           {/* <img className="header-right-image" src={userDetails.avatar_url || './add-user-icon.png'}/> */}
         </div>
-
       </Link>
     } else {
       return null
     }
-
-
   }
+
+  useEffect(() => {
+    if (isProfileFetched) {
+      setUserProfile(userDetails)
+    }
+  }, [token, isProfileFetched])
 
   function openMenu() {
     setMainMenuOpen(true)
@@ -61,7 +70,7 @@ function HeaderBar(props) {
 
   return (
     <div className="header-container">
-      {userDetails && <MainMenu userDetails={userDetails} userImage={userDetails.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />}
+      {userProfile && <MainMenu userDetails={userProfile} userImage={userProfile.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />}
 
       <div className="header-left-holder">
         <img alt={'logo'}
@@ -117,7 +126,7 @@ function HeaderBar(props) {
               :
               <></>
             }
-            {userDetails ? (
+            {userProfile ? (
               <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="header-bar-menu-icon"
                 style={{ zIndex: 999999999999 }}>
                 <div className={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>

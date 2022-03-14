@@ -1,6 +1,8 @@
 import { db } from "../../firebase";
 import * as DropMagnetAPI from '../../DropMagnetAPI'
 import { getAllDropTabs } from "../../services/drop-services";
+import { fetchCategories } from "../../store/reducers/CategoryReducer";
+import { useGetCategoriesQuery } from "../../store/api/DropApi";
 
 const getDataFromDb = async (dispatch, categoryType, actionType, activeTabIndex, extras) => {
   const querySnapshot = await db
@@ -62,14 +64,14 @@ const getDataFromDb = async (dispatch, categoryType, actionType, activeTabIndex,
 
 };
 
-const getDataFromDb2 = async (dispatch, categorySymbol, actionType, activeTabIndex, extras , id) => {
+const getDataFromDb2 = async (dispatch, categorySymbol, actionType, activeTabIndex, extras, id) => {
   // const querySnapshot = await db
   //   .collection("drops_v1")
   //   .where("category", "==", categorySymbol)
   //   .get();
 
 
-  console.log("extras: ", extras.token)
+  // console.log("extras: ", extras.token)
   let response = {}
   let timeIndex = extras.curTime
   var d = new Date(timeIndex);
@@ -87,15 +89,16 @@ const getDataFromDb2 = async (dispatch, categorySymbol, actionType, activeTabInd
     }
 
     try {
+      console.log('Step Try')
       dispatch({ type: "CHANGE_CUR_INDEX", payload: d.getTime() });
-      response = await DropMagnetAPI.getFeeds2(id , extras)
-        .then((res) => res)
-
+      response = await DropMagnetAPI.getFeeds2(id, extras).then((res) => res)
+      console.log('Step Try response', response)
       response['curIndex'] = d.getTime()
       response['random'] = extras.random
       dispatch({ type: actionType, payload: { ...response, activeTabIndex, categorySymbol } });
       error = false
     } catch (err) {
+      console.log('Step Catch')
       if (d.getTime() >= new Date().setUTCHours(0, 0, 0, 0)) {
         d = new Date();
         let curIdx = new Date()
@@ -150,18 +153,23 @@ export const fetchReswipeList = (tabIndex) => async (dispatch, getState) => {
 };
 
 
-export const fetchCategory = ( ) => async (dispatch, getState) => {
+export const fetchCategory = () => async (dispatch, getState) => {
   try {
-    // console.log('fetch catt action called');
-    const { data } = await getAllDropTabs() 
-    dispatch({ type: "FETCH_CATEGORY_SUCCESS" , payload : data });
+    
+    // if(isError) {
+    //   console.log('fetch catt action called', error);
+    // }
+    // const { data } = await getAllDropTabs()
+    // console.log('fetch catt action called', data);
+    // dispatch(fetchCategories(data));
+    // dispatch({ type: "FETCH_CATEGORY_SUCCESS", payload: data });
   } catch (error) {
     dispatch({
       type: "FETCH_CATEGORY_ERROR",
       payload:
         error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message,
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -170,25 +178,25 @@ export const fetchExternalCreators =
   ({ extras }) =>
     async (dispatch, getState) => {
       const Ex = await DropMagnetAPI.getEC(extras)
-      dispatch({ type: "FETCH_EC_SUCCESS" , payload : Ex });
-  };
+      dispatch({ type: "FETCH_EC_SUCCESS", payload: Ex });
+    };
 
 
-export const fetchCategoryDrops =
-  ({ activeTabIndex, extras, id, categorySymbol, isExternalCategory }) =>
-    async (dispatch) => {
-      dispatch({
-        type: "FETCH_CATEGORY_DROPS",
-        payload: {
-          categoryId: id,
-          categorySymbol,
-          activeTabIndex,
-        },
-      });
+export const fetchCategoryDrops = ({ activeTabIndex, extras, id, categorySymbol, isExternalCategory }) =>
+
+  async (dispatch) => {
+    dispatch({
+      type: "FETCH_CATEGORY_DROPS",
+      payload: {
+        categoryId: id,
+        categorySymbol,
+        activeTabIndex,
+      },
+    });
 
     if (isExternalCategory) {
       getDataFromDb2(dispatch, categorySymbol, "FETCH_CATEGORY_DROPS_SUCCESS", activeTabIndex, extras, id);
     } else {
       getDataFromDb(dispatch, categorySymbol, "FETCH_CATEGORY_DROPS_SUCCESS", activeTabIndex, extras);
     }
-};
+  };

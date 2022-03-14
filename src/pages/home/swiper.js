@@ -41,10 +41,7 @@ const alreadyRemoved = [];
 const CARD_PRELOAD = 25; //card count to preload
 function Swiper(props) {
   const { db, reswipeModeActive, setDetailView, nextIndex, tabList2 } = props
-
-  const { currentUser, idToken } = useAuth();
-
-
+  const { token, userId } = useSelector((state) => state.auth);
   const [allCards, setAllCards] = useState(db);
   const [cards, setCards] = useState(db);
   const [openView, setOpenView] = useState(false)
@@ -56,8 +53,6 @@ function Swiper(props) {
 
   const allCategories = useSelector(state => state.category.allCategories)
   const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
-
-  console.log(allCategories, activeTabIndex)
 
   const history = useHistory()
 
@@ -84,34 +79,27 @@ function Swiper(props) {
   //const childRefs = useMemo(() => Array(cards.length).fill(0).map(i => React.createRef()), [cards.length])
 
   const swiped = async (direction, drop_id, index, drop) => {
-    const user_id = currentUser.uid;
-    let id_token = ""
-    currentUser.getIdToken(false).then(function (idToken) {
-        id_token = idToken
-        // DropMagnetAPI.getUserPosts(user_id, idToken)
-        //   .then((res) => {
-        //     console.log("posts")
-        //     // console.log(res.data)
-        //     console.log('DropMagnetAPI.getUserPosts', res)
-        //   })
-        //   console.log('currentUser.getIdToken', idToken)
-      })
+    // DropMagnetAPI.getUserPosts(userId, token)
+    //   .then((res) => {
+    //     console.log("posts")
+    //     // console.log(res.data)
+    //     console.log('DropMagnetAPI.getUserPosts', res)
+    //   })
+    //   console.log('currentUser.getIdToken', token)
 
     if (reswipeModeActive) {
       props.onReswipe(direction, drop_id, index);
     } else {
       props.onSwipe && await props.onSwipe(direction, drop_id, drop);
-      if (direction === "right") {
-        const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories);
-        const length = await getCategorySavedDrops(idToken, currentTab)
-        // console.log("prevLength: ", length?.length)
-        dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index, token: idToken, length: length === null ? 0 : length.length, currentTab: currentTab } });
-      }
-      if (direction === "left") {
-        dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
-      }
+      // if (direction === "right") {
+      //   const currentTab = await getCategorySymbolByPosition(activeTabIndex, allCategories);
+      //   const length = await getCategorySavedDrops(token, currentTab)
+      //   dispatch({ type: "ADD_USER_DATA", payload: { drop_id, dropIndex: index, token: token, length: length === null ? 0 : length.length, currentTab: currentTab } });
+      // }
+      // if (direction === "left") {
+      //   dispatch({ type: "REMOVE_USER_DATA", payload: { drop_id } });
+      // }
     }
-
 
     // setLastDirection(direction);
     alreadyRemoved.push(drop_id);
@@ -182,12 +170,11 @@ function Swiper(props) {
               data-id={id}
               key={id}
               onSwipe={(dir) => {
-                const u = JSON.parse(localStorage.getItem('userDetails'));
-                if (u) {
+                if (userId) {
                   setSwiping(true)
                   return swiped(dir, id, index, cardDetails)
-                }
-                else { history.push("/login") }
+                } else { history.push("/login") }
+
               }}
               onClickSwiperMain={() => openDrop(cardDetails)}
               onCardLeftScreen={() => outOfFrame(id)}
@@ -201,15 +188,13 @@ function Swiper(props) {
       </CardContainer>
       <ActionSection key="footer" style={{ display: `${openView ? 'none' : 'flex'}` }}>
         <MinusBtn onClick={() => {
-          const u = JSON.parse(localStorage.getItem('userDetails'));
-          if (u) { swipe("left") }
+          if (userId) { swipe("left") }
           else { history.push("/login") }
         }}>
           <img src="./minus.svg" alt="minus" />
         </MinusBtn>
         <PlusBtn onClick={() => {
-          const u = JSON.parse(localStorage.getItem('userDetails'));
-          if (u) { swipe("right") }
+          if (userId) { swipe("right") }
           else { history.push("/login") }
         }}>
           <img src="./plus.svg" alt="plus" />

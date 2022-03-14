@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import IntroScreen from "./intro_screen";
@@ -19,6 +19,7 @@ import { useAuth } from "../../contexts/FirebaseAuthContext";
 import { saveDrop, unsaveDrop } from "../../DropMagnetAPI";
 import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDropDetail";
 import ReswipeCard from './reswipe_card';
+import { useFetchUserSavedDropsQuery } from "../../store/api/DropApi";
 
 const MainContainer = styled.div`
   display: flex;
@@ -49,6 +50,9 @@ function Reswipe(props) {
   function selectDate(date) {
     console.log("opened item", date);
   }
+  const { token } = useSelector((state) => state.auth);
+  const curTab = qs.parse(useLocation().search, "?").tabs;
+  const { data: userSavedPosts, isSuccess } = useFetchUserSavedDropsQuery({ token: token, symbol: curTab })
 
   function setSelectedDate(date) {
     setSelectedDropdownDate(date.date);
@@ -56,23 +60,20 @@ function Reswipe(props) {
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
 
   const [isReswipeStarted, setIsReswipeStarted] = useState(false);
-  const curTab = qs.parse(useLocation().search, "?").tabs;
+
   const [detailView, setDetailView] = useState(false);
   const [showRestartReSwipeMessage, setShowRestartReSwipeMessage] =
     useState(false);
 
   const [isFinal4Left, setIsFinal4Left] = useState(false);
-  const { idToken } = useAuth();
 
-  const { reswipedDrops = {} } = useSelector((state) => {
-    if (!state.category[curTab]) {
-      return {}
-    }
-
-    return state.category[curTab];
-  });
-
-  console.log('reswipedDrops',reswipedDrops)
+  const reswipedDrops = userSavedPosts
+  //   const { reswipedDrops = {} } = useSelector((state) => {
+  //   if (!state.category[curTab]) {
+  //     return {}
+  //   }
+  //   return state.category[curTab];
+  // });
 
   const { reswipeModeActive } = useSelector((state) => state.category.general);
   if (!reswipeModeActive) {
@@ -87,11 +88,12 @@ function Reswipe(props) {
   const counterRef = useRef(currentCounter);
   const [roundLength, setRoundLength] = useState(0);
   const [reswipeComplete, setReswipeComplete] = useState(false);
-  const [deletedFinalFour, setDeletedFinalFour] = useState([false,false,false,false]);
+  const [deletedFinalFour, setDeletedFinalFour] = useState([false, false, false, false]);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(null);
 
   useEffect(() => {
-    if(Object.keys(reswipedDrops).length === 4){
+    if(!isSuccess) return
+    if (isSuccess && reswipedDrops.length === 4) {
       setRoundLength(4);
       setCurrentCounter(4);
       counterRef.current = 4;
@@ -101,17 +103,16 @@ function Reswipe(props) {
     }
   }, []);
 
-  useEffect(()=>{
-    tempRef.current  = [...tempReswipeBucket];
-  },[tempReswipeBucket]);
+  useEffect(() => {
+    tempRef.current = [...tempReswipeBucket];
+  }, [tempReswipeBucket]);
 
   useEffect(() => {
-    if (!Object.keys(reswipedDrops).length) return;
-
-    setTempReswipeBucket(Object.keys(reswipedDrops).map((key) => reswipedDrops[key]))
-    setCurrentCounter(Object.keys(reswipedDrops).length);
-    setRoundLength(Object.keys(reswipedDrops).length);
-    counterRef.current = Object.keys(reswipedDrops).length;
+    if (!isSuccess || !reswipedDrops.length) return;
+    setTempReswipeBucket(reswipedDrops)
+    setCurrentCounter(reswipedDrops);
+    setRoundLength(reswipedDrops);
+    counterRef.current = reswipedDrops;
   }, [reswipedDrops]);
 
   const openDateMenu = () => {
@@ -123,10 +124,10 @@ function Reswipe(props) {
     let currCAndCurrL = newArray.length;
 
     if (dir === "right") {
-      saveDrop(idToken, drop_id);
+      saveDrop(token, drop_id);
       currCAndCurrL += 1;
     } else {
-      unsaveDrop(idToken, drop_id);
+      unsaveDrop(token, drop_id);
       setTempReswipeBucket(newArray);
     }
     if (newArray.length === 4 && dir !== "right") {
@@ -142,10 +143,10 @@ function Reswipe(props) {
     ) {
       setReswipeComplete(true);
       setIsReswipeStarted(false);
-    }else if(newArray.length === 1 && dir==="left" && counterRef.current - 1 === 0){
+    } else if (newArray.length === 1 && dir === "left" && counterRef.current - 1 === 0) {
       setReswipeComplete(true);
       setIsReswipeStarted(false);
-    }else if (counterRef.current - 1 === 0) {
+    } else if (counterRef.current - 1 === 0) {
       setRoundLength(currCAndCurrL);
       setCurrentCounter(currCAndCurrL);
       counterRef.current = counterRef.current - 1;
@@ -168,9 +169,9 @@ function Reswipe(props) {
     let newTempReswipeBuckets = [];
     tempRef.current.map((drop, index) => {
       if (deletedFinalFour[index]) {
-        unsaveDrop(idToken, drop.id);
+        unsaveDrop(token, drop.id);
       } else {
-        saveDrop(idToken, drop.id);
+        saveDrop(token, drop.id);
         newTempReswipeBuckets.push(drop);
       }
     });
@@ -243,7 +244,7 @@ function Reswipe(props) {
             )}
             {isReswipeStarted && (
               <div classNAme="rel"
-              style={{marginTop: 'var(--main-header-margin-top)'}}>
+                style={{ marginTop: 'var(--main-header-margin-top)' }}>
                 <ProgressBar
                   key="progressBar"
                   size={roundLength}
@@ -274,12 +275,14 @@ function Reswipe(props) {
             closeDetailView={() => {
               setCurrentDetailIndex(null);
             }}
-            style={{width: '100%'}}
+            style={{ width: '100%' }}
           />
         </ReswipeCard>
-        
+
       )}
-      {}
+      {
+        console.log('tempReswipeBucket', (!!tempReswipeBucket.length && !isFinal4Left && !showRestartReSwipeMessage && !isReswipeStarted))
+      }
 
       <ReswipedButtonContainer
         style={{ display: currentDetailIndex === null ? "block" : "none" }}

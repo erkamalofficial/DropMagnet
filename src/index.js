@@ -9,16 +9,17 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { AuthProvider } from "./contexts/FirebaseAuthContext";
 import { DropProvider } from "./contexts/DropContext";
+import { Store } from "./store/Store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProvider>
-      <Provider store={store}>
-        <DropProvider>
+    {/* <AuthProvider> */}
+      <Provider store={Store}>
+        {/* <DropProvider> */}
           <App />
-        </DropProvider>
+        {/* </DropProvider> */}
       </Provider>
-    </AuthProvider>
+    {/* </AuthProvider> */}
   </React.StrictMode>,
   document.getElementById("root")
 );

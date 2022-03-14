@@ -1,16 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 
-const AuthContext = React.createContext({currentUser: {}});
+const AuthContext = React.createContext({ currentUser: {} });
 
 let VERIFICATION_URL_SIGNIN = ""
 let VERIFICATION_URL_SIGNUP = ""
 
-if(process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development') {
   VERIFICATION_URL_SIGNIN = "http://localhost:3000/verify/signin"
   VERIFICATION_URL_SIGNUP = "http://localhost:3000/verify/signup"
 }
-else{
+else {
   VERIFICATION_URL_SIGNIN = "https://dropmagnet-develop.web.app/verify/signin"
   VERIFICATION_URL_SIGNUP = "https://dropmagnet-develop.web.app/verify/signup"
 }
@@ -68,10 +68,10 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setLoading(false);
       user.getIdToken().then(function (idToken) {
         setIdToken(idToken);
+        setCurrentUser(user);
+        setLoading(false);
       });
     });
 
