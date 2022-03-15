@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { useGetCategoriesQuery } from "../../store/api/DropApi";
+import { useEffect, useState } from "react";
+import { getCategoryIdByPosition, getCategorySymbolByPosition } from "../../utils/category";
 
 // overflow:hidden;
 // overflow-x: scroll;
@@ -113,15 +114,23 @@ const TabItem = styled.li`
 `;
 
 
-const Tabs = ({ activeTabIndex, handleActiveTabIndex }) => {
-  const { data, isLoading, isError, error, currentData } = useGetCategoriesQuery();
-  const allCategories = data
+const Tabs = ({ changeCurrentTab }) => {
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const { data: allCategories, isSuccess } = useGetCategoriesQuery();
+
+  useEffect(() => {
+    if (!allCategories) return
+    const id = getCategoryIdByPosition(activeTabIndex, allCategories)
+    const categorySymbol = getCategorySymbolByPosition(activeTabIndex, allCategories)
+    changeCurrentTab(id, categorySymbol)
+  }, [activeTabIndex, isSuccess])
+
   return (
     <TabsWrapper >
       {allCategories && allCategories.external_creators.map((x, i) => (
         <TabItem
           key={x.position}
-          onClick={() => handleActiveTabIndex(i + allCategories.categories.length)}
+          onClick={() => setActiveTabIndex(i + allCategories.categories.length)}
           className={`${activeTabIndex === (i + allCategories.categories.length) ? "tab-selected" : ""}`}
         >
           {x.name}
@@ -130,7 +139,7 @@ const Tabs = ({ activeTabIndex, handleActiveTabIndex }) => {
       {allCategories && allCategories.categories.map((x, id) => (
         <TabItem
           key={id}
-          onClick={() => handleActiveTabIndex(id)}
+          onClick={() => setActiveTabIndex(id)}
           className={activeTabIndex === id ? "tab-selected" : ""}
         >
           {x.name}

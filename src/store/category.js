@@ -33,7 +33,7 @@ const getGroupedLinks = (linkList) => {
 };
 
 
-const getProcessedCollection = (state, action, type) => {
+export const getProcessedCollection = (state, action, type) => {
   const loadingIndexList = state.general.loadingIndexList.filter(it => it !== action.payload?.activeTabIndex);
   const general = { ...state.general, isLoading: false, loadingIndexList };
 

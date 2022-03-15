@@ -18,16 +18,16 @@ import { useAuth } from '../../../contexts/FirebaseAuthContext';
 import * as DropMagnetAPI from "../../../DropMagnetAPI"
 import LoadingModal from '../LoadingModal/LoadingModal';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSelector } from 'react-redux';
 
 export default function DropList(props) {
+  const { token, userId } = useSelector((state) => state.auth);
   const [listItems, setListItems] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [swiping, setSwiping] = useState(false)
   const [loading, setLoading] = useState(false)
   const [stage, setStage] = useState(20)
   const [index, setIndex] = useState(0)
-
-  const { currentUser } = useAuth()
 
   const loadItems = () => {
     if (window.location.pathname === "/profile") {
@@ -36,22 +36,18 @@ export default function DropList(props) {
       setStage(prev => prev + 20)
     }
     else {
-      if(index > 0) {
-      currentUser
-      .getIdToken(false)
-      .then(function (idToken) {
-        DropMagnetAPI.getFeeds2(props.user_id, {curTime: index, token: idToken}).then((res) => {
+      if (index > 0) {
+        DropMagnetAPI.getFeeds2(props.user_id, { curTime: index, token: token }).then((res) => {
           const drops = listItems
-          for(let i = 0; i < res.drops.length; i++) {
+          for (let i = 0; i < res.drops.length; i++) {
             drops.push(res.drops[i])
           }
           setIndex(res.index)
           setListItems(drops)
           setStage(prev => prev + 20)
         })
-      })
+      }
     }
-  }
   }
 
   // useEffect(() => {
@@ -67,15 +63,11 @@ export default function DropList(props) {
   // }, [index])
 
   useEffect(() => {
-    if(props.isSaved !== true) {
-    currentUser
-      .getIdToken(false)
-      .then(function (idToken) {
-        DropMagnetAPI.getFeeds2(props.user_id, {curTime: Date.now(), token: idToken}).then((res) => {
-          setIndex(res.index)
-          setListItems(res.drops)
-          setStage(prev => prev + 20)
-        })
+    if (props.isSaved !== true) {
+      DropMagnetAPI.getFeeds2(props.user_id, { curTime: Date.now(), token: token }).then((res) => {
+        setIndex(res.index)
+        setListItems(res.drops)
+        setStage(prev => prev + 20)
       })
     }
   }, [])
@@ -134,14 +126,12 @@ export default function DropList(props) {
           let ans = window.confirm("Do you really want to delete the drop?")
           if (ans) {
             setLoading(true)
-            currentUser && currentUser.getIdToken().then((idToken) => {
-              DropMagnetAPI.deleteDrop(drop.id, idToken)
-                .then(res => {
-                  alert(res.message)
-                  setLoading(false)
-                  window.location.reload()
-                })
-            })
+            DropMagnetAPI.deleteDrop(drop.id, token)
+              .then(res => {
+                alert(res.message)
+                setLoading(false)
+                window.location.reload()
+              })
           }
         }}
       >
@@ -159,42 +149,42 @@ export default function DropList(props) {
         <SwipeableList
           type={ListType.IOS}
           scrollStartThreshold={0}>
-            <InfiniteScroll 
+          <InfiniteScroll
             dataLength={listItems.length}
             next={loadItems}
             hasMore={true}
             loader={<><h4>Loading...</h4></>}
             endMessage={<></>}
-            >
-          {
-            listItems.length > 0 && listItems.map(drop => (
-              <SwipeableListItem
-                swipeStartThreshold={0}
-                // leadingActions={leadingActions()}
-                trailingActions={trailingActions(drop)}
-                onSwipeProgress={progress => {
-                  console.log(progress)
-                  setSwiping(true)
-                }}
-                onSwipeEnd={p => {
-                  setTimeout(() => {
-                    setSwiping(false)
-                  }, 800);
-                }}
-                onSwipeStart={p => setSwiping(true)}
-              >
-                <div className="card">
-                  {renderDropCell(drop)}
-                </div>
-              </SwipeableListItem>
-            ))}
-            </InfiniteScroll>
+          >
+            {
+              listItems.length > 0 && listItems.map(drop => (
+                <SwipeableListItem
+                  swipeStartThreshold={0}
+                  // leadingActions={leadingActions()}
+                  trailingActions={trailingActions(drop)}
+                  onSwipeProgress={progress => {
+                    console.log(progress)
+                    setSwiping(true)
+                  }}
+                  onSwipeEnd={p => {
+                    setTimeout(() => {
+                      setSwiping(false)
+                    }, 800);
+                  }}
+                  onSwipeStart={p => setSwiping(true)}
+                >
+                  <div className="card">
+                    {renderDropCell(drop)}
+                  </div>
+                </SwipeableListItem>
+              ))}
+          </InfiniteScroll>
         </SwipeableList>
       ) : (
         <>
           {
             listItems.map(drop => (
-              <div className="card" style={{marginBottom: '10px'}}>
+              <div className="card" style={{ marginBottom: '10px' }}>
                 {renderDropCell(drop)}
               </div>
             ))}

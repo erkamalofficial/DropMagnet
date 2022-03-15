@@ -16,7 +16,7 @@ import { useFetchUserProfileQuery } from '../../../store/api/DropApi';
 
 function HeaderBar(props) {
   const { token, userId } = useSelector((state) => state.auth);
-  const { data: userDetails, isSuccess: isProfileFetched } = useFetchUserProfileQuery({ token, userId })
+  const { data: userDetails, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId)
   const headerLoad = sessionStorage.getItem('headerLoad')
   const [userProfile, setUserProfile] = useState(null)
 

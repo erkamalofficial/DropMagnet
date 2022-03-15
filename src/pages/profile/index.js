@@ -64,7 +64,7 @@ export default function Profile(props) {
   const profilePic = useRef(null)
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const [selectedProfileList, setSelectedProfileList] = useState([]);
+  const [selectedProfileList, setSelectedProfileList] = useState(null);
   const [scheduledPosts, setScheduledPosts] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
 
@@ -92,14 +92,14 @@ export default function Profile(props) {
 
   const currentTabName = useMemo(() => seprateTL[activeTabIndex], [seprateTL, activeTabIndex]);
 
-  const currUserSavedPosts = savedPosts && savedPosts.filter((value) => value.category === currentTabName);
+
   const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
 
-  useEffect(() => {
-    if (currUserSavedPosts !== undefined) {
-      setCurrSavedPosts(currUserSavedPosts)
-    }
-  }, [currUserSavedPosts])
+  // useEffect(() => {
+  //   if (currUserSavedPosts !== undefined) {
+  //     setCurrSavedPosts(currUserSavedPosts)
+  //   }
+  // }, [currUserSavedPosts])
 
   useEffect(() => {
     if (allCategories) {
@@ -132,10 +132,10 @@ export default function Profile(props) {
     else if (!fetchingPosts) {
       setSelectedProfileList("saved")
     }
-  }, [scheduledPosts.length, fetchingPosts])
+  }, [scheduledPosts.length, fetchingPosts]) //scheduledPosts.length, fetchingPosts
 
 
-  const { data: fetchedProfile, isSuccess: isProfileFetched } = useFetchUserProfileQuery({ token, userId })
+  const { data: fetchedProfile, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId)
   useEffect(() => {
     if (!isProfileFetched) {
       setLoading({ ...loading, profile: true })
@@ -145,7 +145,7 @@ export default function Profile(props) {
       setFetchingPosts(false)
       setUserProfile(fetchedProfile)
     }
-  }, [token, fetchedProfile])
+  }, [userId, fetchedProfile]) //
 
   useEffect(() => {
     if (userId) {
@@ -165,18 +165,20 @@ export default function Profile(props) {
     }
   }, []);
 
-  const { data: userSavedPosts, refetch } = useFetchUserSavedDropsQuery({ token: token, symbol: currentTabName })
+  const { data: userSavedPosts } = useFetchUserSavedDropsQuery(currentTabName)
   useEffect(() => {
     if (!currentTabName || !userId) return;
-    refetch()
     if (userSavedPosts === null) {
-      setLoading({ ...loading, drops: false })
+      setLoading({ ...loading, drops: true })
       setSavedPosts([]);
-    }
-    else {
+      setCurrSavedPosts([]);
+    } else {
       setSavedPosts(userSavedPosts);
+      setLoading({ ...loading, drops: false })
+      const currUserSavedPosts = userSavedPosts && userSavedPosts.filter((value) => value.category === currentTabName);
+      setCurrSavedPosts(currUserSavedPosts)
     }
-    setLoading({ ...loading, drops: false })
+
   }, [userId, userSavedPosts])
 
 
@@ -203,8 +205,8 @@ export default function Profile(props) {
     setCurrentEditField(field);
     setOpenEditModal(true);
     setUsernameForm(userProfile.usename);
-    setInstaHandleForm(userProfile.instaHandle);
-    setTwitterHandleForm(userProfile.twitterHandle);
+    setInstaHandleForm(userProfile.insta_url);
+    setTwitterHandleForm(userProfile.twitter_url);
     setDescriptionForm(userProfile.bio);
     // setLastNameForm(lastName);
     setFirstNameForm(userProfile.name);
@@ -215,7 +217,7 @@ export default function Profile(props) {
       case "username":
         return (
           <TextField
-            setInputValue={setUsernameForm}
+            onChange={(e) => { console.log(e.target.value); setUsernameForm(e.target.value) }}
             title={"Username"}
             titleTopMargin={"24px"}
             value={usernameForm}
@@ -225,7 +227,7 @@ export default function Profile(props) {
       case "insta":
         return (
           <TextField
-            setInputValue={setInstaHandleForm}
+            onChange={(e) => setInstaHandleForm(e.target.value)}
             title={"Instagram Handle"}
             titleTopMargin={"24px"}
             value={instaHandleForm}
@@ -236,7 +238,7 @@ export default function Profile(props) {
       case "twitter":
         return (
           <TextField
-            setInputValue={setTwitterHandleForm}
+            onChange={(e) => setTwitterHandleForm(e.target.value)}
             title={"Twitter Handle"}
             titleTopMargin={"24px"}
             value={twitterHandleForm}
@@ -249,7 +251,7 @@ export default function Profile(props) {
           <TextView
             height={"100px"}
             titleTopMargin={"24px"}
-            setInputValue={setDescriptionForm}
+            onChange={(e) => setDescriptionForm(e.target.value)}
             value={descriptionForm}
             title={"Your Bio"}
             placeholder={"Tell us about your self (max 300 words)"}
@@ -260,7 +262,7 @@ export default function Profile(props) {
         return (
           <>
             <TextField
-              setInputValue={setFirstNameForm}
+              onChange={(e) => setFirstNameForm(e.target.value)}
               title={"Full Name"}
               titleTopMargin={"24px"}
               value={firstNameForm}
@@ -758,14 +760,14 @@ export default function Profile(props) {
                 }}
               >
                 <FooterContainer>
-                  {(selectedProfileList === "saved" && currSavedPosts && currSavedPosts.length !== 0) && (
+                  {(selectedProfileList && selectedProfileList === "saved" && currSavedPosts && currSavedPosts.length !== 0) && (
                     <button
                       className={"main-button-2 floating clickable"}
                       style={{
                         margin: "16px auto 16px auto",
                       }}
                       onClick={() => {
-                        dispatch(categorySavedBuckets({ newBucket: savedPosts }));
+                        // dispatch(categorySavedBuckets({ newBucket: savedPosts }));
                         history.push(`/reswipe?tabs=${seprateTL[activeTabIndex]}`);
                       }}
                     >
@@ -824,16 +826,11 @@ export default function Profile(props) {
                   </div>
 
                 </FooterContainer>
-
-                {currUserPosts.length > 0 &&
-                  selectedProfileList === "scheduled" ? (
+                {(currUserPosts && currUserPosts.length > 0 && selectedProfileList === "scheduled") ? (
                   renderDrops(currUserPosts)
-                ) : currSavedPosts.length > 0 && selectedProfileList === "saved" ? (
-                  renderDrops(
-                    currSavedPosts,
-                    true
-                  )
-                ) : currSavedPosts.length === 0 ? (
+                ) : (currSavedPosts && currSavedPosts.length > 0 && selectedProfileList === "saved") ? (
+                  renderDrops(currSavedPosts, true)
+                ) : (currSavedPosts && currSavedPosts.length === 0) ? (
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px", height: 50 }}
                     className="profile-bio-description">
                     <p className="redirect-link"> You don't have any drops saved yet. Go to the{" "}
@@ -847,12 +844,7 @@ export default function Profile(props) {
                   </div>
                 ) : (
                   <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      marginTop: "20px",
-                    }}
+                    style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px", }}
                     className="profile-bio-description"
                   >
                     <p className="redirect-link">

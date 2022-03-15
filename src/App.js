@@ -126,7 +126,7 @@ function App() {
   const [date, setDate] = useState(new Date().getTime())
 
   const [reload, setReload] = useState(true)
-  const [curUser, setCurUser] = useState(null)
+  const [isTokenFetched, setIsTokenFetched] = useState(false)
 
   const addFlag = () => {
     if (!sessionStorage.reloading) {
@@ -153,7 +153,6 @@ function App() {
       setReload(true)
       removeFlag()
     }
-
   }, []);
 
 
@@ -164,9 +163,13 @@ function App() {
     auth.onAuthStateChanged((user) => {
       if (!user) {
         history.push('/swiper')
+        setIsTokenFetched(true)
       }
       user.getIdToken().then(function (token) {
-        dispatch(getAuthTokenAndUserId({ token, userId: user.uid }))
+        if (token) {
+          dispatch(getAuthTokenAndUserId({ token, userId: user.uid }))
+          setIsTokenFetched(true)
+        }
       });
 
     });
@@ -174,114 +177,116 @@ function App() {
 
 
   return (
-    <MoralisProvider appId={MORILIS_APP_ID} serverUrl={MORILIS_SERVER_URL}>
-      {/* <GlobalContext.Provider value={{ date, setDate, setCurUser, curUser }}> */}
-      <Router>
-        <div className="fixed-container"
-          style={{ top: '0' }}>
-          {window.location.pathname !== "/" ?
-            reload ? (
-              <FadeIn delay={200}>
-                <HeaderBar
-                  openHome={() => { }}
-                  openMenu={() => { }}
-                  isLogoNotVisible
-                  curIndex={date}
-                  selectedDropdownDate={date}
-                  setSelectedDropdownDate={setDate}
-                  datePickerVisible={isInternalCreator}
-                  userLoggedIn={true}
-                  userImageVisible={true}
-                  reload={reload}
-                />
-              </FadeIn>
-            ) : (
-              <HeaderBar
-                openHome={() => { }}
-                openMenu={() => { }}
-                isLogoNotVisible
-                curIndex={date}
-                selectedDropdownDate={date}
-                setSelectedDropdownDate={setDate}
-                datePickerVisible={isInternalCreator}
-                userLoggedIn={true}
-                userImageVisible={true}
-                reload={reload}
+    <>
+      {isTokenFetched ?
+        <MoralisProvider appId={MORILIS_APP_ID} serverUrl={MORILIS_SERVER_URL}>
+          {/* <GlobalContext.Provider value={{ date, setDate, setCurUser, curUser }}> */}
+          <Router>
+            <div className="fixed-container"
+              style={{ top: '0' }}>
+              {window.location.pathname !== "/" ?
+                reload ? (
+                  <FadeIn delay={200}>
+                    <HeaderBar
+                      openHome={() => { }}
+                      openMenu={() => { }}
+                      isLogoNotVisible
+                      curIndex={date}
+                      selectedDropdownDate={date}
+                      setSelectedDropdownDate={setDate}
+                      datePickerVisible={isInternalCreator}
+                      userLoggedIn={true}
+                      userImageVisible={true}
+                      reload={reload}
+                    />
+                  </FadeIn>
+                ) : (
+                  <HeaderBar
+                    openHome={() => { }}
+                    openMenu={() => { }}
+                    isLogoNotVisible
+                    curIndex={date}
+                    selectedDropdownDate={date}
+                    setSelectedDropdownDate={setDate}
+                    datePickerVisible={isInternalCreator}
+                    userLoggedIn={true}
+                    userImageVisible={true}
+                    reload={reload}
+                  />
+                ) : null}
+            </div>
+            <Switch>
+              <Route
+                exact
+                path="/new-landing"
+                component={NewLandingPage}
               />
-            ) : null}
-        </div>
-        <Switch>
-          <Route
-            exact
-            path="/new-landing"
-            component={NewLandingPage}
-          />
-          <Route
-            exact
-            path="/home/dummy"
-            userDetails={userDetails}
-            isLogged
-            component={DummyHomePage}
-          />
-          <Route
-            exact
-            path="/swiper"
-            userDetails={userDetails}
-            isLogged
-            render={(props) => (
-              <HomePage
-                date={date}
-                reload={reload}
-                setReload={setReload} />
-            )}
-          />
+              <Route
+                exact
+                path="/home/dummy"
+                userDetails={userDetails}
+                isLogged
+                component={DummyHomePage}
+              />
+              <Route
+                exact
+                path="/swiper"
+                userDetails={userDetails}
+                isLogged
+                render={(props) => (
+                  <HomePage
+                    date={date}
+                    reload={reload}
+                    setReload={setReload} />
+                )}
+              />
 
-          <Route
-            exact
-            path="/drop/:id"
-            component={DropPage}
-          />
-          <Route
-            path="/terms"
-            render={(props) => <TermsAndConditions {...props} />}
-          />
+              <Route
+                exact
+                path="/drop/:id"
+                component={DropPage}
+              />
+              <Route
+                path="/terms"
+                render={(props) => <TermsAndConditions {...props} />}
+              />
 
-          <Route
-            path="/create"
-            render={(props) => <ProfileForm />}
-          />
+              <Route
+                path="/create"
+                render={(props) => <ProfileForm />}
+              />
 
-          <Route
-            path="/about"
-            render={(props) => <About {...props} />}
-          />
+              <Route
+                path="/about"
+                render={(props) => <About {...props} />}
+              />
 
-          <Route
-            path="/aboutDrop"
-            render={(props) => <AboutDrop {...props} />}
-          />
+              <Route
+                path="/aboutDrop"
+                render={(props) => <AboutDrop {...props} />}
+              />
 
-          <Route
-            path="/verify/signin"
-            render={(props) => <Verify {...props} />}
-          />
+              <Route
+                path="/verify/signin"
+                render={(props) => <Verify {...props} />}
+              />
 
-          <Route
-            path="/verify/signup"
-            render={(props) => <SignupVerify {...props} />}
-          />
+              <Route
+                path="/verify/signup"
+                render={(props) => <SignupVerify {...props} />}
+              />
 
-          <Route
-            path="/getToken"
-            render={(props) => <GetToken {...props} />}
-          />
+              <Route
+                path="/getToken"
+                render={(props) => <GetToken {...props} />}
+              />
 
-          <Route
-            path="/upgradeSub"
-            render={(props) => <UpgradeSub {...props} />}
-          />
+              <Route
+                path="/upgradeSub"
+                render={(props) => <UpgradeSub {...props} />}
+              />
 
-          {/* <Route
+              {/* <Route
               exact
               path="/"
               render={(props) => (
@@ -291,157 +296,163 @@ function App() {
               )}
             /> */}
 
-          <Route
-            exact
-            path="/"
-            component={NewLandingPage}
-          />
+              <Route
+                exact
+                path="/"
+                component={NewLandingPage}
+              />
 
 
-          <PrivateRoute
-            path="/create_drop"
-            component={CreateDropPage}
-          />
+              <PrivateRoute
+                path="/create_drop"
+                component={CreateDropPage}
+              />
 
-          <PrivateRoute
-            path="/settings"
-            component={SettingsPage}
-            userImage={userDetails.image}
-            userDetails={userDetails}
-            userLoggedIn={true}
-            reload={reload}
-            setReload={setReload}
-          />
-
-          <PrivateRoute
-            path="/subscription"
-            component={SubscriptionPage}
-            userImage={userDetails.image}
-            userDetails={userDetails}
-            userLoggedIn={true}
-            reload={reload}
-            setReload={setReload}
-          />
-
-          <Route
-            path="/reswipe"
-            component={Reswipe}
-          />
-
-
-          <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login/redirect/:id" component={Login} />
-          <Route path="/login" component={Login} />
-          <Route path="/magic" component={MagicLogin} />
-          <Route path="/forgot-password" component={ForgotPassword} />
-
-          <Route
-            path="/profile/saved"
-            render={(props) => (
-              <Profile
-                {...props}
-                reload={reload}
-                setReload={setReload}
+              <PrivateRoute
+                path="/settings"
+                component={SettingsPage}
                 userImage={userDetails.image}
                 userDetails={userDetails}
                 userLoggedIn={true}
-              />
-            )}
-          />
-
-          <Route
-            path="/profile/:id"
-            render={(props) => (
-              <ProfilePage
-                {...props}
                 reload={reload}
                 setReload={setReload}
+              />
+
+              <PrivateRoute
+                path="/subscription"
+                component={SubscriptionPage}
                 userImage={userDetails.image}
                 userDetails={userDetails}
                 userLoggedIn={true}
-              />
-            )}
-          />
-
-          <Route
-            path="/profile"
-            render={(props) => (
-              <Profile
-                {...props}
                 reload={reload}
                 setReload={setReload}
-                userImage={userDetails.image}
-                userDetails={userDetails}
-                userLoggedIn={true}
               />
-            )}
-          />
 
-          <Route
-            path="/wallet_links"
-            render={(props) => (
-              <WalletLinks
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
+              <Route
+                path="/reswipe"
+                component={Reswipe}
               />
-            )}
-          />
-          <Route
-            path="/nfts"
-            render={(props) => (
-              <NftDisplay
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
+
+
+              <Route path="/signup2" render={(props) => <Signup2 {...props} />} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/login/redirect/:id" component={Login} />
+              <Route path="/login" component={Login} />
+              <Route path="/magic" component={MagicLogin} />
+              <Route path="/forgot-password" component={ForgotPassword} />
+
+              <Route
+                path="/profile/saved"
+                render={(props) => (
+                  <Profile
+                    {...props}
+                    reload={reload}
+                    setReload={setReload}
+                    userImage={userDetails.image}
+                    userDetails={userDetails}
+                    userLoggedIn={true}
+                  />
+                )}
               />
-            )}
-          />
-          <Route
-            path="/cw"
-            render={(props) => (
-              <ConnectedWallets
-                {...props}
-                userDetails={userDetails}
-                userLoggedIn={true}
+
+              <Route
+                path="/profile/:id"
+                render={(props) => (
+                  <ProfilePage
+                    {...props}
+                    reload={reload}
+                    setReload={setReload}
+                    userImage={userDetails.image}
+                    userDetails={userDetails}
+                    userLoggedIn={true}
+                  />
+                )}
               />
-            )}
-          />
 
-          <Route exact path="/oldLandingPage" component={PersonalLinksHome} />
+              <Route
+                path="/profile"
+                render={(props) => (
+                  <Profile
+                    {...props}
+                    reload={reload}
+                    setReload={setReload}
+                    userImage={userDetails.image}
+                    userDetails={userDetails}
+                    userLoggedIn={true}
+                  />
+                )}
+              />
 
-          <Route exact path="/logout" render={(props) => {
-            LogoutCurrentUser().then(() => {
-              dispatch(removeAuthTokenAndUserId())
-              props.history.push('/')
-            })
-              .catch(() => {
-                props.history.push('/')
-              })
-            return null
-          }} />
+              <Route
+                path="/wallet_links"
+                render={(props) => (
+                  <WalletLinks
+                    {...props}
+                    userDetails={userDetails}
+                    userLoggedIn={true}
+                  />
+                )}
+              />
+              <Route
+                path="/nfts"
+                render={(props) => (
+                  <NftDisplay
+                    {...props}
+                    userDetails={userDetails}
+                    userLoggedIn={true}
+                  />
+                )}
+              />
+              <Route
+                path="/cw"
+                render={(props) => (
+                  <ConnectedWallets
+                    {...props}
+                    userDetails={userDetails}
+                    userLoggedIn={true}
+                  />
+                )}
+              />
 
-          <PrivateRoute
-            exact
-            path="/links-payment"
-            component={PersonalLinksPayment}
-          />
-          <PrivateRoute path="/buy-links" exact component={BuyLinks} />
+              <Route exact path="/oldLandingPage" component={PersonalLinksHome} />
 
-          <PrivateRoute path="/home"
-            component={ExploreGalleries}
-            reload={reload}
-            setReload={setReload}
-          />
-          <PrivateRoute path="/metaurl" component={DropMagnet} />
-          <PrivateRoute path="/my-gallery" component={MyGallery} />
-          <Route path="/politician" component={Politician} />
-          <Route path="/movie-farm" render={() => <MovieFarm />} />
-        </Switch>
-      </Router>
-      {/* </GlobalContext.Provider> */}
-    </MoralisProvider>
+              <Route exact path="/logout" render={(props) => {
+                LogoutCurrentUser().then(() => {
+                  dispatch(removeAuthTokenAndUserId())
+                  props.history.push('/')
+                })
+                  .catch(() => {
+                    props.history.push('/')
+                  })
+                return null
+              }} />
+
+              <PrivateRoute
+                exact
+                path="/links-payment"
+                component={PersonalLinksPayment}
+              />
+              <PrivateRoute path="/buy-links" exact component={BuyLinks} />
+
+              <PrivateRoute path="/home"
+                component={ExploreGalleries}
+                reload={reload}
+                setReload={setReload}
+              />
+              <PrivateRoute path="/metaurl" component={DropMagnet} />
+              <PrivateRoute path="/my-gallery" component={MyGallery} />
+              <Route path="/politician" component={Politician} />
+              <Route path="/movie-farm" render={() => <MovieFarm />} />
+            </Switch>
+          </Router>
+          {/* </GlobalContext.Provider> */}
+        </MoralisProvider>
+        :
+        <div>
+          Loding........
+        </div>
+      }
+    </>
   );
 }
 
