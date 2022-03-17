@@ -1,35 +1,12 @@
-// import "../../server";
 import styled from "styled-components";
-import React, { useEffect, useMemo, useState, useCallback, useContext } from "react";
-import DateMenu from "../../components/detail_page/DateMenu/DateMenu";
-import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
+import React, { useEffect, useState } from "react";
 import Tabs from "./tabs";
-import ProgressBar from "./progress-bar";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchCategoryDrops } from "./actions";
-import Spinner from "../../components/blocks/spinner";
 import Swiper from "./swiper";
 import "./index.css";
-import { useHistory } from 'react-router-dom';
-import { useAuth } from "../../contexts/FirebaseAuthContext";
-import { getCategorySavedDrops, saveDrop, unsaveDrop, updateTokens } from "../../DropMagnetAPI";
-import LazyCard from "./LazyCard";
-import LazyTab from "./LazyTab";
-import { getCategoryFromTab, tabList } from "../../constants";
-import PlusBtn from "../../components/blocks/plus-btn";
-import MinusBtn from "../../components/blocks/minus-btn";
 import FadeIn from 'react-fade-in';
-import { GlobalContext } from "../../utils/GlobalContext";
-import { getCategorySymbolByPosition, getCategoryIdByPosition } from "../../utils/category";
-// jsx upgrade
-import * as DROP_SERVICE from '../../services/drop-services';
-import DropDetail from "../../components/detail_page/DropDetail/DropDetail";
-import store from "../../store";
-import { setOpen } from "../../store/OpenCard";
-
 import "../../components/detail_page/DropDetail/DropDetail.css";
-import { useFetchCategoryDropsQuery, useFetchUserSavedDropsQuery, useGetCategoriesQuery, useSaveSwipedDropMutation, useUnSaveSwipedDropMutation } from "../../store/api/DropApi";
-import { categorySavedBuckets } from "../../store/reducers/CategoryReducer";
+import { getCategoryIdByPosition, getCategorySymbolByPosition } from "../../utils/category";
+import { useGetCategoriesQuery } from "../../store/api/DropApi";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -67,20 +44,33 @@ const HomeContainer = styled.div`
 `;
 
 const Home = () => {
+  const { data: allCategories, isSuccess } = useGetCategoriesQuery();
   const [activeTabSymbol, setActiveTabSymbol] = useState(null);
   const [activeTabId, setActiveTabId] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (!isSuccess) return
+    const id = getCategoryIdByPosition(activeIndex, allCategories)
+    const categorySymbol = getCategorySymbolByPosition(activeIndex, allCategories)
+    setActiveTabId(id)
+    setActiveTabSymbol(categorySymbol)
+  }, [activeIndex, isSuccess])
+
+  const handleActiveIndex = (index) => {
+    setActiveIndex(index)
+  }
 
   return (
     <HomeContainer>
       <div className="rel">
         <FadeIn delay={200}>
           <div className="tabs-container">
-            <Tabs changeCurrentTab={(id, categorySymbol) => { setActiveTabId(id); setActiveTabSymbol(categorySymbol); }} />
+            <Tabs activeTabIndex={activeIndex} setActiveTabIndex={handleActiveIndex} />
           </div>
         </FadeIn>
         <div className="card-section">
           <Swiper activeTabId={activeTabId} activeTabSymbol={activeTabSymbol} />
-          )
         </div>
       </div>
     </HomeContainer>

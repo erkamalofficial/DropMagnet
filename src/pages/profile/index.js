@@ -1,22 +1,17 @@
-import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import * as DropMagnetAPI from "../../DropMagnetAPI";
 import DropList from "../../components/elements/DropList/DropList";
 import "./Profile.css";
 import TextField from "../../components/elements/TextField/TextField";
 
-import HeaderBar from "../../components/elements/HeaderBar/HeaderBar";
-import { useAuth } from "../../contexts/FirebaseAuthContext";
 import Modal from "../../components/elements/Modal/Modal";
 import TextView from "../../components/elements/TextView/TextView";
 import Avatar from "../../components/elements/Avatar/Avatar";
-import ProfileDropDetail from "../../components/detail_page/DropDetail/ProfileDropDetail";
 import DropDetail from '../../components/detail_page/DropDetail/DropDetail';
-import Spinner from "../../components/blocks/spinner";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Tabs from "../home/tabs";
-import { getCategoryFromTab, tabList } from "../../constants";
 import { getInitials } from "../../utils";
 import EditIcon from '@material-ui/icons/Edit';
 import LazyProfile from "./LazyProfile";
@@ -26,7 +21,8 @@ import InstaIcon from "../../assets/insta-icon.png"
 import TwitterIcon from "../../assets/twitter-icon.png"
 import LoadingModal from "../../components/elements/LoadingModal/LoadingModal";
 import { useFetchUserProfileQuery, useGetCategoriesQuery, useFetchUserSavedDropsQuery } from "../../store/api/DropApi";
-import { categorySavedBuckets } from "../../store/reducers/CategoryReducer";
+import { getCategorySymbolByPosition } from "../../utils/category";
+import { UserDetails } from "./UserDetails";
 
 const FooterContainer = styled.div`
   margin-top: 16px;
@@ -61,39 +57,23 @@ export default function Profile(props) {
   const { token, userId } = useSelector((state) => state.auth);
 
   let history = useHistory();
-  const profilePic = useRef(null)
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-
   const [selectedProfileList, setSelectedProfileList] = useState(null);
   const [scheduledPosts, setScheduledPosts] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
-
   const [userProfile, setUserProfile] = useState(null)
 
-  const dispatch = useDispatch();
-  /* For profile edit */
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const [usernameForm, setUsernameForm] = useState("");
-  const [firstNameForm, setFirstNameForm] = useState("");
-  const [currentEditField, setCurrentEditField] = useState("");
-  const [descriptionForm, setDescriptionForm] = useState("");
-  const [twitterHandleForm, setTwitterHandleForm] = useState("");
-  const [instaHandleForm, setInstaHandleForm] = useState("");
   const [loading, setLoading] = useState({ profile: true, drops: true });
   const [fetchingPosts, setFetchingPosts] = useState(true)
 
   const [curDrop, setCurDrop] = useState({});
   const [detailView, setDetailView] = useState(false);
-  const [cropModal, setCropModal] = useState(false)
-  const [uploading, setUploading] = useState(false)
-  const [updating, setUpdating] = useState(false)
-  const [seprateTL, setseprateTL] = useState([])
   const [currSavedPosts, setCurrSavedPosts] = useState([])
 
-  const currentTabName = useMemo(() => seprateTL[activeTabIndex], [seprateTL, activeTabIndex]);
+  const currUserPosts = scheduledPosts.filter((value) => value.category === activeTabSymbol);
 
+  const [activeTabSymbol, setActiveTabSymbol] = useState(null);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const currUserPosts = scheduledPosts.filter((value) => value.category === currentTabName);
 
   // useEffect(() => {
   //   if (currUserSavedPosts !== undefined) {
@@ -101,19 +81,7 @@ export default function Profile(props) {
   //   }
   // }, [currUserSavedPosts])
 
-  useEffect(() => {
-    if (allCategories) {
-      const en = [];
 
-      for (let i = 0; i < allCategories.categories.length; i++) {
-        en.push(allCategories.categories[i].value)
-      }
-      for (let i = 0; i < allCategories.external_creators.length; i++) {
-        en.push(allCategories.external_creators[i].symbol)
-      }
-      setseprateTL([...en]);
-    }
-  }, [allCategories])
 
   useEffect(() => {
     setTimeout(() => {
@@ -165,21 +133,20 @@ export default function Profile(props) {
     }
   }, []);
 
-  const { data: userSavedPosts } = useFetchUserSavedDropsQuery(currentTabName)
+  const { data: userSavedPosts, isSuccess, isFetching } = useFetchUserSavedDropsQuery(activeTabSymbol)
   useEffect(() => {
-    if (!currentTabName || !userId) return;
-    if (userSavedPosts === null) {
-      setLoading({ ...loading, drops: true })
+    if (!activeTabSymbol || !userId) return;
+    if (userSavedPosts === null && isSuccess) {
+      setLoading({ ...loading, drops: false })
       setSavedPosts([]);
       setCurrSavedPosts([]);
     } else {
       setSavedPosts(userSavedPosts);
       setLoading({ ...loading, drops: false })
-      const currUserSavedPosts = userSavedPosts && userSavedPosts.filter((value) => value.category === currentTabName);
+      const currUserSavedPosts = userSavedPosts && userSavedPosts.filter((value) => value.category === activeTabSymbol);
       setCurrSavedPosts(currUserSavedPosts)
     }
-
-  }, [userId, userSavedPosts])
+  }, [userId, userSavedPosts, activeTabSymbol])
 
 
   function openDrop() { }
@@ -200,170 +167,6 @@ export default function Profile(props) {
       />
     );
   }
-
-  const handleProfileEdit = (field = "") => {
-    setCurrentEditField(field);
-    setOpenEditModal(true);
-    setUsernameForm(userProfile.usename);
-    setInstaHandleForm(userProfile.insta_url);
-    setTwitterHandleForm(userProfile.twitter_url);
-    setDescriptionForm(userProfile.bio);
-    // setLastNameForm(lastName);
-    setFirstNameForm(userProfile.name);
-  };
-
-  const renderInput = () => {
-    switch (currentEditField) {
-      case "username":
-        return (
-          <TextField
-            onChange={(e) => { console.log(e.target.value); setUsernameForm(e.target.value) }}
-            title={"Username"}
-            titleTopMargin={"24px"}
-            value={usernameForm}
-            placeholder={"Enter a username"}
-          />
-        );
-      case "insta":
-        return (
-          <TextField
-            onChange={(e) => setInstaHandleForm(e.target.value)}
-            title={"Instagram Handle"}
-            titleTopMargin={"24px"}
-            value={instaHandleForm}
-            placeholder={"Enter your Instagram Handle"}
-          />
-        );
-
-      case "twitter":
-        return (
-          <TextField
-            onChange={(e) => setTwitterHandleForm(e.target.value)}
-            title={"Twitter Handle"}
-            titleTopMargin={"24px"}
-            value={twitterHandleForm}
-            placeholder={"Enter your Twitter Handle"}
-          />
-        );
-
-      case "bio":
-        return (
-          <TextView
-            height={"100px"}
-            titleTopMargin={"24px"}
-            onChange={(e) => setDescriptionForm(e.target.value)}
-            value={descriptionForm}
-            title={"Your Bio"}
-            placeholder={"Tell us about your self (max 300 words)"}
-          />
-        );
-
-      case "name":
-        return (
-          <>
-            <TextField
-              onChange={(e) => setFirstNameForm(e.target.value)}
-              title={"Full Name"}
-              titleTopMargin={"24px"}
-              value={firstNameForm}
-              placeholder={"Enter your Full Name"}
-            />
-            {/* <TextField
-              setInputValue={setLastNameForm}
-              title={"Last Name"}
-              titleTopMargin={"24px"}
-              value={lastNameForm}
-              placeholder={"Enter your Last Name"}
-            /> */}
-          </>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const updateDetails = (field, value) => {
-    setUpdating(true)
-    if (field === 'username') {
-      if (value.split(' ').length > 1) {
-        alert("Username cannot have space.")
-        setUpdating(false)
-        return
-      }
-    }
-    if (value === undefined) {
-      setUpdating(false)
-      return;
-    }
-
-    if (value === userProfile[field]) {
-      alert(`It is same as previous ${field}. Try new one.`)
-      setUpdating(false)
-      return;
-    }
-
-    DropMagnetAPI.updateUserDetails(field, value, token).then((res) => {
-      DropMagnetAPI.getUserProfile(userId, token).then(function (response) {
-        if (response.status === "error") {
-        } else {
-          setUserProfile(response)
-        }
-      });
-      if (res.status === 200) {
-        alert("Successfully updated.")
-        setUpdating(false)
-      }
-      else {
-        alert("Username already exists. Try different username.")
-        setUpdating(false)
-      }
-    });
-  };
-
-
-  const saveForm = () => {
-    switch (currentEditField) {
-      case "username": {
-        /*API Call*/
-        updateDetails("username", usernameForm);
-        setUsernameForm("");
-        break;
-      }
-      case "insta": {
-        /*API Call to save*/
-        updateDetails("insta_url", instaHandleForm);
-        setInstaHandleForm("");
-        break;
-      }
-
-      case "twitter": {
-        // API Call TO Save
-        updateDetails("twitter_url", twitterHandleForm);
-        setTwitterHandleForm("");
-        break;
-      }
-
-      case "bio": {
-        // API Call To Save
-        updateDetails("bio", descriptionForm);
-        setDescriptionForm("");
-        break;
-      }
-
-      case "name": {
-        // API Call To Save
-        updateDetails("name", firstNameForm);
-        setFirstNameForm("");
-
-        break;
-      }
-
-      default:
-        return null;
-    }
-    setOpenEditModal(false);
-  };
 
   function renderDetail() {
     return (
@@ -391,12 +194,18 @@ export default function Profile(props) {
     }
   }, [])
 
+  useEffect(() => {
+    if (!isCategorySuccess) return
+    const categorySymbol = getCategorySymbolByPosition(activeTabIndex, allCategories)
+    setActiveTabSymbol(categorySymbol)
+  }, [activeTabIndex, isCategorySuccess])
+
+  const handleActiveIndex = (index) => {
+    setActiveTabIndex(index)
+  }
 
   return (
     <div>
-      {updating && (
-        <LoadingModal label="Updating...." />
-      )}
       {(loading.profile && loading.drops) ? (
         <div>
           <LazyProfile />
@@ -413,134 +222,11 @@ export default function Profile(props) {
           </div>
 
         </div>
-      ) : (loading.drops) ?
+      ) : ((loading.drops || isFetching) && userProfile) ?
         (
           <>
-            <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
-              {renderInput()}
-              <div
-                className={"main-button-container"}
-                style={{ textAlign: "center" }}
-              >
-                <button className="main-button" onClick={saveForm}>
-                  {"Save"}
-                </button>
-              </div>
-            </Modal>
             <div className="profile-container">
-              <div
-                className="profile-detail-container"
-                style={{ display: `${detailView ? "none" : "flex"}` }}
-              >
-
-                <div className="acc-profile-pic">
-                  <Avatar
-                    userImage={userProfile.userImage}
-                    initial={getInitials(userProfile.name)}
-                    picRef={profilePic}
-                    cropModal={cropModal}
-                    setCropModal={setCropModal}
-                    setUploading={setUploading}
-                    uploading={uploading}
-                    onChange={(file) => {
-                      DropMagnetAPI.updateUserAvatar(file, file.type, token)
-                        .then(function (res) {
-                          window.location.reload()
-                        })
-                      const fileReader = new FileReader();
-                      fileReader.onload = () => {
-                        setUserProfile({ ...userProfile, userImage: fileReader.result })
-                        // setUserImage(fileReader.result);
-                      };
-                      fileReader.readAsDataURL(file);
-                    }}
-                    onRemove={() => {
-                      DropMagnetAPI.updateUserAvatar(null, '', token).then((res) =>
-                        window.location.reload()
-                      );
-                    }
-                    }
-                  />
-                  <div className="edit-btn"
-                    onClick={() => profilePic.current.click()}>
-                    <EditIcon className="svg-icon" />
-                  </div>
-                </div>
-                {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
-                <div
-                  className="profile-large-title clickable"
-                  onClick={() => handleProfileEdit("name")}
-                >{`${userProfile.name}`}</div>
-                <div
-                  className="profile-handle-title clickable"
-                  onClick={() => handleProfileEdit("username")}
-                >
-                  {`@${userProfile.username}`}
-                </div>
-                <div style={{ display: "flex", paddingBottom: "16px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      paddingRight: "24px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleProfileEdit("twitter")}
-                  >
-                    <img
-                      width={37}
-                      height={24}
-                      src={TwitterIcon}
-                      style={{ paddingRight: "8px" }}
-                      alt="/"
-                    />
-                    <div className="profile-medium-title">
-
-                      {userProfile && userProfile.twitter_url && userProfile.twitter_url.length > 8 ? (
-                        <div className="socialHandle">
-                          @
-                          <p className="truncate">{userProfile.twitter_url.substring(0, userProfile.twitter_url.length - 4)}</p>
-                          <p className="last">{userProfile.twitter_url.substring(userProfile.twitter_url.length - 4)}</p>
-                        </div>
-                      )
-                        : userProfile.twitter_url.length <= 8 ? <p>@{userProfile.twitter_url}</p>
-                          : <p>Add Twitter</p>
-                      }
-                    </div>
-                  </div>
-                  <div
-                    style={{ display: "flex", cursor: "pointer" }}
-                    onClick={() => handleProfileEdit("insta")}
-                  >
-                    <img width={24} height={24} src={InstaIcon} alt="/" />
-                    <div
-                      className="profile-medium-title"
-                      style={{ marginLeft: "10px" }}
-                    >
-                      {userProfile && userProfile.insta_url && userProfile.insta_url.length > 8 ? (
-                        <div className="socialHandle">
-                          @
-                          <p className="truncate">
-                            {userProfile.insta_url.substring(0, userProfile.insta_url.length - 4)}
-                          </p>
-                          <p className="last">
-                            {userProfile.insta_url.substring(userProfile.insta_url.length - 4)}
-                          </p>
-                        </div>
-                      ) : userProfile.insta_url.length <= 8 ? (
-                        <p>@{userProfile.insta_url}</p>
-                      ) : (
-                        <p>Add Instagram</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="profile-bio-edit-button clickable"
-                  onClick={() => handleProfileEdit("bio")}
-                >
-                  {userProfile.bio ? userProfile.bio : "Tap to Add Bio"}
-                </div>
-              </div>
+              <UserDetails userProfile={userProfile} detailView={detailView} />
 
               <div
                 style={{
@@ -550,11 +236,7 @@ export default function Profile(props) {
               >
                 <TabContainer>
                   <Tabs
-                    activeTabIndex={activeTabIndex}
-                    handleActiveTabIndex={(index) => {
-                      setActiveTabIndex(index);
-                    }}
-                    tabList={tabList}
+                    changeCurrentTab={(id, categorySymbol) => { setActiveTabSymbol(categorySymbol); }}
                   />
                 </TabContainer>
               </div>
@@ -574,8 +256,7 @@ export default function Profile(props) {
                         margin: "16px auto 16px auto",
                       }}
                       onClick={() => {
-                        // dispatch(categorySavedBuckets({ newBucket: savedPosts }));
-                        history.push(`/reswipe?tabs=${seprateTL[activeTabIndex]}`);
+                        history.push(`/reswipe?tabs=${activeTabSymbol}`);
                       }}
                     >
                       <h1 style={{ textAlign: "center", width: "100%" }}>
@@ -605,135 +286,9 @@ export default function Profile(props) {
         :
         (
           <>
-            <Modal isOpen={openEditModal} onClose={() => setOpenEditModal(false)}>
-              {renderInput()}
-              <div
-                className={"main-button-container"}
-                style={{ textAlign: "center" }}
-              >
-                <button className="main-button" onClick={saveForm}>
-                  {"Save"}
-                </button>
-              </div>
-            </Modal>
             <div className="profile-container">
               {userProfile &&
-                <div
-                  className="profile-detail-container"
-                  style={{ display: `${detailView ? "none" : "flex"}` }}
-                >
-
-                  <div className="acc-profile-pic">
-                    <Avatar
-                      userImage={userProfile.avator_url || props.userImage}
-                      initial={getInitials(userProfile.name)}
-                      picRef={profilePic}
-                      cropModal={cropModal}
-                      setCropModal={setCropModal}
-                      setUploading={setUploading}
-                      uploading={uploading}
-                      onChange={(file) => {
-                        DropMagnetAPI.updateUserAvatar(file, file.type, token)
-                          .then(function (res) {
-                            window.location.reload()
-                          })
-                        const fileReader = new FileReader();
-                        fileReader.onload = () => {
-                          setUserProfile({ ...userProfile, userImage: fileReader.result })
-                        };
-                        fileReader.readAsDataURL(file);
-                      }}
-                      onRemove={() => {
-                        DropMagnetAPI.updateUserAvatar(null, '', token).then((res) =>
-                          window.location.reload()
-                        );
-                      }
-                      }
-                    />
-                    <div className="edit-btn"
-                      onClick={() => profilePic.current.click()}>
-                      <EditIcon className="svg-icon" />
-                    </div>
-                  </div>
-                  {/* <img style={{borderRadius: '70px'}} width={120} height={120} src={userImage === "" ? "./add-user-icon.png" : userImage}/> */}
-                  <div
-                    className="profile-large-title clickable"
-                    onClick={() => handleProfileEdit("name")}
-                  >{`${userProfile.name || ''}`}</div>
-                  <div
-                    className="profile-handle-title clickable"
-                    onClick={() => handleProfileEdit("username")}
-                  >
-                    {`@${userProfile.username}`}
-                  </div>
-                  <div style={{ display: "flex", paddingBottom: "16px" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        paddingRight: "24px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleProfileEdit("twitter")}
-                    >
-                      <img
-                        width={37}
-                        height={24}
-                        src={TwitterIcon}
-                        style={{ paddingRight: "8px" }}
-                        alt="/"
-                      />
-                      <div className="profile-medium-title">
-                        {userProfile && userProfile.twitter_url.length > 8 ? (
-                          <div className="socialHandle">
-                            @
-                            <p className="truncate">
-                              {userProfile.twitter_url.substring(0, userProfile.twitter_url.length - 4)}
-                            </p>
-                            <p className="last">
-                              {userProfile.twitter_url.substring(userProfile.twitter_url.length - 4)}
-                            </p>
-                          </div>
-                        ) : userProfile.twitter_url.length <= 8 ? (
-                          <p>@{userProfile.twitter_url}</p>
-                        ) : (
-                          <p>Add Twitter</p>
-                        )}
-                      </div>
-                    </div>
-                    <div
-                      style={{ display: "flex", cursor: "pointer" }}
-                      onClick={() => handleProfileEdit("insta")}
-                    >
-                      <img width={24} height={24} src={InstaIcon} alt="/" />
-                      <div
-                        className="profile-medium-title"
-                        style={{ marginLeft: "10px" }}
-                      >
-                        {userProfile && userProfile.insta_url.length > 8 ? (
-                          <div className="socialHandle">
-                            @
-                            <p className="truncate">
-                              {userProfile.insta_url.substring(0, userProfile.insta_url.length - 4)}
-                            </p>
-                            <p className="last">
-                              {userProfile.insta_url.substring(userProfile.insta_url.length - 4)}
-                            </p>
-                          </div>
-                        ) : userProfile.insta_url.length <= 8 ? (
-                          <p>@{userProfile.insta_url}</p>
-                        ) : (
-                          <p>Add Instagram</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="profile-bio-edit-button clickable"
-                    onClick={() => handleProfileEdit("bio")}
-                  >
-                    {userProfile.bio ? userProfile.bio : "Tap to Add Bio"}
-                  </div>
-                </div>
+                <UserDetails userProfile={userProfile} detailView={detailView} />
               }
               <div
                 style={{
@@ -742,13 +297,7 @@ export default function Profile(props) {
                 }}
               >
                 <TabContainer>
-                  <Tabs
-                    activeTabIndex={activeTabIndex}
-                    handleActiveTabIndex={(index) => {
-                      setActiveTabIndex(index);
-                    }}
-                    tabList={tabList}
-                  />
+                  <Tabs activeTabIndex={activeTabIndex} setActiveTabIndex={handleActiveIndex} />
                 </TabContainer>
               </div>
 
@@ -767,8 +316,7 @@ export default function Profile(props) {
                         margin: "16px auto 16px auto",
                       }}
                       onClick={() => {
-                        // dispatch(categorySavedBuckets({ newBucket: savedPosts }));
-                        history.push(`/reswipe?tabs=${seprateTL[activeTabIndex]}`);
+                        history.push(`/reswipe?tabs=${activeTabSymbol}`);
                       }}
                     >
                       <h1 style={{ textAlign: "center", width: "100%" }}>

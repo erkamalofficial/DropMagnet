@@ -8,7 +8,6 @@ const CropModal = ({ img, setImg, setCropModal, onChange, uploading, setUploadin
     const cropper = useRef(null)
     const [scale, setScale] = useState(1)
     const [file, setFile] = useState(null)
-
     const saveImage = () => {
         if (cropper) {
             const canvas = cropper.current.getImage()
@@ -26,7 +25,7 @@ const CropModal = ({ img, setImg, setCropModal, onChange, uploading, setUploadin
 
     useEffect(() => {
         if (uploading && file) {
-            onChange(file)
+            onChange(file, img)
         }
     }, [uploading, file])
 

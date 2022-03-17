@@ -5,6 +5,7 @@ import "./Avatar.css";
 import CropModal from "./CropModal";
 import { useAuth } from "../../../contexts/FirebaseAuthContext";
 import CloseIcon from "../../../assets/close-icon.png"
+import { useSelector } from "react-redux";
 
 const InitialCircle = styled.span`
   width: 100%;
@@ -47,15 +48,13 @@ function Avatar({
   picRef,
   userId
 }) {
-
+  const { userId: user_id } = useSelector((state) => state.auth);
   const [img, setImg] = useState(null)
   const cont_style = style ? style : {};
 
   const history = useHistory()
-  const { currentUser } = useAuth();
 
   const openUser = (e) => {
-    const user_id = currentUser.uid;
     if (userId && user_id !== userId) {
       history.push(`/profile/${userId}`)
     }

@@ -157,8 +157,8 @@ export default function DropList(props) {
             endMessage={<></>}
           >
             {
-              listItems.length > 0 && listItems.map(drop => (
-                <SwipeableListItem
+              listItems.length > 0 && listItems.map((drop, index) => (
+                <SwipeableListItem key={index}
                   swipeStartThreshold={0}
                   // leadingActions={leadingActions()}
                   trailingActions={trailingActions(drop)}
@@ -183,8 +183,8 @@ export default function DropList(props) {
       ) : (
         <>
           {
-            listItems.map(drop => (
-              <div className="card" style={{ marginBottom: '10px' }}>
+            listItems.map((drop, index) => (
+              <div key={index} className="card" style={{ marginBottom: '10px' }}>
                 {renderDropCell(drop)}
               </div>
             ))}

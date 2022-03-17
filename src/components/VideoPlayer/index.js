@@ -51,7 +51,7 @@ export default function VideoPlayer({ url, caption }) {
     <VideoPlayerContainer>
       {!isPlaying && isPlayerReady && (
         <ExtraContainer>
-          <div style={{ "text-align": "center", fontSize: "22px",marginBottom: "12px" }}>
+          <div style={{ textAlign: "center", fontSize: "22px",marginBottom: "12px" }}>
             {caption}
           </div>
           <div

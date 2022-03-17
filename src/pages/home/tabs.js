@@ -114,16 +114,8 @@ const TabItem = styled.li`
 `;
 
 
-const Tabs = ({ changeCurrentTab }) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const { data: allCategories, isSuccess } = useGetCategoriesQuery();
-
-  useEffect(() => {
-    if (!allCategories) return
-    const id = getCategoryIdByPosition(activeTabIndex, allCategories)
-    const categorySymbol = getCategorySymbolByPosition(activeTabIndex, allCategories)
-    changeCurrentTab(id, categorySymbol)
-  }, [activeTabIndex, isSuccess])
+const Tabs = ({ activeTabIndex, setActiveTabIndex }) => {
+  const { data: allCategories } = useGetCategoriesQuery();
 
   return (
     <TabsWrapper >

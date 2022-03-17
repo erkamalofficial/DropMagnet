@@ -162,13 +162,12 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (!user) {
-        history.push('/swiper')
         setIsTokenFetched(true)
+        history.push('/swiper')
       }
       user.getIdToken().then(function (token) {
         if (token) {
           dispatch(getAuthTokenAndUserId({ token, userId: user.uid }))
-          setIsTokenFetched(true)
         }
       });
 
@@ -178,7 +177,7 @@ function App() {
 
   return (
     <>
-      {isTokenFetched ?
+      {isTokenFetched &&
         <MoralisProvider appId={MORILIS_APP_ID} serverUrl={MORILIS_SERVER_URL}>
           {/* <GlobalContext.Provider value={{ date, setDate, setCurUser, curUser }}> */}
           <Router>
@@ -447,10 +446,6 @@ function App() {
           </Router>
           {/* </GlobalContext.Provider> */}
         </MoralisProvider>
-        :
-        <div>
-          Loding........
-        </div>
       }
     </>
   );

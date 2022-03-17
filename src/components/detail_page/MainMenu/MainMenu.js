@@ -68,15 +68,15 @@ export default function MainMenu(props) {
   }, [])
 
   var menuList = [
-    {
-      title: verified ? "Create a Drop" : "Apply for Drop Swipe",
-      link: verified ? "create_drop" : "home"
-    },
+    // {
+    //   title: verified ? "Create a Drop" : "Apply for Drop Swipe",
+    //   link: verified ? "create_drop" : "home"
+    // },
     { title: "Settings", link: "/settings" },
-    { title: "Subscription", link: "/subscription" },
-    { title: "Get drop token", link: "/getToken" },
+    // { title: "Subscription", link: "/subscription" },
+    // { title: "Get drop token", link: "/getToken" },
     { title: "About", link: "/about" },
-    { title: "What's a drop?", link: "/aboutDrop" },
+    // { title: "What's a drop?", link: "/aboutDrop" },
     { title: "Terms and Conditions", link: "/term" },
     { title: "Logout", link: "/logout" },
   ];
@@ -112,8 +112,8 @@ export default function MainMenu(props) {
         {props.userDetails !== {} && props.userDetails !== undefined ? (
           <div className="main-menu-header">
             <div className="user-details">
-              <p1 style={{ fontWeight: "bold" }}>{props.userDetails.name}</p1>
-              <p2 style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p2>
+              <p style={{ fontWeight: "bold" }}>{props.userDetails.name}</p>
+              <p style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p>
             </div>
             <GlossyButton
               label={`${user?.tokens} Drop Tokens Earned`}

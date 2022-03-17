@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import TinderCard from "./swipe-main";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,14 +34,19 @@ function Swiper(props) {
   const [catgoryIndex, setCategoryIndex] = useState(new Date().getTime())
   const { userId } = useSelector((state) => state.auth);
   const { data: categoryDrops, isSuccess, isFetching, isLoading } = useFetchCategoryDropsQuery({ userId: props.activeTabId, time: catgoryIndex });
-  const { data: userSavedPosts } = useFetchUserSavedDropsQuery(props.activeTabSymbol)
+  const { data: currenUserSavedDrops, isFetching: isDropsFetching } = useFetchUserSavedDropsQuery(props.activeTabSymbol)
 
-  const [saveCategoryDrop] = useSaveSwipedDropMutation();
+  const [saveCategoryDrop, { isLoading: isUpdateding }] = useSaveSwipedDropMutation();
   const [unSaveCategoryDrop] = useUnSaveSwipedDropMutation();
 
   const [openView, setOpenView] = useState(false)
   const [curDrop, setCurDrop] = useState({})
   const history = useHistory()
+
+  // useEffect(() => {
+  //   if (!currenUserSavedDrops) return
+  //   setCounter(currenUserSavedDrops.length)
+  // }, [isSuccess])
 
   const swipe = (dir) => {
     const drop = categoryDrops.drops[categoryDrops.drops.length - 1]
@@ -65,13 +70,14 @@ function Swiper(props) {
       </div>
     )
   }
+  console.log('currenUserSavedDrops length Outer==>', { A: currenUserSavedDrops?.length })
 
-  const handleDropSwipe = async (dir, drop) => {
+  const handleDropSwipe = (dir, drop, length) => {
     if (dir === "right") {
-      const length = userSavedPosts ? userSavedPosts?.length : 0
-      if (length < 10) {
-        await saveCategoryDrop({ symbol: drop.category, userId: drop.user_id, drop, time: catgoryIndex })
-        if (length + 1 === 10) {
+      console.log('currenUserSavedDrops length Inner==>', { A: length })
+      if ((length) < 10) {
+        saveCategoryDrop({ symbol: drop.category, userId: drop.user_id, drop, time: catgoryIndex })
+        if ((length + 1) === 10) {
           handleFullBucket()
         }
       } else {
@@ -79,7 +85,7 @@ function Swiper(props) {
       }
     }
     if (dir === "left") {
-      await unSaveCategoryDrop({ symbol: drop.category, userId: drop.user_id, drop, time: catgoryIndex })
+      unSaveCategoryDrop({ symbol: drop.category, userId: drop.user_id, drop, time: catgoryIndex })
     }
     if ((categoryDrops.drops?.length - 1) === 0) {
       setCategoryIndex(categoryDrops.index)
@@ -90,16 +96,16 @@ function Swiper(props) {
     if (window.confirm("Your Bucket Limit has reached its End ? \n 1. Press ok to 'Upgrade Your Subscription' \n 2. Press Cancel to 'Go To Reswipe'?")) {
       history.push('/upgradeSub');
     } else {
-      history.push(`/reswipe?tabs=${props.activeTabId}`);
+      history.push(`/reswipe?tabs=${props.activeTabSymbol}`);
     }
   }
 
   return (
     <>
-      {(!isSuccess || isFetching || isLoading) ?
+      {(!isSuccess || isFetching || isLoading || isDropsFetching || isUpdateding) ?
         <>
           <FadeIn delay={200}>
-            <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'}>
+            <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: 'flex' }}>
               <LazyCard />
             </CardContainer>
           </FadeIn>
@@ -129,7 +135,7 @@ function Swiper(props) {
                     key={id}
                     onSwipe={(dir) => {
                       if (userId) {
-                        handleDropSwipe(dir, cardDetails)
+                        handleDropSwipe(dir, cardDetails, currenUserSavedDrops?.length)
                       } else { history.push("/login") }
 
                     }}

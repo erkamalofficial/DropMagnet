@@ -63,8 +63,8 @@ export default function DateMenu(props) {
     props.setOpen(false)
   }
 
-  function renderDateCell(date) {
-    return <DateCell day={date} setSelectedDate={() => {props.setSelectedDate(date); closeMenu()}}/>
+  function renderDateCell(date, i) {
+    return <DateCell key={i} day={date} setSelectedDate={() => {props.setSelectedDate(date); closeMenu()}}/>
   }
 
   let menuClass = open ? "main-menu-open" : "main-menu-closed"
