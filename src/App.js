@@ -168,6 +168,7 @@ function App() {
       user.getIdToken().then(function (token) {
         if (token) {
           dispatch(getAuthTokenAndUserId({ token, userId: user.uid }))
+          setIsTokenFetched(true)
         }
       });
 
