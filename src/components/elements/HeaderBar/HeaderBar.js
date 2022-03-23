@@ -9,7 +9,7 @@ import { getInitials } from '../../../utils';
 import { Row } from "../../exploreGalleries/styled-components/Row";
 import { Link as HeaderLink } from "../../exploreGalleries/styled-components/Link";
 import Logo from "../../dropMagnet/assets/logo.svg";
-import DropMagnetLogo from "../../dropMagnet/assets/dropMagnetlogo.svg";
+import DropMagnetLogo from "../../dropMagnet/assets/DropMagnetlogonew.svg";
 import { GlobalContext } from '../../../utils/GlobalContext';
 import { useSelector } from 'react-redux';
 import { useFetchUserProfileQuery } from '../../../store/api/DropApi';

@@ -206,12 +206,20 @@
 
 
 // <======================= Connect Wallet Button Model CSS ================================>
+.Connect-Wallet-Modal {
+ display: flex;
+ justify-content: center;
+}
 
 .Connect-Wallet-Button-Container {
  display: flex;
  flex-direction: column;
  justify-content: center;
  align-items: center;
+ height: 220px;
+ width: 273px;
+ background: #0000002e;
+ border-radius: 54px;
 }
 .Connect-Wallet-Button-Container > h1 {
     color: #fff;

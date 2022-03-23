@@ -5,7 +5,7 @@ import Swiper from "./swiper";
 import "./index.css";
 import FadeIn from 'react-fade-in';
 import "../../components/detail_page/DropDetail/DropDetail.css";
-import { getCategoryIdByPosition, getCategorySymbolByPosition } from "../../utils/category";
+import { getCategoryIdByPosition, getCategorySymbolByPosition, getFirstExternalCategoryPosition } from "../../utils/category";
 import { useGetCategoriesQuery } from "../../store/api/DropApi";
 
 const HomeContainer = styled.div`
@@ -51,6 +51,7 @@ const Home = (props) => {
 
   useEffect(() => {
     if (!isSuccess) return
+    console.log('useEffect activeIndex==>', activeIndex)
     const id = getCategoryIdByPosition(activeIndex, allCategories)
     const categorySymbol = getCategorySymbolByPosition(activeIndex, allCategories)
     setActiveTabId(id)
@@ -60,6 +61,7 @@ const Home = (props) => {
   const handleActiveIndex = (index) => {
     setActiveIndex(index)
   }
+
 
   return (
     <HomeContainer>

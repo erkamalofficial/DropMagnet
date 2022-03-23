@@ -264,20 +264,22 @@ export const NewLandingPage = () => {
 
       {connectModal &&
         <Modal key={'Connect-Wallet-Button-Model'} isOpen={connectModal} onClose={() => setConnectModal(false)} showCloseButton>
-          <div className="Connect-Wallet-Button-Container">
-            <h1>What Blockchain?</h1>
-            <div className="Connect-Wallet-Button-Wrapper">
-              <div className="Connect-Wallet-Button">
-                <div onClick={connectToEthereumChain} className="Connect-Wallet-Button-Img">
-                  <img src="https://global-uploads.webflow.com/5ef27900119086588ee44420/6009e881ba9c2a278c623ce9_116_Ethereum_logo_logos-512.png" alt="" srcset="" />
+          <div className="Connect-Wallet-Modal">
+            <div className="Connect-Wallet-Button-Container">
+              <h1>What Blockchain?</h1>
+              <div className="Connect-Wallet-Button-Wrapper">
+                <div className="Connect-Wallet-Button">
+                  <div onClick={connectToEthereumChain} className="Connect-Wallet-Button-Img">
+                    <img src="https://global-uploads.webflow.com/5ef27900119086588ee44420/6009e881ba9c2a278c623ce9_116_Ethereum_logo_logos-512.png" alt="" srcset="" />
+                  </div>
+                  <p>Ethereum</p>
                 </div>
-                <p>Ethereum</p>
-              </div>
-              <div className="Connect-Wallet-Button">
-                <div onClick={connectToSolanaChain} lassName="Connect-Wallet-Button-Img">
-                  <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="" srcset="" />
+                <div className="Connect-Wallet-Button">
+                  <div onClick={connectToSolanaChain} lassName="Connect-Wallet-Button-Img">
+                    <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="" srcset="" />
+                  </div>
+                  <p>Solana</p>
                 </div>
-                <p>Solana</p>
               </div>
             </div>
           </div>
