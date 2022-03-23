@@ -31,8 +31,6 @@ const CardContainer = styled.div`
 const alreadyRemoved = [];
 export const DropsReswiper = (props) => {
     const { drops } = props;
-    // const [saveUserReSwipedDrop] = useSaveReSwipedDropMutation();
-    // const [unSaveUserReSwipedDrop] = useUnSaveReSwipedDropMutation();
     const { userId } = useSelector((state) => state.auth);
     const [openView, setOpenView] = useState(false)
     const [curDrop, setCurDrop] = useState({})
@@ -51,13 +49,9 @@ export const DropsReswiper = (props) => {
             (card) => !alreadyRemoved.includes(card.id)
         );
         if (cardsLeft.length) {
-            console.log('cardsLeft directioin======> ', dir)
             const toBeRemoved = cardsLeft[cardsLeft.length - 1].id;
             const index = drops.map((card) => card.id).indexOf(toBeRemoved);
             childRefs[index].current.swipe(dir);
-            console.log('swipe======> ', { 
-                ref: childRefs, 
-                curr:  childRefs[index].current })
         }
     };
 
@@ -81,12 +75,6 @@ export const DropsReswiper = (props) => {
     const handleDropSwipe = async (dir, drop) => {
         props.onReswipe(dir, drop.id)
         alreadyRemoved.push(drop.id);
-        // if (dir === "right") {
-        //     await saveUserReSwipedDrop({ symbol: drop.category, dropId: drop.id })
-        // }
-        // if (dir === "left") {
-        //     await unSaveUserReSwipedDrop({ symbol: drop.category, dropId: drop.id })
-        // }
     }
 
     console.log('current ref', childRefs)

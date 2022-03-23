@@ -275,9 +275,12 @@ export function unsaveDrop(token = '', dropid = '') {
 
 // Wallet Login
 
-export function getNonce(address) {
+export function getNonce(address, chain) {
   // const nonceEndPoint = `profiles/user/nonce?address=${address}`;
-  const nonceEndPoint = `auth/creds?addr=${address}`
+  let nonceEndPoint = `auth/creds?addr=${address}`
+  if(chain) {
+    nonceEndPoint = `${nonceEndPoint}&chain=${chain}`
+  }
   return customAPICall(nonceEndPoint, "", "POST", '');
 }
 

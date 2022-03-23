@@ -113,8 +113,8 @@ function App() {
   // Global functions
   const history = useHistory()
   const dispatch = useDispatch()
-  const state = useSelector((state) => state);
-  const curIndex = useSelector((state) => state.category.curIndex);
+  // const state = useSelector((state) => state);
+  // const curIndex = useSelector((state) => state.category.curIndex);
   const activeTabIndex = useSelector((state) => state.category.general.activeTabIndex);
   const allCategories = useSelector((state) => state.category);
 
@@ -179,8 +179,7 @@ function App() {
   return (
     <>
       {isTokenFetched &&
-        <MoralisProvider appId={MORILIS_APP_ID} serverUrl={MORILIS_SERVER_URL}>
-          {/* <GlobalContext.Provider value={{ date, setDate, setCurUser, curUser }}> */}
+        // <MoralisProvider appId={MORILIS_APP_ID} serverUrl={MORILIS_SERVER_URL}>
           <Router>
             <div className="fixed-container"
               style={{ top: '0' }}>
@@ -445,8 +444,7 @@ function App() {
               <Route path="/movie-farm" render={() => <MovieFarm />} />
             </Switch>
           </Router>
-          {/* </GlobalContext.Provider> */}
-        </MoralisProvider>
+        // </MoralisProvider>
       }
     </>
   );

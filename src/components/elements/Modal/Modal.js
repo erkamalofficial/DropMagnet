@@ -54,13 +54,14 @@ const ModalContent = styled.div`
 
 `
 
-function Modal(props){
-    const {isOpen, onClose, title,children} = props;
+function Modal(props) {
+    const { isOpen, onClose, title, children, showCloseButton } = props;
 
-    return(
+    return (
         <ModalContainer style={{
-            opacity: !isOpen ? '0': '1', 
+            opacity: !isOpen ? '0' : '1',
             visibility: !isOpen ? 'hidden' : 'visible',
+            zIndex: 1,
             top: '0'
         }}>
             <ModalBody>
@@ -69,7 +70,7 @@ function Modal(props){
                         {title && <ModalTitle> {title}</ModalTitle>}
                     </ModalHeaderLeft>
                     <ModalHeaderRight>
-                      {/* <img alt={'close-button'} style={{top: 15, right:20,display:props.isOpen ? "block": "none" ,transition: "all .4s", position: 'fixed',cursor:'pointer' }} className={'close-button'} onClick={onClose} src="./close-icon.png" /> */}
+                        {showCloseButton && <img alt={'close-button'} style={{ top: 15, right: 20, display: props.isOpen ? "block" : "none", transition: "all .4s", position: 'fixed', cursor: 'pointer' }} className={'close-button'} onClick={onClose} src="./close-icon.png" />}
                     </ModalHeaderRight>
                 </ModalHeader>
                 <ModalContent>

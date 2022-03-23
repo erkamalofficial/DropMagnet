@@ -11,7 +11,7 @@ const settings = {
 };
 
 const animateOut = async (element, speed, easeIn = false) => {
-  const time = 0.7; //diagonal / velocity
+  const time = 0.75; //diagonal / velocity
   const multiplier = 1; //diagonal / velocity
 
   // const translateString = translationString(speed.x * multiplier + startPos.x, -speed.y * multiplier + startPos.y)
@@ -37,8 +37,9 @@ const animateOut = async (element, speed, easeIn = false) => {
     rotateString = rotationString(rotationPower / 4 + getRotation(element));
   }
   // rotateString = rotationString(0)
-  // console.log("vaules", translateString + rotateString);
-  element.style.transform = translateString + rotateString;
+  element.style.transform = `${translateString} ${rotateString}`;
+
+  // console.log("element===>", element.style);
   await sleep(time * 1000);
 };
 
@@ -165,7 +166,7 @@ const TinderCard = React.forwardRef(
       },
     }));
 
-    const handleSwipeReleased = React.useCallback(
+    const handleSwipeReleased = 
       async (element, speed, location) => {
         if (swipeAlreadyReleased.current) {
           return;
@@ -212,15 +213,7 @@ const TinderCard = React.forwardRef(
 
         // Card was not flicked away, animate back to start
         animateBack(element);
-      },
-      [
-        swipeAlreadyReleased,
-        flickOnSwipe,
-        onSwipe,
-        onCardLeftScreen,
-        preventSwipe,
-      ]
-    );
+      }
 
     const handleSwipeStart = React.useCallback(() => {
       swipeAlreadyReleased.current = false;

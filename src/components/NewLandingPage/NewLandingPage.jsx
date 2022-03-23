@@ -32,6 +32,10 @@ import { SignInWithCustomToken } from "../../helpers/AuthHelper"
 import { useDispatch, useSelector } from "react-redux"
 import { getAuthToken, getAuthTokenAndUserId } from "../../store/reducers/AuthReducer"
 import { DROPMAGNET_SERVER_URL } from '../../config/constants'
+import * as solanaWeb3 from '@solana/web3.js';
+import Modal from "../elements/Modal/Modal"
+
+const SOLANA_RPC_URL = 'https://api.devnet.solana.com';
 
 export const NewLandingPage = () => {
   const { token, userId } = useSelector((state) => state.auth);
@@ -54,10 +58,10 @@ export const NewLandingPage = () => {
 
   const { id } = useParams()
 
-
   const [error, setError] = useState("")
 
   const [loading, setLoading] = useState(false);
+  const [connectModal, setConnectModal] = useState(false);
   const history = useHistory();
 
   const coinbase = getProviderInfoByName('Coinbase')
@@ -97,7 +101,19 @@ export const NewLandingPage = () => {
         await provider.enable()
         return provider;
       }
-    }
+    },
+    // "custom-Solana": {
+    //   display: {
+    //     logo: "https://cryptologos.cc/logos/solana-sol-logo.png",
+    //     name: 'Solana'
+    //   },
+    //   package: solanaWeb3,
+    //   connector: async () => {
+    //     const provider = window.solana;
+    //     await provider.connect()
+    //     return provider;
+    //   }
+    // },
   };
 
   const web3Modal = new Web3Modal({
@@ -134,20 +150,11 @@ export const NewLandingPage = () => {
   }
 
   // ================>Step 3
-  const signMessageV2 = async (web3, accounts, nonce) => {
-    let message = `Sign In to DropMagnet: ${nonce.nonce}`
-    let _signature, token
-    await web3.eth.personal.sign(message, accounts[0], async (err, signature) => {
-      if (err) {
-        console.log('Metamask Signing Error===>', err)
-      }
-      _signature = signature
-    }
-    )
+  const authenticateSignatures = async (account, signature, chain) => {
     try {
-      const authenticate = await axios.post(`${DROPMAGNET_SERVER_URL}/auth`, { addr: accounts[0], sig: _signature, })
-      dispatch(getAuthTokenAndUserId({ token: authenticate.data.token, userId: accounts[0] }))
-      await userLogin(authenticate.data.token, accounts[0])
+      const authenticate = await axios.post(`${DROPMAGNET_SERVER_URL}/auth`, { addr: account, sig: signature, chain: chain })
+      dispatch(getAuthTokenAndUserId({ token: authenticate.data.token, userId: account }))
+      await userLogin(authenticate.data.token, account)
     } catch (err) {
       console.log('Auth Error==>', { message: err.message, data: err.data })
       if (err.message.includes("401")) {
@@ -156,18 +163,60 @@ export const NewLandingPage = () => {
     }
   }
 
+
   // ================>Step 2
-  const connectWallet = async () => {
+  const connectToEthereumChain = async () => {
+    console.log('called')
     const provider = await web3Modal.connect();
-    const wb = new Web3(provider);
-    let accounts = await wb.eth.getAccounts().then(acc => acc)
-    let nonce = await DropMagnetAPI.getNonce(accounts[0])
-    await signMessageV2(wb, accounts, nonce)
+    const web3 = new Web3(provider);
+    const accounts = await web3.eth.getAccounts().then(acc => acc)
+    const account = accounts[0]
+
+    let nonce = await DropMagnetAPI.getNonce(account)
+    let message = `Sign In to DropMagnet: ${nonce.nonce}`
+    let _signature
+    await web3.eth.personal.sign(message, account, async (err, signature) => {
+      if (err) {
+        console.log('Metamask Signing Error===>', err)
+      }
+      _signature = signature
+    })
+    await authenticateSignatures(account, _signature)
   }
+
+  const connectToSolanaChain = async () => {
+
+    const provider = window.solana;
+    if (!provider) {
+      console.log('No Solana based Wallet Detected')
+      return
+    }
+
+    await provider.connect()
+    const web3 = new solanaWeb3.Connection(
+      solanaWeb3.clusterApiUrl('testnet'),
+      'confirmed',
+    );
+    const account = provider.publicKey.toString()
+    const chain = 'sol'
+
+    let nonce = await DropMagnetAPI.getNonce(account, chain)
+    const msg = new TextEncoder().encode(`Sign In to DropMagnet: ${nonce.nonce}`);
+    const signedMessage = await window.solana.request({
+      method: "signMessage",
+      params: {
+        message: msg,
+        display: "utf8",
+      },
+    });
+    console.log('signedMessage', signedMessage)
+    const signature = signedMessage.signature
+    await authenticateSignatures(account, signature, chain)
+  }
+
 
   // ================>Step 1
   useEffect(() => {
-    // const user = localStorage.getItem("userDetails")
     if (userId) {
       history.push("/swiper")
     }
@@ -190,7 +239,7 @@ export const NewLandingPage = () => {
             </div>
             <h4>Discover NFTs from verified collections and build your web3 social page with DropSwipe.</h4>
             <div>
-              <button className="landing__main-content__button" onClick={connectWallet} >Connect Wallet</button>
+              <button className="landing__main-content__button" onClick={() => setConnectModal(true)} >Connect Wallet</button>
               <h4 className="landing__main-content__error">{error}</h4>
             </div>
             <h4>Early access is available for collectors of Crypto Punks & Bored Apes.</h4>
@@ -216,6 +265,28 @@ export const NewLandingPage = () => {
           </div>
         </div>
       </div>
+
+      {connectModal &&
+        <Modal key={'Connect-Wallet-Button-Model'} isOpen={connectModal} onClose={() => setConnectModal(false)} showCloseButton>
+          <div className="Connect-Wallet-Button-Container">
+            <h1>What Blockchain?</h1>
+            <div className="Connect-Wallet-Button-Wrapper">
+              <div className="Connect-Wallet-Button">
+                <div onClick={connectToEthereumChain} className="Connect-Wallet-Button-Img">
+                  <img src="https://global-uploads.webflow.com/5ef27900119086588ee44420/6009e881ba9c2a278c623ce9_116_Ethereum_logo_logos-512.png" alt="" srcset="" />
+                </div>
+                <p>Ethereum</p>
+              </div>
+              <div className="Connect-Wallet-Button">
+                <div onClick={connectToSolanaChain} lassName="Connect-Wallet-Button-Img">
+                  <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="" srcset="" />
+                </div>
+                <p>Solana</p>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      }
     </>
   )
 }

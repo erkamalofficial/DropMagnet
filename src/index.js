@@ -6,9 +6,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { Provider } from "react-redux";
-import store from "./store";
-import { AuthProvider } from "./contexts/FirebaseAuthContext";
-import { DropProvider } from "./contexts/DropContext";
+// import { AuthProvider } from "./contexts/FirebaseAuthContext";
+// import { DropProvider } from "./contexts/DropContext";
 import { Store } from "./store/Store";
 
 ReactDOM.render(

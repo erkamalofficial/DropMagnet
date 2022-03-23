@@ -201,3 +201,46 @@
     }
 }
 }
+
+
+
+
+// <======================= Connect Wallet Button Model CSS ================================>
+
+.Connect-Wallet-Button-Container {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+.Connect-Wallet-Button-Container > h1 {
+    color: #fff;
+    font-family: 'Poppins';
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.Connect-Wallet-Button-Wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.Connect-Wallet-Button-Wrapper > .Connect-Wallet-Button {
+    text-align: center;
+    margin: 0 20px;
+}
+.Connect-Wallet-Button-Wrapper > .Connect-Wallet-Button > p {
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: 700;
+    font-style: italic;
+}
+.Connect-Wallet-Button-Wrapper > .Connect-Wallet-Button > div {
+    height: 80px;
+    width: 80px;
+    border: 0.75px solid #44FF95;
+    border-radius: 50%;
+    padding: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16">
+  <defs>
+    <path d="M3.801 2.75H12.2c.713 0 .972.074 1.232.214.261.14.466.344.605.605.14.26.214.519.214 1.232V11.2c0 .713-.074.972-.214 1.232-.14.261-.344.466-.605.605-.26.14-.519.214-1.232.214H3.8c-.713 0-.972-.074-1.232-.214a1.454 1.454 0 01-.605-.605c-.14-.26-.214-.519-.214-1.232V4.8c0-.713.074-.972.214-1.232.14-.261.344-.466.605-.605.26-.14.519-.214 1.232-.214z" id="image-16_svg__a"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="image-16_svg__b" fill="#fff">
+      <use xlink:href="#image-16_svg__a"/>
+    </mask>
+    <use stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" xlink:href="#image-16_svg__a"/>
+    <path d="M6.905 7.894l2.809 2.838.747-.749a1.282 1.282 0 011.886.048l2.23 2.469H16v5H0v-5l.802.002a.14.14 0 01-.002-.024l4.212-4.55a1.297 1.297 0 011.893-.034z" stroke="currentColor" stroke-width="1.5" fill-opacity=".15" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" mask="url(#image-16_svg__b)"/>
+    <circle fill="currentColor" mask="url(#image-16_svg__b)" cx="11" cy="6" r="1.5"/>
+  </g>
+</svg>

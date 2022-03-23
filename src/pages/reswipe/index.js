@@ -48,7 +48,7 @@ function Reswipe() {
     console.log("opened item", date);
   }
   const curTab = qs.parse(useLocation().search, "?").tabs;
-  const { data: reswipedDrops, isSuccess,refetch } = useFetchUserSavedDropsQuery(curTab)
+  const { data: reswipedDrops, isSuccess, refetch } = useFetchUserSavedDropsQuery(curTab)
   const [saveUserReSwipedDrop] = useSaveReSwipedDropMutation();
   const [unSaveUserReSwipedDrop] = useUnSaveReSwipedDropMutation();
   function setSelectedDate(date) {
@@ -110,7 +110,9 @@ function Reswipe() {
       saveUserReSwipedDrop({ symbol: curTab, dropId: drop_id });
       currCAndCurrL += 1;
     } else {
-      unSaveUserReSwipedDrop({ symbol: curTab, dropId: drop_id });
+      setTimeout(() => {
+        unSaveUserReSwipedDrop({ symbol: curTab, dropId: drop_id });
+      }, 500)
       setTempReswipeBucket(newArray);
     }
     if (newArray.length === 4 && dir !== "right") {
@@ -200,7 +202,7 @@ function Reswipe() {
         userLoggedIn={currentUser && currentUser.uid}
         userImageVisible={true}
       /> */}
-     
+
       {currentDetailIndex === null ? (
         !reswipeComplete ? (
           <>
@@ -330,7 +332,7 @@ function Reswipe() {
           <button
             className={"main-button-2 clickable"}
             style={{ width: "calc(100% - 50px )", margin: "0 auto" }}
-            onClick={() => {  handleClose();  }}
+            onClick={() => { handleClose(); }}
           >
             <h1 style={{ textAlign: "center", width: "100%" }}>
               Go To Collection Page

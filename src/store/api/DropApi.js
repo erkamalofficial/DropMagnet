@@ -133,7 +133,7 @@ export const DropApi = createApi({
                     // dispatch(DropApi.util.invalidateTags(['UserSavedDrops']))
                 } catch (e) {
                     console.log("error=+>", e)
-                    // categoryDropResult.undo()
+                    categoryDropResult.undo()
                     patchResult.undo()
                 }
             },
@@ -146,19 +146,6 @@ export const DropApi = createApi({
                 responseHandler: "text",
             }),
             async onQueryStarted({ symbol, drop, userId, time }, { dispatch, queryFulfilled }) {
-                const patchResult = dispatch(
-                    DropApi.util.updateQueryData('fetchUserSavedDrops', symbol, (draft) => {
-                        if (draft === null) {
-                            return
-                        } else {
-                            let drops = draft
-                            const index = drops.findIndex(x => x.id === drop.id)
-                            drops.splice(index, 1)
-                            Object.assign(draft, drops)
-                        }
-                    })
-                )
-
                 const categoryDropResult = dispatch(
                     DropApi.util.updateQueryData('fetchCategoryDrops', { userId, time }, (draft) => {
                         let drops = draft.drops
@@ -170,14 +157,9 @@ export const DropApi = createApi({
 
                 try {
                     await queryFulfilled
-                    // if (categoryDropResult.patches[0].value === 0) {
-                    //     dispatch(DropApi.util.invalidateTags(['CategoryDrops']))
-                    // }
-
                 } catch (e) {
                     console.log("error=+>", e)
                     categoryDropResult.undo()
-                    patchResult.undo()
                 }
             },
         }),
@@ -192,25 +174,6 @@ export const DropApi = createApi({
                 method: 'POST',
                 responseHandler: "text",
             }),
-            // async onQueryStarted({ symbol, dropId }, { dispatch, queryFulfilled }) {
-            //     const patchResult = dispatch(
-            //         DropApi.util.updateQueryData('fetchUserSavedDrops', symbol, (draft) => {
-            //             if (draft === null) {
-            //                 return
-            //             } else {
-            //                 let drops = draft
-            //                 const index = drops.findIndex(x => x.id === dropId)
-            //                 drops.splice(index, 1)
-            //                 Object.assign(draft, drops)
-            //             }
-            //         })
-            //     )
-            //     try {
-            //         await queryFulfilled
-            //     } catch (e) {
-            //         patchResult.undo()
-            //     }
-            // },
         }),
 
         unSaveReSwipedDrop: builder.mutation({
@@ -225,7 +188,7 @@ export const DropApi = createApi({
             //             if (draft === null) {
             //                 return
             //             } else {
-            //                 let drops = draft
+            //                 let drops = [...draft]
             //                 const index = drops.findIndex(x => x.id === dropId)
             //                 drops.splice(index, 1)
             //                 Object.assign(draft, drops)
