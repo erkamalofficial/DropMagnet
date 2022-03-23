@@ -43,7 +43,7 @@ const HomeContainer = styled.div`
   }
 `;
 
-const Home = () => {
+const Home = (props) => {
   const { data: allCategories, isSuccess } = useGetCategoriesQuery();
   const [activeTabSymbol, setActiveTabSymbol] = useState(null);
   const [activeTabId, setActiveTabId] = useState(null);

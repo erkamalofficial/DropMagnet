@@ -30,15 +30,14 @@ const CardContainer = styled.div`
 
 function Swiper(props) {
   const [catgoryIndex, setCategoryIndex] = useState(new Date().getTime())
-  const { data: categoryDrops, isSuccess, isFetching, isLoading } = useFetchCategoryDropsQuery({ userId: props.activeTabId, time: catgoryIndex });
-  const { currentData: currenUserSavedDrops, isSuccess: isUserDropsSuccess } = useFetchUserSavedDropsQuery(props.activeTabSymbol)
+  const { data: categoryDrops, isSuccess, isFetching, isLoading } = useFetchCategoryDropsQuery({ userId: props.activeTabId, time: catgoryIndex }, {skip: !props.activeTabId});
+  const { currentData: currenUserSavedDrops, isSuccess: isUserDropsSuccess } = useFetchUserSavedDropsQuery(props.activeTabSymbol, {skip: !props.activeTabSymbol})
 
   console.log('Swiper Parent re-render')
 
-
   return (
     <>
-      {(!isSuccess || isFetching || isLoading || !isUserDropsSuccess) ?
+      {(!isSuccess || isFetching || isLoading) ?
         <>
           <FadeIn delay={200}>
             <CardContainer key="cardContainer" className={'fix-minor-bug-swipe'} style={{ display: 'flex' }}>

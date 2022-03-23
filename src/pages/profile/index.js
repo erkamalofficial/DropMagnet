@@ -103,7 +103,7 @@ export default function Profile(props) {
   }, [scheduledPosts.length, fetchingPosts]) //scheduledPosts.length, fetchingPosts
 
 
-  const { data: fetchedProfile, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId)
+  const { data: fetchedProfile, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId, {skip: !userId})
   useEffect(() => {
     if (!isProfileFetched) {
       setLoading({ ...loading, profile: true })
@@ -133,7 +133,7 @@ export default function Profile(props) {
     }
   }, []);
 
-  const { data: userSavedPosts, isSuccess, isFetching } = useFetchUserSavedDropsQuery(activeTabSymbol)
+  const { data: userSavedPosts, isSuccess, isFetching } = useFetchUserSavedDropsQuery(activeTabSymbol, {skip: !activeTabSymbol})
   useEffect(() => {
     if (!activeTabSymbol || !userId) return;
     if (userSavedPosts === null && isSuccess) {

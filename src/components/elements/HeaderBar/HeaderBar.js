@@ -16,7 +16,7 @@ import { useFetchUserProfileQuery } from '../../../store/api/DropApi';
 
 function HeaderBar(props) {
   const { token, userId } = useSelector((state) => state.auth);
-  const { data: userDetails, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId)
+  const { data: userDetails, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId, {skip: !userId})
   const headerLoad = sessionStorage.getItem('headerLoad')
   const [userProfile, setUserProfile] = useState(null)
 
@@ -36,7 +36,7 @@ function HeaderBar(props) {
   pageName = pageName === '' ? 'Landing Page' : pageName
 
   function showUserAction() {
-    if (props && props.userLoggedIn && userProfile && h.location.pathname !== '/profile') {
+    if (userProfile && h.location.pathname !== '/profile') {
       return <Link to={'/profile'} style={{ textDecoration: 'none' }}>
         <div className="header-profile-img-holder">
           <Avatar userImage={userProfile.avatar_url}
@@ -55,7 +55,7 @@ function HeaderBar(props) {
     if (isProfileFetched) {
       setUserProfile(userDetails)
     }
-  }, [token, isProfileFetched])
+  }, [userId, isProfileFetched])
 
   function openMenu() {
     setMainMenuOpen(true)
@@ -67,7 +67,6 @@ function HeaderBar(props) {
   if (match?.isExact) {
     return null
   }
-
   return (
     <div className="header-container">
       {userProfile && <MainMenu userDetails={userProfile} userImage={userProfile.avatar_url} open={mainMenuOpen} setOpen={setMainMenuOpen} openItem={openItem} />}

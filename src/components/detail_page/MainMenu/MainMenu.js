@@ -19,8 +19,6 @@ export default function MainMenu(props) {
   const [tokens, setTokens] = useState(0)
   const [loading, setLoading] = useState(false)
 
-  const user = JSON.parse(localStorage.getItem('userDetails'))
-
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
@@ -36,35 +34,19 @@ export default function MainMenu(props) {
     }
   }, [open])
 
-  // useEffect(() => {
-  //   if (props.open) {
-  //     setLoading(true)
-  //     currentUser.getIdToken().then((idToken) => {
-  //       getTokens(user.id, idToken).then(res => {
-  //         setTokens(res.tokens)
-  //         setTimeout(() => {
-  //           setLoading(false)
-  //         }, 500);
-  //       })
-  //     })
-  //   }
-  // }, [props.open])
-
-  const checkIfVerified = async () => {
-    try {
-      const r = await currentUser.getIdTokenResult()
-      const is_verified = r.claims["verified"]
-      setVerified(is_verified)
-    } catch (error) {
-      setVerified(false);
-    }
-
-  }
 
   const h = useHistory()
 
   useEffect(() => {
-    checkIfVerified()
+    (async () => {
+      try {
+        const r = await currentUser.getIdTokenResult()
+        const is_verified = r.claims["verified"]
+        setVerified(is_verified)
+      } catch (error) {
+        setVerified(false);
+      }
+    })()
   }, [])
 
   var menuList = [
@@ -103,10 +85,8 @@ export default function MainMenu(props) {
     );
   }
 
-  let menuClass = open ? "main-menu-open" : "main-menu-closed";
-
   return (
-    <div className={menuClass}>
+    <div className={open ? "main-menu-open" : "main-menu-closed"}>
 
       <div className="main-menu-holder">
         {props.userDetails !== {} && props.userDetails !== undefined ? (
@@ -116,7 +96,7 @@ export default function MainMenu(props) {
               <p style={{ paddingTop: "4px" }}>@{props.userDetails.username}</p>
             </div>
             <GlossyButton
-              label={`${user?.tokens} Drop Tokens Earned`}
+              label={`${props.userDetails?.tokens || 0} Drop Tokens Earned`}
               btnStyle={{
                 padding: '12px 14px 10px 14px',
                 borderRadius: '27px',

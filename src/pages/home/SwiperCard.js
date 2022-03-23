@@ -35,14 +35,18 @@ export const SwiperCard = ({ drops, catgoryIndex, savedDrops, onSwipe, tabSymbol
     const [unSaveCategoryDrop] = useUnSaveSwipedDropMutation();
     
     console.log('Swiper Card re-render')
-    const [selectedCategoryDrops, setSelectedCategoryDrops] = useState(drops)
-    const [userSavedDrops, setUserSavedDrops] = useState(savedDrops)
+    const [selectedCategoryDrops, setSelectedCategoryDrops] = useState([])
+    const [userSavedDrops, setUserSavedDrops] = useState([])
     // const { userId } = useSelector((state) => state.auth);
     const [openView, setOpenView] = useState(false)
     const [curDrop, setCurDrop] = useState({})
 
+    useEffect(() => {
+        setSelectedCategoryDrops(drops)
+        setUserSavedDrops(savedDrops)
+    }, [drops, savedDrops])
 
-    const dropRefs = useMemo(() => Array(selectedCategoryDrops.length).fill(0).map((i) => createRef()), [])
+    const dropRefs = useMemo(() => Array(selectedCategoryDrops.length).fill(0).map((i) => createRef()), [selectedCategoryDrops])
 
     const buttonSwipe = (dir) => {
         const cardsLeft = selectedCategoryDrops.filter(

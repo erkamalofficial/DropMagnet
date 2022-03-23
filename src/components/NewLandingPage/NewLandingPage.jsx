@@ -123,10 +123,9 @@ export const NewLandingPage = () => {
   });
 
   // ================>Step 4
-  const userLogin = async (token, user_id) => { // This one is for wallet
+  const customTokenLogin = async (token, user_id) => { // This one is for wallet
     const res = await SignInWithCustomToken(token)
     let tk = await res.user.getIdToken()
-    // localStorage.setItem("token", tk)
 
     await getUserProfile(res.user.uid, tk).then((response) => {
       if (response === null) {
@@ -136,7 +135,6 @@ export const NewLandingPage = () => {
         dispatch(getAuthTokenAndUserId({ token: tk, userId: res.user.uid }))
         if (response?.status === "error") {
         } else {
-          // localStorage.setItem('userDetails', JSON.stringify(response));
           if (id) {
             history.push(`/drop/${id}`);
           }
@@ -153,10 +151,8 @@ export const NewLandingPage = () => {
   const authenticateSignatures = async (account, signature, chain) => {
     try {
       const authenticate = await axios.post(`${DROPMAGNET_SERVER_URL}/auth`, { addr: account, sig: signature, chain: chain })
-      dispatch(getAuthTokenAndUserId({ token: authenticate.data.token, userId: account }))
-      await userLogin(authenticate.data.token, account)
+      await customTokenLogin(authenticate.data.token, account)
     } catch (err) {
-      console.log('Auth Error==>', { message: err.message, data: err.data })
       if (err.message.includes("401")) {
         setError("access denied")
       }

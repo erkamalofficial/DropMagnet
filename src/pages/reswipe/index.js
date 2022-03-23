@@ -112,8 +112,8 @@ function Reswipe() {
     } else {
       setTimeout(() => {
         unSaveUserReSwipedDrop({ symbol: curTab, dropId: drop_id });
-      }, 500)
-      setTempReswipeBucket(newArray);
+        setTempReswipeBucket(newArray);
+      }, 300)
     }
     if (newArray.length === 4 && dir !== "right") {
       setRoundLength(4);
