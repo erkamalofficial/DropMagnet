@@ -29,31 +29,32 @@ const CardContainer = styled.div`
 `;
 
 let alreadyRemoved = []
-export const SwiperCard = ({ drops, catgoryIndex, savedDrops, onSwipe, tabSymbol, fetchMoreDrops }) => {
+export const SwiperCard = ({ drops, catgoryIndex, savedDrops, tabSymbol, fetchMoreDrops }) => {
     const history = useHistory()
-    const [saveCategoryDrop, { isLoading: isUpdateding }] = useSaveSwipedDropMutation();
+    const [saveCategoryDrop] = useSaveSwipedDropMutation();
     const [unSaveCategoryDrop] = useUnSaveSwipedDropMutation();
-    
-    console.log('Swiper Card re-render')
-    const [selectedCategoryDrops, setSelectedCategoryDrops] = useState([])
-    const [userSavedDrops, setUserSavedDrops] = useState([])
-    // const { userId } = useSelector((state) => state.auth);
+
+    // console.log('Swiper Card re-render', drops)
+    const [selectedCategoryDrops, setSelectedCategoryDrops] = useState(drops)
+    const [userSavedDrops, setUserSavedDrops] = useState(savedDrops)
     const [openView, setOpenView] = useState(false)
     const [curDrop, setCurDrop] = useState({})
 
     useEffect(() => {
         setSelectedCategoryDrops(drops)
         setUserSavedDrops(savedDrops)
-    }, [drops, savedDrops])
+    }, [tabSymbol])
+
+    // useEffect(() => {
+    //     setUserSavedDrops(savedDrops)
+    // }, [savedDrops])
 
     const dropRefs = useMemo(() => Array(selectedCategoryDrops.length).fill(0).map((i) => createRef()), [selectedCategoryDrops])
 
     const buttonSwipe = (dir) => {
-        const cardsLeft = selectedCategoryDrops.filter(
-            (card) => !alreadyRemoved.includes(card.id)
-        );
-        if (cardsLeft.length) {
-            const toBeRemoved = cardsLeft[cardsLeft.length - 1].id;
+        if (selectedCategoryDrops.length) {
+            // console.log('buttonSwipe called with==> ', selectedCategoryDrops[selectedCategoryDrops.length - 1])
+            const toBeRemoved = selectedCategoryDrops[selectedCategoryDrops.length - 1].id;
             const index = selectedCategoryDrops.map((card) => card.id).indexOf(toBeRemoved);
             dropRefs[index].current.swipe(dir);
         }
@@ -77,8 +78,11 @@ export const SwiperCard = ({ drops, catgoryIndex, savedDrops, onSwipe, tabSymbol
     }
 
     const handleDropSwipe = (dir, drop, length) => {
-        console.log('selectedCategoryDrops', { selectedCategoryDrops, userSavedDrops })
-        // onSwipe(dir, drop, catgoryIndex)
+        // console.log('handleDropSwipe called with==> ', drop)
+        console.log('selectedCategoryDrops', {
+            selectedCategoryDrops: selectedCategoryDrops,
+            userSavedDrops: userSavedDrops,
+        })
         if (dir === 'right') {
             let length = userSavedDrops ? userSavedDrops.length : 0
             if (length < 10) {
@@ -86,7 +90,7 @@ export const SwiperCard = ({ drops, catgoryIndex, savedDrops, onSwipe, tabSymbol
                 setUserSavedDrops(userSavedDrops)
                 setTimeout(() => {
                     saveCategoryDrop({ symbol: drop.category, userId: drop.user_id, drop, time: catgoryIndex })
-                }, 500)
+                }, 300)
             } else {
                 handleFullBucket()
             }
@@ -94,9 +98,9 @@ export const SwiperCard = ({ drops, catgoryIndex, savedDrops, onSwipe, tabSymbol
         if (dir === "left") {
             setTimeout(() => {
                 unSaveCategoryDrop({ symbol: drop.category, userId: drop.user_id, drop, time: catgoryIndex })
-            }, 500)
+            }, 300)
         }
-        if ((selectedCategoryDrops.length - 1) === 0) {
+        if ((selectedCategoryDrops.length - 1) === 0 || selectedCategoryDrops.length === 0) {
             console.log('Cards Empty')
             fetchMoreDrops()
             // setCategoryIndex(categoryDrops.index)

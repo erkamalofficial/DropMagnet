@@ -16,7 +16,7 @@ import { useFetchUserProfileQuery } from '../../../store/api/DropApi';
 
 function HeaderBar(props) {
   const { token, userId } = useSelector((state) => state.auth);
-  const { data: userDetails, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId, {skip: !userId})
+  const { data: userDetails, isSuccess: isProfileFetched, isFetching, isLoading } = useFetchUserProfileQuery(userId, {skip: !userId})
   const headerLoad = sessionStorage.getItem('headerLoad')
   const [userProfile, setUserProfile] = useState(null)
 
@@ -125,16 +125,13 @@ function HeaderBar(props) {
               :
               <></>
             }
-            {userProfile ? (
+            {(isFetching || isLoading) ? (null) : userProfile  ? (
               <div onClick={() => setMainMenuOpen(!mainMenuOpen)} className="header-bar-menu-icon"
                 style={{ zIndex: 999999999999 }}>
                 <div className={`menu-icon ${mainMenuOpen ? 'close-icon' : ''}`}>
                   <div className="leftright" />
                   <div className="rightleft" />
                 </div>
-                {/* <img height={10} width={20}
-              style={{ margin: 'auto' }}
-              src="./menu-bars-icon.png" alt="/" /> */}
               </div>
             ) : props.dropId !== undefined ? (
               <Link to={`/login/redirect/${props.dropId}`} id="login-link">Log In</Link>

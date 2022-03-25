@@ -75,14 +75,6 @@ export default function Profile(props) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
 
-  // useEffect(() => {
-  //   if (currUserSavedPosts !== undefined) {
-  //     setCurrSavedPosts(currUserSavedPosts)
-  //   }
-  // }, [currUserSavedPosts])
-
-
-
   useEffect(() => {
     setTimeout(() => {
       props.setReload(false)
@@ -103,7 +95,7 @@ export default function Profile(props) {
   }, [scheduledPosts.length, fetchingPosts]) //scheduledPosts.length, fetchingPosts
 
 
-  const { data: fetchedProfile, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId, {skip: !userId})
+  const { data: fetchedProfile, isSuccess: isProfileFetched } = useFetchUserProfileQuery(userId, { skip: !userId })
   useEffect(() => {
     if (!isProfileFetched) {
       setLoading({ ...loading, profile: true })
@@ -133,7 +125,7 @@ export default function Profile(props) {
     }
   }, []);
 
-  const { data: userSavedPosts, isSuccess, isFetching } = useFetchUserSavedDropsQuery(activeTabSymbol, {skip: !activeTabSymbol})
+  const { data: userSavedPosts, isSuccess, isFetching } = useFetchUserSavedDropsQuery(activeTabSymbol, { skip: !activeTabSymbol })
   useEffect(() => {
     if (!activeTabSymbol || !userId) return;
     if (userSavedPosts === null && isSuccess) {
@@ -144,7 +136,7 @@ export default function Profile(props) {
       setSavedPosts(userSavedPosts);
       setLoading({ ...loading, drops: false })
       const currUserSavedPosts = userSavedPosts && userSavedPosts.filter((value) => value.category === activeTabSymbol);
-      setCurrSavedPosts(currUserSavedPosts)
+      setCurrSavedPosts(currUserSavedPosts ? currUserSavedPosts : [])
     }
   }, [userId, userSavedPosts, activeTabSymbol])
 
@@ -235,9 +227,7 @@ export default function Profile(props) {
                 }}
               >
                 <TabContainer>
-                  <Tabs
-                    changeCurrentTab={(id, categorySymbol) => { setActiveTabSymbol(categorySymbol); }}
-                  />
+                  <Tabs activeTabIndex={activeTabIndex} setActiveTabIndex={handleActiveIndex} />
                 </TabContainer>
               </div>
 
@@ -389,12 +379,9 @@ export default function Profile(props) {
                       </span>{" "}
                       to explore or change category.
                     </p>
-                  </div>
-                ) : (
-                  <div
-                    style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px", }}
-                    className="profile-bio-description"
-                  >
+                  </div>)
+                  :
+                  (<div className="profile-bio-description" style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px", }}>
                     <p className="redirect-link">
                       You don't have any drops.{" "}
                       <span onClick={() => props.history.push("/create_drop")}>
@@ -402,8 +389,8 @@ export default function Profile(props) {
                       </span>{" "}
                       first.
                     </p>
-                  </div>
-                )}
+                  </div>)
+                }
               </div>
 
               <div style={{ display: `${!detailView ? "none" : "block"}` }}>

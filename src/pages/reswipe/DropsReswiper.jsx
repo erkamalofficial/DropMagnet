@@ -45,11 +45,11 @@ export const DropsReswiper = (props) => {
     );
 
     const buttonSwipe = (dir) => {
-        const cardsLeft = drops.filter(
-            (card) => !alreadyRemoved.includes(card.id)
-        );
-        if (cardsLeft.length) {
-            const toBeRemoved = cardsLeft[cardsLeft.length - 1].id;
+        // const cardsLeft = drops.filter(
+        //     (card) => !alreadyRemoved.includes(card.id)
+        // );
+        if (drops.length) {
+            const toBeRemoved = drops[drops.length - 1].id;
             const index = drops.map((card) => card.id).indexOf(toBeRemoved);
             childRefs[index].current.swipe(dir);
         }

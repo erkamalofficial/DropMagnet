@@ -58,9 +58,9 @@ const Home = (props) => {
     setActiveTabSymbol(categorySymbol)
   }, [activeIndex, isSuccess])
 
-  const handleActiveIndex = (index) => {
-    setActiveIndex(index)
-  }
+  // const handleActiveIndex = (index) => {
+  //   setActiveIndex(index)
+  // }
 
 
   return (
@@ -68,7 +68,7 @@ const Home = (props) => {
       <div className="rel">
         <FadeIn delay={200}>
           <div className="tabs-container">
-            <Tabs activeTabIndex={activeIndex} setActiveTabIndex={handleActiveIndex} />
+            <Tabs activeTabIndex={activeIndex} setActiveTabIndex={(index) => setActiveIndex(index)} />
           </div>
         </FadeIn>
         <div className="card-section">

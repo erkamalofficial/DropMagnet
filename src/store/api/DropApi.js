@@ -113,7 +113,12 @@ export const DropApi = createApi({
                             draft = [drop]
                             return draft
                         } else {
-                            Object.assign(draft, [...draft, drop])
+                            const duplicate = draft.findIndex(d => d.id === drop.id)
+                            if (duplicate < 0) { // return -1 if not duplicate
+                                Object.assign(draft, [...draft, drop])
+                            } else {
+                                return draft
+                            }
                         }
                     })
                 )
